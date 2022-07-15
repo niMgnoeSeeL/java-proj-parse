@@ -285,6 +285,12 @@ if __name__ == "__main__":
                 "Skip group", group_idx, f"because it already exists ({idx=})"
             )
             continue
+        # flush currently parsed data
+        if (idx - 1) % 10 == 0 and idx != 1:
+            print(f"{idx}/{size}")
+            with open(f"data/parsed/ant-ivy/{idx - 1}.json", "w") as f:
+                json.dump(parsed_data, f, indent=4)
+                parsed_data = OrderedDict()
         parsed_commit_data = OrderedDict()
         parsed_commit_data["authored_data"] = time.strftime(
             "%Y %b %d %H:%M", time.gmtime(commit.authored_date)
@@ -340,11 +346,5 @@ if __name__ == "__main__":
             continue
         parsed_commit_data["changes"] = change_dict
         parsed_data[commit.hexsha] = parsed_commit_data
-        if idx % 10 == 0:
-            print(f"{idx}/{size}")
-            with open(f"data/parsed/ant-ivy/{idx}.json", "w") as f:
-                json.dump(parsed_data, f, indent=4)
-                parsed_data = OrderedDict()
     with open(f"data/parsed/ant-ivy/{idx}.json", "w") as f:
         json.dump(parsed_data, f, indent=4)
-        parsed_data = OrderedDict()
