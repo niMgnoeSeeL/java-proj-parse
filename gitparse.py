@@ -304,7 +304,9 @@ if __name__ == "__main__":
         except DiffExplodeException as e:
             print(e)
             continue
-        assert len(changes.diffs) == 1
+        assert len(changes.diffs) < 2
+        if not changes.diffs:
+            continue
         pcid, diff_dict = changes.diffs.popitem()
         parsed_commit_data["pcid"] = pcid
         change_dict = OrderedDict()

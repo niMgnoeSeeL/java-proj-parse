@@ -1,0 +1,1653 @@
+{
+    "2d240df3638d74df7cde9f99eb724bd043f1989a": {
+        "authored_data": "2007 Dec 05 19:46",
+        "commit.message": "FIX: concurrency issues with locking strategy when using cache shared among a large number of processes\n\ngit-svn-id: https://svn.apache.org/repos/asf/ant/ivy/core/trunk@601489 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Xavier Hanin",
+        "pcid": "f57d2e32920783ef8b21078b328a2717f06d8372",
+        "changes": {
+            "src/java/org/apache/ivy/core/cache/CacheManager.java": {
+                "old": {
+                    "('org.apache.ivy.core.cache#CacheManager', 'saveResolver(ModuleDescriptor,String)')": [
+                        167
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'saveArtResolver(ModuleDescriptor,String)')": [
+                        182,
+                        184,
+                        185
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', None)": [
+                        186,
+                        187,
+                        207,
+                        208,
+                        258,
+                        259,
+                        263,
+                        264,
+                        442,
+                        443,
+                        444,
+                        451,
+                        452,
+                        453,
+                        486,
+                        487,
+                        488,
+                        605,
+                        606,
+                        607
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'saveArtifactOrigin(Artifact,ArtifactOrigin)')": [
+                        188
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'getSavedArtifactOrigin(Artifact)')": [
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'removeSavedArtifactOrigin(Artifact)')": [
+                        209
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'getSavedResolverName(ModuleDescriptor)')": [
+                        255,
+                        256,
+                        257
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'getSavedArtResolverName(ModuleDescriptor)')": [
+                        260,
+                        261,
+                        262
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'findModuleInCache(ModuleRevisionId,boolean,String)')": [
+                        277,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        291,
+                        293,
+                        294,
+                        297,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        327,
+                        328
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'download(Artifact,ArtifactResourceResolver,ResourceDownloader,CacheDownloadOptions)')": [
+                        365,
+                        366,
+                        367,
+                        369,
+                        441
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'lockArtifact(Artifact)')": [
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'unlockArtifact(Artifact)')": [
+                        454,
+                        455
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'originalToCachedModuleDescriptor(DependencyResolver,ResolvedResource,Artifact,ModuleDescriptor,ModuleDescriptorWriter)')": [
+                        465,
+                        466,
+                        474,
+                        475,
+                        485
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'cacheModuleDescriptor(DependencyResolver,ResolvedResource,Artifact,ResourceDownloader,CacheMetadataOptions)')": [
+                        498,
+                        499,
+                        503,
+                        504,
+                        505,
+                        506,
+                        507,
+                        508,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516,
+                        517,
+                        518,
+                        519,
+                        521,
+                        522,
+                        523,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        542,
+                        543,
+                        544,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569,
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        575,
+                        576,
+                        577,
+                        578,
+                        579,
+                        580,
+                        581,
+                        582,
+                        583,
+                        584,
+                        585,
+                        586,
+                        587,
+                        588,
+                        589,
+                        590,
+                        591,
+                        592,
+                        593,
+                        594,
+                        595,
+                        596,
+                        597,
+                        598,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.core.cache#CacheManager', 'saveResolver(ModuleDescriptor,String)')": [
+                        167,
+                        168
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'saveResolvers(ModuleDescriptor,String,String)')": [
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', None)": [
+                        197,
+                        198,
+                        199,
+                        204,
+                        205,
+                        210,
+                        211,
+                        226,
+                        227,
+                        248,
+                        478,
+                        509,
+                        510,
+                        511,
+                        629,
+                        630,
+                        631,
+                        632,
+                        633,
+                        645,
+                        646,
+                        647,
+                        652,
+                        653,
+                        654,
+                        659,
+                        660,
+                        663,
+                        664,
+                        665,
+                        666,
+                        667,
+                        668,
+                        669,
+                        670,
+                        671,
+                        672,
+                        673,
+                        674,
+                        675,
+                        676,
+                        677,
+                        678
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'getSavedResolverName(ModuleDescriptor)')": [
+                        200,
+                        201,
+                        203
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'getSavedArtResolverName(ModuleDescriptor)')": [
+                        206,
+                        207,
+                        208,
+                        209
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'saveArtifactOrigin(Artifact,ArtifactOrigin)')": [
+                        212,
+                        213
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'removeSavedArtifactOrigin(Artifact)')": [
+                        220,
+                        221
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'getSavedArtifactOrigin(Artifact)')": [
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'findModuleInCache(ModuleRevisionId,boolean,String)')": [
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        321,
+                        323,
+                        324,
+                        327,
+                        328,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        357,
+                        358,
+                        360,
+                        361
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'download(Artifact,ArtifactResourceResolver,ResourceDownloader,CacheDownloadOptions)')": [
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        405,
+                        477
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'originalToCachedModuleDescriptor(DependencyResolver,ResolvedResource,Artifact,ModuleDescriptor,ModuleDescriptorWriter)')": [
+                        488,
+                        489,
+                        490,
+                        498,
+                        508
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'cacheModuleDescriptor(DependencyResolver,ResolvedResource,Artifact,ResourceDownloader,CacheMetadataOptions)')": [
+                        521,
+                        522,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        544,
+                        545,
+                        546,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569,
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        575,
+                        576,
+                        577,
+                        578,
+                        579,
+                        580,
+                        581,
+                        582,
+                        583,
+                        584,
+                        585,
+                        586,
+                        587,
+                        588,
+                        589,
+                        590,
+                        591,
+                        592,
+                        593,
+                        594,
+                        595,
+                        596,
+                        597,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612,
+                        613,
+                        614,
+                        615,
+                        616,
+                        617,
+                        618,
+                        619,
+                        620,
+                        621,
+                        622,
+                        623,
+                        624,
+                        625,
+                        626,
+                        628
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'lockMetadataArtifact(ModuleRevisionId)')": [
+                        634,
+                        635,
+                        637,
+                        638,
+                        639,
+                        640,
+                        641,
+                        642,
+                        643,
+                        644
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'unlockMetadataArtifact(ModuleRevisionId)')": [
+                        648,
+                        649,
+                        650,
+                        651
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'getDefaultMetadataArtifactOrigin(ModuleRevisionId)')": [
+                        655,
+                        656,
+                        657,
+                        658
+                    ],
+                    "('org.apache.ivy.core.cache#CacheManager', 'getDefaultMetadataArtifact(ModuleRevisionId)')": [
+                        661,
+                        662
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/core/cache/RepositoryCacheManager.java": {
+                "old": {
+                    "(None, None)": [
+                        66,
+                        67,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        85,
+                        86,
+                        87,
+                        90,
+                        91,
+                        134,
+                        135
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        66,
+                        67,
+                        68,
+                        72,
+                        73,
+                        74,
+                        77,
+                        78
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/core/resolve/IvyNode.java": {
+                "old": {
+                    "('org.apache.ivy.core.resolve#IvyNode', 'loadData(String,IvyNode,String,String,boolean)')": [
+                        228,
+                        229,
+                        230
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.core.resolve#IvyNode', 'loadData(String,IvyNode,String,String,boolean)')": [
+                        228,
+                        229
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/core/settings/IvySettings.java": {
+                "old": {
+                    "('org.apache.ivy.core.settings#IvySettings', None)": [
+                        246
+                    ],
+                    "('org.apache.ivy.core.settings#IvySettings', 'debugLocking')": [
+                        1157
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.core.settings#IvySettings', None)": [
+                        246
+                    ],
+                    "('org.apache.ivy.core.settings#IvySettings', 'debugLocking')": [
+                        1157
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/plugins/lock/FileBasedLockStrategy.java": {
+                "old": {
+                    "('org.apache.ivy.plugins.lock#FileBasedLockStrategy', 'acquireLock(File)')": [
+                        64,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80
+                    ],
+                    "('org.apache.ivy.plugins.lock#FileBasedLockStrategy', 'releaseLock(File)')": [
+                        88,
+                        89,
+                        90,
+                        91
+                    ],
+                    "('org.apache.ivy.plugins.lock#FileBasedLockStrategy', None)": [
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        105,
+                        106,
+                        137,
+                        180
+                    ],
+                    "('org.apache.ivy.plugins.lock#FileBasedLockStrategy', 'hasLock(File)')": [
+                        97
+                    ],
+                    "('org.apache.ivy.plugins.lock#FileBasedLockStrategy', 'incrementLock(File)')": [
+                        102,
+                        104
+                    ],
+                    "('org.apache.ivy.plugins.lock#FileBasedLockStrategy', 'decrementLock(File)')": [
+                        107
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.plugins.lock#FileBasedLockStrategy', 'acquireLock(File)')": [
+                        64,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85
+                    ],
+                    "('org.apache.ivy.plugins.lock#FileBasedLockStrategy', 'releaseLock(File)')": [
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103
+                    ],
+                    "('org.apache.ivy.plugins.lock#FileBasedLockStrategy', None)": [
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        112,
+                        113,
+                        124,
+                        125,
+                        156,
+                        199
+                    ],
+                    "('org.apache.ivy.plugins.lock#FileBasedLockStrategy', 'debugLocking(String)')": [
+                        110,
+                        111
+                    ],
+                    "('org.apache.ivy.plugins.lock#FileBasedLockStrategy', 'hasLock(File)')": [
+                        114
+                    ],
+                    "('org.apache.ivy.plugins.lock#FileBasedLockStrategy', 'incrementLock(File)')": [
+                        119,
+                        121,
+                        122,
+                        123
+                    ],
+                    "('org.apache.ivy.plugins.lock#FileBasedLockStrategy', 'decrementLock(File)')": [
+                        126
+                    ]
+                }
+            }
+        }
+    },
+    "06151bfd4b77eefa1c8630d6db8fab207ff40ce9": {
+        "authored_data": "2007 Dec 04 20:39",
+        "commit.message": "IMPROVEMENT: Ease performance auditing (IVY-655)\n\ngit-svn-id: https://svn.apache.org/repos/asf/ant/ivy/core/trunk@601077 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Xavier Hanin",
+        "pcid": "56e3bfe5bb88a09a564e6f1d05d7544056b12d5b",
+        "changes": {
+            "src/java/org/apache/ivy/Ivy.java": {
+                "old": {
+                    "('org.apache.ivy#Ivy', 'bind')": [
+                        283
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy#Ivy', 'bind')": [
+                        283
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/core/event/download/DownloadEvent.java": {
+                "new": {
+                    "('org.apache.ivy.core.event.download#DownloadEvent', 'addArtifactAttributes(Artifact)')": [
+                        35
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/core/event/download/EndArtifactDownloadEvent.java": {
+                "old": {
+                    "('org.apache.ivy.core.event.download#EndArtifactDownloadEvent', None)": [
+                        45,
+                        46
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.core.event.download#EndArtifactDownloadEvent', None)": [
+                        41,
+                        44,
+                        47,
+                        48
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/core/event/resolve/EndResolveDependencyEvent.java": {
+                "old": {
+                    "('org.apache.ivy.core.event.resolve#EndResolveDependencyEvent', None)": [
+                        30
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.core.event.resolve#EndResolveDependencyEvent', None)": [
+                        29,
+                        30,
+                        32,
+                        35,
+                        36,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62
+                    ],
+                    "('org.apache.ivy.core.event.resolve#EndResolveDependencyEvent', 'getDuration')": [
+                        63,
+                        64
+                    ],
+                    "(None, None)": [
+                        65
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/core/event/resolve/EndResolveEvent.java": {
+                "new": {
+                    "('org.apache.ivy.core.event.resolve#EndResolveEvent', None)": [
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/core/event/resolve/ResolveDependencyEvent.java": {
+                "new": {
+                    "('org.apache.ivy.core.event.resolve#ResolveDependencyEvent', None)": [
+                        37
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/core/report/ArtifactDownloadReport.java": {
+                "old": {
+                    "('org.apache.ivy.core.report#ArtifactDownloadReport', 'toString')": [
+                        122
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.core.report#ArtifactDownloadReport', 'toString')": [
+                        122,
+                        123,
+                        125,
+                        126,
+                        127,
+                        128
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/core/report/ResolveReport.java": {
+                "old": {
+                    "('org.apache.ivy.core.report#ResolveReport', None)": [
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.core.report#ResolveReport', None)": [
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        58,
+                        59,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        258,
+                        259
+                    ],
+                    "('org.apache.ivy.core.report#ResolveReport', 'setDownloadSize(long)')": [
+                        243,
+                        244
+                    ],
+                    "('org.apache.ivy.core.report#ResolveReport', 'getDownloadSize')": [
+                        256,
+                        257
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/core/resolve/IvyNode.java": {
+                "old": {
+                    "('org.apache.ivy.core.resolve#IvyNode', 'loadData(String,IvyNode,String,String,boolean)')": [
+                        224
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.core.resolve#IvyNode', 'loadData(String,IvyNode,String,String,boolean)')": [
+                        220,
+                        225,
+                        226
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/core/resolve/ResolveEngine.java": {
+                "old": {
+                    "('org.apache.ivy.core.resolve#ResolveEngine', 'outputReport(ResolveReport,ResolutionCacheManager)')": [
+                        309
+                    ],
+                    "('org.apache.ivy.core.resolve#ResolveEngine', 'downloadArtifacts(ResolveReport,RepositoryCacheManager,boolean,Filter)')": [
+                        336
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.core.resolve#ResolveEngine', 'outputReport(ResolveReport,ResolutionCacheManager)')": [
+                        309,
+                        310
+                    ],
+                    "('org.apache.ivy.core.resolve#ResolveEngine', 'downloadArtifacts(ResolveReport,RepositoryCacheManager,boolean,Filter)')": [
+                        325,
+                        338,
+                        340,
+                        341,
+                        361
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/core/retrieve/RetrieveEngine.java": {
+                "old": {
+                    "('org.apache.ivy.core.retrieve#RetrieveEngine', None)": [
+                        57
+                    ],
+                    "('org.apache.ivy.core.retrieve#RetrieveEngine', 'retrieve(ModuleRevisionId,String,RetrieveOptions)')": [
+                        164,
+                        165
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        41,
+                        42,
+                        43
+                    ],
+                    "('org.apache.ivy.core.retrieve#RetrieveEngine', None)": [
+                        58,
+                        59,
+                        62,
+                        63,
+                        64,
+                        66
+                    ],
+                    "('org.apache.ivy.core.retrieve#RetrieveEngine', 'retrieve(ModuleRevisionId,String,RetrieveOptions)')": [
+                        91,
+                        92,
+                        93,
+                        109,
+                        138,
+                        173,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/plugins/repository/TransferEvent.java": {
+                "old": {
+                    "('org.apache.ivy.plugins.repository#TransferEvent', None)": [
+                        118,
+                        119,
+                        120,
+                        125
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setEventType(int)')": [
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235
+                    ],
+                    "(None, None)": [
+                        288
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.plugins.repository#TransferEvent', None)": [
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        132,
+                        241,
+                        242,
+                        243,
+                        297,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setRequestType(int)')": [
+                        216
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setEventType(int)')": [
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setResource(Resource)')": [
+                        252
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getRepository')": [
+                        298,
+                        299
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getElapsedTime(int,int)')": [
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'checkEventType(int)')": [
+                        349,
+                        350,
+                        351
+                    ],
+                    "(None, None)": [
+                        352,
+                        353
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/util/FileUtil.java": {
+                "old": {
+                    "('org.apache.ivy.util#FileUtil', 'readEntirely(BufferedReader)')": [
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.util#FileUtil', None)": [
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        264
+                    ],
+                    "('org.apache.ivy.util#FileUtil', 'readEntirely(BufferedReader)')": [
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223
+                    ],
+                    "('org.apache.ivy.util#FileUtil', 'readEntirely(File)')": [
+                        236,
+                        237
+                    ],
+                    "('org.apache.ivy.util#FileUtil', 'readEntirely(InputStream)')": [
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263
+                    ]
+                }
+            },
+            "test/java/org/apache/ivy/core/retrieve/RetrieveTest.java": {
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        30,
+                        31,
+                        32,
+                        33
+                    ],
+                    "('org.apache.ivy.core.retrieve#RetrieveTest', None)": [
+                        89,
+                        90
+                    ],
+                    "('org.apache.ivy.core.retrieve#RetrieveTest', 'testEvent')": [
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119
+                    ]
+                }
+            }
+        }
+    },
+    "56e3bfe5bb88a09a564e6f1d05d7544056b12d5b": {
+        "authored_data": "2007 Dec 04 12:49",
+        "commit.message": "fix test too dependenant of the test data\n\ngit-svn-id: https://svn.apache.org/repos/asf/ant/ivy/core/trunk@600914 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Scokart Gilles",
+        "pcid": "87a4b24ce48c913ff455bb3cc90225105304c8e9",
+        "changes": {
+            "test/java/org/apache/ivy/plugins/resolver/FileSystemResolverTest.java": {
+                "old": {
+                    "('org.apache.ivy.plugins.resolver#FileSystemResolverTest', 'testListing')": [
+                        791,
+                        792
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.plugins.resolver#FileSystemResolverTest', 'testListing')": [
+                        791,
+                        792,
+                        793
+                    ]
+                }
+            }
+        }
+    },
+    "87a4b24ce48c913ff455bb3cc90225105304c8e9": {
+        "authored_data": "2007 Dec 04 11:02",
+        "commit.message": "fix regression found when configuration extends private confuration and is transfered to an other version because of a conflict detected\n\ngit-svn-id: https://svn.apache.org/repos/asf/ant/ivy/core/trunk@600876 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Scokart Gilles",
+        "pcid": "36a31e5d587c5e7fc8dd3e32c671186a690e6719",
+        "changes": {
+            "src/java/org/apache/ivy/core/resolve/ResolveEngine.java": {
+                "old": {
+                    "('org.apache.ivy.core.resolve#ResolveEngine', 'doFetchDependencies(VisitNode,String)')": [
+                        670
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.core.resolve#ResolveEngine', 'doFetchDependencies(VisitNode,String)')": [
+                        670,
+                        671,
+                        672,
+                        673,
+                        674,
+                        675
+                    ]
+                }
+            },
+            "test/java/org/apache/ivy/core/resolve/ResolveTest.java": {
+                "new": {
+                    "('org.apache.ivy.core.resolve#ResolveTest', None)": [
+                        3568,
+                        3574,
+                        3575,
+                        3576
+                    ],
+                    "('org.apache.ivy.core.resolve#ResolveTest', 'testPrivateConfigurationTransferWhenConflict')": [
+                        3569,
+                        3570,
+                        3571,
+                        3572,
+                        3573
+                    ]
+                }
+            }
+        }
+    },
+    "464db0f1b43a4865e5311cb83ba1c3d0737db093": {
+        "authored_data": "2007 Dec 03 17:18",
+        "commit.message": "restore logging level for not required downloads (prior to cache management change)\n\ngit-svn-id: https://svn.apache.org/repos/asf/ant/ivy/core/trunk@600601 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Xavier Hanin",
+        "pcid": "119dac77b2930e9ca2ffd3ee8b9054e13f5f2891",
+        "changes": {
+            "src/java/org/apache/ivy/plugins/resolver/BasicResolver.java": {
+                "new": {
+                    "('org.apache.ivy.plugins.resolver#BasicResolver', 'download(Artifact,DownloadOptions)')": [
+                        627,
+                        628
+                    ]
+                }
+            }
+        }
+    },
+    "119dac77b2930e9ca2ffd3ee8b9054e13f5f2891": {
+        "authored_data": "2007 Dec 03 14:33",
+        "commit.message": "fix style\n\ngit-svn-id: https://svn.apache.org/repos/asf/ant/ivy/core/trunk@600550 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Xavier Hanin",
+        "pcid": "9086af72ada4eae2eeb6c2c0dd25282e3b340848",
+        "changes": {
+            "src/java/org/apache/ivy/plugins/repository/TransferEvent.java": {
+                "old": {
+                    "('org.apache.ivy.plugins.repository#TransferEvent', None)": [
+                        58,
+                        63,
+                        68,
+                        73,
+                        78,
+                        83,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        117,
+                        118,
+                        119,
+                        120,
+                        132,
+                        139,
+                        140,
+                        235,
+                        236,
+                        237,
+                        238
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getName(int)')": [
+                        156
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getResource')": [
+                        163
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getException')": [
+                        170
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getRequestType')": [
+                        180
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setRequestType(int)')": [
+                        203
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getEventType')": [
+                        210
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setEventType(int)')": [
+                        234
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setResource(Resource)')": [
+                        242
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getLocalFile')": [
+                        249
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setLocalFile(File)')": [
+                        257
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getLength')": [
+                        261
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setLength(long)')": [
+                        265
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getTotalLength')": [
+                        269
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setTotalLength(long)')": [
+                        273
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setException(Exception)')": [
+                        277
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'isTotalLengthSet')": [
+                        281
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setTotalLengthSet(boolean)')": [
+                        285
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.plugins.repository#TransferEvent', None)": [
+                        58,
+                        63,
+                        68,
+                        73,
+                        78,
+                        83,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        117,
+                        118,
+                        119,
+                        120,
+                        132,
+                        139,
+                        140,
+                        236,
+                        237,
+                        238,
+                        239
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getName(int)')": [
+                        155,
+                        156
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getResource')": [
+                        164
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getException')": [
+                        171
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getRequestType')": [
+                        181
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setRequestType(int)')": [
+                        204
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getEventType')": [
+                        211
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setEventType(int)')": [
+                        235
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setResource(Resource)')": [
+                        243
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getLocalFile')": [
+                        250
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setLocalFile(File)')": [
+                        258
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getLength')": [
+                        262
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setLength(long)')": [
+                        266
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'getTotalLength')": [
+                        270
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setTotalLength(long)')": [
+                        274
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setException(Exception)')": [
+                        278
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'isTotalLengthSet')": [
+                        282
+                    ],
+                    "('org.apache.ivy.plugins.repository#TransferEvent', 'setTotalLengthSet(boolean)')": [
+                        286
+                    ]
+                }
+            }
+        }
+    },
+    "9086af72ada4eae2eeb6c2c0dd25282e3b340848": {
+        "authored_data": "2007 Dec 03 13:55",
+        "commit.message": "fix style\n\ngit-svn-id: https://svn.apache.org/repos/asf/ant/ivy/core/trunk@600538 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Xavier Hanin",
+        "pcid": "29dea67ff1d747e21e40ef89c5ade5c6ff222a42",
+        "changes": {
+            "src/java/org/apache/ivy/plugins/resolver/util/ApacheHttpURLLister.java": {
+                "old": {
+                    "('org.apache.ivy.plugins.resolver.util#ApacheHttpURLLister', None)": [
+                        27
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#ApacheHttpURLLister', 'listAll(URL)')": [
+                        34
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.plugins.resolver.util#ApacheHttpURLLister', None)": [
+                        27
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#ApacheHttpURLLister', 'listAll(URL)')": [
+                        34
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/plugins/resolver/util/FileURLLister.java": {
+                "old": {
+                    "('org.apache.ivy.plugins.resolver.util#FileURLLister', None)": [
+                        28,
+                        35
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#FileURLLister', 'listAll(URL)')": [
+                        44
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.plugins.resolver.util#FileURLLister', None)": [
+                        28,
+                        35
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#FileURLLister', 'listAll(URL)')": [
+                        44
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/plugins/resolver/util/MDResolvedResource.java": {
+                "old": {
+                    "('org.apache.ivy.plugins.resolver.util#MDResolvedResource', None)": [
+                        24,
+                        28
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#MDResolvedResource', 'getResolvedModuleRevision')": [
+                        32
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.plugins.resolver.util#MDResolvedResource', None)": [
+                        24,
+                        28
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#MDResolvedResource', 'getResolvedModuleRevision')": [
+                        32
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/plugins/resolver/util/ResolvedModuleRevisionProxy.java": {
+                "old": {
+                    "('org.apache.ivy.plugins.resolver.util#ResolvedModuleRevisionProxy', None)": [
+                        33,
+                        35,
+                        44,
+                        45
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#ResolvedModuleRevisionProxy', 'getResolver')": [
+                        49
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#ResolvedModuleRevisionProxy', 'getArtifactResolver')": [
+                        53
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#ResolvedModuleRevisionProxy', 'getId')": [
+                        57
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#ResolvedModuleRevisionProxy', 'getPublicationDate')": [
+                        61
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#ResolvedModuleRevisionProxy', 'getDescriptor')": [
+                        65
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#ResolvedModuleRevisionProxy', 'isDownloaded')": [
+                        69
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#ResolvedModuleRevisionProxy', 'isSearched')": [
+                        73
+                    ]
+                },
+                "new": {
+                    "('org.apache.ivy.plugins.resolver.util#ResolvedModuleRevisionProxy', None)": [
+                        33,
+                        35,
+                        44,
+                        45
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#ResolvedModuleRevisionProxy', 'getResolver')": [
+                        49
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#ResolvedModuleRevisionProxy', 'getArtifactResolver')": [
+                        53
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#ResolvedModuleRevisionProxy', 'getId')": [
+                        57
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#ResolvedModuleRevisionProxy', 'getPublicationDate')": [
+                        61
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#ResolvedModuleRevisionProxy', 'getDescriptor')": [
+                        65
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#ResolvedModuleRevisionProxy', 'isDownloaded')": [
+                        69
+                    ],
+                    "('org.apache.ivy.plugins.resolver.util#ResolvedModuleRevisionProxy', 'isSearched')": [
+                        73
+                    ]
+                }
+            },
+            "src/java/org/apache/ivy/plugins/trigger/AbstractTrigger.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        23
+                    ]
+                }
+            }
+        }
+    }
+}
