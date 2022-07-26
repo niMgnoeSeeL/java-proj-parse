@@ -24,6 +24,18 @@ os.chdir("/Users/bohrok/Documents/replication-kit-2020-line-validation")
 pp = pprint.PrettyPrinter(indent=4)
 
 
+REPODICT = {
+    "ivy": {
+        "repo_path": "data/repos/ant-ivy",
+        "data_dir": "data/parsed/ant-ivy",
+    },
+    "math": {
+        "repo_path": "data/repos/commons-math",
+        "data_dir": "data/parsed/commons-math",
+    },
+}
+
+
 def get_parents(commit: git.Commit) -> Sequence[git.Commit]:
     return commit.parents
 
@@ -271,16 +283,17 @@ def get_change_dict(
 
 
 if __name__ == "__main__":
-    repo_path = "data/repos/ant-ivy"
+    assert len(sys.argv) == 2
+    repo_name = sys.argv[1]
+    repo_path = REPODICT[repo_name]["repo_path"]
+    data_dir = REPODICT[repo_name]["data_dir"]
     repo = git.Repo(repo_path)
     parsed_data = OrderedDict()
     size = len(list(repo.iter_commits()))
     print(f"{size} commits")
     for idx, commit in enumerate(repo.iter_commits(), 1):
         group_idx = ((idx - 1) // 10 + 1) * 10
-        if os.path.exists(
-            os.path.join("data/parsed/ant-ivy", f"{str(group_idx)}.json")
-        ):
+        if os.path.exists(os.path.join(data_dir, f"{str(group_idx)}.json")):
             print(
                 "Skip group", group_idx, f"because it already exists ({idx=})"
             )
@@ -288,7 +301,7 @@ if __name__ == "__main__":
         # flush currently parsed data
         if (idx - 1) % 10 == 0 and idx != 1:
             print(f"{idx}/{size}")
-            with open(f"data/parsed/ant-ivy/{idx - 1}.json", "w") as f:
+            with open(os.path.join(data_dir, f"{idx - 1}.json"), "w") as f:
                 json.dump(parsed_data, f, indent=4)
                 parsed_data = OrderedDict()
         parsed_commit_data = OrderedDict()
@@ -348,5 +361,6 @@ if __name__ == "__main__":
             continue
         parsed_commit_data["changes"] = change_dict
         parsed_data[commit.hexsha] = parsed_commit_data
-    with open(f"data/parsed/ant-ivy/{idx}.json", "w") as f:
-        json.dump(parsed_data, f, indent=4)
+    if len(parsed_data):
+        with open(os.path.join(data_dir, f"{idx}.json"), "w") as f:
+            json.dump(parsed_data, f, indent=4)
