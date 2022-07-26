@@ -1,0 +1,1720 @@
+{
+    "1a6879a0023a2892323221622e0d1e759613c68f": {
+        "authored_data": "2014 Feb 19 20:31",
+        "commit.message": "Make QR in GaussNewton faster and more accurate\n\nRe-factored the code in GaussNewtonOptimizer so that the decomposition\nalgorithm sees the Jacobian and residuals instead of the normal\nequation. This lets the QR algorithm operate directly on the Jacobian\nmatrix, which is faster and less sensitive to numerical errors. As a\nresult, one test case that threw a singular matrix exception now passes\nwith the QR decomposition.\n\nThe refactoring also include a speed improvement when computing the\nnormal matrix for the LU decomposition. Since the normal matrix is\nsymmetric only half of is computed, which results in a factor of 2 speed\nup in computing the normal matrix for problems with many more\nmeasurements than states.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1569905 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "499101c88c8158844e7bbdcba35b8fe91bed8314",
+        "changes": {
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/GaussNewtonOptimizer.java": {
+                "old": {
+                    "(None, None)": [
+                        24,
+                        25
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#GaussNewtonOptimizer', None)": [
+                        49,
+                        52,
+                        53,
+                        56,
+                        59,
+                        60,
+                        65,
+                        67,
+                        68,
+                        70
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#GaussNewtonOptimizer', 'optimize(LeastSquaresProblem)')": [
+                        135,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        32,
+                        254,
+                        255
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#GaussNewtonOptimizer', None)": [
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        97,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        106,
+                        107,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#GaussNewtonOptimizer', 'optimize(LeastSquaresProblem)')": [
+                        199,
+                        200,
+                        201,
+                        202,
+                        203
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#GaussNewtonOptimizer', 'computeNormalMatrix(RealMatrix,RealVector)')": [
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math3/fitting/leastsquares/GaussNewtonOptimizerWithQRTest.java": {
+                "old": {
+                    "('org.apache.commons.math3.fitting.leastsquares#GaussNewtonOptimizerWithQRTest', None)": [
+                        48,
+                        49,
+                        50,
+                        51,
+                        59,
+                        60,
+                        61
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#GaussNewtonOptimizerWithQRTest', 'testMoreEstimatedParametersSimple')": [
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58
+                    ]
+                }
+            }
+        }
+    },
+    "499101c88c8158844e7bbdcba35b8fe91bed8314": {
+        "authored_data": "2014 Feb 19 17:19",
+        "commit.message": "The sparse vector and matrix classes have been un-deprecated.\n\nThis is a reversal of a former decision, as we now think we should adopt\na generally accepted behavior which is ... to ignore the problems of\nNaNs and infinities in sparse linear algebra entities.\n\nJIRA: MATH-870 (which is therefore NOT fixed)\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1569825 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "785ea269eb22ebaa4e2fcd4542d456d3da2823bc",
+        "changes": {
+            "src/main/java/org/apache/commons/math3/linear/OpenMapRealMatrix.java": {
+                "old": {
+                    "(None, None)": [
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        39
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/linear/OpenMapRealVector.java": {
+                "old": {
+                    "(None, None)": [
+                        35,
+                        36,
+                        37,
+                        38,
+                        40
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/linear/SparseFieldMatrix.java": {
+                "old": {
+                    "(None, None)": [
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        35
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/linear/SparseFieldVector.java": {
+                "old": {
+                    "(None, None)": [
+                        38,
+                        39,
+                        40,
+                        41,
+                        43
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/linear/SparseRealMatrix.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        31
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/linear/SparseRealVector.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        29
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math3/linear/SparseFieldMatrixTest.java": {
+                "old": {
+                    "('org.apache.commons.math3.linear#SparseFieldMatrixTest', 'testOperate')": [
+                        268
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math3.linear#SparseFieldMatrixTest', 'testOperate')": [
+                        268
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math3/linear/SparseFieldVectorTest.java": {
+                "old": {
+                    "('org.apache.commons.math3.linear#SparseFieldVectorTest', 'testMapFunctions')": [
+                        58,
+                        64,
+                        69,
+                        75,
+                        80,
+                        86,
+                        91,
+                        97,
+                        102,
+                        108
+                    ],
+                    "('org.apache.commons.math3.linear#SparseFieldVectorTest', 'testBasicFunctions')": [
+                        123,
+                        128,
+                        133,
+                        137,
+                        142,
+                        146,
+                        151,
+                        155
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math3.linear#SparseFieldVectorTest', 'testMapFunctions')": [
+                        58,
+                        64,
+                        69,
+                        75,
+                        80,
+                        86,
+                        91,
+                        97,
+                        102,
+                        108
+                    ],
+                    "('org.apache.commons.math3.linear#SparseFieldVectorTest', 'testBasicFunctions')": [
+                        123,
+                        128,
+                        133,
+                        137,
+                        142,
+                        146,
+                        151,
+                        155
+                    ]
+                }
+            }
+        }
+    },
+    "785ea269eb22ebaa4e2fcd4542d456d3da2823bc": {
+        "authored_data": "2014 Feb 18 15:11",
+        "commit.message": "Javadoc.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1569380 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "b0521ef7e0d2946fe237abe67e309d88108d9e4a",
+        "changes": {
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/LeastSquaresProblem.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36
+                    ]
+                }
+            }
+        }
+    },
+    "b0521ef7e0d2946fe237abe67e309d88108d9e4a": {
+        "authored_data": "2014 Feb 18 14:33",
+        "commit.message": "Removed interfaces in the fluent API that do not add any value.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1569363 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "613a83c56a439a0c0f4a2363881653838e4b6bc2",
+        "changes": {
+            "src/main/java/org/apache/commons/math3/fitting/GaussianCurveFitter.java": {
+                "old": {
+                    "(None, None)": [
+                        35,
+                        36
+                    ],
+                    "('org.apache.commons.math3.fitting#GaussianCurveFitter', None)": [
+                        75,
+                        76,
+                        77
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math3.fitting#GaussianCurveFitter', None)": [
+                        73
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/HarmonicCurveFitter.java": {
+                "old": {
+                    "(None, None)": [
+                        30,
+                        31
+                    ],
+                    "('org.apache.commons.math3.fitting#HarmonicCurveFitter', None)": [
+                        52,
+                        53,
+                        54
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math3.fitting#HarmonicCurveFitter', None)": [
+                        50
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/PolynomialCurveFitter.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        26
+                    ],
+                    "('org.apache.commons.math3.fitting#PolynomialCurveFitter', None)": [
+                        42,
+                        43,
+                        44
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math3.fitting#PolynomialCurveFitter', None)": [
+                        40
+                    ]
+                }
+            }
+        }
+    },
+    "613a83c56a439a0c0f4a2363881653838e4b6bc2": {
+        "authored_data": "2014 Feb 18 14:33",
+        "commit.message": "Fixed checkstyle and compiler warnings.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1569362 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "b01933b17f1978c9da0a252ff6791671e01bdcae",
+        "changes": {
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/AbstractEvaluation.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        34
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/DenseWeightedEvaluation.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        27
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/GaussNewtonOptimizer.java": {
+                "old": {
+                    "('org.apache.commons.math3.fitting.leastsquares#GaussNewtonOptimizer', None)": [
+                        115
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#GaussNewtonOptimizer', 'withDecomposition(Decomposition)')": [
+                        118,
+                        119
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math3.fitting.leastsquares#GaussNewtonOptimizer', None)": [
+                        115
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#GaussNewtonOptimizer', 'withDecomposition(Decomposition)')": [
+                        118,
+                        119
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/LeastSquaresAdapter.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        27
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/LeastSquaresBuilder.java": {
+                "old": {
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', None)": [
+                        48,
+                        59,
+                        70,
+                        83,
+                        105,
+                        116,
+                        127,
+                        137,
+                        148,
+                        158
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'maxEvaluations(int)')": [
+                        51,
+                        52
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'maxIterations(int)')": [
+                        62,
+                        63
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'checker(ConvergenceChecker)')": [
+                        73,
+                        74
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'checkerPair(ConvergenceChecker)')": [
+                        86,
+                        87
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'model(MultivariateJacobianFunction)')": [
+                        108,
+                        109
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'target(RealVector)')": [
+                        119,
+                        120
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'target(double)')": [
+                        130,
+                        131
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'start(RealVector)')": [
+                        140,
+                        141
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'start(double)')": [
+                        151,
+                        152
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'weight(RealMatrix)')": [
+                        161,
+                        162
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        33
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', None)": [
+                        65,
+                        76,
+                        87,
+                        100,
+                        122,
+                        133,
+                        144,
+                        154,
+                        165,
+                        175
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'maxEvaluations(int)')": [
+                        68,
+                        69
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'maxIterations(int)')": [
+                        79,
+                        80
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'checker(ConvergenceChecker)')": [
+                        90,
+                        91
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'checkerPair(ConvergenceChecker)')": [
+                        103,
+                        104
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'model(MultivariateJacobianFunction)')": [
+                        125,
+                        126
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'target(RealVector)')": [
+                        136,
+                        137
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'target(double)')": [
+                        147,
+                        148
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'start(RealVector)')": [
+                        157,
+                        158
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'start(double)')": [
+                        168,
+                        169
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresBuilder', 'weight(RealMatrix)')": [
+                        178,
+                        179
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/LeastSquaresFactory.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        38
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/LeastSquaresOptimizer.java": {
+                "old": {
+                    "(None, None)": [
+                        2
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        23
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/LeastSquaresProblem.java": {
+                "old": {
+                    "(None, None)": [
+                        3,
+                        105,
+                        106,
+                        125
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        29,
+                        121,
+                        122,
+                        141,
+                        142
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/LevenbergMarquardtOptimizer.java": {
+                "old": {
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizer', 'withInitialStepBoundFactor(double)')": [
+                        178,
+                        184
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizer', None)": [
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizer', 'withCostRelativeTolerance(double)')": [
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizer', 'withParameterRelativeTolerance(double)')": [
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizer', 'withOrthoTolerance(double)')": [
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizer', 'withRankingThreshold(double)')": [
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizer', 'withInitialStepBoundFactor(double)')": [
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizer', None)": [
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizer', 'withCostRelativeTolerance(double)')": [
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizer', 'withParameterRelativeTolerance(double)')": [
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizer', 'withOrthoTolerance(double)')": [
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizer', 'withRankingThreshold(double)')": [
+                        237,
+                        243
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/MultivariateJacobianFunction.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        28
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/OptimizationProblem.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        30
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/OptimumImpl.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        28
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/package-info.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        27,
+                        28,
+                        29,
+                        31,
+                        32,
+                        34,
+                        35,
+                        36,
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        27,
+                        28,
+                        29,
+                        31,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37
+                    ]
+                }
+            }
+        }
+    },
+    "b01933b17f1978c9da0a252ff6791671e01bdcae": {
+        "authored_data": "2014 Feb 18 14:33",
+        "commit.message": "Expand Evaluation tests, use weighted values.\n    \nAdded more test cases to EvaluationTest to test the other methods of\nDenseWeightedEvaluation/UnweightedEvaluation.\n    \nFixed a bug in DenseWeightedEvaluation.computeValue() where the the\nweights were not applied to the return value.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1569361 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "9a012f530ea7d938e3d64ad6786b0f1c67f19df8",
+        "changes": {
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/DenseWeightedEvaluation.java": {
+                "old": {
+                    "('org.apache.commons.math3.fitting.leastsquares#DenseWeightedEvaluation', None)": [
+                        52
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#DenseWeightedEvaluation', 'computeValue')": [
+                        53,
+                        54
+                    ],
+                    "(None, None)": [
+                        55
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math3.fitting.leastsquares#DenseWeightedEvaluation', None)": [
+                        45,
+                        48,
+                        49
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#DenseWeightedEvaluation', 'computeValue')": [
+                        46,
+                        47
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/LeastSquaresProblem.java": {
+                "old": {
+                    "(None, None)": [
+                        95,
+                        97
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        95,
+                        97
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math3/fitting/leastsquares/EvaluationTest.java": {
+                "new": {
+                    "(None, None)": [
+                        16,
+                        18,
+                        20,
+                        21,
+                        23,
+                        25,
+                        26,
+                        32
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#EvaluationTest', 'testComputeResiduals')": [
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#EvaluationTest', None)": [
+                        84,
+                        85,
+                        86,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        155,
+                        156,
+                        157
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#EvaluationTest', 'testComputeCovariance')": [
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#EvaluationTest', 'testComputeValueAndJacobian')": [
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154
+                    ]
+                }
+            }
+        }
+    },
+    "9a012f530ea7d938e3d64ad6786b0f1c67f19df8": {
+        "authored_data": "2014 Feb 18 14:33",
+        "commit.message": "Qualify Evaluation in interfaces.\n    \nUse LeastSquaresProblem.Evaluation in the public interfaces for\nreadability.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1569360 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "57096ad696cc088ff94f6b7e81dac1e068df2c3c",
+        "changes": {
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/LeastSquaresOptimizer.java": {
+                "old": {
+                    "(None, None)": [
+                        3,
+                        27
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/LeastSquaresProblem.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        16
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        15
+                    ]
+                }
+            }
+        }
+    },
+    "57096ad696cc088ff94f6b7e81dac1e068df2c3c": {
+        "authored_data": "2014 Feb 18 14:33",
+        "commit.message": "JUnit directly executes least squares tests\n    \nPreviously JUnit would make the call to test a specific optimizer, and\nthen that method would call all of the individual test cases relevant to\nthat optimizer.,Now JUnit will directly call each individual test case.\n    \nThe same test coverage is preserved. The GaussNewtonOptimizerTest is\nsplit into two classes, one for each decomposition algorithm it can use.\nThere is a significant amount of duplicated code between\nGaussNewtonOptimizerWithLUTest and GaussNewtonOptimizerWithQRTest.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1569359 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "c12ae52424b3b93bb8f2ca39a3daa8392caa1348",
+        "changes": {
+            "src/test/java/org/apache/commons/math3/fitting/leastsquares/AbstractLeastSquaresOptimizerAbstractTest.java": {
+                "old": {
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', None)": [
+                        106,
+                        107,
+                        108,
+                        130,
+                        131
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'check(LeastSquaresOptimizer)')": [
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testGetIterations(LeastSquaresOptimizer)')": [
+                        132
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testTrivial(LeastSquaresOptimizer)')": [
+                        161
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testQRColumnsPermutation(LeastSquaresOptimizer)')": [
+                        174
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testNoDependency(LeastSquaresOptimizer)')": [
+                        186
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testOneSet(LeastSquaresOptimizer)')": [
+                        204
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testTwoSets(LeastSquaresOptimizer)')": [
+                        217
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testNonInvertible(LeastSquaresOptimizer)')": [
+                        234
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testIllConditioned(LeastSquaresOptimizer)')": [
+                        250
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testMoreEstimatedParametersSimple(LeastSquaresOptimizer)')": [
+                        278
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testMoreEstimatedParametersUnsorted(LeastSquaresOptimizer)')": [
+                        291
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testRedundantEquations(LeastSquaresOptimizer)')": [
+                        308
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testInconsistentEquations(LeastSquaresOptimizer)')": [
+                        322
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testInconsistentSizes1(LeastSquaresOptimizer)')": [
+                        336
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testInconsistentSizes2(LeastSquaresOptimizer)')": [
+                        359
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testCircleFitting(LeastSquaresOptimizer)')": [
+                        384
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testCircleFittingBadInit(LeastSquaresOptimizer)')": [
+                        430
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testCircleFittingGoodInit(LeastSquaresOptimizer)')": [
+                        450
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testKirby2(LeastSquaresOptimizer)')": [
+                        515
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testHahn1(LeastSquaresOptimizer)')": [
+                        519
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', None)": [
+                        107,
+                        108,
+                        109,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        148,
+                        162,
+                        175,
+                        194,
+                        208,
+                        226,
+                        243,
+                        272,
+                        286,
+                        304,
+                        319,
+                        334,
+                        358,
+                        384,
+                        431,
+                        452,
+                        518,
+                        523
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'getOptimizer')": [
+                        111
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testGetIterations')": [
+                        119
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testTrivial')": [
+                        149
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testQRColumnsPermutation')": [
+                        163
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testNoDependency')": [
+                        176
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testOneSet')": [
+                        195
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testTwoSets')": [
+                        209
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testNonInvertible')": [
+                        227
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testIllConditioned')": [
+                        244
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testMoreEstimatedParametersSimple')": [
+                        273
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testMoreEstimatedParametersUnsorted')": [
+                        287
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testRedundantEquations')": [
+                        305
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testInconsistentEquations')": [
+                        320
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testInconsistentSizes1')": [
+                        335
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testInconsistentSizes2')": [
+                        359
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testCircleFitting')": [
+                        385
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testCircleFittingBadInit')": [
+                        432
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testCircleFittingGoodInit')": [
+                        453
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testKirby2')": [
+                        519
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#AbstractLeastSquaresOptimizerAbstractTest', 'testHahn1')": [
+                        524
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math3/fitting/leastsquares/LevenbergMarquardtOptimizerTest.java": {
+                "old": {
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizerTest', 'testLevenberMarquardtOptimizer')": [
+                        68,
+                        69
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizerTest', None)": [
+                        70,
+                        71,
+                        72,
+                        78,
+                        79,
+                        80
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizerTest', 'check(LeastSquaresOptimizer)')": [
+                        73,
+                        74,
+                        75,
+                        76,
+                        77
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizerTest', 'testNonInvertible(LeastSquaresOptimizer)')": [
+                        81
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizerTest', 'testBevington(LeastSquaresOptimizer)')": [
+                        165
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizerTest', 'testCircleFitting2(LeastSquaresOptimizer)')": [
+                        236
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizerTest', None)": [
+                        67,
+                        70,
+                        71,
+                        72,
+                        158,
+                        230
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizerTest', 'getOptimizer')": [
+                        68,
+                        69
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizerTest', 'testNonInvertible')": [
+                        74
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizerTest', 'testBevington')": [
+                        159
+                    ],
+                    "('org.apache.commons.math3.fitting.leastsquares#LevenbergMarquardtOptimizerTest', 'testCircleFitting2')": [
+                        231
+                    ]
+                }
+            }
+        }
+    },
+    "c12ae52424b3b93bb8f2ca39a3daa8392caa1348": {
+        "authored_data": "2014 Feb 18 14:33",
+        "commit.message": "Fixed errors introduced by few previous API changes.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1569358 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "46b2ce2ee046ec3c35919ce72ce67262dfc37c5b",
+        "changes": {
+            "src/main/java/org/apache/commons/math3/fitting/AbstractCurveFitter.java": {
+                "old": {
+                    "('org.apache.commons.math3.fitting#AbstractCurveFitter', 'fit(Collection)')": [
+                        64
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math3.fitting#AbstractCurveFitter', 'fit(Collection)')": [
+                        64
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/GaussianCurveFitter.java": {
+                "old": {
+                    "('org.apache.commons.math3.fitting#GaussianCurveFitter', 'getProblem(Collection)')": [
+                        181,
+                        182
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math3.fitting#GaussianCurveFitter', 'getProblem(Collection)')": [
+                        181
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/HarmonicCurveFitter.java": {
+                "old": {
+                    "('org.apache.commons.math3.fitting#HarmonicCurveFitter', 'getProblem(Collection)')": [
+                        134,
+                        135
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math3.fitting#HarmonicCurveFitter', 'getProblem(Collection)')": [
+                        134
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/PolynomialCurveFitter.java": {
+                "old": {
+                    "('org.apache.commons.math3.fitting#PolynomialCurveFitter', 'getProblem(Collection)')": [
+                        123,
+                        124
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math3.fitting#PolynomialCurveFitter', 'getProblem(Collection)')": [
+                        123
+                    ]
+                }
+            }
+        }
+    },
+    "46b2ce2ee046ec3c35919ce72ce67262dfc37c5b": {
+        "authored_data": "2014 Feb 18 14:33",
+        "commit.message": "Fix Javadoc and checkstyle errors.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1569357 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "8916830e8a2d551b87ed64559246621d439a8694",
+        "changes": {
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/GaussNewtonOptimizer.java": {
+                "new": {
+                    "('org.apache.commons.math3.fitting.leastsquares#GaussNewtonOptimizer', None)": [
+                        122
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/LeastSquaresProblemImpl.java": {
+                "old": {
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresProblemImpl', None)": [
+                        105
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math3.fitting.leastsquares#LeastSquaresProblemImpl', None)": [
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        66,
+                        71,
+                        76,
+                        81,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        127,
+                        132,
+                        137,
+                        142
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/fitting/leastsquares/OptimizationProblem.java": {
+                "old": {
+                    "(None, None)": [
+                        6,
+                        9,
+                        10,
+                        17,
+                        18
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        17,
+                        18,
+                        25,
+                        26
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math3/optim/AbstractOptimizationProblem.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27,
+                        29,
+                        30,
+                        31,
+                        32
+                    ],
+                    "('org.apache.commons.math3.optim#AbstractOptimizationProblem', None)": [
+                        44,
+                        46,
+                        49,
+                        50,
+                        53,
+                        54,
+                        80,
+                        81,
+                        95
+                    ],
+                    "('org.apache.commons.math3.optim#AbstractOptimizationProblem', 'getEvaluationCounter')": [
+                        47,
+                        48
+                    ],
+                    "('org.apache.commons.math3.optim#AbstractOptimizationProblem', 'getIterationCounter')": [
+                        51,
+                        52
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27,
+                        29
+                    ],
+                    "('org.apache.commons.math3.optim#AbstractOptimizationProblem', None)": [
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        46,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        63,
+                        66,
+                        67,
+                        68,
+                        71,
+                        72,
+                        73
+                    ],
+                    "('org.apache.commons.math3.optim#AbstractOptimizationProblem', 'getEvaluationCounter')": [
+                        64,
+                        65
+                    ],
+                    "('org.apache.commons.math3.optim#AbstractOptimizationProblem', 'getIterationCounter')": [
+                        69,
+                        70
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -203,7 +203,7 @@ def get_final_line(node: javalang.tree.Node) -> int:
 
 
 def build_position_dict(tree: javalang.tree.CompilationUnit) -> Dict:
-    package_name = tree.package.name
+    package_name = None if tree.package is None else tree.package.name
     ret = {"package": package_name, "classes": []}
     for path, node in tree.filter(javalang.tree.ClassDeclaration):
         classDeclNode: javalang.tree.ClassDeclaration = node

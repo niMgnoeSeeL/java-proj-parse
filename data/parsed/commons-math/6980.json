@@ -1,0 +1,515 @@
+{
+    "8216dd89b5260aacaf509147b77367ed5006334f": {
+        "authored_data": "2003 May 22 15:31",
+        "commit.message": "RandomDataTest.testNextGaussian() was using Univarite.getN().  Added\nan explicit cast from int to double.  Test now succeeds.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/math/trunk@140854 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Tim O'Brien",
+        "pcid": "ca304541d80a5042d55ece0efde6fc9c1206e81f",
+        "changes": {
+            "src/test/org/apache/commons/math/RandomDataTest.java": {
+                "old": {
+                    "(None, None)": [
+                        66
+                    ],
+                    "('org.apache.commons.math#RandomDataTest', 'testNextGaussian')": [
+                        409
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        66
+                    ],
+                    "('org.apache.commons.math#RandomDataTest', 'testNextGaussian')": [
+                        409
+                    ]
+                }
+            }
+        }
+    },
+    "ca304541d80a5042d55ece0efde6fc9c1206e81f": {
+        "authored_data": "2003 May 22 15:19",
+        "commit.message": "The EmpiricalDistributionImpl that submitted yesterday assumed the \"old\"\nUnivariate interface, in which getN() returned a double.  The attached patch\ninserts the necessary casts to avoid the rounding/truncation errors that were\ncausing the EmpiricalDistribution and ValueServer unit tests to fail.\n\nThe patch also adds a RandomData member variable so that getNext() does not\ninstantiate a new RandomData instance for each activation\n\nPR: Bugzilla #20149\nObtained from: Issue Patch\nSubmitted by: Phil Steitz\nReviewed by: Tim O'Brien\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/math/trunk@140853 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Tim O'Brien",
+        "pcid": "1376d960b5eb1e7ff68555e4f45a47cc5dd6ecaa",
+        "changes": {
+            "src/java/org/apache/commons/math/EmpiricalDistributionImpl.java": {
+                "old": {
+                    "(None, None)": [
+                        90
+                    ],
+                    "('org.apache.commons.math#EmpiricalDistributionImpl', 'load(File)')": [
+                        203,
+                        206
+                    ],
+                    "('org.apache.commons.math#EmpiricalDistributionImpl', 'getNextValue')": [
+                        224,
+                        228,
+                        230
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        90
+                    ],
+                    "('org.apache.commons.math#EmpiricalDistributionImpl', None)": [
+                        109,
+                        110,
+                        111
+                    ],
+                    "('org.apache.commons.math#EmpiricalDistributionImpl', 'load(File)')": [
+                        206,
+                        207,
+                        210,
+                        211
+                    ],
+                    "('org.apache.commons.math#EmpiricalDistributionImpl', 'getNextValue')": [
+                        232,
+                        234
+                    ]
+                }
+            }
+        }
+    },
+    "8ed6e84dc6b37360ef716422077d788b865eda48": {
+        "authored_data": "2003 May 21 17:59",
+        "commit.message": "Added Product and Mean to Univariate and all implementations, this patch\ncontains contributions from Mark Diggory.\n\n* This patch introduces Product and GeometricMean into the Univariate\nimplementation.\n\n* Discarding the contribution of a discarded element in a rolling\nUnivariateImpl requires that the product be calculated explicitly each\ntime a value is discarded.  This is necessary because not all values will\nhave non-zero values.\n\n* Errors in rolling logic for ListUimpl, and UnivariateImpl were corrected,\nand more test cases were added to the JUnit tests for the Univariate\nimplementations.  More rigorous test cases are needed for the entire\nsuite of Univariate implementations\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/math/trunk@140851 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Tim O'Brien",
+        "pcid": "a3e8ae46e059cfc5ae4d94562f102df8e543462a",
+        "changes": {
+            "src/java/org/apache/commons/math/AbstractStoreUnivariate.java": {
+                "new": {
+                    "(None, None)": [
+                        60
+                    ],
+                    "('org.apache.commons.math#AbstractStoreUnivariate', None)": [
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        184,
+                        185
+                    ],
+                    "('org.apache.commons.math#AbstractStoreUnivariate', 'getGeometricMean')": [
+                        166,
+                        167,
+                        168
+                    ],
+                    "('org.apache.commons.math#AbstractStoreUnivariate', 'getProduct')": [
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/math/ListUnivariateImpl.java": {
+                "old": {
+                    "('org.apache.commons.math#ListUnivariateImpl', 'getElement(int)')": [
+                        116,
+                        117
+                    ],
+                    "('org.apache.commons.math#ListUnivariateImpl', 'getN')": [
+                        129,
+                        130
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math#ListUnivariateImpl', 'getElement(int)')": [
+                        116,
+                        117,
+                        118,
+                        119,
+                        125
+                    ],
+                    "('org.apache.commons.math#ListUnivariateImpl', 'getN')": [
+                        132,
+                        133
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/math/StoreUnivariateImpl.java": {
+                "old": {
+                    "('org.apache.commons.math#StoreUnivariateImpl', 'getN')": [
+                        94
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math#StoreUnivariateImpl', 'getN')": [
+                        94
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/math/Univariate.java": {
+                "old": {
+                    "(None, None)": [
+                        64,
+                        106
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        64,
+                        65,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        119
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/math/UnivariateImpl.java": {
+                "old": {
+                    "(None, None)": [
+                        67
+                    ],
+                    "('org.apache.commons.math#UnivariateImpl', None)": [
+                        87
+                    ],
+                    "('org.apache.commons.math#UnivariateImpl', 'getMean')": [
+                        121
+                    ],
+                    "('org.apache.commons.math#UnivariateImpl', 'getVariance')": [
+                        136
+                    ],
+                    "('org.apache.commons.math#UnivariateImpl', 'insertValue(double)')": [
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170
+                    ],
+                    "('org.apache.commons.math#UnivariateImpl', 'getN')": [
+                        223
+                    ],
+                    "('org.apache.commons.math#UnivariateImpl', 'clear')": [
+                        262
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        67,
+                        68,
+                        69
+                    ],
+                    "('org.apache.commons.math#UnivariateImpl', None)": [
+                        89,
+                        96,
+                        97,
+                        98,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140
+                    ],
+                    "('org.apache.commons.math#UnivariateImpl', 'getMean')": [
+                        126
+                    ],
+                    "('org.apache.commons.math#UnivariateImpl', 'getGeometricMean')": [
+                        133,
+                        134
+                    ],
+                    "('org.apache.commons.math#UnivariateImpl', 'getProduct')": [
+                        141,
+                        142
+                    ],
+                    "('org.apache.commons.math#UnivariateImpl', 'getVariance')": [
+                        157
+                    ],
+                    "('org.apache.commons.math#UnivariateImpl', 'insertValue(double)')": [
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        192,
+                        196,
+                        197,
+                        198,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        227,
+                        238
+                    ],
+                    "('org.apache.commons.math#UnivariateImpl', 'getN')": [
+                        266
+                    ],
+                    "('org.apache.commons.math#UnivariateImpl', 'clear')": [
+                        305
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ListUnivariateImplTest.java": {
+                "old": {
+                    "(None, None)": [
+                        67
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        67,
+                        176,
+                        177,
+                        178,
+                        179
+                    ],
+                    "('org.apache.commons.math#ListUnivariateImplTest', None)": [
+                        154
+                    ],
+                    "('org.apache.commons.math#ListUnivariateImplTest', 'testProductAndGeometricMean')": [
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/StoreUnivariateImplTest.java": {
+                "old": {
+                    "(None, None)": [
+                        64
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        64,
+                        167,
+                        168,
+                        169,
+                        170
+                    ],
+                    "('org.apache.commons.math#StoreUnivariateImplTest', None)": [
+                        145
+                    ],
+                    "('org.apache.commons.math#StoreUnivariateImplTest', 'testProductAndGeometricMean')": [
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/UnivariateImplTest.java": {
+                "old": {
+                    "(None, None)": [
+                        64
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        64,
+                        149,
+                        150,
+                        151,
+                        152
+                    ],
+                    "('org.apache.commons.math#UnivariateImplTest', None)": [
+                        128
+                    ],
+                    "('org.apache.commons.math#UnivariateImplTest', 'testProductAndGeometricMean')": [
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ValueServerTest.java": {
+                "old": {
+                    "(None, None)": [
+                        66
+                    ],
+                    "('org.apache.commons.math#ValueServerTest', 'testNextDigest')": [
+                        108,
+                        110
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        66
+                    ],
+                    "('org.apache.commons.math#ValueServerTest', 'testNextDigest')": [
+                        108,
+                        110
+                    ]
+                }
+            }
+        }
+    },
+    "a99cbac0bb10a8761c337a9bab38541254472782": {
+        "authored_data": "2003 May 21 06:46",
+        "commit.message": "Updated class javadoc for ContractableDoubleArray\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/math/trunk@140847 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Tim O'Brien",
+        "pcid": "246d50aa44f8679390023f4a5552de9836eb4f1d",
+        "changes": {
+            "src/java/org/apache/commons/math/ContractableDoubleArray.java": {
+                "old": {
+                    "(None, None)": [
+                        59
+                    ],
+                    "('org.apache.commons.math#ContractableDoubleArray', None)": [
+                        153,
+                        193
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89
+                    ],
+                    "('org.apache.commons.math#ContractableDoubleArray', None)": [
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244
+                    ]
+                }
+            }
+        }
+    }
+}
