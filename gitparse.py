@@ -33,6 +33,10 @@ REPODICT = {
         "repo_path": "data/repos/commons-math",
         "data_dir": "data/parsed/commons-math",
     },
+    "opennlp": {
+        "repo_path": "data/repos/opennlp",
+        "data_dir": "data/parsed/opennlp",
+    }
 }
 
 

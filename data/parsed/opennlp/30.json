@@ -1,0 +1,418 @@
+{
+    "182bef7351e4b577fed6107143668a4bb90bc3a6": {
+        "authored_data": "2022 Jan 20 14:13",
+        "commit.message": "OPENNLP-1353: Fixing checkstyle issues. (#403)\n\n",
+        "commit.author.name": "Jeff Zemerick",
+        "pcid": "dd8fcfdd184a3b7397f7c2614294bf303f490f87",
+        "changes": {
+            "opennlp-tools/src/main/java/opennlp/tools/lemmatizer/DictionaryLemmatizer.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        24
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33
+                    ]
+                }
+            }
+        }
+    },
+    "dd8fcfdd184a3b7397f7c2614294bf303f490f87": {
+        "authored_data": "2022 Jan 19 13:40",
+        "commit.message": "OPENNLP-1353: include charset in dictionary lemmatizer (#402)\n\ninclude charset in dictionary lemmatizer",
+        "commit.author.name": "Robert Wenig",
+        "pcid": "63a9cc181881ff7a5f772d9852a9cb2bab8981e7",
+        "changes": {
+            "opennlp-tools/src/main/java/opennlp/tools/lemmatizer/DictionaryLemmatizer.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31
+                    ],
+                    "('opennlp.tools.lemmatizer#DictionaryLemmatizer', None)": [
+                        52,
+                        53,
+                        56,
+                        61
+                    ],
+                    "('opennlp.tools.lemmatizer#DictionaryLemmatizer', 'init(InputStream)')": [
+                        69,
+                        71
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        24
+                    ],
+                    "('opennlp.tools.lemmatizer#DictionaryLemmatizer', None)": [
+                        45,
+                        46,
+                        48,
+                        49,
+                        50,
+                        51,
+                        53,
+                        57,
+                        58,
+                        59,
+                        60,
+                        62
+                    ],
+                    "('opennlp.tools.lemmatizer#DictionaryLemmatizer', 'init(InputStream,Charset)')": [
+                        70,
+                        72
+                    ]
+                }
+            }
+        }
+    },
+    "cb0f3e6c92dbce0f5307a3fbedf6f87fab0d2307": {
+        "authored_data": "2022 Jan 07 09:16",
+        "commit.message": "OPENNLP-1350: Improve normaliser MAIL_REGEX (#399)\n\nThe `MAIL_REGEX` in `UrlCharSSequenceNormalizer` causes `replaceAll(...)` to become extremely costly when given an input string with a long sequence of characters from the first character set in the regex, but which ultimately fails to match the whole regex. This pull request fixes that, and also another detail:\r\n\r\nAllow + in the local part, and disallow _ in the domain part. There are other characters that are allowed in the local part as well, but these are less common (https://en.wikipedia.org/wiki/Email_address).\r\n\r\nThe speedup for unfortunate input is achieved by adding a negative lookbehind with a single characters from the first character set.\r\nCurrently, the replaceAll(\" \") on a string of ~100K characters from the set [-_.0-9A-Za-z] runs in ~1minute on modern hardware; adding a negative lookbehind with one of the characters from that set reduces this to a few milliseconds, and is functionally equivalent. (Consider the current pattern and a match from position i to k. If the character at i-1 is in the character set, there would also be a match from i-1 to k, which would already be replaced.)",
+        "commit.author.name": "Jon Marius Venstad",
+        "pcid": "4c550355125209aecb57116db77cdc35e753b797",
+        "changes": {
+            "opennlp-tools/src/main/java/opennlp/tools/util/normalizer/UrlCharSequenceNormalizer.java": {
+                "old": {
+                    "('opennlp.tools.util.normalizer#UrlCharSequenceNormalizer', None)": [
+                        29
+                    ]
+                },
+                "new": {
+                    "('opennlp.tools.util.normalizer#UrlCharSequenceNormalizer', None)": [
+                        29
+                    ]
+                }
+            },
+            "opennlp-tools/src/test/java/opennlp/tools/util/normalizer/UrlCharSequenceNormalizerTest.java": {
+                "new": {
+                    "('opennlp.tools.util.normalizer#UrlCharSequenceNormalizerTest', 'normalizeEmail')": [
+                        46,
+                        47,
+                        48,
+                        49
+                    ]
+                }
+            }
+        }
+    },
+    "4c550355125209aecb57116db77cdc35e753b797": {
+        "authored_data": "2021 Dec 16 21:58",
+        "commit.message": "OPENNLP-1343: Full CoNLL-U Format support (#397)\n\nCo-authored-by: Jeroen Steggink <978411+jsteggink@users.noreply.github.com>",
+        "commit.author.name": "Jeroen Steggink",
+        "pcid": "c88f57814c0af0dccf471b895a35981ecdac2e7a",
+        "changes": {
+            "opennlp-tools/src/main/java/opennlp/tools/formats/conllu/ConlluSentence.java": {
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        92
+                    ],
+                    "('opennlp.tools.formats.conllu#ConlluSentence', None)": [
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        69,
+                        72,
+                        73,
+                        76,
+                        77,
+                        80,
+                        81,
+                        84,
+                        85,
+                        88,
+                        89
+                    ],
+                    "('opennlp.tools.formats.conllu#ConlluSentence', 'isNewDocument')": [
+                        70,
+                        71
+                    ],
+                    "('opennlp.tools.formats.conllu#ConlluSentence', 'getDocumentId')": [
+                        74,
+                        75
+                    ],
+                    "('opennlp.tools.formats.conllu#ConlluSentence', 'isNewParagraph')": [
+                        78,
+                        79
+                    ],
+                    "('opennlp.tools.formats.conllu#ConlluSentence', 'getParagraphId')": [
+                        82,
+                        83
+                    ],
+                    "('opennlp.tools.formats.conllu#ConlluSentence', 'getTextLang')": [
+                        86,
+                        87
+                    ],
+                    "('opennlp.tools.formats.conllu#ConlluSentence', 'getTranslit')": [
+                        90,
+                        91
+                    ]
+                }
+            },
+            "opennlp-tools/src/main/java/opennlp/tools/formats/conllu/ConlluStream.java": {
+                "old": {
+                    "('opennlp.tools.formats.conllu#ConlluStream', 'read')": [
+                        90
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        30,
+                        31,
+                        32,
+                        36
+                    ],
+                    "('opennlp.tools.formats.conllu#ConlluStream', 'read')": [
+                        61,
+                        62,
+                        63,
+                        64,
+                        67,
+                        68,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        98,
+                        99,
+                        100,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        129,
+                        130
+                    ],
+                    "('opennlp.tools.formats.conllu#ConlluStream', 'addTextLang(String,String,Map)')": [
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238
+                    ],
+                    "('opennlp.tools.formats.conllu#ConlluStream', None)": [
+                        239,
+                        240
+                    ]
+                }
+            },
+            "opennlp-tools/src/test/java/opennlp/tools/formats/conllu/ConlluStreamTest.java": {
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        115,
+                        116
+                    ],
+                    "('opennlp.tools.formats.conllu#ConlluStreamTest', None)": [
+                        61,
+                        62
+                    ],
+                    "('opennlp.tools.formats.conllu#ConlluStreamTest', 'testOptionalComments')": [
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114
+                    ]
+                }
+            }
+        }
+    },
+    "6b129aadedef5b65e0f2b5b4defa93bbfcd8da71": {
+        "authored_data": "2021 Oct 08 22:13",
+        "commit.message": "OPENNLP-1338: Refactor DummyNameFinder to improve test logic (#396)\n\n",
+        "commit.author.name": "wx930910",
+        "pcid": "e0befb58d95e7d5777acd03fef8822cc0de21dfa",
+        "changes": {
+            "opennlp-tools/src/test/java/opennlp/tools/namefind/TokenNameFinderEvaluatorTest.java": {
+                "old": {
+                    "('opennlp.tools.namefind#TokenNameFinderEvaluatorTest', 'testPositive')": [
+                        41,
+                        42
+                    ],
+                    "('opennlp.tools.namefind#TokenNameFinderEvaluatorTest', 'testNegative')": [
+                        57,
+                        58
+                    ],
+                    "('opennlp.tools.namefind#TokenNameFinderEvaluatorTest', None)": [
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107
+                    ],
+                    "(None, None)": [
+                        108,
+                        109,
+                        110,
+                        111
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        30,
+                        31,
+                        32
+                    ],
+                    "('opennlp.tools.namefind#TokenNameFinderEvaluatorTest', None)": [
+                        38,
+                        39,
+                        44
+                    ],
+                    "('opennlp.tools.namefind#TokenNameFinderEvaluatorTest', 'mockTokenNameFinder(Span)')": [
+                        40,
+                        41,
+                        42,
+                        43
+                    ],
+                    "('opennlp.tools.namefind#TokenNameFinderEvaluatorTest', 'testPositive')": [
+                        52,
+                        53
+                    ],
+                    "('opennlp.tools.namefind#TokenNameFinderEvaluatorTest', 'testNegative')": [
+                        68,
+                        69
+                    ]
+                }
+            }
+        }
+    }
+}
