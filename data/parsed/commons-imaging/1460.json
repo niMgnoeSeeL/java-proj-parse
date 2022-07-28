@@ -1,0 +1,1146 @@
+{
+    "1b67db5ee3109f6556cce34abd0d8ac2825639bb": {
+        "authored_data": "2011 Nov 28 05:46",
+        "commit.message": "EXIF tag matching fixes.\n\nSearch all tags instead of just EXIF tags\nwhen parsing TIFF metadata tags, and\nsimplify the directory type search.\n\nChange TiffImageMetadata's findField() to\nwork like TiffField's getTag(). This means\nit tries to do a directory match as well\nas a tag match. Also an inexact directory\nmatch is not even tried unless that tag\nis unique among all our tags.\n\nTest with other tools (Phatch, exiftool,\nexif, Irfanview, PhotoME) shows\nthat this parsing is now consistent with them:\nall of them also either ignore tags in\nambiguous directories, fail to parse them,\nor interpret them potentially incorrectly.\n\nJira issue key: SANSELAN-21\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1206983 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "72c06ef3bd85d780bb20988545d908841db61ba8",
+        "changes": {
+            "src/main/java/org/apache/sanselan/formats/jpeg/JpegImageMetadata.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.jpeg#JpegImageMetadata', 'findEXIFValue(TagInfo)')": [
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64
+                    ],
+                    "('org.apache.sanselan.formats.jpeg#JpegImageMetadata', 'findEXIFValueWithExactMatch(TagInfo)')": [
+                        68
+                    ],
+                    "('org.apache.sanselan.formats.jpeg#JpegImageMetadata', None)": [
+                        69,
+                        70
+                    ],
+                    "('org.apache.sanselan.formats.jpeg#JpegImageMetadata', 'findEXIFValue(TagInfo,boolean)')": [
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.jpeg#JpegImageMetadata', 'findEXIFValue(TagInfo)')": [
+                        56,
+                        57,
+                        58,
+                        59
+                    ],
+                    "('org.apache.sanselan.formats.jpeg#JpegImageMetadata', None)": [
+                        60,
+                        68
+                    ],
+                    "('org.apache.sanselan.formats.jpeg#JpegImageMetadata', 'findEXIFValueWithExactMatch(TagInfo)')": [
+                        64,
+                        65,
+                        66,
+                        67
+                    ]
+                }
+            },
+            "src/main/java/org/apache/sanselan/formats/tiff/TiffField.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.tiff#TiffField', 'getTag(int,int,List)')": [
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160
+                    ],
+                    "('org.apache.sanselan.formats.tiff#TiffField', 'getTag(int,int)')": [
+                        274
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.tiff#TiffField', 'getTag(int,int,List)')": [
+                        123,
+                        124,
+                        140
+                    ],
+                    "('org.apache.sanselan.formats.tiff#TiffField', 'getTag(int,int)')": [
+                        254
+                    ]
+                }
+            },
+            "src/main/java/org/apache/sanselan/formats/tiff/TiffImageMetadata.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.tiff#TiffImageMetadata', 'findField(TagInfo)')": [
+                        238,
+                        239,
+                        240
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        24,
+                        30
+                    ],
+                    "('org.apache.sanselan.formats.tiff#TiffImageMetadata', None)": [
+                        44,
+                        49,
+                        50,
+                        257,
+                        258
+                    ],
+                    "('org.apache.sanselan.formats.tiff#TiffImageMetadata', 'countTags(TagInfo)')": [
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67
+                    ],
+                    "('org.apache.sanselan.formats.tiff#TiffImageMetadata', 'findField(TagInfo)')": [
+                        256
+                    ],
+                    "('org.apache.sanselan.formats.tiff#TiffImageMetadata', 'findField(TagInfo,boolean)')": [
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308
+                    ]
+                }
+            }
+        }
+    },
+    "72c06ef3bd85d780bb20988545d908841db61ba8": {
+        "authored_data": "2011 Nov 26 09:19",
+        "commit.message": "When reading TIFF files (and EXIF sections in JPEG)\nthat have invalid offsets and/or lengths\nfor their IFD fields, ignore these\nbad IFDs when we are not in strict mode.\n\nThis seems to be how other tools handle\nthis problem; we used to throw IOException\nor OutOfMemoryError, and fail to parse the\nfile with no possibility of recovery.\n\nJira issue key: SANSELAN-55\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1206412 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "ffe7cbb0117ccc74e5826b208a73ee1fcb9033e8",
+        "changes": {
+            "src/main/java/org/apache/sanselan/formats/tiff/TiffField.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.tiff#TiffField', 'getFieldType(int)')": [
+                        108
+                    ],
+                    "('org.apache.sanselan.formats.tiff#TiffField', 'getValueLengthInBytes')": [
+                        285
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.tiff#TiffField', 'getFieldType(int)')": [
+                        108
+                    ],
+                    "('org.apache.sanselan.formats.tiff#TiffField', 'getValueLengthInBytes')": [
+                        285
+                    ]
+                }
+            },
+            "src/main/java/org/apache/sanselan/formats/tiff/TiffReader.java": {
+                "new": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.sanselan.formats.tiff#TiffReader', 'readDirectory(ByteSource,int,int,FormatCompliance,Listener,boolean,List)')": [
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200
+                    ]
+                }
+            }
+        }
+    },
+    "ffe7cbb0117ccc74e5826b208a73ee1fcb9033e8": {
+        "authored_data": "2011 Oct 15 05:38",
+        "commit.message": "\"Tiff (exif) tags of type double written in wrong byte order\" patch from Gary Lucas,\nwith my tests and fix to convertByteArrayToDouble().\n\nJira issue key: SANSELAN-54\nSubmitted by: Gary Lucas <gwlucas at sonalysts dot com>\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1183584 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "4d584387b40fd1ace4dd772c9cf8c2166c4baea8",
+        "changes": {
+            "src/main/java/org/apache/sanselan/common/BinaryFileFunctions.java": {
+                "old": {
+                    "('org.apache.sanselan.common#BinaryFileFunctions', 'convertFloatToByteArray(float,int)')": [
+                        860,
+                        865
+                    ],
+                    "('org.apache.sanselan.common#BinaryFileFunctions', 'convertFloatArrayToByteArray(float,int)')": [
+                        885,
+                        893
+                    ],
+                    "('org.apache.sanselan.common#BinaryFileFunctions', 'convertDoubleToByteArray(double,int)')": [
+                        912,
+                        917
+                    ],
+                    "('org.apache.sanselan.common#BinaryFileFunctions', 'convertDoubleArrayToByteArray(double,int)')": [
+                        945,
+                        953
+                    ],
+                    "('org.apache.sanselan.common#BinaryFileFunctions', 'convertByteArrayToDouble(String,byte,int,int)')": [
+                        987,
+                        988,
+                        1002,
+                        1003,
+                        1004,
+                        1005,
+                        1010,
+                        1011,
+                        1012,
+                        1013
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.common#BinaryFileFunctions', 'convertFloatToByteArray(float,int)')": [
+                        864
+                    ],
+                    "('org.apache.sanselan.common#BinaryFileFunctions', 'convertFloatArrayToByteArray(float,int)')": [
+                        891
+                    ],
+                    "('org.apache.sanselan.common#BinaryFileFunctions', 'convertDoubleToByteArray(double,int)')": [
+                        914
+                    ],
+                    "('org.apache.sanselan.common#BinaryFileFunctions', 'convertDoubleArrayToByteArray(double,int)')": [
+                        949
+                    ],
+                    "('org.apache.sanselan.common#BinaryFileFunctions', 'convertByteArrayToDouble(String,byte,int,int)')": [
+                        996,
+                        997,
+                        998,
+                        999,
+                        1004,
+                        1005,
+                        1006,
+                        1007
+                    ]
+                }
+            }
+        }
+    },
+    "4d584387b40fd1ace4dd772c9cf8c2166c4baea8": {
+        "authored_data": "2011 Jul 16 09:11",
+        "commit.message": "Make JPEG parsing a lot more resilient:\nskip all bytes between the end of a segment\nand the next 0xFF followed by non-0xFF.\nAdd a thorough test for this.\n\nFixes one of the problems with SANSELAN-13.\n\nJIRA-Key: SANSELAN-13\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1147386 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "d3b7517b2a28f5b1affdc753ea482621f9da641f",
+        "changes": {
+            "src/main/java/org/apache/sanselan/formats/jpeg/JpegUtils.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.jpeg#JpegUtils', 'traverseJFIF(ByteSource,Visitor)')": [
+                        68,
+                        69,
+                        70,
+                        71
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.jpeg#JpegUtils', 'traverseJFIF(ByteSource,Visitor)')": [
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73
+                    ]
+                }
+            }
+        }
+    },
+    "d3b7517b2a28f5b1affdc753ea482621f9da641f": {
+        "authored_data": "2011 Jun 23 19:34",
+        "commit.message": "\"Transparency detection on PNG\" patch from Clement Escoffier,\nand my test for it.\n\nJira issue key: SANSELAN-52\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1139045 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "9231e5dfe3857155e6615cdc2d3823ed66a729e8",
+        "changes": {
+            "src/main/java/org/apache/sanselan/formats/png/PngImageParser.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.png#PngImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        550,
+                        551
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.png#PngImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        550,
+                        551,
+                        552,
+                        553,
+                        554
+                    ]
+                }
+            },
+            "src/test/java/org/apache/sanselan/formats/png/PngWriteReadTest.java": {
+                "new": {
+                    "('org.apache.sanselan.formats.png#PngWriteReadTest', 'testTransparency')": [
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108
+                    ],
+                    "('org.apache.sanselan.formats.png#PngWriteReadTest', None)": [
+                        109,
+                        110
+                    ]
+                }
+            }
+        }
+    },
+    "9231e5dfe3857155e6615cdc2d3823ed66a729e8": {
+        "authored_data": "2011 Jun 21 20:05",
+        "commit.message": "Fix use of the alpha channel for 32 bit BI_RGB compressed ICO files.\nTest this.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1138156 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "142a4f4053d1d4a71ce2e02de78987d23c45f118",
+        "changes": {
+            "src/main/java/org/apache/sanselan/formats/ico/IcoImageParser.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.ico#IcoImageParser', 'readBitmapIconData(byte,IconInfo)')": [
+                        354,
+                        356,
+                        357,
+                        358,
+                        368,
+                        379,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        438,
+                        439
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.ico#IcoImageParser', 'readBitmapIconData(byte,IconInfo)')": [
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        376,
+                        378,
+                        379,
+                        380,
+                        390,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468
+                    ]
+                }
+            },
+            "src/test/java/org/apache/sanselan/formats/ico/IcoRoundtripTest.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.ico#IcoRoundtripTest', None)": [
+                        512,
+                        513,
+                        514,
+                        515,
+                        516,
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.ico#IcoRoundtripTest', 'testAlphaVersusANDMask')": [
+                        512,
+                        513,
+                        514,
+                        515,
+                        516,
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526
+                    ],
+                    "('org.apache.sanselan.formats.ico#IcoRoundtripTest', None)": [
+                        527
+                    ]
+                }
+            }
+        }
+    },
+    "142a4f4053d1d4a71ce2e02de78987d23c45f118": {
+        "authored_data": "2011 Jun 21 18:51",
+        "commit.message": "Parse the BMP version 2, 3, 4 and 5 headers.\nDecouple reading BI_BITFIELDS masks from reading the palette,\nand add a comment explaining why the palette can be present\neven for images that don't need it. In the case of\nversion >= 3 BMP files with BI_BITFIELDS compression,\npopulate the alpha channel, and add a test case for this.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1138134 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "c659a6007b258f3e2afc57cf2b4c4c5eb03fce74",
+        "changes": {
+            "src/main/java/org/apache/sanselan/formats/bmp/BmpHeaderInfo.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.bmp#BmpHeaderInfo', None)": [
+                        51
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.bmp#BmpHeaderInfo', None)": [
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114
+                    ]
+                }
+            },
+            "src/main/java/org/apache/sanselan/formats/bmp/BmpImageParser.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.bmp#BmpImageParser', 'readBmpHeaderInfo(InputStream,FormatCompliance,boolean)')": [
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        144
+                    ],
+                    "('org.apache.sanselan.formats.bmp#BmpImageParser', 'readImageContents(InputStream,FormatCompliance,boolean)')": [
+                        277,
+                        278,
+                        322
+                    ],
+                    "('org.apache.sanselan.formats.bmp#BmpImageParser', 'getBufferedImage(InputStream,Map)')": [
+                        608,
+                        610
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.bmp#BmpImageParser', 'readBmpHeaderInfo(InputStream,FormatCompliance,boolean)')": [
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        242,
+                        243,
+                        244,
+                        245
+                    ],
+                    "('org.apache.sanselan.formats.bmp#BmpImageParser', 'readImageContents(InputStream,FormatCompliance,boolean)')": [
+                        334,
+                        335,
+                        336,
+                        381,
+                        382,
+                        383,
+                        384,
+                        428,
+                        429
+                    ],
+                    "('org.apache.sanselan.formats.bmp#BmpImageParser', 'getBufferedImage(InputStream,Map)')": [
+                        716
+                    ]
+                }
+            },
+            "src/main/java/org/apache/sanselan/formats/bmp/pixelparsers/PixelParserBitFields.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        21
+                    ],
+                    "('org.apache.sanselan.formats.bmp.pixelparsers#PixelParserBitFields', None)": [
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49
+                    ],
+                    "('org.apache.sanselan.formats.bmp.pixelparsers#PixelParserBitFields', 'getNextRGB')": [
+                        113,
+                        114
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.bmp.pixelparsers#PixelParserBitFields', None)": [
+                        30,
+                        35,
+                        42,
+                        43,
+                        44,
+                        45,
+                        50
+                    ],
+                    "('org.apache.sanselan.formats.bmp.pixelparsers#PixelParserBitFields', 'getNextRGB')": [
+                        106,
+                        111
+                    ]
+                }
+            }
+        }
+    },
+    "c659a6007b258f3e2afc57cf2b4c4c5eb03fce74": {
+        "authored_data": "2011 Apr 10 09:08",
+        "commit.message": "Fix some JPEG marker names, improve JPEG parsing,\nadd support for reading baseline JPEG images,\nand enable JPEG round-trip read tests.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1090754 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "cb1f096543f1294821c194173150be526d640ebf",
+        "changes": {
+            "src/main/java/org/apache/sanselan/formats/jpeg/JpegConstants.java": {
+                "old": {
+                    "(None, None)": [
+                        80,
+                        81,
+                        98,
+                        106,
+                        111,
+                        115,
+                        116,
+                        117
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        96,
+                        104,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        118,
+                        119,
+                        120,
+                        121
+                    ]
+                }
+            },
+            "src/main/java/org/apache/sanselan/formats/jpeg/JpegImageParser.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.jpeg#JpegImageParser', 'getBufferedImage(ByteSource,Map)')": [
+                        90,
+                        91
+                    ],
+                    "('org.apache.sanselan.formats.jpeg#JpegImageParser', 'readSegments(ByteSource,int,boolean,boolean)')": [
+                        132,
+                        154
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        38,
+                        43
+                    ],
+                    "('org.apache.sanselan.formats.jpeg#JpegImageParser', 'getBufferedImage(ByteSource,Map)')": [
+                        93,
+                        94
+                    ],
+                    "('org.apache.sanselan.formats.jpeg#JpegImageParser', 'readSegments(ByteSource,int,boolean,boolean)')": [
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        143,
+                        165,
+                        168,
+                        169,
+                        170
+                    ]
+                }
+            },
+            "src/main/java/org/apache/sanselan/formats/jpeg/JpegUtils.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.jpeg#JpegUtils', 'traverseJFIF(ByteSource,Visitor)')": [
+                        76
+                    ],
+                    "('org.apache.sanselan.formats.jpeg#JpegUtils', 'getMarkerName(int)')": [
+                        149,
+                        165,
+                        166
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.jpeg#JpegUtils', 'traverseJFIF(ByteSource,Visitor)')": [
+                        76
+                    ],
+                    "('org.apache.sanselan.formats.jpeg#JpegUtils', 'getMarkerName(int)')": [
+                        149,
+                        165,
+                        166,
+                        173,
+                        174
+                    ]
+                }
+            },
+            "src/main/java/org/apache/sanselan/formats/jpeg/segments/SOFNSegment.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.jpeg.segments#SOFNSegment', None)": [
+                        47,
+                        48,
+                        49,
+                        50,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.jpeg.segments#SOFNSegment', None)": [
+                        31,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        74,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85
+                    ]
+                }
+            },
+            "src/main/java/org/apache/sanselan/formats/jpeg/segments/SOSSegment.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.jpeg.segments#SOSSegment', None)": [
+                        27,
+                        28,
+                        29,
+                        31,
+                        32,
+                        42,
+                        43,
+                        44,
+                        46,
+                        47,
+                        49,
+                        53,
+                        55,
+                        58,
+                        59,
+                        62,
+                        64,
+                        65,
+                        67,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19
+                    ],
+                    "('org.apache.sanselan.formats.jpeg.segments#SOSSegment', None)": [
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        65,
+                        66,
+                        67,
+                        69,
+                        70,
+                        72,
+                        73,
+                        77,
+                        79,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        91,
+                        93,
+                        94,
+                        96,
+                        100,
+                        101,
+                        102,
+                        103
+                    ]
+                }
+            },
+            "src/test/java/org/apache/sanselan/roundtrip/RoundtripTest.java": {
+                "old": {
+                    "('org.apache.sanselan.roundtrip#RoundtripTest', None)": [
+                        73
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.roundtrip#RoundtripTest', None)": [
+                        73
+                    ]
+                }
+            }
+        }
+    },
+    "cb1f096543f1294821c194173150be526d640ebf": {
+        "authored_data": "2011 Apr 09 14:20",
+        "commit.message": "Add support for reading and writing XPM images, and some tests.\nSupport for reading rgb.txt colours is provided, but the necessary\nrgb.txt file is not yet included because it's under a different\nlicense.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1090599 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "bb799ae884da0eed87674530a0db8af3336e720c",
+        "changes": {
+            "src/main/java/org/apache/sanselan/ImageFormat.java": {
+                "new": {
+                    "('org.apache.sanselan#ImageFormat', None)": [
+                        80
+                    ],
+                    "('org.apache.sanselan#ImageFormat', 'getAllFormats')": [
+                        91
+                    ]
+                }
+            },
+            "src/main/java/org/apache/sanselan/ImageParser.java": {
+                "old": {
+                    "('org.apache.sanselan#ImageParser', 'getAllImageParsers')": [
+                        63
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        49
+                    ],
+                    "('org.apache.sanselan#ImageParser', 'getAllImageParsers')": [
+                        64
+                    ]
+                }
+            },
+            "src/test/java/org/apache/sanselan/common/byteSources/ByteSourceImageTest.java": {
+                "old": {
+                    "('org.apache.sanselan.common.byteSources#ByteSourceImageTest', 'test')": [
+                        66
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.common.byteSources#ByteSourceImageTest', 'test')": [
+                        66,
+                        67
+                    ]
+                }
+            },
+            "src/test/java/org/apache/sanselan/roundtrip/RoundtripTest.java": {
+                "new": {
+                    "('org.apache.sanselan.roundtrip#RoundtripTest', None)": [
+                        97,
+                        98
+                    ]
+                }
+            }
+        }
+    }
+}

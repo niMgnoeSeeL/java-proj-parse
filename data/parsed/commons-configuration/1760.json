@@ -1,0 +1,1871 @@
+{
+    "71e54db9da7985ae947ea5d129238bbdbd0bf313": {
+        "authored_data": "2013 Nov 26 20:35",
+        "commit.message": "Parameters now uses a DefaultParametersManager.\n\nThe handling of default values for newly created parameters objects is now\ndelegated to a DefaultParametersManager instance which can either be passed to\nthe constructor or is dynamically created.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1545825 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "23ea8cc61ef3b0bf3a2d76677a89d0078697d3a7",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/builder/fluent/Parameters.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        497,
+                        498
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', None)": [
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        97,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        349,
+                        350,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'registerDefaultsHandler(Class,DefaultParametersHandler)')": [
+                        121
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'registerDefaultsHandler(Class,DefaultParametersHandler,Class)')": [
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'unregisterDefaultsHandler(DefaultParametersHandler)')": [
+                        188,
+                        189,
+                        190
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'unregisterDefaultsHandler(DefaultParametersHandler,Class)')": [
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'initializeParameters(BuilderParameters)')": [
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'createParametersProxy(Object,Class,Class)')": [
+                        375
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', None)": [
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        127,
+                        128,
+                        136,
+                        147,
+                        148
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'getDefaultParametersManager')": [
+                        120,
+                        121,
+                        122
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'registerDefaultsHandler(Class,DefaultParametersHandler)')": [
+                        141
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'registerDefaultsHandler(Class,DefaultParametersHandler,Class)')": [
+                        162,
+                        163
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'createParametersProxy(Object,Class,Class)')": [
+                        296,
+                        297
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/builder/fluent/TestParameters.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        22,
+                        39,
+                        551
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', None)": [
+                        56,
+                        57,
+                        58,
+                        65,
+                        361,
+                        362,
+                        363,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        406,
+                        407,
+                        408,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        502,
+                        503,
+                        504,
+                        505,
+                        506,
+                        507,
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        548,
+                        549,
+                        550
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'setUp')": [
+                        66,
+                        67,
+                        68
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testBasic')": [
+                        77
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testFileBased')": [
+                        102
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testFileBasedInheritance')": [
+                        148
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testProxyObjectMethods')": [
+                        158
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testCombined')": [
+                        173
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testJndi')": [
+                        189
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testHierarchical')": [
+                        205
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testHierarchicalInheritance')": [
+                        223
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testXml')": [
+                        236
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testXmlInheritance')": [
+                        259
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testProperties')": [
+                        273
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testPropertiesInheritance')": [
+                        293
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testMultiFile')": [
+                        306
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testDatabase')": [
+                        325
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testInheritance')": [
+                        344
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testRegisterDefaultsHandlerNoClass')": [
+                        364,
+                        365,
+                        366,
+                        367
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testRegisterDefaultsHandlerNoHandler')": [
+                        374,
+                        375,
+                        376
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'checkDefaultValues(Map)')": [
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'checkNoDefaultValues(Map)')": [
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testApplyDefaults')": [
+                        415,
+                        416,
+                        417,
+                        418
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testApplyDefaultsOnSubClass')": [
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testApplyDefaultsStartClass')": [
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testApplyDefaultsMultipleHandlers')": [
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474,
+                        475,
+                        476
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testInitializeParametersNull')": [
+                        484,
+                        485,
+                        486,
+                        487,
+                        488
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testInitializeParameters')": [
+                        495,
+                        496,
+                        497,
+                        498,
+                        499,
+                        500,
+                        501
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testUnregisterDefaultsHandlerAll')": [
+                        508,
+                        509,
+                        510,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516,
+                        517,
+                        518
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testUnregisterDefaultsHandlerSpecific')": [
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        33,
+                        40
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', None)": [
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testDefaultParametersManager')": [
+                        68,
+                        69,
+                        70,
+                        71,
+                        72
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testBasic')": [
+                        81
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testFileBased')": [
+                        106
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testFileBasedInheritance')": [
+                        152
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testProxyObjectMethods')": [
+                        162
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testCombined')": [
+                        177
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testJndi')": [
+                        193
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testHierarchical')": [
+                        209
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testHierarchicalInheritance')": [
+                        227
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testXml')": [
+                        240
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testXmlInheritance')": [
+                        263
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testProperties')": [
+                        277
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testPropertiesInheritance')": [
+                        297
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testMultiFile')": [
+                        310
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testDatabase')": [
+                        329
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testInheritance')": [
+                        348
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testApplyDefaults')": [
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'createHandlerMock')": [
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testRegisterDefaultsHandlerWithStartClass')": [
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testRegisterDefaultsHandlerNoStartClass')": [
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443
+                    ]
+                }
+            }
+        }
+    },
+    "fadfbd3fd12c33f2eaf646f17c33c861cca30139": {
+        "authored_data": "2013 Nov 26 20:33",
+        "commit.message": "Moved DefaultParametersHandler from fluent to builder package.\n\nThis interface makes more sense in the builder package. Also, it is going to be\nused there, and we do not want to create cyclic dependencies with the fluent\npackage.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1545823 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "55e6182d9d0b615a92b2b28f105002a4299d2275",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/builder/fluent/Parameters.java": {
+                "new": {
+                    "(None, None)": [
+                        29
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/builder/fluent/TestParameters.java": {
+                "new": {
+                    "(None, None)": [
+                        32
+                    ]
+                }
+            }
+        }
+    },
+    "55e6182d9d0b615a92b2b28f105002a4299d2275": {
+        "authored_data": "2013 Nov 24 20:41",
+        "commit.message": "Missing svn properties.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1545074 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "8f99a056d0c4cd3faa7a7e3c286e20a01ac3e601",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/builder/fluent/DefaultParametersHandler.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33
+                    ]
+                }
+            }
+        }
+    },
+    "8f99a056d0c4cd3faa7a7e3c286e20a01ac3e601": {
+        "authored_data": "2013 Nov 24 20:37",
+        "commit.message": "Parameters now supports the registration of DefaultParametersHandlers.\n\nThe parameters objects created by an instance are now directly initialized with\ndefault values provided by the registered handlers.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1545073 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "e79b5106d6268622f977fca37e777f6c57a12d1a",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/builder/fluent/Parameters.java": {
+                "old": {
+                    "(None, None)": [
+                        53,
+                        54,
+                        55
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', None)": [
+                        181
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'createParametersProxy(Object,Class,Class)')": [
+                        190,
+                        191,
+                        196,
+                        197,
+                        198
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        56,
+                        57,
+                        58,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        496,
+                        497
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', None)": [
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        217,
+                        218,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        354,
+                        355,
+                        356,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'registerDefaultsHandler(Class,DefaultParametersHandler)')": [
+                        117,
+                        118,
+                        119,
+                        120
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'registerDefaultsHandler(Class,DefaultParametersHandler,Class)')": [
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'unregisterDefaultsHandler(DefaultParametersHandler)')": [
+                        187,
+                        188,
+                        189
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'unregisterDefaultsHandler(DefaultParametersHandler,Class)')": [
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'initializeParameters(BuilderParameters)')": [
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'createParametersProxy(Object,Class,Class)')": [
+                        365,
+                        366,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/builder/fluent/TestParameters.java": {
+                "old": {
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testFileBased')": [
+                        97,
+                        103
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        22,
+                        550,
+                        551
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', None)": [
+                        49,
+                        50,
+                        51,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        501,
+                        502,
+                        503,
+                        504,
+                        505,
+                        506,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testFileBased')": [
+                        102,
+                        108
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testRegisterDefaultsHandlerNoClass')": [
+                        363,
+                        364,
+                        365,
+                        366
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testRegisterDefaultsHandlerNoHandler')": [
+                        373,
+                        374,
+                        375
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'checkDefaultValues(Map)')": [
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'checkNoDefaultValues(Map)')": [
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testApplyDefaults')": [
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testApplyDefaultsOnSubClass')": [
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testApplyDefaultsStartClass')": [
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testApplyDefaultsMultipleHandlers')": [
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474,
+                        475
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testInitializeParametersNull')": [
+                        483,
+                        484,
+                        485,
+                        486,
+                        487
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testInitializeParameters')": [
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        499,
+                        500
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testUnregisterDefaultsHandlerAll')": [
+                        507,
+                        508,
+                        509,
+                        510,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516,
+                        517
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testUnregisterDefaultsHandlerSpecific')": [
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534
+                    ]
+                }
+            }
+        }
+    },
+    "e79b5106d6268622f977fca37e777f6c57a12d1a": {
+        "authored_data": "2013 Nov 24 20:37",
+        "commit.message": "Parameters objects now implement multiple interfaces.\n\nThe proxy objects created by Parameters now not only implement one single\nparameters interface but also all logic base interfaces. This can be used to\napply certain logic based on their inheritance structure.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1545072 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "66b85cdde2b5107a58a36239a1823da2643ae352",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/builder/fluent/Parameters.java": {
+                "old": {
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'fileBased')": [
+                        90
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', None)": [
+                        91,
+                        103,
+                        114,
+                        126,
+                        137,
+                        149,
+                        161,
+                        173,
+                        182
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'combined')": [
+                        102
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'jndi')": [
+                        113
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'hierarchical')": [
+                        125
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'xml')": [
+                        136
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'properties')": [
+                        148
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'multiFile')": [
+                        160
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'database')": [
+                        172
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'createParametersProxy(Class,Object)')": [
+                        185,
+                        186,
+                        188,
+                        189,
+                        190
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'fileBased')": [
+                        90,
+                        91
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'combined')": [
+                        102,
+                        103
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'jndi')": [
+                        113,
+                        114
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'hierarchical')": [
+                        125,
+                        126,
+                        127
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'xml')": [
+                        137,
+                        138,
+                        139
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'properties')": [
+                        150,
+                        151,
+                        152
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'multiFile')": [
+                        163,
+                        164
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'database')": [
+                        175,
+                        176
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', None)": [
+                        184,
+                        186,
+                        187
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'createParametersProxy(Object,Class,Class)')": [
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        197,
+                        198
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/builder/fluent/TestParameters.java": {
+                "new": {
+                    "(None, None)": [
+                        28,
+                        352
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', None)": [
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        143,
+                        144,
+                        145,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        248,
+                        249,
+                        250,
+                        255,
+                        256,
+                        257,
+                        282,
+                        283,
+                        284,
+                        289,
+                        290,
+                        291,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'checkInstanceOf(Object,Class)')": [
+                        115,
+                        116,
+                        117
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'checkInheritance(Object,Class)')": [
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testFileBasedInheritance')": [
+                        140,
+                        141,
+                        142
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testHierarchicalInheritance')": [
+                        215,
+                        216,
+                        217,
+                        218
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testXmlInheritance')": [
+                        251,
+                        252,
+                        253,
+                        254
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testPropertiesInheritance')": [
+                        285,
+                        286,
+                        287,
+                        288
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testInheritance')": [
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351
+                    ]
+                }
+            }
+        }
+    },
+    "66b85cdde2b5107a58a36239a1823da2643ae352": {
+        "authored_data": "2013 Nov 24 20:36",
+        "commit.message": "Made Parameters a bean class.\n\nThe class will have state in future. Therefore, it can no longer provide its\nservices as a static utilities class.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1545071 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "0ef01c3db0127bfcea9ff36f6ffcad50f6e98167",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/builder/fluent/Parameters.java": {
+                "old": {
+                    "(None, None)": [
+                        53,
+                        58
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', None)": [
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'basic')": [
+                        83
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'fileBased')": [
+                        94
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'combined')": [
+                        106
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'jndi')": [
+                        117
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'hierarchical')": [
+                        129
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'xml')": [
+                        140
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'properties')": [
+                        152
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'multiFile')": [
+                        164
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'database')": [
+                        176
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        53,
+                        58,
+                        59
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'basic')": [
+                        77
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'fileBased')": [
+                        88
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'combined')": [
+                        100
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'jndi')": [
+                        111
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'hierarchical')": [
+                        123
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'xml')": [
+                        134
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'properties')": [
+                        146
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'multiFile')": [
+                        158
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#Parameters', 'database')": [
+                        170
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/DatabaseConfigurationTestHelper.java": {
+                "old": {
+                    "('org.apache.commons.configuration#DatabaseConfigurationTestHelper', 'setUpDefaultParameters')": [
+                        145
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration#DatabaseConfigurationTestHelper', 'setUpDefaultParameters')": [
+                        145
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/TestBaseHierarchicalConfigurationSynchronization.java": {
+                "old": {
+                    "('org.apache.commons.configuration#TestBaseHierarchicalConfigurationSynchronization', 'testReadOnlyAccessToSubConfigurations')": [
+                        342
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration#TestBaseHierarchicalConfigurationSynchronization', 'testReadOnlyAccessToSubConfigurations')": [
+                        342
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/TestDynamicCombinedConfiguration.java": {
+                "old": {
+                    "('org.apache.commons.configuration#TestDynamicCombinedConfiguration', 'testConfiguration')": [
+                        79,
+                        86
+                    ],
+                    "('org.apache.commons.configuration#TestDynamicCombinedConfiguration', 'testUpdateConfiguration')": [
+                        122
+                    ],
+                    "('org.apache.commons.configuration#TestDynamicCombinedConfiguration', 'testConcurrentGetAndReload')": [
+                        233
+                    ],
+                    "('org.apache.commons.configuration#TestDynamicCombinedConfiguration', 'testConcurrentGetAndReload2')": [
+                        261
+                    ],
+                    "('org.apache.commons.configuration#TestDynamicCombinedConfiguration', 'testConcurrentGetAndReloadMultipleClients')": [
+                        292
+                    ],
+                    "('org.apache.commons.configuration#TestDynamicCombinedConfiguration', 'testConcurrentGetAndReloadFile')": [
+                        340
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        50
+                    ],
+                    "('org.apache.commons.configuration#TestDynamicCombinedConfiguration', None)": [
+                        69,
+                        70,
+                        71,
+                        72,
+                        76,
+                        77
+                    ],
+                    "('org.apache.commons.configuration#TestDynamicCombinedConfiguration', 'setUpOnce')": [
+                        73,
+                        74,
+                        75
+                    ],
+                    "('org.apache.commons.configuration#TestDynamicCombinedConfiguration', 'testConfiguration')": [
+                        89,
+                        96
+                    ],
+                    "('org.apache.commons.configuration#TestDynamicCombinedConfiguration', 'testUpdateConfiguration')": [
+                        132
+                    ],
+                    "('org.apache.commons.configuration#TestDynamicCombinedConfiguration', 'testConcurrentGetAndReload')": [
+                        243
+                    ],
+                    "('org.apache.commons.configuration#TestDynamicCombinedConfiguration', 'testConcurrentGetAndReload2')": [
+                        271
+                    ],
+                    "('org.apache.commons.configuration#TestDynamicCombinedConfiguration', 'testConcurrentGetAndReloadMultipleClients')": [
+                        302
+                    ],
+                    "('org.apache.commons.configuration#TestDynamicCombinedConfiguration', 'testConcurrentGetAndReloadFile')": [
+                        350
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/builder/combined/TestCombinedConfigurationBuilder.java": {
+                "old": {
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'createParameters')": [
+                        165,
+                        166,
+                        167
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testInitChildBuilderParametersDefaultChildProperties')": [
+                        1019,
+                        1022,
+                        1024
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testInitChildBuilderParametersDefaultChildPropertiesEx')": [
+                        1061,
+                        1064
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        61
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', None)": [
+                        106,
+                        107,
+                        108
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'setUp')": [
+                        119
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'createParameters')": [
+                        170,
+                        171,
+                        172
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testInitChildBuilderParametersDefaultChildProperties')": [
+                        1024,
+                        1027,
+                        1029
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testInitChildBuilderParametersDefaultChildPropertiesEx')": [
+                        1066,
+                        1069
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/builder/combined/TestCombinedConfigurationBuilderVFS.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilderVFS', 'createParameters')": [
+                        48,
+                        50
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilderVFS', 'createParameters')": [
+                        48,
+                        50
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/builder/combined/TestReloadingCombinedConfigurationBuilderFileBased.java": {
+                "old": {
+                    "('org.apache.commons.configuration.builder.combined#TestReloadingCombinedConfigurationBuilderFileBased', 'testReloadFromFile')": [
+                        189
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestReloadingCombinedConfigurationBuilderFileBased', 'testConcurrentGetAndReload')": [
+                        245
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestReloadingCombinedConfigurationBuilderFileBased', 'testReloadDefinitionFileExplicitBuilder')": [
+                        321,
+                        323
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestReloadingCombinedConfigurationBuilderFileBased', 'testReloadDefinitionFileDefaultBuilder')": [
+                        337,
+                        338
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.builder.combined#TestReloadingCombinedConfigurationBuilderFileBased', None)": [
+                        75,
+                        76,
+                        77
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestReloadingCombinedConfigurationBuilderFileBased', 'setUp')": [
+                        84
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestReloadingCombinedConfigurationBuilderFileBased', 'testReloadFromFile')": [
+                        193
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestReloadingCombinedConfigurationBuilderFileBased', 'testConcurrentGetAndReload')": [
+                        249
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestReloadingCombinedConfigurationBuilderFileBased', 'testReloadDefinitionFileExplicitBuilder')": [
+                        325,
+                        327
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestReloadingCombinedConfigurationBuilderFileBased', 'testReloadDefinitionFileDefaultBuilder')": [
+                        341,
+                        342
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/builder/fluent/TestParameters.java": {
+                "old": {
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testBasic')": [
+                        60
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testFileBased')": [
+                        85
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testProxyObjectMethods')": [
+                        104
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testCombined')": [
+                        119
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testJndi')": [
+                        135
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testHierarchical')": [
+                        151
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testXml')": [
+                        172
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testProperties')": [
+                        199
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testMultiFile')": [
+                        222
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testDatabase')": [
+                        241
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', None)": [
+                        49,
+                        50,
+                        51,
+                        58,
+                        62,
+                        63
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'setUp')": [
+                        59,
+                        60,
+                        61
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testBasic')": [
+                        70
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testFileBased')": [
+                        95
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testProxyObjectMethods')": [
+                        114
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testCombined')": [
+                        129
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testJndi')": [
+                        145
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testHierarchical')": [
+                        161
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testXml')": [
+                        182
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testProperties')": [
+                        209
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testMultiFile')": [
+                        232
+                    ],
+                    "('org.apache.commons.configuration.builder.fluent#TestParameters', 'testDatabase')": [
+                        251
+                    ]
+                }
+            }
+        }
+    }
+}

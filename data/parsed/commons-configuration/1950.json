@@ -1,0 +1,2509 @@
+{
+    "582c40aa159efa0fa5b72d23f2d24671e9776fef": {
+        "authored_data": "2013 May 22 20:12",
+        "commit.message": "Added support for setting a Synchronizer to BasicBuilderParameters.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1485393 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "d3891e97c46ef133be3b3d2d9c3a272c6526910d",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/builder/BasicBuilderParameters.java": {
+                "new": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.commons.configuration.builder#BasicBuilderParameters', None)": [
+                        79,
+                        80,
+                        81,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236
+                    ],
+                    "('org.apache.commons.configuration.builder#BasicBuilderParameters', 'setSynchronizer(Synchronizer)')": [
+                        237,
+                        238,
+                        239
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/configuration/builder/BasicBuilderProperties.java": {
+                "new": {
+                    "(None, None)": [
+                        24,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/builder/TestBasicBuilderParameters.java": {
+                "new": {
+                    "(None, None)": [
+                        35,
+                        475
+                    ],
+                    "('org.apache.commons.configuration.builder#TestBasicBuilderParameters', None)": [
+                        463,
+                        464,
+                        465,
+                        466,
+                        467
+                    ],
+                    "('org.apache.commons.configuration.builder#TestBasicBuilderParameters', 'testSetSynchronizer')": [
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474
+                    ]
+                }
+            }
+        }
+    },
+    "d3891e97c46ef133be3b3d2d9c3a272c6526910d": {
+        "authored_data": "2013 May 22 20:11",
+        "commit.message": "Reworked CombinedConfiguration regarding thread-safety.\n\nThe Synchronizer object is now exclusively used to protect an instance against\nconcurrent access. This is a change of behavior because previously there was\nalways some kind of synchronization; now this is configurable. Therefore,\ncurrently some tests for multi-threaded access are failing and have been\ndisabled.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1485392 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "18c55d7c4fedd929486d317a8fcd2f8f442c6a5e",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/CombinedConfiguration.java": {
+                "old": {
+                    "(None, None)": [
+                        48,
+                        161,
+                        162,
+                        163,
+                        164
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', None)": [
+                        197,
+                        205,
+                        206,
+                        207,
+                        540,
+                        541,
+                        542,
+                        557,
+                        769,
+                        868,
+                        869,
+                        870,
+                        871,
+                        872,
+                        873
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getNodeCombiner')": [
+                        246
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'setNodeCombiner(NodeCombiner)')": [
+                        265,
+                        266
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getConversionExpressionEngine')": [
+                        278
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'setConversionExpressionEngine(ExpressionEngine)')": [
+                        299
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'addConfiguration(Configuration,String,String)')": [
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        346
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getNumberOfConfigurations')": [
+                        382
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getConfiguration(int)')": [
+                        395,
+                        396
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getConfiguration(String)')": [
+                        408
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getConfigurations')": [
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getConfigurationNameList')": [
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getConfigurationNames')": [
+                        508
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'invalidate')": [
+                        521
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'configurationChanged(ConfigurationEvent)')": [
+                        533
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getRootNode')": [
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'clone')": [
+                        582,
+                        583,
+                        584,
+                        585,
+                        586,
+                        587,
+                        588,
+                        589,
+                        590,
+                        591,
+                        592
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getSource(String)')": [
+                        625,
+                        626,
+                        627,
+                        628,
+                        629,
+                        630,
+                        631,
+                        632,
+                        633,
+                        634,
+                        635,
+                        636,
+                        637,
+                        638,
+                        639,
+                        640,
+                        641,
+                        642,
+                        643
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'invalidateInternal')": [
+                        654
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'constructCombinedNode')": [
+                        675,
+                        690
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'findSourceConfiguration(ConfigurationNode)')": [
+                        712,
+                        713,
+                        714,
+                        715,
+                        716,
+                        717,
+                        718,
+                        719,
+                        720,
+                        721,
+                        722,
+                        723,
+                        724,
+                        725,
+                        726,
+                        727,
+                        728,
+                        729,
+                        730
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        49,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', None)": [
+                        204,
+                        258,
+                        287,
+                        307,
+                        336,
+                        438,
+                        460,
+                        480,
+                        504,
+                        529,
+                        605,
+                        626,
+                        645,
+                        646,
+                        647,
+                        648,
+                        649,
+                        650,
+                        699,
+                        758,
+                        759,
+                        760,
+                        761,
+                        762,
+                        763,
+                        764,
+                        765,
+                        784,
+                        785,
+                        786,
+                        787,
+                        788,
+                        789,
+                        790,
+                        805,
+                        925,
+                        926,
+                        927,
+                        928,
+                        929,
+                        930,
+                        934,
+                        935,
+                        936,
+                        937,
+                        938,
+                        939,
+                        940,
+                        944,
+                        945,
+                        946,
+                        947,
+                        948,
+                        949,
+                        950,
+                        954,
+                        955,
+                        956,
+                        960,
+                        1059,
+                        1060,
+                        1061,
+                        1062,
+                        1063,
+                        1064,
+                        1065,
+                        1066,
+                        1067,
+                        1068,
+                        1069,
+                        1070,
+                        1071,
+                        1072,
+                        1073
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getNodeCombiner')": [
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'setNodeCombiner(NodeCombiner)')": [
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getConversionExpressionEngine')": [
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'setConversionExpressionEngine(ExpressionEngine)')": [
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'addConfiguration(Configuration,String,String)')": [
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getNumberOfConfigurations')": [
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getConfiguration(int)')": [
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getConfiguration(String)')": [
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478,
+                        479
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getConfigurations')": [
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        499,
+                        500,
+                        501,
+                        502,
+                        503
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getConfigurationNameList')": [
+                        516,
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getConfigurationNames')": [
+                        597,
+                        598,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'invalidate')": [
+                        618,
+                        619,
+                        620,
+                        621,
+                        622,
+                        623,
+                        624,
+                        625
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'configurationChanged(ConfigurationEvent)')": [
+                        638
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getRootNode')": [
+                        657
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'clone')": [
+                        682,
+                        683,
+                        684,
+                        685,
+                        686,
+                        687,
+                        688,
+                        689,
+                        690,
+                        691,
+                        692,
+                        693,
+                        694,
+                        695,
+                        696,
+                        697,
+                        698
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getSource(String)')": [
+                        732,
+                        733,
+                        734,
+                        735,
+                        736,
+                        737,
+                        738,
+                        739,
+                        740,
+                        741,
+                        742,
+                        743,
+                        744,
+                        745,
+                        746,
+                        747,
+                        748,
+                        749,
+                        750,
+                        751,
+                        752,
+                        753,
+                        754,
+                        755,
+                        756,
+                        757
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'beginRead')": [
+                        766,
+                        767,
+                        768,
+                        769,
+                        770,
+                        771,
+                        772,
+                        773,
+                        774,
+                        775,
+                        776,
+                        777,
+                        778,
+                        779,
+                        780,
+                        781,
+                        782,
+                        783
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'beginWrite')": [
+                        791,
+                        792,
+                        793,
+                        794,
+                        795,
+                        796,
+                        797,
+                        798,
+                        799,
+                        800,
+                        801,
+                        802,
+                        803,
+                        804
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'invalidateInternal')": [
+                        816
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'constructCombinedNode')": [
+                        837,
+                        852
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'findSourceConfiguration(ConfigurationNode)')": [
+                        874,
+                        875,
+                        876,
+                        877,
+                        878,
+                        879,
+                        880,
+                        881,
+                        882,
+                        883,
+                        884,
+                        885,
+                        886,
+                        887,
+                        888,
+                        889
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'getNumberOfConfigurationsInternal')": [
+                        931,
+                        932,
+                        933
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'readLock')": [
+                        941,
+                        942,
+                        943
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'writeLock')": [
+                        951,
+                        952,
+                        953
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/TestCombinedConfiguration.java": {
+                "old": {
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', None)": [
+                        545,
+                        546,
+                        547,
+                        548,
+                        663
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testInvalidateAfterChange')": [
+                        549,
+                        550,
+                        551,
+                        552,
+                        554,
+                        557
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        30,
+                        34,
+                        35,
+                        39,
+                        43,
+                        44,
+                        45,
+                        46,
+                        1158,
+                        1159
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', None)": [
+                        68,
+                        69,
+                        70,
+                        559,
+                        560,
+                        561,
+                        562,
+                        661,
+                        662,
+                        663,
+                        664,
+                        665,
+                        672,
+                        673,
+                        674,
+                        675,
+                        676,
+                        677,
+                        684,
+                        685,
+                        686,
+                        687,
+                        688,
+                        689,
+                        696,
+                        697,
+                        698,
+                        699,
+                        700,
+                        701,
+                        708,
+                        709,
+                        710,
+                        711,
+                        712,
+                        713,
+                        714,
+                        721,
+                        722,
+                        723,
+                        724,
+                        725,
+                        726,
+                        727,
+                        734,
+                        735,
+                        736,
+                        737,
+                        738,
+                        739,
+                        740,
+                        747,
+                        748,
+                        749,
+                        750,
+                        751,
+                        752,
+                        753,
+                        761,
+                        762,
+                        763,
+                        764,
+                        765,
+                        766,
+                        774,
+                        775,
+                        776,
+                        777,
+                        778,
+                        779,
+                        780,
+                        788,
+                        789,
+                        790,
+                        791,
+                        792,
+                        793,
+                        794,
+                        801,
+                        802,
+                        803,
+                        804,
+                        805,
+                        806,
+                        812,
+                        813,
+                        814,
+                        815,
+                        816,
+                        817,
+                        824,
+                        825,
+                        826,
+                        827,
+                        828,
+                        829,
+                        830,
+                        838,
+                        839,
+                        840,
+                        841,
+                        842,
+                        843,
+                        855,
+                        856,
+                        857,
+                        858,
+                        859,
+                        860,
+                        861,
+                        891,
+                        892,
+                        893,
+                        894,
+                        895,
+                        896,
+                        897,
+                        898,
+                        951,
+                        952,
+                        953,
+                        971,
+                        1003,
+                        1004,
+                        1005,
+                        1006,
+                        1007,
+                        1008,
+                        1009,
+                        1010,
+                        1011,
+                        1012,
+                        1013,
+                        1014,
+                        1015,
+                        1016,
+                        1017,
+                        1018,
+                        1019,
+                        1020,
+                        1021,
+                        1022,
+                        1023,
+                        1024,
+                        1025,
+                        1026,
+                        1027,
+                        1028,
+                        1029,
+                        1030,
+                        1031,
+                        1032,
+                        1033,
+                        1034,
+                        1035,
+                        1036,
+                        1037,
+                        1038,
+                        1039,
+                        1040,
+                        1041,
+                        1042,
+                        1043,
+                        1044,
+                        1045,
+                        1046,
+                        1047,
+                        1048,
+                        1049,
+                        1050,
+                        1051,
+                        1052,
+                        1053,
+                        1054,
+                        1055,
+                        1056,
+                        1057,
+                        1058,
+                        1059,
+                        1060,
+                        1061,
+                        1062,
+                        1063,
+                        1064,
+                        1065,
+                        1066,
+                        1067,
+                        1068,
+                        1069,
+                        1070,
+                        1071,
+                        1072,
+                        1073,
+                        1074,
+                        1075,
+                        1076,
+                        1077,
+                        1078,
+                        1079,
+                        1080,
+                        1081,
+                        1082,
+                        1083,
+                        1084,
+                        1085,
+                        1086,
+                        1087,
+                        1088,
+                        1089,
+                        1090,
+                        1091,
+                        1092,
+                        1093,
+                        1094,
+                        1095,
+                        1096,
+                        1097,
+                        1098,
+                        1099,
+                        1100,
+                        1101,
+                        1102,
+                        1103,
+                        1104,
+                        1105,
+                        1106,
+                        1107,
+                        1108,
+                        1109,
+                        1110,
+                        1111,
+                        1112,
+                        1113,
+                        1114,
+                        1115,
+                        1116,
+                        1117,
+                        1118,
+                        1119,
+                        1120,
+                        1121,
+                        1122,
+                        1123,
+                        1124,
+                        1125,
+                        1126,
+                        1127,
+                        1128,
+                        1129,
+                        1130,
+                        1131,
+                        1132,
+                        1133,
+                        1134,
+                        1135,
+                        1136,
+                        1137,
+                        1138,
+                        1139,
+                        1140,
+                        1141,
+                        1142,
+                        1143,
+                        1144,
+                        1145,
+                        1146,
+                        1147,
+                        1148,
+                        1149,
+                        1150,
+                        1151,
+                        1152,
+                        1153,
+                        1154,
+                        1155,
+                        1156,
+                        1157
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testClone')": [
+                        386,
+                        387
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testInvalidateEventBeforeAndAfterChange')": [
+                        563,
+                        564,
+                        565,
+                        566,
+                        568,
+                        571,
+                        572
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'setUpSynchronizerTest')": [
+                        666,
+                        667,
+                        668,
+                        669,
+                        670,
+                        671
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testAddConfigurationSynchronized')": [
+                        678,
+                        679,
+                        680,
+                        681,
+                        682,
+                        683
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testSetNodeCombinerSynchronized')": [
+                        690,
+                        691,
+                        692,
+                        693,
+                        694,
+                        695
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testGetNodeCombinerSynchronized')": [
+                        702,
+                        703,
+                        704,
+                        705,
+                        706,
+                        707
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testGetConfigurationByIdxSynchronized')": [
+                        715,
+                        716,
+                        717,
+                        718,
+                        719,
+                        720
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testGetConfigurationByNameSynchronized')": [
+                        728,
+                        729,
+                        730,
+                        731,
+                        732,
+                        733
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testGetConfigurationNamesSynchronized')": [
+                        741,
+                        742,
+                        743,
+                        744,
+                        745,
+                        746
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testGetConfigurationNameListSynchronized')": [
+                        754,
+                        755,
+                        756,
+                        757,
+                        758,
+                        759,
+                        760
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testGetConfigurationsSynchronized')": [
+                        767,
+                        768,
+                        769,
+                        770,
+                        771,
+                        772,
+                        773
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testGetConversionExpressionEngineSynchronized')": [
+                        781,
+                        782,
+                        783,
+                        784,
+                        785,
+                        786,
+                        787
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testSetConversionExpressionEngineSynchronized')": [
+                        795,
+                        796,
+                        797,
+                        798,
+                        799,
+                        800
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testInvalidateSynchronized')": [
+                        807,
+                        808,
+                        809,
+                        810,
+                        811
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testGetSourceSynchronized')": [
+                        818,
+                        819,
+                        820,
+                        821,
+                        822,
+                        823
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testGetNumberOfConfigurationsSynchronized')": [
+                        831,
+                        832,
+                        833,
+                        834,
+                        835,
+                        836,
+                        837
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testCloneSynchronized')": [
+                        844,
+                        845,
+                        846,
+                        847,
+                        848,
+                        849,
+                        850,
+                        851,
+                        852,
+                        853,
+                        854
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testLockHandlingWithExceptionWhenConstructingRootNode')": [
+                        862,
+                        863,
+                        864,
+                        865,
+                        866,
+                        867,
+                        868,
+                        869,
+                        870,
+                        871,
+                        872,
+                        873,
+                        874,
+                        875,
+                        876,
+                        877,
+                        878,
+                        879,
+                        880,
+                        881,
+                        882,
+                        883,
+                        884,
+                        885,
+                        886,
+                        887,
+                        888,
+                        889,
+                        890
+                    ],
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testConcurrentAccess')": [
+                        899,
+                        900,
+                        901,
+                        902,
+                        903,
+                        904,
+                        905,
+                        906,
+                        907,
+                        908,
+                        909,
+                        910,
+                        911,
+                        912,
+                        913,
+                        914,
+                        915,
+                        916,
+                        917,
+                        918,
+                        919,
+                        920,
+                        921,
+                        922,
+                        923,
+                        924,
+                        925,
+                        926,
+                        927,
+                        928,
+                        929,
+                        930,
+                        931,
+                        932,
+                        933,
+                        934,
+                        935,
+                        936,
+                        937,
+                        938,
+                        939,
+                        940,
+                        941,
+                        942,
+                        943,
+                        944,
+                        945,
+                        946,
+                        947,
+                        948,
+                        949,
+                        950
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/TestDynamicCombinedConfiguration.java": {
+                "old": {
+                    "('org.apache.commons.configuration#TestDynamicCombinedConfiguration', None)": [
+                        104,
+                        131,
+                        161
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        44
+                    ],
+                    "('org.apache.commons.configuration#TestDynamicCombinedConfiguration', None)": [
+                        105,
+                        132,
+                        162
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/builder/combined/TestReloadingCombinedConfigurationBuilderFileBased.java": {
+                "old": {
+                    "('org.apache.commons.configuration.builder.combined#TestReloadingCombinedConfigurationBuilderFileBased', None)": [
+                        218
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        46
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestReloadingCombinedConfigurationBuilderFileBased', None)": [
+                        219
+                    ]
+                }
+            }
+        }
+    },
+    "18c55d7c4fedd929486d317a8fcd2f8f442c6a5e": {
+        "authored_data": "2013 May 22 20:10",
+        "commit.message": "Ensure proper synchronization of BaseHierarchicalConfiguration.subset() method.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1485390 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "a0b8f48fe6eeb4d03cf2ad069c2a518c3279dce4",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/BaseHierarchicalConfiguration.java": {
+                "old": {
+                    "('org.apache.commons.configuration#BaseHierarchicalConfiguration', None)": [
+                        544
+                    ],
+                    "('org.apache.commons.configuration#BaseHierarchicalConfiguration', 'subset(String)')": [
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569,
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        575,
+                        576,
+                        577,
+                        578,
+                        579,
+                        580,
+                        581,
+                        582,
+                        583,
+                        584,
+                        585,
+                        586,
+                        587,
+                        588,
+                        589,
+                        590,
+                        591,
+                        592,
+                        593,
+                        594,
+                        595,
+                        596,
+                        597
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration#BaseHierarchicalConfiguration', None)": [
+                        544,
+                        545,
+                        616
+                    ],
+                    "('org.apache.commons.configuration#BaseHierarchicalConfiguration', 'subset(String)')": [
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569,
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        575,
+                        576,
+                        577,
+                        578,
+                        579,
+                        580,
+                        581,
+                        582,
+                        583,
+                        584,
+                        585,
+                        586,
+                        587,
+                        588,
+                        589,
+                        590,
+                        591,
+                        592,
+                        593,
+                        594,
+                        595,
+                        596,
+                        597,
+                        598,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612,
+                        613,
+                        614,
+                        615
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/TestBaseHierarchicalConfigurationSynchronization.java": {
+                "new": {
+                    "(None, None)": [
+                        24,
+                        265
+                    ],
+                    "('org.apache.commons.configuration#TestBaseHierarchicalConfigurationSynchronization', None)": [
+                        255,
+                        256,
+                        257,
+                        258,
+                        259
+                    ],
+                    "('org.apache.commons.configuration#TestBaseHierarchicalConfigurationSynchronization', 'testSubsetSynchronized')": [
+                        260,
+                        261,
+                        262,
+                        263,
+                        264
+                    ]
+                }
+            }
+        }
+    },
+    "a0b8f48fe6eeb4d03cf2ad069c2a518c3279dce4": {
+        "authored_data": "2013 May 22 20:10",
+        "commit.message": "Don't call non-private, non-final methods from the constructor.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1485389 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "835629765d1c6297f6cb5dc6d350cce1cfbfab7d",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/CombinedConfiguration.java": {
+                "old": {
+                    "('org.apache.commons.configuration#CombinedConfiguration', None)": [
+                        223,
+                        224
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'setNodeCombiner(NodeCombiner)')": [
+                        266
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'addConfiguration(Configuration,String,String)')": [
+                        346
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'removeConfigurationAt(int)')": [
+                        477
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'invalidate')": [
+                        521,
+                        522
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'clearInternal')": [
+                        567,
+                        568,
+                        569
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'clone')": [
+                        585
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration#CombinedConfiguration', None)": [
+                        223,
+                        224,
+                        647,
+                        648,
+                        649,
+                        650,
+                        651,
+                        656,
+                        657,
+                        658,
+                        659,
+                        660,
+                        661,
+                        666,
+                        667,
+                        668
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'setNodeCombiner(NodeCombiner)')": [
+                        266
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'addConfiguration(Configuration,String,String)')": [
+                        346
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'removeConfigurationAt(int)')": [
+                        477
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'invalidate')": [
+                        521
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'clearInternal')": [
+                        566,
+                        567
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'clone')": [
+                        583
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'invalidateInternal')": [
+                        652,
+                        653,
+                        654,
+                        655
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'initChildCollections')": [
+                        662,
+                        663,
+                        664,
+                        665
+                    ]
+                }
+            }
+        }
+    },
+    "835629765d1c6297f6cb5dc6d350cce1cfbfab7d": {
+        "authored_data": "2013 May 22 20:09",
+        "commit.message": "Removed some stuff related to the old reloading mechanism.\n\nCombinedConfiguration used to support a flag for triggering reloads on child\nconfigurations. If set, on each property access all child configurations are\nqueried to initiate a reload if necessary. Reloading is now handled in a\ndifferent way; therefore, this mechanism could be removed.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1485387 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "9f5468faecbe356c7c85bac7d987f8f4b9185d97",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/CombinedConfiguration.java": {
+                "old": {
+                    "('org.apache.commons.configuration#CombinedConfiguration', None)": [
+                        173,
+                        193,
+                        194,
+                        195,
+                        208,
+                        209,
+                        210,
+                        220,
+                        221,
+                        222,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        256,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        718,
+                        719,
+                        720,
+                        721,
+                        722,
+                        723,
+                        724,
+                        725,
+                        726,
+                        735,
+                        736,
+                        737,
+                        738,
+                        739,
+                        740,
+                        741,
+                        742,
+                        743,
+                        744,
+                        745,
+                        761,
+                        762,
+                        763,
+                        764,
+                        765,
+                        766
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'isForceReloadCheck')": [
+                        296,
+                        297,
+                        298
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'setForceReloadCheck(boolean)')": [
+                        313,
+                        314,
+                        315
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'isIgnoreReloadExceptions')": [
+                        355,
+                        356,
+                        357
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'setIgnoreReloadExceptions(boolean)')": [
+                        366,
+                        367,
+                        368
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'fetchNodeList(String)')": [
+                        727,
+                        728,
+                        729,
+                        730,
+                        731,
+                        732,
+                        733,
+                        734
+                    ],
+                    "('org.apache.commons.configuration#CombinedConfiguration', 'performReloadCheck')": [
+                        746,
+                        747,
+                        748,
+                        749,
+                        750,
+                        751,
+                        752,
+                        753,
+                        754,
+                        755,
+                        756,
+                        757,
+                        758,
+                        759,
+                        760
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration#CombinedConfiguration', None)": [
+                        173,
+                        235
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/configuration/DynamicCombinedConfiguration.java": {
+                "old": {
+                    "('org.apache.commons.configuration#DynamicCombinedConfiguration', None)": [
+                        101,
+                        115
+                    ],
+                    "('org.apache.commons.configuration#DynamicCombinedConfiguration', 'getCurrentConfig')": [
+                        831,
+                        844
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/configuration/builder/combined/CombinedConfigurationBuilder.java": {
+                "old": {
+                    "('org.apache.commons.configuration.builder.combined#CombinedConfigurationBuilder', 'createAdditionalsConfiguration(CombinedConfiguration)')": [
+                        837,
+                        838,
+                        839
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/TestCombinedConfiguration.java": {
+                "old": {
+                    "('org.apache.commons.configuration#TestCombinedConfiguration', 'testInit')": [
+                        97
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/builder/combined/TestCombinedConfigurationBuilder.java": {
+                "old": {
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'checkCombinedConfigAttrs(CombinedConfiguration)')": [
+                        525,
+                        526
+                    ]
+                }
+            }
+        }
+    },
+    "9f5468faecbe356c7c85bac7d987f8f4b9185d97": {
+        "authored_data": "2013 May 15 20:06",
+        "commit.message": "Reworked CompositeConfiguration regarding thread-safety.\n\nThe methods for accessing the list of child configurations and the in-memory\nconfiguration now call the Synchronizer correctly. Updated Javadoc regarding\nthread-safety.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1483061 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "60301da8eaba925045104231e3618d89bf8b6547",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/CompositeConfiguration.java": {
+                "old": {
+                    "('org.apache.commons.configuration#CompositeConfiguration', 'addConfiguration(Configuration,boolean)')": [
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188
+                    ],
+                    "('org.apache.commons.configuration#CompositeConfiguration', None)": [
+                        189,
+                        190
+                    ],
+                    "('org.apache.commons.configuration#CompositeConfiguration', 'removeConfiguration(Configuration)')": [
+                        201,
+                        202,
+                        203,
+                        204,
+                        205
+                    ],
+                    "('org.apache.commons.configuration#CompositeConfiguration', 'getNumberOfConfigurations')": [
+                        216
+                    ],
+                    "('org.apache.commons.configuration#CompositeConfiguration', 'getConfiguration(int)')": [
+                        402
+                    ],
+                    "('org.apache.commons.configuration#CompositeConfiguration', 'getInMemoryConfiguration')": [
+                        413
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61
+                    ],
+                    "('org.apache.commons.configuration#CompositeConfiguration', 'addConfiguration(Configuration,boolean)')": [
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209
+                    ],
+                    "('org.apache.commons.configuration#CompositeConfiguration', 'removeConfiguration(Configuration)')": [
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232
+                    ],
+                    "('org.apache.commons.configuration#CompositeConfiguration', 'getNumberOfConfigurations')": [
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250
+                    ],
+                    "('org.apache.commons.configuration#CompositeConfiguration', None)": [
+                        251,
+                        445,
+                        464
+                    ],
+                    "('org.apache.commons.configuration#CompositeConfiguration', 'getConfiguration(int)')": [
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444
+                    ],
+                    "('org.apache.commons.configuration#CompositeConfiguration', 'getInMemoryConfiguration')": [
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/TestCompositeConfiguration.java": {
+                "old": {
+                    "(None, None)": [
+                        44
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36,
+                        45
+                    ],
+                    "('org.apache.commons.configuration#TestCompositeConfiguration', None)": [
+                        877,
+                        878,
+                        879,
+                        880,
+                        888,
+                        889,
+                        890,
+                        891,
+                        892,
+                        893,
+                        899,
+                        900,
+                        901,
+                        902,
+                        903,
+                        904,
+                        910,
+                        911,
+                        912,
+                        913,
+                        914,
+                        915,
+                        921,
+                        922,
+                        923,
+                        924,
+                        925,
+                        926,
+                        932,
+                        933,
+                        934,
+                        935,
+                        936,
+                        937,
+                        938,
+                        945,
+                        946,
+                        947
+                    ],
+                    "('org.apache.commons.configuration#TestCompositeConfiguration', 'installSynchronizer')": [
+                        881,
+                        882,
+                        883,
+                        884,
+                        885,
+                        886,
+                        887
+                    ],
+                    "('org.apache.commons.configuration#TestCompositeConfiguration', 'testAddConfigurationSynchronized')": [
+                        894,
+                        895,
+                        896,
+                        897,
+                        898
+                    ],
+                    "('org.apache.commons.configuration#TestCompositeConfiguration', 'testRemoveConfigurationSynchronized')": [
+                        905,
+                        906,
+                        907,
+                        908,
+                        909
+                    ],
+                    "('org.apache.commons.configuration#TestCompositeConfiguration', 'testGetConfigurationSynchronized')": [
+                        916,
+                        917,
+                        918,
+                        919,
+                        920
+                    ],
+                    "('org.apache.commons.configuration#TestCompositeConfiguration', 'testGetInMemoryConfigurationSynchronized')": [
+                        927,
+                        928,
+                        929,
+                        930,
+                        931
+                    ],
+                    "('org.apache.commons.configuration#TestCompositeConfiguration', 'testGetNumberOfConfigurationsSynchronized')": [
+                        939,
+                        940,
+                        941,
+                        942,
+                        943,
+                        944
+                    ]
+                }
+            }
+        }
+    },
+    "60301da8eaba925045104231e3618d89bf8b6547": {
+        "authored_data": "2013 May 15 20:06",
+        "commit.message": "Updated Javadocs related to thread-safety.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1483060 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "ad356da0f6b10e4ab32c575f85b719d184ba32cc",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/INIConfiguration.java": {
+                "old": {
+                    "(None, None)": [
+                        191,
+                        192,
+                        193
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200
+                    ]
+                }
+            }
+        }
+    },
+    "ad356da0f6b10e4ab32c575f85b719d184ba32cc": {
+        "authored_data": "2013 May 15 20:05",
+        "commit.message": "Reworked PropertiesConfiguration regarding thread-safety.\n\nSome special methods of PropertiesConfiguration now call the Synchronizer\ncorrectly. Removed synchronization from properties set via the builder.\nUpdated Javadoc regarding thread-safety.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1483059 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "94aeffb3636ae371e8096a71156aeed02ff92091",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/PropertiesConfiguration.java": {
+                "old": {
+                    "(None, None)": [
+                        162,
+                        163,
+                        164
+                    ],
+                    "('org.apache.commons.configuration#PropertiesConfiguration', None)": [
+                        235
+                    ],
+                    "('org.apache.commons.configuration#PropertiesConfiguration', 'getHeader')": [
+                        304
+                    ],
+                    "('org.apache.commons.configuration#PropertiesConfiguration', 'setHeader(String)')": [
+                        315
+                    ],
+                    "('org.apache.commons.configuration#PropertiesConfiguration', 'getFooter')": [
+                        327
+                    ],
+                    "('org.apache.commons.configuration#PropertiesConfiguration', 'setFooter(String)')": [
+                        339
+                    ],
+                    "('org.apache.commons.configuration#PropertiesConfiguration', 'getLayout')": [
+                        348
+                    ],
+                    "('org.apache.commons.configuration#PropertiesConfiguration', 'setLayout(PropertiesConfigurationLayout)')": [
+                        360
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171
+                    ],
+                    "('org.apache.commons.configuration#PropertiesConfiguration', None)": [
+                        242,
+                        319,
+                        338,
+                        358,
+                        378
+                    ],
+                    "('org.apache.commons.configuration#PropertiesConfiguration', 'getHeader')": [
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318
+                    ],
+                    "('org.apache.commons.configuration#PropertiesConfiguration', 'setHeader(String)')": [
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337
+                    ],
+                    "('org.apache.commons.configuration#PropertiesConfiguration', 'getFooter')": [
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357
+                    ],
+                    "('org.apache.commons.configuration#PropertiesConfiguration', 'setFooter(String)')": [
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377
+                    ],
+                    "('org.apache.commons.configuration#PropertiesConfiguration', 'getLayout')": [
+                        387
+                    ],
+                    "('org.apache.commons.configuration#PropertiesConfiguration', 'setLayout(PropertiesConfigurationLayout)')": [
+                        399
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/TestPropertiesConfiguration.java": {
+                "new": {
+                    "(None, None)": [
+                        51
+                    ],
+                    "('org.apache.commons.configuration#TestPropertiesConfiguration', None)": [
+                        1005,
+                        1006,
+                        1007,
+                        1014,
+                        1015,
+                        1016,
+                        1017,
+                        1018,
+                        1019,
+                        1026,
+                        1027,
+                        1028,
+                        1029,
+                        1030,
+                        1031,
+                        1038,
+                        1039,
+                        1040,
+                        1041,
+                        1042,
+                        1043,
+                        1050,
+                        1051,
+                        1052
+                    ],
+                    "('org.apache.commons.configuration#TestPropertiesConfiguration', 'testGetFooterSynchronized')": [
+                        1008,
+                        1009,
+                        1010,
+                        1011,
+                        1012,
+                        1013
+                    ],
+                    "('org.apache.commons.configuration#TestPropertiesConfiguration', 'testSetFooterSynchronized')": [
+                        1020,
+                        1021,
+                        1022,
+                        1023,
+                        1024,
+                        1025
+                    ],
+                    "('org.apache.commons.configuration#TestPropertiesConfiguration', 'testGetHeaderSynchronized')": [
+                        1032,
+                        1033,
+                        1034,
+                        1035,
+                        1036,
+                        1037
+                    ],
+                    "('org.apache.commons.configuration#TestPropertiesConfiguration', 'testSetHeaderSynchronized')": [
+                        1044,
+                        1045,
+                        1046,
+                        1047,
+                        1048,
+                        1049
+                    ]
+                }
+            }
+        }
+    },
+    "94aeffb3636ae371e8096a71156aeed02ff92091": {
+        "authored_data": "2013 May 13 20:27",
+        "commit.message": "Some special methods of XMLConfiguration now call the Synchronizer correctly.\nUpdated Javadoc regarding thread-safety.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1482087 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "fb2cb222c5aa1bbc51882a79fba752b8008efecc",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/XMLConfiguration.java": {
+                "old": {
+                    "(None, None)": [
+                        162,
+                        163,
+                        164
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'getRootElementNameInternal')": [
+                        262,
+                        268
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'getPublicID')": [
+                        333
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'setPublicID(String)')": [
+                        346
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'getSystemID')": [
+                        359
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'setSystemID(String)')": [
+                        372
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'getDocument')": [
+                        463
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'createTransformer')": [
+                        988,
+                        991,
+                        992,
+                        993,
+                        996
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'getRootElementNameInternal')": [
+                        270,
+                        276
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'getPublicID')": [
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', None)": [
+                        349,
+                        370,
+                        391,
+                        412,
+                        511,
+                        1018
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'setPublicID(String)')": [
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'getSystemID')": [
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'setSystemID(String)')": [
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'getDocument')": [
+                        503,
+                        504,
+                        505,
+                        506,
+                        507,
+                        508,
+                        509,
+                        510
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'validate')": [
+                        987,
+                        1015,
+                        1016,
+                        1017
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'createTransformer')": [
+                        1041,
+                        1044,
+                        1045,
+                        1046,
+                        1049
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/TestXMLConfiguration.java": {
+                "new": {
+                    "(None, None)": [
+                        43
+                    ],
+                    "('org.apache.commons.configuration#TestXMLConfiguration', 'testSaveWithValidation')": [
+                        1472,
+                        1473,
+                        1475
+                    ],
+                    "('org.apache.commons.configuration#TestXMLConfiguration', None)": [
+                        1633,
+                        1634,
+                        1635,
+                        1644,
+                        1645,
+                        1646,
+                        1647,
+                        1648,
+                        1649,
+                        1658,
+                        1659,
+                        1660,
+                        1661,
+                        1662,
+                        1663,
+                        1670,
+                        1671,
+                        1672
+                    ],
+                    "('org.apache.commons.configuration#TestXMLConfiguration', 'testSystemIdSynchronized')": [
+                        1636,
+                        1637,
+                        1638,
+                        1639,
+                        1640,
+                        1641,
+                        1642,
+                        1643
+                    ],
+                    "('org.apache.commons.configuration#TestXMLConfiguration', 'testPublicIdSynchronized')": [
+                        1650,
+                        1651,
+                        1652,
+                        1653,
+                        1654,
+                        1655,
+                        1656,
+                        1657
+                    ],
+                    "('org.apache.commons.configuration#TestXMLConfiguration', 'testGetDocumentSynchronized')": [
+                        1664,
+                        1665,
+                        1666,
+                        1667,
+                        1668,
+                        1669
+                    ]
+                }
+            }
+        }
+    },
+    "fb2cb222c5aa1bbc51882a79fba752b8008efecc": {
+        "authored_data": "2013 May 13 20:26",
+        "commit.message": "FileHandler now takes care for synchronization.\n\nIf the associated FileBased object implements the SynchronizerSupport\ninterface, the object is locked during load and save operations.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1482086 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "e6f4229ef5f582df0969e7b9ab569ba3b7e9e7e4",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/io/FileHandler.java": {
+                "old": {
+                    "('org.apache.commons.configuration.io#FileHandler', 'loadFromStream(InputStream,String,URL)')": [
+                        812,
+                        813,
+                        814,
+                        815,
+                        816,
+                        817,
+                        818,
+                        819,
+                        820
+                    ],
+                    "('org.apache.commons.configuration.io#FileHandler', 'saveToStream(OutputStream,String,URL)')": [
+                        1042,
+                        1043,
+                        1044,
+                        1045,
+                        1046,
+                        1047,
+                        1049,
+                        1051,
+                        1053,
+                        1054,
+                        1055,
+                        1057,
+                        1058,
+                        1059,
+                        1060,
+                        1061,
+                        1062,
+                        1063,
+                        1064
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37,
+                        38,
+                        39,
+                        40,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92
+                    ],
+                    "('org.apache.commons.configuration.io#FileHandler', None)": [
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        763,
+                        764,
+                        765,
+                        766,
+                        767,
+                        768,
+                        769,
+                        777,
+                        778,
+                        779,
+                        1146
+                    ],
+                    "('org.apache.commons.configuration.io#FileHandler', 'fetchSynchronizerSupport')": [
+                        770,
+                        771,
+                        772,
+                        773,
+                        774,
+                        775,
+                        776
+                    ],
+                    "('org.apache.commons.configuration.io#FileHandler', 'loadFromStream(InputStream,String,URL)')": [
+                        876,
+                        877,
+                        878,
+                        879,
+                        880,
+                        881,
+                        882,
+                        883,
+                        884,
+                        885,
+                        886,
+                        887,
+                        888,
+                        889,
+                        890,
+                        891,
+                        892,
+                        893
+                    ],
+                    "('org.apache.commons.configuration.io#FileHandler', 'saveToStream(OutputStream,String,URL)')": [
+                        1115,
+                        1116,
+                        1117,
+                        1118,
+                        1119,
+                        1120,
+                        1121,
+                        1122,
+                        1124,
+                        1125,
+                        1126,
+                        1127,
+                        1128,
+                        1129,
+                        1130,
+                        1131,
+                        1132,
+                        1133,
+                        1135,
+                        1136,
+                        1138,
+                        1140,
+                        1141,
+                        1142,
+                        1143,
+                        1144,
+                        1145
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/io/TestFileHandler.java": {
+                "new": {
+                    "(None, None)": [
+                        45,
+                        46,
+                        47
+                    ],
+                    "('org.apache.commons.configuration.io#TestFileHandler', None)": [
+                        1184,
+                        1185,
+                        1186,
+                        1196,
+                        1197,
+                        1198,
+                        1199,
+                        1200,
+                        1201,
+                        1212,
+                        1213,
+                        1214
+                    ],
+                    "('org.apache.commons.configuration.io#TestFileHandler', 'testLoadSynchronized')": [
+                        1187,
+                        1188,
+                        1189,
+                        1190,
+                        1191,
+                        1192,
+                        1193,
+                        1194,
+                        1195
+                    ],
+                    "('org.apache.commons.configuration.io#TestFileHandler', 'testSaveSynchronized')": [
+                        1202,
+                        1203,
+                        1204,
+                        1205,
+                        1206,
+                        1207,
+                        1208,
+                        1209,
+                        1210,
+                        1211
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,743 @@
+{
+    "5cb0099a249f4609702e707d5846aec761cf49ca": {
+        "authored_data": "2013 Sep 29 20:12",
+        "commit.message": "[CONFIGURATION-555] Fixed a problem with the handling of the xml:space attribute.\n\nThe attribute was only evaluated for sub elements, but not for the current\nelement. However, now there is a corner case of an element which only\ncontains sub elements and has the attribute set to \"preserve\". In this case,\na trim is done because it does not make sense to assign a value consisting\nonly of whitespace to this element.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1527396 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "2f60a82073b81ca990ac941a68fc5f2667b31706",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/XMLConfiguration.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', None)": [
+                        547,
+                        548,
+                        549,
+                        550
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'constructHierarchy(ConfigurationNode,Element,boolean,boolean)')": [
+                        571,
+                        580,
+                        581,
+                        582,
+                        583,
+                        584
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'processAttributes(ConfigurationNode,Element,boolean)')": [
+                        616,
+                        617,
+                        618,
+                        619,
+                        620,
+                        621,
+                        622,
+                        623,
+                        624
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        55
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', None)": [
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        602,
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612,
+                        613,
+                        614,
+                        615
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'constructHierarchy(ConfigurationNode,Element,boolean,boolean)')": [
+                        561,
+                        575,
+                        576,
+                        585
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'determineValue(ConfigurationNode,String,boolean)')": [
+                        616,
+                        617,
+                        618,
+                        619,
+                        620,
+                        621,
+                        622,
+                        623
+                    ],
+                    "('org.apache.commons.configuration#XMLConfiguration', 'processAttributes(ConfigurationNode,Element,boolean)')": [
+                        639
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/TestXMLConfiguration.java": {
+                "new": {
+                    "('org.apache.commons.configuration#TestXMLConfiguration', None)": [
+                        1435,
+                        1436,
+                        1437,
+                        1438,
+                        1442,
+                        1443,
+                        1444
+                    ],
+                    "('org.apache.commons.configuration#TestXMLConfiguration', 'testPreserveSpaceOnElement')": [
+                        1439,
+                        1440,
+                        1441
+                    ]
+                }
+            }
+        }
+    },
+    "2f60a82073b81ca990ac941a68fc5f2667b31706": {
+        "authored_data": "2013 Sep 29 17:41",
+        "commit.message": "Missing svn properties.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1527363 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "0c251ade81a728d178182ae6ca68411fcf484125",
+        "changes": {
+            "src/test/java/org/apache/commons/configuration/io/TestDefaultFileSystem.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33
+                    ]
+                }
+            }
+        }
+    },
+    "5840b22a9049ca18258e0c685ab7f402f0b6470a": {
+        "authored_data": "2013 Sep 28 19:46",
+        "commit.message": "DefaultFileSystem now uses the logger defined by the base class.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1527249 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "6374d4b34601c5bfe12dd2743b58a95b46d54f9f",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/io/DefaultFileSystem.java": {
+                "old": {
+                    "(None, None)": [
+                        31,
+                        32
+                    ],
+                    "('org.apache.commons.configuration.io#DefaultFileSystem', None)": [
+                        42,
+                        43,
+                        44,
+                        45,
+                        46
+                    ],
+                    "('org.apache.commons.configuration.io#DefaultFileSystem', 'getPath(File,URL,String,String)')": [
+                        150,
+                        152
+                    ],
+                    "('org.apache.commons.configuration.io#DefaultFileSystem', 'locateFromURL(String,String)')": [
+                        256,
+                        257,
+                        258
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.io#DefaultFileSystem', 'getPath(File,URL,String,String)')": [
+                        143,
+                        145
+                    ],
+                    "('org.apache.commons.configuration.io#DefaultFileSystem', 'locateFromURL(String,String)')": [
+                        249,
+                        250,
+                        251
+                    ]
+                }
+            }
+        }
+    },
+    "6374d4b34601c5bfe12dd2743b58a95b46d54f9f": {
+        "authored_data": "2013 Sep 28 19:46",
+        "commit.message": "Some changes in FileSystem class.\n\nRemoved the static default file system field. It was thread-hostile. (The\nfile system now has to be provided explicitly by clients.) Changed the way the\nlogger is accessed, do not call a non-final, non-private method in\nconstructor. Member fields have been made volatile, they might be accessed by\ndifferent threads.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1527248 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "489e623cb3341b909690d9fb66a15ec773b206cf",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/io/FileSystem.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.commons.configuration.io#FileSystem', None)": [
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        46,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144
+                    ],
+                    "('org.apache.commons.configuration.io#FileSystem', 'getLogger')": [
+                        63
+                    ],
+                    "('org.apache.commons.configuration.io#FileSystem', 'setLogger(Log)')": [
+                        77
+                    ],
+                    "('org.apache.commons.configuration.io#FileSystem', 'setDefaultFileSystem(FileSystem)')": [
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130
+                    ],
+                    "('org.apache.commons.configuration.io#FileSystem', 'resetDefaultFileSystem')": [
+                        136,
+                        137,
+                        138
+                    ],
+                    "('org.apache.commons.configuration.io#FileSystem', 'getDefaultFileSystem')": [
+                        145,
+                        146,
+                        147
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.io#FileSystem', None)": [
+                        38,
+                        39,
+                        42,
+                        45
+                    ],
+                    "('org.apache.commons.configuration.io#FileSystem', 'getLogger')": [
+                        54,
+                        55
+                    ],
+                    "('org.apache.commons.configuration.io#FileSystem', 'setLogger(Log)')": [
+                        69
+                    ]
+                }
+            }
+        }
+    },
+    "489e623cb3341b909690d9fb66a15ec773b206cf": {
+        "authored_data": "2013 Sep 28 19:45",
+        "commit.message": "Changed default file system, made protected fields private.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1527247 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "bcf4d6ff755be9727079fc06f538fb7a5865d3ce",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/resolver/CatalogResolver.java": {
+                "old": {
+                    "('org.apache.commons.configuration.resolver#CatalogResolver', None)": [
+                        68,
+                        73
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.resolver#CatalogResolver', None)": [
+                        68,
+                        73
+                    ]
+                }
+            }
+        }
+    },
+    "bcf4d6ff755be9727079fc06f538fb7a5865d3ce": {
+        "authored_data": "2013 Sep 28 19:45",
+        "commit.message": "Removed some obsolete methods from ConfigurationUtils.\n\nMethods related to URL handling have been moved to FileLocatorUtils.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1527246 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "b7c2518b6647af62345ab05d4bfc7e160117151b",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/ConfigurationUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        27,
+                        28,
+                        35
+                    ],
+                    "('org.apache.commons.configuration#ConfigurationUtils', None)": [
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        461,
+                        462,
+                        463
+                    ],
+                    "('org.apache.commons.configuration#ConfigurationUtils', 'getURL(String,String)')": [
+                        443,
+                        444,
+                        445
+                    ],
+                    "('org.apache.commons.configuration#ConfigurationUtils', 'toURL(File)')": [
+                        458,
+                        459,
+                        460
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/TestConfigurationUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        28,
+                        29
+                    ],
+                    "('org.apache.commons.configuration#TestConfigurationUtils', 'testGetURL')": [
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141
+                    ],
+                    "('org.apache.commons.configuration#TestConfigurationUtils', None)": [
+                        142,
+                        143,
+                        144
+                    ]
+                }
+            }
+        }
+    },
+    "b7c2518b6647af62345ab05d4bfc7e160117151b": {
+        "authored_data": "2013 Sep 28 19:44",
+        "commit.message": "Changed file system access in tests for CombinedConfigurationBuilder.\n\nRather than changing the default file system, the file system is now set via\nthe parameters object passed to the builder.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1527244 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "bd2b3623e3d268dd59474888052cbc6c8959aa19",
+        "changes": {
+            "src/test/java/org/apache/commons/configuration/builder/combined/TestCombinedConfigurationBuilder.java": {
+                "old": {
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testLoadConfiguration')": [
+                        222
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testLoadAdditional')": [
+                        236
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testLoadOptional')": [
+                        285
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testLoadOptionalWithException')": [
+                        303
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testBuilderNamesBeforeConfigurationAccess')": [
+                        341
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testBuilderNames')": [
+                        352
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testBuilderNamesManipulate')": [
+                        368
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testGetNamedBuilder')": [
+                        381
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testGetNamedBuilderUnknown')": [
+                        399
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testGetNamedBuilderBeforeConfigurationAccess')": [
+                        413
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testCombinedConfigurationAttributes')": [
+                        545
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testCombinedConfigurationNoAdditional')": [
+                        563
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testCombinedConfigurationListNodes')": [
+                        581
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testProviderInDefinitionConfig')": [
+                        637
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testSystemProperties')": [
+                        654
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testEnvironmentProperties')": [
+                        671
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testJndiConfiguration')": [
+                        692
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testINIConfiguration')": [
+                        709
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testCustomEntityResolver')": [
+                        724
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'checkFileSystem(File)')": [
+                        769
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testDefaultBasePathInParameters')": [
+                        813
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testDefaultBasePathFromDefinitionBuilder')": [
+                        831
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testConfigurationBuilderProviderInheritCustomProviders')": [
+                        967
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testConfigurationBuilderProviderInheritBasePath')": [
+                        991
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testInitChildBuilderParametersDefaultChildProperties')": [
+                        1014
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testCustomLookup')": [
+                        1079
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testInterpolationOverMultipleSources')": [
+                        1099
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testGetChildBuilders')": [
+                        1120
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'createMultiFileConfig(String)')": [
+                        1140
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testRootNodeInitializedAfterCreation')": [
+                        1281
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testConcurrentReadAccessWithoutSynchronizer')": [
+                        1295
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', None)": [
+                        161,
+                        162,
+                        163,
+                        164,
+                        168,
+                        169,
+                        170
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'createParameters')": [
+                        165,
+                        166,
+                        167
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testLoadConfiguration')": [
+                        232
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testLoadAdditional')": [
+                        246
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testLoadOptional')": [
+                        295
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testLoadOptionalWithException')": [
+                        313
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testBuilderNamesBeforeConfigurationAccess')": [
+                        351
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testBuilderNames')": [
+                        362
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testBuilderNamesManipulate')": [
+                        378
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testGetNamedBuilder')": [
+                        391
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testGetNamedBuilderUnknown')": [
+                        409
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testGetNamedBuilderBeforeConfigurationAccess')": [
+                        423
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testCombinedConfigurationAttributes')": [
+                        555
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testCombinedConfigurationNoAdditional')": [
+                        573
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testCombinedConfigurationListNodes')": [
+                        591
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testProviderInDefinitionConfig')": [
+                        647
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testSystemProperties')": [
+                        664
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testEnvironmentProperties')": [
+                        681
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testJndiConfiguration')": [
+                        702
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testINIConfiguration')": [
+                        719
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testCustomEntityResolver')": [
+                        734
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'checkFileSystem(File)')": [
+                        779
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testDefaultBasePathInParameters')": [
+                        823
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testDefaultBasePathFromDefinitionBuilder')": [
+                        841
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testConfigurationBuilderProviderInheritCustomProviders')": [
+                        977
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testConfigurationBuilderProviderInheritBasePath')": [
+                        1001
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testInitChildBuilderParametersDefaultChildProperties')": [
+                        1024
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testCustomLookup')": [
+                        1089
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testInterpolationOverMultipleSources')": [
+                        1109
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testGetChildBuilders')": [
+                        1130
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'createMultiFileConfig(String)')": [
+                        1150
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testRootNodeInitializedAfterCreation')": [
+                        1291
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilder', 'testConcurrentReadAccessWithoutSynchronizer')": [
+                        1305
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/builder/combined/TestCombinedConfigurationBuilderVFS.java": {
+                "old": {
+                    "(None, None)": [
+                        30,
+                        32,
+                        33
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilderVFS', None)": [
+                        46,
+                        51,
+                        52,
+                        53
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilderVFS', 'setUp')": [
+                        47,
+                        49,
+                        50
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilderVFS', 'tearDown')": [
+                        54,
+                        55,
+                        56
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilderVFS', 'testSetConfigurationBasePath')": [
+                        69,
+                        70
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilderVFS', None)": [
+                        43,
+                        44,
+                        45,
+                        46
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilderVFS', 'createParameters')": [
+                        48,
+                        50,
+                        51
+                    ],
+                    "('org.apache.commons.configuration.builder.combined#TestCombinedConfigurationBuilderVFS', 'testSetConfigurationBasePath')": [
+                        63,
+                        64,
+                        65,
+                        66,
+                        68
+                    ]
+                }
+            }
+        }
+    },
+    "bd2b3623e3d268dd59474888052cbc6c8959aa19": {
+        "authored_data": "2013 Sep 28 19:44",
+        "commit.message": "Removed access to default file system in test case.\n\nIn future, the file system will have to be set explicitly if another one than\nthe DefaultFileSystem is to be used. Adapted the test class correspondingly.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/trunk@1527243 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "0b690f20407872361fa0f5273d59abe2892aa689",
+        "changes": {
+            "src/test/java/org/apache/commons/configuration/reloading/TestVFSFileHandlerReloadingDetector.java": {
+                "old": {
+                    "(None, None)": [
+                        30,
+                        36,
+                        37
+                    ],
+                    "('org.apache.commons.configuration.reloading#TestVFSFileHandlerReloadingDetector', None)": [
+                        60,
+                        61,
+                        65,
+                        66,
+                        67,
+                        71
+                    ],
+                    "('org.apache.commons.configuration.reloading#TestVFSFileHandlerReloadingDetector', 'setUp')": [
+                        62,
+                        63,
+                        64
+                    ],
+                    "('org.apache.commons.configuration.reloading#TestVFSFileHandlerReloadingDetector', 'tearDown')": [
+                        68,
+                        69,
+                        70
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.reloading#TestVFSFileHandlerReloadingDetector', 'testLastModificationDateExisting')": [
+                        85
+                    ],
+                    "('org.apache.commons.configuration.reloading#TestVFSFileHandlerReloadingDetector', 'testLastModificationDateNonExisting')": [
+                        99
+                    ],
+                    "('org.apache.commons.configuration.reloading#TestVFSFileHandlerReloadingDetector', 'testLastModificationDateUnresolvableURI')": [
+                        164
+                    ]
+                }
+            }
+        }
+    }
+}

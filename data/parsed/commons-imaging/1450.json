@@ -1,0 +1,376 @@
+{
+    "229a144a6af2e77123405567a5515cb79fc1257c": {
+        "authored_data": "2011 Dec 09 10:18",
+        "commit.message": "Detect ASCII field types more rigorously,\nand write their correct length when writing\nTIFF tags.\n\nThis is based on bits from SANSELAN-51\nand SANSELAN-12, however neither of those\nis complete or correct by itself or even\nwhen they're put together.\n\nThis resolves SANSELAN-12 and fixes part 1\nof SANSELAN-51.\n\nJira issue keys: SANSELAN-12 , SANSELAN-51\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1212318 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "232832c3b6d14de0099be6ef8bef11f5c4fffd3e",
+        "changes": {
+            "src/main/java/org/apache/sanselan/formats/tiff/write/TiffOutputField.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.tiff.write#TiffOutputField', 'create(TagInfo,int,String)')": [
+                        100,
+                        101,
+                        102,
+                        105,
+                        109
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.tiff.write#TiffOutputField', 'create(TagInfo,int,String)')": [
+                        100,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        112
+                    ]
+                }
+            }
+        }
+    },
+    "232832c3b6d14de0099be6ef8bef11f5c4fffd3e": {
+        "authored_data": "2011 Dec 09 09:37",
+        "commit.message": "Add some EXIF tag writing tests,\nand fix TiffOutputField to allow\nwriting to fields that specify\nthey require an unknown number\nof values.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1212304 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "1ed49664f70aca519b919e0fa07d1e458f5a1ac9",
+        "changes": {
+            "src/main/java/org/apache/sanselan/formats/tiff/write/TiffOutputField.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.tiff.write#TiffOutputField', 'create(TagInfo,int,Number)')": [
+                        87,
+                        88
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.tiff.write#TiffOutputField', 'create(TagInfo,int,Number)')": [
+                        87,
+                        88
+                    ]
+                }
+            }
+        }
+    },
+    "1ed49664f70aca519b919e0fa07d1e458f5a1ac9": {
+        "authored_data": "2011 Dec 08 20:02",
+        "commit.message": "Rather than hardcoding which images break the ExifRewriteTest,\ndetect fields that are broken during the test\nand ignore only those fields.\n\nSanselan cannot transfer raw tag bytes from image to image\nbecause the byte order might change (at least, for non-ASCII fields).\nBut since it cannot properly parse 8 bit unclean strings (which aren't\nsupposed to exist according to EXIF), it cannot properly copy them either,\nand ends up corrupting them when rewriting EXIF. For now detect and ignore\nthese fields. In future it could be possible to transfer raw bytes\nfrom TiffField to TiffOutputField when the type is ASCII.\n\nThis gets the test suite to *finally* pass.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1212076 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "5455fe4d3c18383893544c91d4b21fa76141bfbf",
+        "changes": {
+            "src/test/java/org/apache/sanselan/formats/jpeg/exif/ExifRewriteTest.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.jpeg.exif#ExifRewriteTest', 'testInsert')": [
+                        108,
+                        109,
+                        110,
+                        111,
+                        112
+                    ],
+                    "('org.apache.sanselan.formats.jpeg.exif#ExifRewriteTest', 'rewrite(Rewriter,String)')": [
+                        193,
+                        194,
+                        195,
+                        196,
+                        197
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.jpeg.exif#ExifRewriteTest', 'compare(File,TiffImageMetadata,TiffImageMetadata)')": [
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447
+                    ]
+                }
+            }
+        }
+    },
+    "5455fe4d3c18383893544c91d4b21fa76141bfbf": {
+        "authored_data": "2011 Dec 08 13:43",
+        "commit.message": "Add support for parsing the JPEG COM (comment) section,\nand present it to the user in ImageInfo.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1211882 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "af56c622f54eecb4120eef5922e81d7d2fe2fa0d",
+        "changes": {
+            "src/main/java/org/apache/sanselan/formats/jpeg/JpegConstants.java": {
+                "old": {
+                    "(None, None)": [
+                        121
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        113,
+                        122
+                    ]
+                }
+            },
+            "src/main/java/org/apache/sanselan/formats/jpeg/JpegImageParser.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.jpeg#JpegImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        804
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        44
+                    ],
+                    "('org.apache.sanselan.formats.jpeg#JpegImageParser', 'readSegments(ByteSource,int,boolean,boolean)')": [
+                        177,
+                        178,
+                        179
+                    ],
+                    "('org.apache.sanselan.formats.jpeg#JpegImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        809,
+                        810,
+                        811,
+                        812,
+                        813,
+                        814,
+                        815,
+                        816,
+                        817,
+                        818,
+                        819,
+                        820
+                    ]
+                }
+            }
+        }
+    },
+    "af56c622f54eecb4120eef5922e81d7d2fe2fa0d": {
+        "authored_data": "2011 Dec 08 11:41",
+        "commit.message": "Verify and fix the lengths of GPS EXIF tags,\nbased on the EXIF 2.2 specification.\n\nThis fixes part 2 of SANSELAN-51 and\nsome of part 3 of SANSELAN-31.\n\nJira issue key: SANSELAN-51 , SANSELAN-31\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1211843 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "889dc41829b42fdb6bd8fccec095f2ded7a31663",
+        "changes": {
+            "src/main/java/org/apache/sanselan/formats/tiff/constants/GPSTagConstants.java": {
+                "old": {
+                    "(None, None)": [
+                        54,
+                        61,
+                        89,
+                        101,
+                        112,
+                        123,
+                        164,
+                        177,
+                        197
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        54,
+                        61,
+                        89,
+                        101,
+                        112,
+                        123,
+                        164,
+                        177,
+                        197
+                    ]
+                }
+            }
+        }
+    },
+    "889dc41829b42fdb6bd8fccec095f2ded7a31663": {
+        "authored_data": "2011 Dec 07 07:24",
+        "commit.message": "Fix another large offset bug in TIFF parsing,\nfix the required fields necessary for bilevel images,\nand add a test image for these changes and\nthe last few parsing changes.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1211312 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "cd48fbf1efb1f3f4bfbbc9dc01525a7a0b839dd3",
+        "changes": {
+            "src/main/java/org/apache/sanselan/formats/tiff/TiffField.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.tiff#TiffField', 'fillInValue(ByteSource)')": [
+                        290
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.tiff#TiffField', 'fillInValue(ByteSource)')": [
+                        283,
+                        291
+                    ]
+                }
+            },
+            "src/main/java/org/apache/sanselan/formats/tiff/TiffImageParser.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.tiff#TiffImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        227
+                    ],
+                    "('org.apache.sanselan.formats.tiff#TiffImageParser', 'getBufferedImage(TiffDirectory,Map)')": [
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.tiff#TiffImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        227
+                    ],
+                    "('org.apache.sanselan.formats.tiff#TiffImageParser', 'getBufferedImage(TiffDirectory,Map)')": [
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474
+                    ]
+                }
+            }
+        }
+    },
+    "cd48fbf1efb1f3f4bfbbc9dc01525a7a0b839dd3": {
+        "authored_data": "2011 Dec 03 16:38",
+        "commit.message": "TIFF parsing should really be done with unsigned ints.\nUnfortunately Java doesn't have those,\nand Sanselan doesn't use larger ints and zero-extend.\nThis means Sanselan can't parse files larger than 2GB,\neven though the max is 4GB. Fixing this would take more\nwork, but for now, at least make FieldType's isLocalValue()\ntreat length as unsigned, so that corrupt lengths\ncan be caught and ignored early.\n\nJira issue key: SANSELAN-53\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1209945 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "3fd8acd194850cd874d861309f793525ce23b91e",
+        "changes": {
+            "src/main/java/org/apache/sanselan/formats/tiff/fieldtypes/FieldType.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.tiff.fieldtypes#FieldType', 'isLocalValue(TiffField)')": [
+                        40
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.tiff.fieldtypes#FieldType', 'isLocalValue(TiffField)')": [
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45
+                    ]
+                }
+            }
+        }
+    },
+    "3fd8acd194850cd874d861309f793525ce23b91e": {
+        "authored_data": "2011 Dec 03 06:54",
+        "commit.message": "Delete an unused method that's breaking compilation.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1209839 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "b19fe94ebcafe52c56b79d7a0940679b8da00ab4",
+        "changes": {
+            "src/main/java/org/apache/sanselan/formats/tiff/TiffDirectory.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.tiff#TiffDirectory', 'fillInValues(ByteSource)')": [
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118
+                    ],
+                    "('org.apache.sanselan.formats.tiff#TiffDirectory', None)": [
+                        119,
+                        120,
+                        121
+                    ]
+                }
+            }
+        }
+    },
+    "b19fe94ebcafe52c56b79d7a0940679b8da00ab4": {
+        "authored_data": "2011 Dec 02 06:36",
+        "commit.message": "Rewrite revision 1206412 to throw a helpful exception\nin strict mode, and catch and ignore it otherwise.\nThis is cleaner and lets us reuse that exception\nclass for other cases.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1209369 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "1b67db5ee3109f6556cce34abd0d8ac2825639bb",
+        "changes": {
+            "src/main/java/org/apache/sanselan/formats/tiff/TiffField.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.tiff#TiffField', 'getFieldType(int)')": [
+                        108
+                    ],
+                    "('org.apache.sanselan.formats.tiff#TiffField', 'getValueLengthInBytes')": [
+                        265
+                    ],
+                    "('org.apache.sanselan.formats.tiff#TiffField', 'fillInValue(ByteSource)')": [
+                        277
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.tiff#TiffField', 'getFieldType(int)')": [
+                        108
+                    ],
+                    "('org.apache.sanselan.formats.tiff#TiffField', 'getValueLengthInBytes')": [
+                        265
+                    ],
+                    "('org.apache.sanselan.formats.tiff#TiffField', 'fillInValue(ByteSource)')": [
+                        277,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295
+                    ]
+                }
+            },
+            "src/main/java/org/apache/sanselan/formats/tiff/TiffReader.java": {
+                "old": {
+                    "('org.apache.sanselan.formats.tiff#TiffReader', 'readDirectory(ByteSource,int,int,FormatCompliance,Listener,boolean,List)')": [
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205
+                    ]
+                },
+                "new": {
+                    "('org.apache.sanselan.formats.tiff#TiffReader', 'readDirectory(ByteSource,int,int,FormatCompliance,Listener,boolean,List)')": [
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204
+                    ]
+                }
+            }
+        }
+    }
+}

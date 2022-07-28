@@ -1,0 +1,2539 @@
+{
+    "121b9444b7d8c8d054fb1368504138b572c1441e": {
+        "authored_data": "2002 May 20 12:35",
+        "commit.message": "Added a Region Detail page (lists keys and allows removals) to the cache admin\nservlet, and added a silent mode (if the silent parameter is present on the\nrequest, no output will be produced.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@223978 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "James Taylor",
+        "pcid": "12f582d5d3d2c312b31c5dcdbec8293be226f07a",
+        "changes": {
+            "src/java/org/apache/jcs/servlet/JCSAdminServlet.java": {
+                "old": {
+                    "('org.apache.jcs.servlet#JCSAdminServlet', 'handleRequest(HttpServletRequest,HttpServletResponse,Context)')": [
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        137,
+                        138,
+                        139
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.servlet#JCSAdminServlet', None)": [
+                        57,
+                        58,
+                        59,
+                        66,
+                        73,
+                        148,
+                        149,
+                        150,
+                        160,
+                        161
+                    ],
+                    "('org.apache.jcs.servlet#JCSAdminServlet', 'handleRequest(HttpServletRequest,HttpServletResponse,Context)')": [
+                        83,
+                        84,
+                        85,
+                        86,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147
+                    ],
+                    "('org.apache.jcs.servlet#JCSAdminServlet', 'getSortedKeys(String)')": [
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159
+                    ],
+                    "('org.apache.jcs.servlet#JCSAdminServlet', 'buildCacheInfo')": [
+                        162,
+                        163,
+                        187
+                    ]
+                }
+            }
+        }
+    },
+    "12f582d5d3d2c312b31c5dcdbec8293be226f07a": {
+        "authored_data": "2002 May 18 02:11",
+        "commit.message": "Reintroducing the Servlet interface to the cache. I rewrote it using velocity\nwhich makes the code a little cleaner. I still would like to add a detail page\nfor viewing the items in the cache and removing one (or perhaps more than one).\nSeems like a decent start.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@223977 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "James Taylor",
+        "pcid": "0b7c13f55fb13517565c504c35d46d86920114d5",
+        "changes": {
+            "src/experimental/org/apache/jcs/auxiliary/lateral/http/server/LateralCacheServletReciever.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.lateral.http.server#LateralCacheServletReciever', 'service(HttpServletRequest,HttpServletResponse)')": [
+                        97
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.lateral.http.server#LateralCacheServletReciever', 'service(HttpServletRequest,HttpServletResponse)')": [
+                        97
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/socket/tcp/LateralTCPListener.java": {
+                "old": {
+                    "(None, None)": [
+                        73
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPListener', None)": [
+                        99,
+                        355
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPListener', None)": [
+                        98
+                    ]
+                }
+            }
+        }
+    },
+    "0b7c13f55fb13517565c504c35d46d86920114d5": {
+        "authored_data": "2002 May 17 14:22",
+        "commit.message": "Renaming for consistency.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@223976 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "James Taylor",
+        "pcid": "e72b17b622975bf3b562b586dd608b6ec2bdebfe",
+        "changes": {
+            "src/java/org/apache/jcs/auxiliary/lateral/LateralCacheManager.java": {
+                "old": {
+                    "(None, None)": [
+                        17
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheManager', 'getCache(String)')": [
+                        202
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        17
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheManager', 'getCache(String)')": [
+                        202
+                    ]
+                }
+            }
+        }
+    },
+    "f4e92208d29d404ef4adbd4b95ed61f6b21ded6f": {
+        "authored_data": "2002 May 17 14:12",
+        "commit.message": "A couple of things:\n\n    - Cleaning up and simplifying the TCP lateral listener. It now uses a\n      thread pool. Just getting started there.\n\n    - Got rid of EXCLUDE_REMOTE_CACHE, INCLUDE_REMOTE_CACHE, methods in\n      ICompositeCache that accept bools. Replaced with local{Update|Get|\n      Remove|RemoveAll}\n\n    - Pushed 'put' methods out of composite cache, everything to create a\n      CacheElement is noe handled in CacheAccess (rather than being split\n      up).\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@223974 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "James Taylor",
+        "pcid": "d30d00ab09f6ea430b965ae978d5ee3a70e4aee0",
+        "changes": {
+            "src/java/org/apache/jcs/access/CacheAccess.java": {
+                "old": {
+                    "('org.apache.jcs.access#CacheAccess', 'put(Object,Object)')": [
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283
+                    ],
+                    "('org.apache.jcs.access#CacheAccess', None)": [
+                        284,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295
+                    ],
+                    "('org.apache.jcs.access#CacheAccess', 'put(Object,Object,IElementAttributes)')": [
+                        296,
+                        297,
+                        298,
+                        301,
+                        302,
+                        303
+                    ],
+                    "('org.apache.jcs.access#CacheAccess', 'destroy')": [
+                        322
+                    ],
+                    "('org.apache.jcs.access#CacheAccess', 'remove')": [
+                        329
+                    ],
+                    "(None, None)": [
+                        489,
+                        493
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.access#CacheAccess', 'put(Object,Object)')": [
+                        277,
+                        278,
+                        279,
+                        280,
+                        281
+                    ],
+                    "('org.apache.jcs.access#CacheAccess', None)": [
+                        287,
+                        337,
+                        351
+                    ],
+                    "('org.apache.jcs.access#CacheAccess', 'put(Object,Object,IElementAttributes)')": [
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311
+                    ],
+                    "('org.apache.jcs.access#CacheAccess', 'destroy')": [
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336
+                    ],
+                    "('org.apache.jcs.access#CacheAccess', 'remove')": [
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350
+                    ],
+                    "(None, None)": [
+                        511,
+                        515
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/LateralCacheManager.java": {
+                "old": {
+                    "(None, None)": [
+                        16,
+                        17,
+                        18,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheManager', None)": [
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheManager', 'getCache(String)')": [
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        17
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheManager', None)": [
+                        116
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheManager', 'getCache(String)')": [
+                        200,
+                        201,
+                        202
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/LateralCacheNoWaitFacade.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWaitFacade', 'get(Serializable)')": [
+                        73,
+                        74,
+                        75,
+                        76
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWaitFacade', 'get(Serializable)')": [
+                        73
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/LateralCacheRestore.java": {
+                "old": {
+                    "(None, None)": [
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheRestore', 'canFix')": [
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheRestore', 'canFix')": [
+                        55
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/socket/tcp/LateralCacheTCPListener.java": {
+                "old": {
+                    "(None, None)": [
+                        58,
+                        62,
+                        65,
+                        66,
+                        67,
+                        70,
+                        72,
+                        73,
+                        74,
+                        75,
+                        78,
+                        81,
+                        82,
+                        83
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', None)": [
+                        85,
+                        90,
+                        92,
+                        95,
+                        96,
+                        98,
+                        99,
+                        112,
+                        131,
+                        132,
+                        152,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        233,
+                        234,
+                        235,
+                        236,
+                        247,
+                        248,
+                        249,
+                        261,
+                        262,
+                        263,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'init')": [
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        130
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'getListenerId')": [
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'getInstance(ILateralCacheAttributes)')": [
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        189,
+                        190,
+                        192,
+                        194,
+                        196,
+                        197,
+                        198,
+                        199
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'handlePut(ICacheElement)')": [
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'handleRemove(String,Serializable)')": [
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'handleRemoveAll(String)')": [
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'handleGet(String,Serializable)')": [
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'handleDispose(String)')": [
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'getCacheManager')": [
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        56,
+                        58,
+                        59,
+                        61,
+                        62,
+                        63,
+                        66,
+                        67,
+                        68,
+                        70,
+                        73,
+                        79,
+                        82,
+                        446
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', None)": [
+                        84,
+                        85,
+                        90,
+                        91,
+                        92,
+                        93,
+                        95,
+                        96,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        137,
+                        138,
+                        139,
+                        169,
+                        200,
+                        201,
+                        219,
+                        220,
+                        230,
+                        231,
+                        241,
+                        242,
+                        252,
+                        253,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'getInstance(ILateralCacheAttributes)')": [
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'init')": [
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        166
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'handlePut(ICacheElement)')": [
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'handleRemove(String,Serializable)')": [
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'handleRemoveAll(String)')": [
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'handleGet(String,Serializable)')": [
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'handleDispose(String)')": [
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralCacheTCPListener', 'getCache(String)')": [
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/socket/tcp/LateralTCPSender.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPSender', 'sendAndReceive(LateralElementDescriptor)')": [
+                        210,
+                        211,
+                        220
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/RemoteCacheListener.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheListener', 'handlePut(ICacheElement)')": [
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheListener', 'handleRemove(String,Serializable)')": [
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheListener', None)": [
+                        248,
+                        249,
+                        250,
+                        251,
+                        252
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheListener', 'handleDispose(String)')": [
+                        279
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheListener', 'handlePut(ICacheElement)')": [
+                        209,
+                        210
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheListener', 'handleRemove(String,Serializable)')": [
+                        234,
+                        235
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheListener', 'handleDispose(String)')": [
+                        262
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/group/RemoteGroupCacheListener.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote.group#RemoteGroupCacheListener', 'handlePut(ICacheElement)')": [
+                        125,
+                        145
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.remote.group#RemoteGroupCacheListener', 'handlePut(ICacheElement)')": [
+                        125,
+                        145
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/server/RemoteCacheServer.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'update(ICacheElement,byte)')": [
+                        282,
+                        290
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'get(String,Serializable)')": [
+                        415,
+                        416,
+                        417
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', None)": [
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'remove(String,Serializable,byte)')": [
+                        476,
+                        484
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'update(ICacheElement,byte)')": [
+                        282,
+                        283,
+                        291,
+                        292
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'get(String,Serializable)')": [
+                        417,
+                        418
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'remove(String,Serializable,byte)')": [
+                        465,
+                        473
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/server/RemoteCacheServerListener.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServerListener', 'handlePut(ICacheElement)')": [
+                        191
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServerListener', 'handleRemove(String,Serializable)')": [
+                        217
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServerListener', 'handleDispose(String)')": [
+                        244
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServerListener', 'handlePut(ICacheElement)')": [
+                        191
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServerListener', 'handleRemove(String,Serializable)')": [
+                        217
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServerListener', 'handleDispose(String)')": [
+                        244
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/CacheConstants.java": {
+                "old": {
+                    "(None, None)": [
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/CacheEventQueue.java": {
+                "old": {
+                    "('org.apache.jcs.engine#CacheEventQueue', None)": [
+                        288,
+                        294,
+                        295,
+                        296
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.engine#CacheEventQueue', None)": [
+                        288,
+                        294,
+                        295
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/behavior/ICompositeCache.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        28,
+                        29,
+                        30,
+                        33,
+                        34,
+                        37,
+                        38,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        82,
+                        83
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        26,
+                        29,
+                        32
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/control/Cache.java": {
+                "old": {
+                    "(None, None)": [
+                        94
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', None)": [
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        289,
+                        290,
+                        291,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        530,
+                        531,
+                        532,
+                        533,
+                        536,
+                        537,
+                        538,
+                        539,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        724,
+                        725,
+                        726,
+                        727,
+                        732,
+                        733,
+                        751,
+                        814,
+                        815,
+                        816,
+                        817,
+                        818
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'add(ICacheElement)')": [
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'put(Serializable,Serializable)')": [
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'put(Serializable,Serializable,IElementAttributes)')": [
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'updateCaches(Serializable,Serializable,IElementAttributes)')": [
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'updateCaches(Serializable,Serializable,IElementAttributes,boolean)')": [
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'update(ICacheElement)')": [
+                        300
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'update(ICacheElement,boolean)')": [
+                        310,
+                        313
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'updateExclude(ICacheElement,boolean)')": [
+                        323,
+                        382,
+                        414
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'getCacheElement(Serializable)')": [
+                        540,
+                        541,
+                        542,
+                        543
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'get(Serializable)')": [
+                        553,
+                        554,
+                        555
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'get(Serializable,boolean)')": [
+                        565,
+                        571,
+                        572,
+                        592,
+                        593,
+                        594,
+                        601
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'remove(Serializable)')": [
+                        731
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'remove(Serializable,boolean)')": [
+                        755,
+                        756,
+                        757,
+                        758,
+                        759,
+                        760,
+                        761,
+                        762,
+                        783,
+                        787
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'removeAll')": [
+                        819,
+                        836
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'dispose')": [
+                        857
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'getElementAttributes(Serializable)')": [
+                        1086
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.engine.control#Cache', 'update(ICacheElement)')": [
+                        192
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', None)": [
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        421,
+                        422,
+                        423,
+                        424,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        436,
+                        437,
+                        438,
+                        439,
+                        442,
+                        603,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612,
+                        616,
+                        634,
+                        693,
+                        694,
+                        695,
+                        696,
+                        701,
+                        702,
+                        703,
+                        704,
+                        705,
+                        710,
+                        711,
+                        712,
+                        713,
+                        714
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'localUpdate(ICacheElement)')": [
+                        201,
+                        204
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'update(ICacheElement,boolean)')": [
+                        214,
+                        273,
+                        305
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'get(Serializable)')": [
+                        425,
+                        426,
+                        427
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'localGet(Serializable)')": [
+                        433,
+                        434,
+                        435
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'get(Serializable,boolean)')": [
+                        445,
+                        451,
+                        471,
+                        472,
+                        473,
+                        480
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'remove(Serializable)')": [
+                        607
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'localRemove(Serializable)')": [
+                        613,
+                        614,
+                        615
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'remove(Serializable,boolean)')": [
+                        638,
+                        639,
+                        640,
+                        661,
+                        665,
+                        666
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'removeAll')": [
+                        697,
+                        698,
+                        699,
+                        700
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'localRemoveAll')": [
+                        706,
+                        707,
+                        708,
+                        709
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'removeAll(boolean)')": [
+                        715,
+                        716,
+                        733,
+                        734,
+                        735,
+                        736
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'dispose')": [
+                        757
+                    ],
+                    "('org.apache.jcs.engine.control#Cache', 'getElementAttributes(Serializable)')": [
+                        986
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/control/CacheHub.java": {
+                "old": {
+                    "('org.apache.jcs.engine.control#CacheHub', 'freeCache(String)')": [
+                        343
+                    ],
+                    "('org.apache.jcs.engine.control#CacheHub', 'release')": [
+                        366
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.engine.control#CacheHub', 'freeCache(String)')": [
+                        343
+                    ],
+                    "('org.apache.jcs.engine.control#CacheHub', 'release')": [
+                        366
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/control/group/GroupCache.java": {
+                "old": {
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'get(Serializable)')": [
+                        157
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'get(Serializable,boolean)')": [
+                        186
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'getGAN(GroupAttrName)')": [
+                        209
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'getGAN(GroupAttrName,boolean)')": [
+                        224
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'getGI(GroupId)')": [
+                        260
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'getGI(GroupId,boolean)')": [
+                        274,
+                        287,
+                        288
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'put(Serializable,Serializable,IElementAttributes)')": [
+                        387
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'put(Serializable,Serializable)')": [
+                        432
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'update(ICacheElement)')": [
+                        470
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', None)": [
+                        480,
+                        481,
+                        482,
+                        483,
+                        484
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'update(ICacheElement,boolean)')": [
+                        485,
+                        497,
+                        498,
+                        499,
+                        500,
+                        501,
+                        502,
+                        503,
+                        504,
+                        507,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'putGAN(GroupAttrName,Serializable,IElementAttributes)')": [
+                        583
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'putGAN(GroupAttrName,Serializable,IElementAttributes,boolean)')": [
+                        593,
+                        601,
+                        602,
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        625,
+                        626,
+                        627,
+                        628,
+                        629,
+                        630,
+                        631,
+                        632,
+                        633,
+                        634,
+                        635,
+                        636,
+                        641,
+                        659,
+                        660,
+                        661
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'createGroup(String,IElementAttributes)')": [
+                        707
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'remove(Serializable)')": [
+                        724
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'remove(Serializable,boolean)')": [
+                        742,
+                        760,
+                        776
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'removeGAN(GroupAttrName,boolean)')": [
+                        808
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'updateGroupAttrNameSet(GroupAttrName,boolean,boolean)')": [
+                        862,
+                        863,
+                        911,
+                        932,
+                        933,
+                        934,
+                        936,
+                        940,
+                        942
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'removeGI(GroupId)')": [
+                        961
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'removeGI(GroupId,boolean,boolean)')": [
+                        993,
+                        994,
+                        995,
+                        996,
+                        997,
+                        998,
+                        999,
+                        1003,
+                        1004,
+                        1005,
+                        1006
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'getElementAttributes(Serializable)')": [
+                        1030
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'get(Serializable)')": [
+                        157
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'get(Serializable,boolean)')": [
+                        186
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'getGAN(GroupAttrName)')": [
+                        209
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'getGAN(GroupAttrName,boolean)')": [
+                        224
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'getGI(GroupId)')": [
+                        260
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'getGI(GroupId,boolean)')": [
+                        274,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'put(Serializable,Serializable,IElementAttributes)')": [
+                        396
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'put(Serializable,Serializable)')": [
+                        441
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'update(ICacheElement)')": [
+                        479
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', None)": [
+                        489,
+                        490
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'update(ICacheElement,boolean)')": [
+                        491,
+                        505,
+                        525
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'putGAN(GroupAttrName,Serializable,IElementAttributes)')": [
+                        570
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'putGAN(GroupAttrName,Serializable,IElementAttributes,boolean)')": [
+                        580,
+                        604,
+                        609,
+                        627,
+                        628
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'createGroup(String,IElementAttributes)')": [
+                        674
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'remove(Serializable)')": [
+                        691
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'remove(Serializable,boolean)')": [
+                        709,
+                        727,
+                        743
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'removeGAN(GroupAttrName,boolean)')": [
+                        775
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'updateGroupAttrNameSet(GroupAttrName,boolean,boolean)')": [
+                        829,
+                        830,
+                        831,
+                        832,
+                        833,
+                        834,
+                        835,
+                        836,
+                        837,
+                        838,
+                        886,
+                        887,
+                        907,
+                        909,
+                        911,
+                        915
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'removeGI(GroupId)')": [
+                        935
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'removeGI(GroupId,boolean,boolean)')": [
+                        967,
+                        968,
+                        969,
+                        973,
+                        974
+                    ],
+                    "('org.apache.jcs.engine.control.group#GroupCache', 'getElementAttributes(Serializable)')": [
+                        998
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/utils/locking/ReadWriteLockManager.java": {
+                "old": {
+                    "('org.apache.jcs.utils.locking#ReadWriteLockManager', 'done(String)')": [
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        82,
+                        83,
+                        84,
+                        87,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97
+                    ],
+                    "('org.apache.jcs.utils.locking#ReadWriteLockManager', None)": [
+                        98,
+                        99,
+                        100
+                    ],
+                    "('org.apache.jcs.utils.locking#ReadWriteLockManager', 'lock(String,boolean)')": [
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        174,
+                        175,
+                        176
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.utils.locking#ReadWriteLockManager', None)": [
+                        44,
+                        130,
+                        131,
+                        132,
+                        140,
+                        141,
+                        142,
+                        200
+                    ],
+                    "('org.apache.jcs.utils.locking#ReadWriteLockManager', 'lock(String,boolean)')": [
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129
+                    ],
+                    "('org.apache.jcs.utils.locking#ReadWriteLockManager', 'ensureGarbageCollectorCreated')": [
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139
+                    ],
+                    "('org.apache.jcs.utils.locking#ReadWriteLockManager', 'done(String)')": [
+                        149,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        183,
+                        188,
+                        191,
+                        197,
+                        198,
+                        199
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/utils/locking/RwLockHolder.java": {
+                "old": {
+                    "('org.apache.jcs.utils.locking#RwLockHolder', None)": [
+                        14,
+                        16,
+                        17,
+                        26,
+                        38
+                    ],
+                    "('org.apache.jcs.utils.locking#RwLockHolder', 'removable(long)')": [
+                        45
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.utils.locking#RwLockHolder', None)": [
+                        13,
+                        16,
+                        17,
+                        47,
+                        48,
+                        52,
+                        53,
+                        54,
+                        58,
+                        59,
+                        60
+                    ],
+                    "('org.apache.jcs.utils.locking#RwLockHolder', 'removable(long)')": [
+                        43,
+                        44,
+                        45
+                    ],
+                    "('org.apache.jcs.utils.locking#RwLockHolder', 'readLock')": [
+                        49,
+                        50,
+                        51
+                    ],
+                    "('org.apache.jcs.utils.locking#RwLockHolder', 'writeLock')": [
+                        55,
+                        56,
+                        57
+                    ],
+                    "('org.apache.jcs.utils.locking#RwLockHolder', 'done')": [
+                        61,
+                        62,
+                        63
+                    ],
+                    "(None, None)": [
+                        64,
+                        65
+                    ]
+                }
+            },
+            "src/test/org/apache/jcs/auxiliary/lateral/http/broadcast/LateralCacheTester.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.lateral.http.broadcast#LateralCacheTester', None)": [
+                        11
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.http.broadcast#LateralCacheTester', 'main(String)')": [
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35
+                    ],
+                    "(None, None)": [
+                        36,
+                        37,
+                        38
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38
+                    ]
+                }
+            }
+        }
+    },
+    "723272187640aa8561c9412984d824c2fe6659b1": {
+        "authored_data": "2002 May 16 13:10",
+        "commit.message": "Cleaning up the ShrinkerThread. Shouldn't affect\nfunctionality.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@223972 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "James Taylor",
+        "pcid": "2e37261fd3c25890ba6e3ca3ad1bcf1aac81c905",
+        "changes": {
+            "src/java/org/apache/jcs/engine/memory/shrinking/ShrinkerThread.java": {
+                "old": {
+                    "(None, None)": [
+                        56,
+                        59,
+                        63,
+                        64,
+                        65,
+                        67,
+                        70,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79
+                    ],
+                    "('org.apache.jcs.engine.memory.shrinking#ShrinkerThread', None)": [
+                        83,
+                        84,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        93,
+                        99,
+                        100,
+                        101,
+                        102,
+                        110,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        147,
+                        148
+                    ],
+                    "('org.apache.jcs.engine.memory.shrinking#ShrinkerThread', 'run')": [
+                        114,
+                        122,
+                        123,
+                        127,
+                        128,
+                        129
+                    ],
+                    "('org.apache.jcs.engine.memory.shrinking#ShrinkerThread', 'shrink')": [
+                        152,
+                        155,
+                        160,
+                        161,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        185,
+                        186,
+                        187,
+                        189,
+                        190,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        56,
+                        57,
+                        58,
+                        64,
+                        65,
+                        69,
+                        70,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        359,
+                        360,
+                        361
+                    ],
+                    "('org.apache.jcs.engine.memory.shrinking#ShrinkerThread', None)": [
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        96,
+                        97,
+                        99,
+                        104,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        132,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        176,
+                        177,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333
+                    ],
+                    "('org.apache.jcs.engine.memory.shrinking#ShrinkerThread', 'run')": [
+                        143,
+                        147,
+                        148,
+                        149,
+                        150
+                    ],
+                    "('org.apache.jcs.engine.memory.shrinking#ShrinkerThread', 'shrink')": [
+                        183,
+                        184,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        198,
+                        199,
+                        200,
+                        201,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        232,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        245,
+                        247,
+                        248,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        258,
+                        259,
+                        260
+                    ],
+                    "('org.apache.jcs.engine.memory.shrinking#ShrinkerThread', 'checkForRemoval(ICacheElement,long)')": [
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323
+                    ],
+                    "('org.apache.jcs.engine.memory.shrinking#ShrinkerThread', 'handleElementEvents(ICacheElement,int)')": [
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358
+                    ]
+                }
+            }
+        }
+    }
+}

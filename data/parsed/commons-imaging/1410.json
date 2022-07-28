@@ -1,0 +1,4375 @@
+{
+    "72bfba2120d9b29aa57aaf681e4e899e0932448f": {
+        "authored_data": "2011 Dec 26 07:18",
+        "commit.message": "Read in the full IPTC block before trying to ignore it,\nso we don't lose our position in the stream.\nAlso added a test image that shows the problem.\n\nSubmitted by: Alex Vigdor <Alex dot Vigdor at abc dot com>\nJira issue key: SANSELAN-35\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1224687 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "c8ec9337e79530e6485a41045ed8865e3bfc7417",
+        "changes": {
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/iptc/IptcParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.jpeg.iptc#IptcParser', 'parseIPTCBlock(byte,boolean)')": [
+                        159,
+                        160,
+                        161
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.iptc#IptcParser', 'parseIPTCBlock(byte,boolean)')": [
+                        201,
+                        202,
+                        203
+                    ]
+                }
+            }
+        }
+    },
+    "c8ec9337e79530e6485a41045ed8865e3bfc7417": {
+        "authored_data": "2011 Dec 26 06:28",
+        "commit.message": "Treat the TIFF/EXIF byte range occupied by maker notes\nas an unknown value that is to be preserved. This is\nbecause some maker notes are TIFF directories which\nreference values stored inside the maker notes\nusing TIFF-relative addresses, meaning that\neven though we parse the maker notes field,\nit is written to a different location\nwhen rewriting the file, causing\nits internal addresses to become wrong.\nBy preserving the location and values\nof the original maker notes, the new maker notes\nwill reference valid values in the old.\n\nAlso disable a file that now fails\nthe ExifRewriteTest, because we duplicate\nthe maker notes on each rewrite,\nand that file's maker notes are 28kB\ncausing the 64kB JPEG segment limit to be overrun.\n\nJira issue key: SANSELAN-32\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1224681 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "9655c9bc280546b2c1752b7ae8e3001435738821",
+        "changes": {
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/write/TiffImageWriterLossless.java": {
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterLossless', 'analyzeOldTiff')": [
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/jpeg/exif/ExifRewriteTest.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#ExifRewriteTest', 'rewrite(Rewriter,String)')": [
+                        255
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#ExifRewriteTest', 'rewrite(Rewriter,String)')": [
+                        255,
+                        256,
+                        257,
+                        258
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#ExifRewriteTest', None)": [
+                        259
+                    ]
+                }
+            }
+        }
+    },
+    "9655c9bc280546b2c1752b7ae8e3001435738821": {
+        "authored_data": "2011 Dec 22 15:57",
+        "commit.message": "Take out some test code commmitted by accident.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1222297 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "718679f74b22c6ac97ef7f34fa99277827ef14fe",
+        "changes": {
+            "src/test/java/org/apache/commons/sanselan/formats/tiff/TiffCcittTest.java": {
+                "old": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffCcittTest', 'testAll5x2Images')": [
+                        201,
+                        202,
+                        203,
+                        204
+                    ]
+                }
+            }
+        }
+    },
+    "718679f74b22c6ac97ef7f34fa99277827ef14fe": {
+        "authored_data": "2011 Dec 22 12:12",
+        "commit.message": "Added support for writing all CCITT Group 3 and Group 4\ncompression types for TIFF, and added exhaustive tests\nfor this.\n\nFixed some row aligned bugs when writing Modified Huffman\nTIFFs, fixed parsing with TIFFs that use tiles intead of\nstrips, and generally brought the CCITT compression\nimplementation to production quality standards.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1222196 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "1e118c0c926c8a38cb87930dccfa3332f9c4638f",
+        "changes": {
+            "src/main/java/org/apache/commons/sanselan/common/BitArrayOutputStream.java": {
+                "new": {
+                    "('org.apache.commons.sanselan.common#BitArrayOutputStream', 'getBitsAvailableInCurrentByte')": [
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79
+                    ],
+                    "('org.apache.commons.sanselan.common#BitArrayOutputStream', None)": [
+                        80,
+                        81
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/common/itu_t4/T4AndT6Compression.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.common.itu_t4#T4AndT6Compression', 'compressModifiedHuffman(byte,int,int)')": [
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#T4AndT6Compression', 'decompressT4_1D(byte,int,int,boolean)')": [
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#T4AndT6Compression', 'decompressT4_2D(byte,int,int,boolean)')": [
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#T4AndT6Compression', 'compress1DLine(BitInputStreamFlexible,BitArrayOutputStream,int,int)')": [
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#T4AndT6Compression', None)": [
+                        103,
+                        104,
+                        186,
+                        187,
+                        331,
+                        332,
+                        514,
+                        515,
+                        613,
+                        614,
+                        615
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#T4AndT6Compression', 'compressModifiedHuffman(byte,int,int)')": [
+                        119,
+                        120
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#T4AndT6Compression', 'compressT4_1D(byte,int,int,boolean)')": [
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#T4AndT6Compression', 'decompressT4_1D(byte,int,int,boolean)')": [
+                        206
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#T4AndT6Compression', 'compressT4_2D(byte,int,int,boolean,int)')": [
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#T4AndT6Compression', 'decompressT4_2D(byte,int,int,boolean)')": [
+                        354
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#T4AndT6Compression', 'compressT6(byte,int,int)')": [
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        499,
+                        500,
+                        501,
+                        502,
+                        503,
+                        504,
+                        505,
+                        506,
+                        507,
+                        508,
+                        509,
+                        510,
+                        511,
+                        512,
+                        513
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#T4AndT6Compression', 'isEOL(T4_T6_Tables,boolean)')": [
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/common/itu_t4/T4_T6_Tables.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.common.itu_t4#T4_T6_Tables', None)": [
+                        257
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/constants/TiffConstants.java": {
+                "new": {
+                    "(None, None)": [
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/datareaders/DataReader.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff.datareaders#DataReader', 'decompress(byte,int,int)')": [
+                        110,
+                        117,
+                        125,
+                        126,
+                        130,
+                        132,
+                        134,
+                        144,
+                        148
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff.datareaders#DataReader', 'decompress(byte,int,int,int,int)')": [
+                        110,
+                        117,
+                        125,
+                        126,
+                        130,
+                        132,
+                        134,
+                        144,
+                        148
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/datareaders/DataReaderStrips.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff.datareaders#DataReaderStrips', 'readImageData(BufferedImage)')": [
+                        96
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff.datareaders#DataReaderStrips', 'readImageData(BufferedImage)')": [
+                        96
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/datareaders/DataReaderTiled.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff.datareaders#DataReaderTiled', 'readImageData(BufferedImage)')": [
+                        109
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff.datareaders#DataReaderTiled', 'readImageData(BufferedImage)')": [
+                        109
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/write/TiffImageWriterBase.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterBase', 'writeImage(BufferedImage,OutputStream,Map)')": [
+                        266,
+                        306,
+                        357
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterBase', 'writeImage(BufferedImage,OutputStream,Map)')": [
+                        267,
+                        298,
+                        299,
+                        300,
+                        310,
+                        311,
+                        334,
+                        335,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        399,
+                        509,
+                        510,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516,
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524
+                    ]
+                }
+            }
+        }
+    },
+    "1e118c0c926c8a38cb87930dccfa3332f9c4638f": {
+        "authored_data": "2011 Dec 21 07:03",
+        "commit.message": "Make it possible to set the x and y resolution\nof images when writing them. This is currently\nonly supported for file formats where Sanselan\nalready writes the resolution, ie.\nBMP and TIFF.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1221631 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "f4d82dcd72c278145521842bd7a4bc9d69da20bc",
+        "changes": {
+            "src/main/java/org/apache/commons/sanselan/SanselanConstants.java": {
+                "new": {
+                    "(None, None)": [
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/bmp/BmpImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.bmp#BmpImageParser', 'writeImage(BufferedImage,OutputStream,Map)')": [
+                        794,
+                        795
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.bmp#BmpImageParser', 'writeImage(BufferedImage,OutputStream,Map)')": [
+                        744,
+                        745,
+                        746,
+                        750,
+                        751,
+                        752,
+                        753,
+                        801,
+                        802
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/write/TiffImageWriterBase.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterBase', 'writeImage(BufferedImage,OutputStream,Map)')": [
+                        446,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        459
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterBase', 'writeImage(BufferedImage,OutputStream,Map)')": [
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        464
+                    ]
+                }
+            }
+        }
+    },
+    "f4d82dcd72c278145521842bd7a4bc9d69da20bc": {
+        "authored_data": "2011 Dec 21 05:11",
+        "commit.message": "Added support for writing CCITT Modified Huffman compressed TIFF files,\nand cleaned up TiffImageWriterBase a little.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1221614 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Damjan Jovanovic",
+        "pcid": "6c7eeef0d361ebfcdc42916e8f77980b08c1d3cd",
+        "changes": {
+            "src/main/java/org/apache/commons/sanselan/SanselanConstants.java": {
+                "new": {
+                    "(None, None)": [
+                        64
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/common/itu_t4/T4AndT6Compression.java": {
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#T4AndT6Compression', None)": [
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        420,
+                        421,
+                        437,
+                        438
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#T4AndT6Compression', 'compressModifiedHuffman(byte,int,int)')": [
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#T4AndT6Compression', 'writeRunLength(BitArrayOutputStream,int,int)')": [
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#T4AndT6Compression', 'lowerBound(T4_T6_Tables,int)')": [
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/common/itu_t4/T4_T6_Tables.java": {
+                "new": {
+                    "(None, None)": [
+                        19,
+                        20
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#T4_T6_Tables', None)": [
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/write/TiffImageWriterBase.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterBase', 'writeImage(BufferedImage,OutputStream,Map)')": [
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        332,
+                        355,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterBase', 'getStrips(BufferedImage,int,int,int)')": [
+                        502,
+                        503,
+                        504,
+                        521,
+                        522,
+                        523
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterBase', 'writeImage(BufferedImage,OutputStream,Map)')": [
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        350,
+                        399,
+                        400,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterBase', 'getStrips(BufferedImage,int,int,int)')": [
+                        500,
+                        501,
+                        502,
+                        512,
+                        513,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548
+                    ]
+                }
+            }
+        }
+    },
+    "6c7eeef0d361ebfcdc42916e8f77980b08c1d3cd": {
+        "authored_data": "2011 Dec 20 22:09",
+        "commit.message": "First stab at generifying the API\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1221504 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Emmanuel Bourg",
+        "pcid": "3a0591eacab3fa7574c807563eac8c0c85b5d5bd",
+        "changes": {
+            "src/main/java/org/apache/commons/sanselan/FormatCompliance.java": {
+                "old": {
+                    "('org.apache.commons.sanselan#FormatCompliance', None)": [
+                        29
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan#FormatCompliance', None)": [
+                        29
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/ImageInfo.java": {
+                "old": {
+                    "('org.apache.commons.sanselan#ImageInfo', None)": [
+                        33,
+                        75
+                    ],
+                    "('org.apache.commons.sanselan#ImageInfo', 'getComments')": [
+                        119,
+                        120,
+                        121
+                    ],
+                    "('org.apache.commons.sanselan#ImageInfo', 'toString(PrintWriter,String)')": [
+                        320
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan#ImageInfo', None)": [
+                        33,
+                        75
+                    ],
+                    "('org.apache.commons.sanselan#ImageInfo', 'getComments')": [
+                        119,
+                        120,
+                        121
+                    ],
+                    "('org.apache.commons.sanselan#ImageInfo', 'toString(PrintWriter,String)')": [
+                        320
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/ImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan#ImageParser', 'getAllBufferedImages(ByteSource)')": [
+                        162,
+                        167
+                    ],
+                    "('org.apache.commons.sanselan#ImageParser', 'getAllBufferedImages(byte)')": [
+                        174
+                    ],
+                    "('org.apache.commons.sanselan#ImageParser', 'getAllBufferedImages(File)')": [
+                        180
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan#ImageParser', 'getAllBufferedImages(ByteSource)')": [
+                        162,
+                        167
+                    ],
+                    "('org.apache.commons.sanselan#ImageParser', 'getAllBufferedImages(byte)')": [
+                        174
+                    ],
+                    "('org.apache.commons.sanselan#ImageParser', 'getAllBufferedImages(File)')": [
+                        180
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/Sanselan.java": {
+                "old": {
+                    "('org.apache.commons.sanselan#Sanselan', 'getAllBufferedImages(InputStream,String)')": [
+                        1076
+                    ],
+                    "('org.apache.commons.sanselan#Sanselan', 'getAllBufferedImages(byte)')": [
+                        1092
+                    ],
+                    "('org.apache.commons.sanselan#Sanselan', 'getAllBufferedImages(File)')": [
+                        1108
+                    ],
+                    "('org.apache.commons.sanselan#Sanselan', 'getAllBufferedImages(ByteSource)')": [
+                        1113
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan#Sanselan', 'getAllBufferedImages(InputStream,String)')": [
+                        1076
+                    ],
+                    "('org.apache.commons.sanselan#Sanselan', 'getAllBufferedImages(byte)')": [
+                        1092
+                    ],
+                    "('org.apache.commons.sanselan#Sanselan', 'getAllBufferedImages(File)')": [
+                        1108
+                    ],
+                    "('org.apache.commons.sanselan#Sanselan', 'getAllBufferedImages(ByteSource)')": [
+                        1113
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/common/BasicCParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.common#BasicCParser', 'preprocess(InputStream,StringBuilder,Map)')": [
+                        115
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.common#BasicCParser', 'preprocess(InputStream,StringBuilder,Map)')": [
+                        115
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/common/IImageMetadata.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/common/ImageMetadata.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.common#ImageMetadata', None)": [
+                        24,
+                        25,
+                        42,
+                        43
+                    ],
+                    "('org.apache.commons.sanselan.common#ImageMetadata', 'getItems')": [
+                        37,
+                        39
+                    ],
+                    "('org.apache.commons.sanselan.common#ImageMetadata', 'toString(String)')": [
+                        63
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.common#ImageMetadata', None)": [
+                        24,
+                        41
+                    ],
+                    "('org.apache.commons.sanselan.common#ImageMetadata', 'getItems')": [
+                        36,
+                        38
+                    ],
+                    "('org.apache.commons.sanselan.common#ImageMetadata', 'toString(String)')": [
+                        61
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/common/itu_t4/HuffmanTree.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.common.itu_t4#HuffmanTree', None)": [
+                        33
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#HuffmanTree', 'growAndGetNode(int)')": [
+                        60
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#HuffmanTree', 'decode(BitInputStreamFlexible)')": [
+                        67,
+                        83
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.common.itu_t4#HuffmanTree', None)": [
+                        33
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#HuffmanTree', 'growAndGetNode(int)')": [
+                        60
+                    ],
+                    "('org.apache.commons.sanselan.common.itu_t4#HuffmanTree', 'decode(BitInputStreamFlexible)')": [
+                        67,
+                        83
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/common/mylzw/MyLzwCompressor.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.common.mylzw#MyLzwCompressor', None)": [
+                        63
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.common.mylzw#MyLzwCompressor', None)": [
+                        63
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/bmp/BmpImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.bmp#BmpImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        610
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.bmp#BmpImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        610
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/dcx/DcxImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.dcx#DcxImageParser', 'readDcxHeader(ByteSource)')": [
+                        142
+                    ],
+                    "('org.apache.commons.sanselan.formats.dcx#DcxImageParser', 'getBufferedImage(ByteSource,Map)')": [
+                        188,
+                        191
+                    ],
+                    "('org.apache.commons.sanselan.formats.dcx#DcxImageParser', None)": [
+                        192,
+                        193
+                    ],
+                    "('org.apache.commons.sanselan.formats.dcx#DcxImageParser', 'getAllBufferedImages(ByteSource)')": [
+                        194,
+                        198
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.dcx#DcxImageParser', 'readDcxHeader(ByteSource)')": [
+                        142
+                    ],
+                    "('org.apache.commons.sanselan.formats.dcx#DcxImageParser', 'getBufferedImage(ByteSource,Map)')": [
+                        188,
+                        191
+                    ],
+                    "('org.apache.commons.sanselan.formats.dcx#DcxImageParser', None)": [
+                        192,
+                        193
+                    ],
+                    "('org.apache.commons.sanselan.formats.dcx#DcxImageParser', 'getAllBufferedImages(ByteSource)')": [
+                        194,
+                        198
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/gif/GenericGifBlock.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.gif#GenericGifBlock', None)": [
+                        25,
+                        27
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GenericGifBlock', 'appendSubBlocks(boolean)')": [
+                        46
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.gif#GenericGifBlock', None)": [
+                        25,
+                        27
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GenericGifBlock', 'appendSubBlocks(boolean)')": [
+                        46
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/gif/GifImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'readGenericGIFBlock(InputStream,int,byte)')": [
+                        205
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'readBlocks(GifHeaderInfo,InputStream,boolean,FormatCompliance)')": [
+                        232,
+                        233,
+                        236
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'findBlock(List,int)')": [
+                        459,
+                        463
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'readFile(ByteSource,boolean,FormatCompliance)')": [
+                        493
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'getComments(List)')": [
+                        556,
+                        557,
+                        558,
+                        563
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        599
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'dumpImageFile(PrintWriter,ByteSource)')": [
+                        659
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'getXmpXml(ByteSource,Map)')": [
+                        1116,
+                        1117,
+                        1118,
+                        1121,
+                        1169
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'readGenericGIFBlock(InputStream,int,byte)')": [
+                        205
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'readBlocks(GifHeaderInfo,InputStream,boolean,FormatCompliance)')": [
+                        232,
+                        233,
+                        236
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'findBlock(List,int)')": [
+                        459,
+                        463
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'readFile(ByteSource,boolean,FormatCompliance)')": [
+                        493
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'getComments(List)')": [
+                        556,
+                        557,
+                        558,
+                        563
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        599
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'dumpImageFile(PrintWriter,ByteSource)')": [
+                        659
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'getXmpXml(ByteSource,Map)')": [
+                        1116,
+                        1117,
+                        1118,
+                        1121,
+                        1169
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/gif/ImageContents.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.gif#ImageContents', None)": [
+                        25,
+                        28
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.gif#ImageContents', None)": [
+                        25,
+                        28
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/icns/IcnsDecoder.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.icns#IcnsDecoder', 'decodeAllImages(IcnsImageParser)')": [
+                        431,
+                        434
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.icns#IcnsDecoder', 'decodeAllImages(IcnsImageParser)')": [
+                        431,
+                        434
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/icns/IcnsImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.icns#IcnsImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        109,
+                        112,
+                        113
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsImageParser', 'getImageSize(ByteSource,Map)')": [
+                        139,
+                        142
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsImageParser', 'readImage(ByteSource)')": [
+                        249,
+                        260
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsImageParser', 'getBufferedImage(ByteSource,Map)')": [
+                        291,
+                        293
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsImageParser', 'getAllBufferedImages(ByteSource)')": [
+                        298
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.icns#IcnsImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        109,
+                        112,
+                        113
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsImageParser', 'getImageSize(ByteSource,Map)')": [
+                        139,
+                        142
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsImageParser', 'readImage(ByteSource)')": [
+                        249,
+                        260
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsImageParser', 'getBufferedImage(ByteSource,Map)')": [
+                        291,
+                        293
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsImageParser', 'getAllBufferedImages(ByteSource)')": [
+                        298
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/ico/IcoImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.ico#IcoImageParser', 'getAllBufferedImages(ByteSource)')": [
+                        565,
+                        568
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.ico#IcoImageParser', 'getAllBufferedImages(ByteSource)')": [
+                        565,
+                        568
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/JpegImageMetadata.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.jpeg#JpegImageMetadata', 'getItems')": [
+                        168
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg#JpegImageMetadata', 'getItems')": [
+                        168
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/decoder/JpegDecoder.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.jpeg.decoder#JpegDecoder', 'visitSegment(int,byte,int,byte,byte)')": [
+                        212,
+                        213,
+                        234,
+                        235
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.decoder#JpegDecoder', 'visitSegment(int,byte,int,byte,byte)')": [
+                        212,
+                        233
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/iptc/IptcTypeLookup.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.jpeg.iptc#IptcTypeLookup', None)": [
+                        25
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.iptc#IptcTypeLookup', 'getIptcType(int)')": [
+                        41
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.iptc#IptcTypeLookup', None)": [
+                        25
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.iptc#IptcTypeLookup', 'getIptcType(int)')": [
+                        41
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/segments/DhtSegment.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#DhtSegment', None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#DhtSegment', None)": [
+                        26
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/segments/DqtSegment.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#DqtSegment', None)": [
+                        28
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#DqtSegment', None)": [
+                        28
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/xmp/JpegRewriter.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegRewriter', None)": [
+                        56,
+                        57,
+                        58
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegRewriter', 'analyzeJFIF(ByteSource)')": [
+                        175
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegRewriter', 'insertBeforeFirstAppSegments(List,List)')": [
+                        279,
+                        285,
+                        297
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegRewriter', None)": [
+                        56,
+                        57,
+                        58
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegRewriter', 'analyzeJFIF(ByteSource)')": [
+                        175
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegRewriter', 'insertBeforeFirstAppSegments(List,List)')": [
+                        279,
+                        285,
+                        297
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/pcx/PcxImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.pcx#PcxImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        113
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.pcx#PcxImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        113
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/png/PngImageInfo.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.png#PngImageInfo', None)": [
+                        27,
+                        30,
+                        35
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageInfo', 'getTextChunks')": [
+                        46,
+                        48
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.png#PngImageInfo', None)": [
+                        27,
+                        30,
+                        35
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageInfo', 'getTextChunks')": [
+                        46,
+                        48
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/png/PngImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'getChuckTypes(InputStream)')": [
+                        112,
+                        113,
+                        114,
+                        116
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'hasChuckType(ByteSource,int)')": [
+                        130,
+                        135
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'readChunks(InputStream,int,boolean)')": [
+                        164,
+                        165,
+                        166,
+                        167
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'readChunks(ByteSource,int,boolean)')": [
+                        242,
+                        251,
+                        252,
+                        254,
+                        255,
+                        256
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'getICCProfileBytes(ByteSource,Map)')": [
+                        273
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'getImageSize(ByteSource,Map)')": [
+                        294
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'getMetadata(ByteSource,Map)')": [
+                        320
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'filterChunks(List,int)')": [
+                        433,
+                        434,
+                        435,
+                        439
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        526,
+                        527,
+                        535,
+                        544,
+                        548,
+                        557,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569,
+                        570,
+                        635,
+                        664,
+                        670,
+                        671
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'getBufferedImage(ByteSource,Map)')": [
+                        689,
+                        695,
+                        701,
+                        711,
+                        730,
+                        733,
+                        741,
+                        742,
+                        743
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'dumpImageFile(PrintWriter,ByteSource)')": [
+                        862,
+                        863,
+                        864,
+                        883
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'getXmpXml(ByteSource,Map)')": [
+                        915,
+                        920,
+                        935
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'getChuckTypes(InputStream)')": [
+                        112,
+                        113,
+                        114,
+                        116
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'hasChuckType(ByteSource,int)')": [
+                        130,
+                        135,
+                        136
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'readChunks(InputStream,int,boolean)')": [
+                        165,
+                        166,
+                        167
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'readChunks(ByteSource,int,boolean)')": [
+                        242,
+                        252,
+                        253,
+                        254,
+                        255
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'getICCProfileBytes(ByteSource,Map)')": [
+                        272
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'getImageSize(ByteSource,Map)')": [
+                        293
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'getMetadata(ByteSource,Map)')": [
+                        319
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'filterChunks(List,int)')": [
+                        432,
+                        433,
+                        434,
+                        438
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        525,
+                        533,
+                        542,
+                        546,
+                        555,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        633,
+                        662
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'getBufferedImage(ByteSource,Map)')": [
+                        685,
+                        691,
+                        697,
+                        707,
+                        726,
+                        729,
+                        737,
+                        738,
+                        739
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'dumpImageFile(PrintWriter,ByteSource)')": [
+                        858,
+                        859,
+                        860,
+                        879
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngImageParser', 'getXmpXml(ByteSource,Map)')": [
+                        911,
+                        916,
+                        931
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/pnm/PnmImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.pnm#PnmImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        188
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.pnm#PnmImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        188
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/psd/PsdImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'readImageResourceBlocks(byte,int,int)')": [
+                        176,
+                        177
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'readImageResourceBlocks(InputStream,int,int,int)')": [
+                        196,
+                        197,
+                        198,
+                        199,
+                        200
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'readImageResourceBlocks(ByteSource,int,int)')": [
+                        256,
+                        257
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'getICCProfileBytes(ByteSource,Map)')": [
+                        461,
+                        462,
+                        467
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        543
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'findImageResourceBlock(List,int)')": [
+                        595,
+                        599
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'dumpImageFile(PrintWriter,ByteSource)')": [
+                        625,
+                        626,
+                        634
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'getBufferedImage(ByteSource,Map)')": [
+                        679,
+                        680
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'getXmpXml(ByteSource,Map)')": [
+                        811,
+                        812,
+                        817,
+                        823,
+                        837
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'readImageResourceBlocks(byte,int,int)')": [
+                        176,
+                        177
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'readImageResourceBlocks(InputStream,int,int,int)')": [
+                        196,
+                        197,
+                        198,
+                        199,
+                        200
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'readImageResourceBlocks(ByteSource,int,int)')": [
+                        256,
+                        257
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'getICCProfileBytes(ByteSource,Map)')": [
+                        461,
+                        462,
+                        467
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        543
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'findImageResourceBlock(List,int)')": [
+                        595,
+                        599
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'dumpImageFile(PrintWriter,ByteSource)')": [
+                        625,
+                        626,
+                        634
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'getBufferedImage(ByteSource,Map)')": [
+                        679,
+                        680
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#PsdImageParser', 'getXmpXml(ByteSource,Map)')": [
+                        811,
+                        812,
+                        817,
+                        823,
+                        837
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/TiffContents.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffContents', None)": [
+                        30,
+                        32
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffContents', 'getElements')": [
+                        46,
+                        50,
+                        53
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffContents', 'findField(TagInfo)')": [
+                        72
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffContents', None)": [
+                        30,
+                        32
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffContents', 'getElements')": [
+                        46,
+                        50,
+                        53
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffContents', 'findField(TagInfo)')": [
+                        72
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/TiffDirectory.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffDirectory', 'getElementDescription(boolean)')": [
+                        48
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffDirectory', None)": [
+                        91,
+                        95
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffDirectory', 'getDirectoryEntrys')": [
+                        106,
+                        107,
+                        108
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffDirectory', 'dump')": [
+                        115
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffDirectory', 'findField(TagInfo,boolean)')": [
+                        169
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffDirectory', 'getElementDescription(boolean)')": [
+                        48
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffDirectory', None)": [
+                        91,
+                        95
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffDirectory', 'getDirectoryEntrys')": [
+                        106,
+                        107,
+                        108
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffDirectory', 'dump')": [
+                        115
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffDirectory', 'findField(TagInfo,boolean)')": [
+                        169
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/TiffField.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffField', 'getTag(int,int,List)')": [
+                        121,
+                        136,
+                        147,
+                        163
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffField', 'getTag(int,int)')": [
+                        254
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffField', 'makeTagMap(TagInfo,boolean,String)')": [
+                        578,
+                        579,
+                        582,
+                        589,
+                        592
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffField', None)": [
+                        612,
+                        614,
+                        616,
+                        618
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffField', 'getTag(int,int,List)')": [
+                        121,
+                        136,
+                        147,
+                        163
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffField', 'getTag(int,int)')": [
+                        254
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffField', 'makeTagMap(TagInfo,boolean,String)')": [
+                        578,
+                        579,
+                        582,
+                        589,
+                        592
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffField', None)": [
+                        612,
+                        614,
+                        616,
+                        618
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/TiffImageMetadata.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageMetadata', None)": [
+                        44,
+                        70,
+                        71,
+                        72,
+                        107
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageMetadata', 'countTags(TagInfo)')": [
+                        51,
+                        52,
+                        53,
+                        60
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageMetadata', 'getItems')": [
+                        195
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageMetadata', 'findField(TagInfo,boolean)')": [
+                        262
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageMetadata', 'getAllFields')": [
+                        324,
+                        325,
+                        326
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageMetadata', None)": [
+                        44,
+                        70,
+                        105
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageMetadata', 'countTags(TagInfo)')": [
+                        51,
+                        52,
+                        53,
+                        60
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageMetadata', 'getItems')": [
+                        193
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageMetadata', 'findField(TagInfo,boolean)')": [
+                        260
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageMetadata', 'getAllFields')": [
+                        322,
+                        323,
+                        324
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/TiffImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getICCProfileBytes(ByteSource,Map)')": [
+                        88
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getImageSize(ByteSource,Map)')": [
+                        102
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getMetadata(ByteSource,Map)')": [
+                        127,
+                        133,
+                        137,
+                        141
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        157,
+                        236,
+                        237,
+                        240
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getXmpXml(ByteSource,Map)')": [
+                        313
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'dumpImageFile(PrintWriter,ByteSource)')": [
+                        357,
+                        364,
+                        367,
+                        376
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'collectRawImageData(ByteSource,Map)')": [
+                        408,
+                        415,
+                        418
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getBufferedImage(ByteSource,Map)')": [
+                        439
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getAllBufferedImages(ByteSource)')": [
+                        446,
+                        451,
+                        454
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getBufferedImage(TiffDirectory,Map)')": [
+                        467
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getICCProfileBytes(ByteSource,Map)')": [
+                        88
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getImageSize(ByteSource,Map)')": [
+                        102
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getMetadata(ByteSource,Map)')": [
+                        127,
+                        133,
+                        137,
+                        141
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        157,
+                        236,
+                        237,
+                        240
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getXmpXml(ByteSource,Map)')": [
+                        313
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'dumpImageFile(PrintWriter,ByteSource)')": [
+                        357,
+                        364,
+                        367,
+                        376
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'collectRawImageData(ByteSource,Map)')": [
+                        408,
+                        415,
+                        418
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getBufferedImage(ByteSource,Map)')": [
+                        439
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getAllBufferedImages(ByteSource)')": [
+                        446,
+                        451,
+                        454
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getBufferedImage(TiffDirectory,Map)')": [
+                        467
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/TiffReader.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffReader', 'readDirectories(ByteSource,FormatCompliance,Listener)')": [
+                        100
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffReader', 'readDirectory(ByteSource,int,int,FormatCompliance,Listener,List)')": [
+                        107
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffReader', 'readDirectory(ByteSource,int,int,FormatCompliance,Listener,boolean,List)')": [
+                        116,
+                        141,
+                        245,
+                        248
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffReader', None)": [
+                        324,
+                        325
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffReader', 'readDirectories(ByteSource,FormatCompliance,Listener)')": [
+                        100
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffReader', 'readDirectory(ByteSource,int,int,FormatCompliance,Listener,List)')": [
+                        107
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffReader', 'readDirectory(ByteSource,int,int,FormatCompliance,Listener,boolean,List)')": [
+                        116,
+                        141,
+                        245,
+                        248
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffReader', None)": [
+                        324,
+                        325
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/write/TiffImageWriterBase.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterBase', 'validateDirectories(TiffOutputSet)')": [
+                        65,
+                        77,
+                        78,
+                        81,
+                        127,
+                        173,
+                        178,
+                        185
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterBase', 'validateDirectories(TiffOutputSet)')": [
+                        65,
+                        77,
+                        78,
+                        81,
+                        127,
+                        173,
+                        178,
+                        185
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/write/TiffImageWriterLossless.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterLossless', 'dumpElements(List)')": [
+                        70
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterLossless', 'dumpElements(ByteSource,List)')": [
+                        84,
+                        90
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterLossless', 'analyzeOldTiff')": [
+                        135,
+                        138,
+                        141,
+                        144
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterLossless', 'dumpElements(List)')": [
+                        70
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterLossless', 'dumpElements(ByteSource,List)')": [
+                        84,
+                        90
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterLossless', 'analyzeOldTiff')": [
+                        135,
+                        138,
+                        141,
+                        144
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/write/TiffOutputDirectory.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputDirectory', 'removeField(int)')": [
+                        71
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputDirectory', 'removeField(int)')": [
+                        71
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/write/TiffOutputSet.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSet', None)": [
+                        30
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSet', 'getOutputItems(TiffOutputSummary)')": [
+                        50
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSet', 'getDirectories')": [
+                        68,
+                        69,
+                        70
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSet', 'findDirectory(int)')": [
+                        130
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSet', 'removeField(int)')": [
+                        222
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSet', 'findField(int)')": [
+                        237
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSet', 'toString(String)')": [
+                        304
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSet', None)": [
+                        30
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSet', 'getOutputItems(TiffOutputSummary)')": [
+                        50
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSet', 'getDirectories')": [
+                        68,
+                        69,
+                        70
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSet', 'findDirectory(int)')": [
+                        130
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSet', 'removeField(int)')": [
+                        222
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSet', 'findField(int)')": [
+                        237
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSet', 'toString(String)')": [
+                        304
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/write/TiffOutputSummary.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSummary', None)": [
+                        30,
+                        33,
+                        54,
+                        90
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSummary', 'updateOffsets(int)')": [
+                        66,
+                        76
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSummary', None)": [
+                        30,
+                        33,
+                        54,
+                        90
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffOutputSummary', 'updateOffsets(int)')": [
+                        66,
+                        76
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/wbmp/WbmpImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.wbmp#WbmpImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        91
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.wbmp#WbmpImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        91
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/xbm/XbmImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.xbm#XbmImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        98
+                    ],
+                    "('org.apache.commons.sanselan.formats.xbm#XbmImageParser', 'parseXbmHeader(ByteSource)')": [
+                        170,
+                        177,
+                        178,
+                        179,
+                        180,
+                        182,
+                        184,
+                        186,
+                        188
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.xbm#XbmImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        98
+                    ],
+                    "('org.apache.commons.sanselan.formats.xbm#XbmImageParser', 'parseXbmHeader(ByteSource)')": [
+                        170,
+                        177,
+                        178,
+                        179,
+                        180,
+                        182,
+                        184,
+                        186,
+                        188
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/xpm/XpmImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.xpm#XpmImageParser', None)": [
+                        56,
+                        209
+                    ],
+                    "('org.apache.commons.sanselan.formats.xpm#XpmImageParser', 'loadColorNames')": [
+                        77
+                    ],
+                    "('org.apache.commons.sanselan.formats.xpm#XpmImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        162,
+                        163,
+                        164,
+                        165,
+                        175
+                    ],
+                    "('org.apache.commons.sanselan.formats.xpm#XpmImageParser', 'parseColor(String)')": [
+                        419
+                    ],
+                    "('org.apache.commons.sanselan.formats.xpm#XpmImageParser', 'readXpmImage(XpmHeader,BasicCParser)')": [
+                        590,
+                        591,
+                        592,
+                        593,
+                        605,
+                        606,
+                        607,
+                        608,
+                        644
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.xpm#XpmImageParser', None)": [
+                        56,
+                        209
+                    ],
+                    "('org.apache.commons.sanselan.formats.xpm#XpmImageParser', 'loadColorNames')": [
+                        77
+                    ],
+                    "('org.apache.commons.sanselan.formats.xpm#XpmImageParser', 'getImageInfo(ByteSource,Map)')": [
+                        162,
+                        163,
+                        164,
+                        165,
+                        175
+                    ],
+                    "('org.apache.commons.sanselan.formats.xpm#XpmImageParser', 'parseColor(String)')": [
+                        419
+                    ],
+                    "('org.apache.commons.sanselan.formats.xpm#XpmImageParser', 'readXpmImage(XpmHeader,BasicCParser)')": [
+                        590,
+                        591,
+                        592,
+                        593,
+                        605,
+                        606,
+                        607,
+                        608,
+                        644
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/palette/MedianCutQuantizer.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.palette#MedianCutQuantizer', None)": [
+                        77,
+                        95,
+                        104,
+                        152,
+                        515,
+                        516,
+                        517
+                    ],
+                    "('org.apache.commons.sanselan.palette#MedianCutQuantizer', 'groupColors1(BufferedImage,int,int)')": [
+                        186,
+                        187,
+                        188,
+                        205
+                    ],
+                    "('org.apache.commons.sanselan.palette#MedianCutQuantizer', 'groupColors(BufferedImage,int)')": [
+                        221,
+                        230,
+                        231,
+                        232,
+                        233
+                    ],
+                    "('org.apache.commons.sanselan.palette#MedianCutQuantizer', 'process(BufferedImage,int,boolean)')": [
+                        243,
+                        252,
+                        256,
+                        268,
+                        269,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        290,
+                        326
+                    ],
+                    "('org.apache.commons.sanselan.palette#MedianCutQuantizer', 'doCut(ColorGroup,int,List)')": [
+                        354,
+                        355,
+                        360,
+                        361,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        394,
+                        395,
+                        419,
+                        420,
+                        421,
+                        422,
+                        426,
+                        430,
+                        434,
+                        435
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.palette#MedianCutQuantizer', None)": [
+                        77,
+                        95,
+                        104,
+                        152,
+                        502
+                    ],
+                    "('org.apache.commons.sanselan.palette#MedianCutQuantizer', 'groupColors1(BufferedImage,int,int)')": [
+                        186,
+                        187,
+                        188,
+                        205
+                    ],
+                    "('org.apache.commons.sanselan.palette#MedianCutQuantizer', 'groupColors(BufferedImage,int)')": [
+                        221,
+                        230,
+                        231,
+                        232
+                    ],
+                    "('org.apache.commons.sanselan.palette#MedianCutQuantizer', 'process(BufferedImage,int,boolean)')": [
+                        242,
+                        251,
+                        255,
+                        267,
+                        268,
+                        272,
+                        273,
+                        274,
+                        275,
+                        286,
+                        322
+                    ],
+                    "('org.apache.commons.sanselan.palette#MedianCutQuantizer', 'doCut(ColorGroup,int,List)')": [
+                        350,
+                        355,
+                        359,
+                        360,
+                        361,
+                        362,
+                        385,
+                        409,
+                        410,
+                        414,
+                        418,
+                        422
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/palette/PaletteFactory.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.palette#PaletteFactory', 'divideSubset2(int,ColorSpaceSubset,int,int)')": [
+                        203,
+                        204,
+                        246
+                    ],
+                    "('org.apache.commons.sanselan.palette#PaletteFactory', 'divideSubset2(int,ColorSpaceSubset,int)')": [
+                        259,
+                        271
+                    ],
+                    "('org.apache.commons.sanselan.palette#PaletteFactory', 'divide(List,int,int,int)')": [
+                        315,
+                        316,
+                        317,
+                        318,
+                        334
+                    ],
+                    "('org.apache.commons.sanselan.palette#PaletteFactory', 'makePaletteQuantized(BufferedImage,int)')": [
+                        390,
+                        429
+                    ],
+                    "('org.apache.commons.sanselan.palette#PaletteFactory', 'makePaletteSimple(BufferedImage,int)')": [
+                        445
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.palette#PaletteFactory', 'divideSubset2(int,ColorSpaceSubset,int,int)')": [
+                        203,
+                        204,
+                        246
+                    ],
+                    "('org.apache.commons.sanselan.palette#PaletteFactory', 'divideSubset2(int,ColorSpaceSubset,int)')": [
+                        259,
+                        271
+                    ],
+                    "('org.apache.commons.sanselan.palette#PaletteFactory', 'divide(List,int,int,int)')": [
+                        315,
+                        316,
+                        317,
+                        318,
+                        334
+                    ],
+                    "('org.apache.commons.sanselan.palette#PaletteFactory', 'makePaletteQuantized(BufferedImage,int)')": [
+                        390,
+                        429
+                    ],
+                    "('org.apache.commons.sanselan.palette#PaletteFactory', 'makePaletteSimple(BufferedImage,int)')": [
+                        445
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/palette/QuantizedPalette.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.palette#QuantizedPalette', None)": [
+                        26,
+                        29,
+                        39
+                    ],
+                    "('org.apache.commons.sanselan.palette#QuantizedPalette', 'getEntry(int)')": [
+                        77
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.palette#QuantizedPalette', None)": [
+                        26,
+                        29,
+                        39
+                    ],
+                    "('org.apache.commons.sanselan.palette#QuantizedPalette', 'getEntry(int)')": [
+                        77
+                    ]
+                }
+            }
+        }
+    },
+    "3a0591eacab3fa7574c807563eac8c0c85b5d5bd": {
+        "authored_data": "2011 Dec 20 19:02",
+        "commit.message": "Fix up unthrown Exceptions\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1221437 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "16744621ecbf16d45438631a67e2752e74a150ba",
+        "changes": {
+            "src/main/java/org/apache/commons/sanselan/ImageDump.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.commons.sanselan#ImageDump', 'dumpColorSpace(String,ColorSpace)')": [
+                        57
+                    ],
+                    "('org.apache.commons.sanselan#ImageDump', 'dump(BufferedImage)')": [
+                        80
+                    ],
+                    "('org.apache.commons.sanselan#ImageDump', 'dump(String,BufferedImage)')": [
+                        86
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan#ImageDump', 'dump(BufferedImage)')": [
+                        78
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/ImageInfo.java": {
+                "old": {
+                    "(None, None)": [
+                        19
+                    ],
+                    "('org.apache.commons.sanselan#ImageInfo', 'toString(PrintWriter,String)')": [
+                        314
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/ImageParser.java": {
+                "new": {
+                    "('org.apache.commons.sanselan#ImageParser', None)": [
+                        137,
+                        138,
+                        139,
+                        140,
+                        248,
+                        249,
+                        250,
+                        365,
+                        366,
+                        367,
+                        368
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/common/BasicCParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.common#BasicCParser', 'tokenizeRow(String)')": [
+                        261
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/common/BinaryFileFunctions.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.common#BinaryFileFunctions', 'readRandomBytes(InputStream)')": [
+                        44
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryFileFunctions', 'readBytes(InputStream,int)')": [
+                        109
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryFileFunctions', 'readByte(String,InputStream,String)')": [
+                        195
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryFileFunctions', 'convertRationalArrayToByteArray(RationalNumber,int)')": [
+                        404
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryFileFunctions', 'convertRationalToByteArray(RationalNumber,int)')": [
+                        421
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryFileFunctions', 'read4Bytes(String,InputStream,String,int)')": [
+                        650,
+                        651
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryFileFunctions', 'read3Bytes(String,InputStream,String,int)')": [
+                        670,
+                        671
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.common#BinaryFileFunctions', 'readRandomBytes(InputStream)')": [
+                        44
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryFileFunctions', 'readBytes(InputStream,int)')": [
+                        109
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryFileFunctions', 'readByte(String,InputStream,String)')": [
+                        195
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryFileFunctions', 'convertRationalArrayToByteArray(RationalNumber,int)')": [
+                        404
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryFileFunctions', 'convertRationalToByteArray(RationalNumber,int)')": [
+                        421
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryFileFunctions', 'read4Bytes(String,InputStream,String,int)')": [
+                        650
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryFileFunctions', 'read3Bytes(String,InputStream,String,int)')": [
+                        669
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/common/BinaryFileParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.common#BinaryFileParser', 'setByteOrder(int,int)')": [
+                        41,
+                        42
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryFileParser', 'read4Bytes(String,InputStream,String)')": [
+                        90
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryFileParser', 'read3Bytes(String,InputStream,String)')": [
+                        96
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.common#BinaryFileParser', 'setByteOrder(int,int)')": [
+                        41
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryFileParser', 'read4Bytes(String,InputStream,String)')": [
+                        89
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryFileParser', 'read3Bytes(String,InputStream,String)')": [
+                        95
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/common/BinaryInputStream.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'setByteOrder(int,int)')": [
+                        62,
+                        63
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'read4Bytes(String,String)')": [
+                        109
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'read3Bytes(String,String)')": [
+                        115
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'read2Bytes(String,String)')": [
+                        121
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'readRandomBytes')": [
+                        126,
+                        127
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'readByteArray(String,int,String)')": [
+                        401
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'read4Bytes(String,String,int)')": [
+                        521
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'read3Bytes(String,String,int)')": [
+                        540
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'read2Bytes(String,String,int)')": [
+                        560
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'setByteOrder(int,int)')": [
+                        62
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'read4Bytes(String,String)')": [
+                        108
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'read3Bytes(String,String)')": [
+                        114
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'read2Bytes(String,String)')": [
+                        120
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'readRandomBytes')": [
+                        125
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'readByteArray(String,int,String)')": [
+                        399
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'read4Bytes(String,String,int)')": [
+                        519
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'read3Bytes(String,String,int)')": [
+                        538
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryInputStream', 'read2Bytes(String,String,int)')": [
+                        558
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/common/BinaryOutputStream.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.common#BinaryOutputStream', 'setByteOrder(int,int)')": [
+                        55,
+                        56
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryOutputStream', 'write4Bytes(int)')": [
+                        91,
+                        92
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryOutputStream', 'write3Bytes(int)')": [
+                        97,
+                        98
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryOutputStream', 'write2Bytes(int)')": [
+                        103,
+                        104
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryOutputStream', 'write4ByteInteger(int)')": [
+                        109,
+                        110
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryOutputStream', 'write2ByteInteger(int)')": [
+                        127,
+                        128
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryOutputStream', 'writeNBytes(int,int)')": [
+                        171
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.common#BinaryOutputStream', 'setByteOrder(int,int)')": [
+                        55
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryOutputStream', 'write4Bytes(int)')": [
+                        90
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryOutputStream', 'write3Bytes(int)')": [
+                        95
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryOutputStream', 'write2Bytes(int)')": [
+                        100
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryOutputStream', 'write4ByteInteger(int)')": [
+                        105
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryOutputStream', 'write2ByteInteger(int)')": [
+                        122
+                    ],
+                    "('org.apache.commons.sanselan.common#BinaryOutputStream', 'writeNBytes(int,int)')": [
+                        165
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/common/Compression.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.common#Compression', 'decompressPackBits(byte,int,int)')": [
+                        43
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.common#Compression', 'decompressPackBits(byte,int,int)')": [
+                        43
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/common/PackBits.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.common#PackBits', 'decompress(byte,int)')": [
+                        28
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.common#PackBits', 'decompress(byte,int)')": [
+                        28
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/bmp/BmpImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.bmp#BmpImageParser', 'getRLEBytes(InputStream,int)')": [
+                        256
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.bmp#BmpImageParser', 'getRLEBytes(InputStream,int)')": [
+                        256
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/bmp/pixelparsers/PixelParserBitFields.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.bmp.pixelparsers#PixelParserBitFields', None)": [
+                        38
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.bmp.pixelparsers#PixelParserBitFields', None)": [
+                        38
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/bmp/pixelparsers/PixelParserRle.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.bmp.pixelparsers#PixelParserRle', 'getSamplesPerByte')": [
+                        36
+                    ],
+                    "('org.apache.commons.sanselan.formats.bmp.pixelparsers#PixelParserRle', 'convertDataToSamples(int)')": [
+                        47,
+                        48
+                    ],
+                    "('org.apache.commons.sanselan.formats.bmp.pixelparsers#PixelParserRle', 'processByteOfData(int,int,int,int,int,int,DataBuffer,BufferedImage)')": [
+                        75
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.bmp.pixelparsers#PixelParserRle', 'getSamplesPerByte')": [
+                        36
+                    ],
+                    "('org.apache.commons.sanselan.formats.bmp.pixelparsers#PixelParserRle', 'convertDataToSamples(int)')": [
+                        47
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/gif/GifImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'readSubBlock(InputStream)')": [
+                        186,
+                        187
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'readGenericGIFBlock(InputStream,int)')": [
+                        198
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'readGenericGIFBlock(InputStream,int,byte)')": [
+                        204
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'readSubBlock(InputStream)')": [
+                        186
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'readGenericGIFBlock(InputStream,int)')": [
+                        197
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifImageParser', 'readGenericGIFBlock(InputStream,int,byte)')": [
+                        203
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/icns/IcnsDecoder.java": {
+                "old": {
+                    "(None, None)": [
+                        20
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsDecoder', 'decodeAllImages(IcnsImageParser)')": [
+                        433
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.icns#IcnsDecoder', 'decodeAllImages(IcnsImageParser)')": [
+                        432
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/icns/IcnsImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.icns#IcnsImageParser', 'readIcnsElement(InputStream)')": [
+                        217,
+                        218
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.icns#IcnsImageParser', 'readIcnsElement(InputStream)')": [
+                        217
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/ico/IcoImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.ico#IcoImageParser', 'readBitmapIconData(byte,IconInfo)')": [
+                        328
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoImageParser', 'readIconData(byte,IconInfo)')": [
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoImageParser', None)": [
+                        494
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.ico#IcoImageParser', 'readBitmapIconData(byte,IconInfo)')": [
+                        328
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoImageParser', 'readIconData(byte,IconInfo)')": [
+                        485
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/JpegUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg#JpegUtils', 'dumpJFIF(ByteSource)')": [
+                        183
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg#JpegUtils', 'dumpJFIF(ByteSource)')": [
+                        182
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/segments/App13Segment.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#App13Segment', None)": [
+                        37,
+                        44
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#App13Segment', 'isPhotoshopJpegSegment')": [
+                        64
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#App13Segment', None)": [
+                        37,
+                        44
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#App13Segment', 'isPhotoshopJpegSegment')": [
+                        64
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/segments/AppnSegment.java": {
+                "old": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#AppnSegment', None)": [
+                        28
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#AppnSegment', None)": [
+                        27
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/segments/ComSegment.java": {
+                "old": {
+                    "(None, None)": [
+                        24,
+                        25
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#ComSegment', None)": [
+                        31,
+                        37
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#ComSegment', None)": [
+                        29,
+                        35
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/segments/DhtSegment.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        24
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#DhtSegment', None)": [
+                        127,
+                        133
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#DhtSegment', None)": [
+                        125,
+                        131
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/segments/GenericSegment.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        24
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#GenericSegment', None)": [
+                        30,
+                        38,
+                        39
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#GenericSegment', None)": [
+                        28,
+                        36
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/segments/SosSegment.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#SosSegment', None)": [
+                        51,
+                        57
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#SosSegment', None)": [
+                        49,
+                        55
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/segments/UnknownSegment.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#UnknownSegment', None)": [
+                        27,
+                        32,
+                        33
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.segments#UnknownSegment', None)": [
+                        25,
+                        30
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/xmp/JpegRewriter.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegRewriter', 'writeSegments(OutputStream,List)')": [
+                        333
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegRewriter', 'writeSegments(OutputStream,List)')": [
+                        333
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/jpeg/xmp/JpegXmpRewriter.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegXmpRewriter', 'removeXmpXml(File,OutputStream)')": [
+                        59
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegXmpRewriter', 'removeXmpXml(byte,OutputStream)')": [
+                        76
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegXmpRewriter', 'removeXmpXml(InputStream,OutputStream)')": [
+                        93
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegXmpRewriter', 'removeXmpXml(ByteSource,OutputStream)')": [
+                        110
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegXmpRewriter', 'removeXmpXml(File,OutputStream)')": [
+                        59
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegXmpRewriter', 'removeXmpXml(byte,OutputStream)')": [
+                        76
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegXmpRewriter', 'removeXmpXml(InputStream,OutputStream)')": [
+                        93
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegXmpRewriter', 'removeXmpXml(ByteSource,OutputStream)')": [
+                        110
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/pcx/PcxImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.pcx#PcxImageParser', 'read256ColorPaletteFromEndOfFile(ByteSource)')": [
+                        368
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.pcx#PcxImageParser', 'read256ColorPaletteFromEndOfFile(ByteSource)')": [
+                        368
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/png/BitParser.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        20
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#BitParser', 'getSample(int,int)')": [
+                        37
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#BitParser', 'getSampleAsByte(int,int)')": [
+                        62
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.png#BitParser', 'getSample(int,int)')": [
+                        35
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#BitParser', 'getSampleAsByte(int,int)')": [
+                        60
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/png/ScanExpediter.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.png#ScanExpediter', 'getScanlineFilter(int,int)')": [
+                        186
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.png#ScanExpediter', 'getScanlineFilter(int,int)')": [
+                        186
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/png/chunks/PngChunkGama.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23
+                    ],
+                    "('org.apache.commons.sanselan.formats.png.chunks#PngChunkGama', None)": [
+                        29
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.png.chunks#PngChunkGama', None)": [
+                        27
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/png/chunks/PngChunkIdat.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        20
+                    ],
+                    "('org.apache.commons.sanselan.formats.png.chunks#PngChunkIdat', None)": [
+                        24
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/png/chunks/PngChunkIhdr.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23
+                    ],
+                    "('org.apache.commons.sanselan.formats.png.chunks#PngChunkIhdr', None)": [
+                        35
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.png.chunks#PngChunkIhdr', None)": [
+                        33
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/png/chunks/PngChunkPhys.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23
+                    ],
+                    "('org.apache.commons.sanselan.formats.png.chunks#PngChunkPhys', None)": [
+                        31
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.png.chunks#PngChunkPhys', None)": [
+                        29
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/png/chunks/PngChunkPlte.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.png.chunks#PngChunkPlte', 'getRGB(int)')": [
+                        56
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.png.chunks#PngChunkPlte', 'getRGB(int)')": [
+                        56
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/png/chunks/PngTextChunk.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        20
+                    ],
+                    "('org.apache.commons.sanselan.formats.png.chunks#PngTextChunk', None)": [
+                        27
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/pnm/PnmImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.pnm#PnmImageParser', 'getColorTable(byte)')": [
+                        239,
+                        240
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.pnm#PnmImageParser', 'getColorTable(byte)')": [
+                        239
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/psd/ImageResourceType.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        20
+                    ],
+                    "('org.apache.commons.sanselan.formats.psd#ImageResourceType', None)": [
+                        35
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.psd#ImageResourceType', None)": [
+                        33
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/TiffField.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffField', 'fillInValue(ByteSource)')": [
+                        276,
+                        277
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffField', 'getByteArrayValue')": [
+                        770
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffField', 'fillInValue(ByteSource)')": [
+                        276
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffField', 'getByteArrayValue')": [
+                        769
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/TiffImageMetadata.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageMetadata', None)": [
+                        107
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageMetadata', 'getAllFields')": [
+                        324
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageMetadata', None)": [
+                        107
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageMetadata', 'getAllFields')": [
+                        324
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/TiffImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getPhotometricInterpreter(TiffDirectory,int,int,int,int,int,int,int)')": [
+                        537,
+                        538
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffImageParser', 'getPhotometricInterpreter(TiffDirectory,int,int,int,int,int,int,int)')": [
+                        537
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/datareaders/DataReader.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff.datareaders#DataReader', 'getSamplesAsBytes(BitInputStream)')": [
+                        66
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff.datareaders#DataReader', 'getSamplesAsBytes(BitInputStream)')": [
+                        66
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/photometricinterpreters/PhotometricInterpreter.java": {
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff.photometricinterpreters#PhotometricInterpreter', None)": [
+                        45,
+                        46,
+                        47,
+                        48
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/write/TiffImageWriterBase.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterBase', 'writeImageFileHeader(BinaryOutputStream)')": [
+                        536
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterBase', 'writeImageFileHeader(BinaryOutputStream,int)')": [
+                        544
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterBase', 'writeImageFileHeader(BinaryOutputStream)')": [
+                        536
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterBase', 'writeImageFileHeader(BinaryOutputStream,int)')": [
+                        544
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/write/TiffImageWriterLossless.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterLossless', 'updateOffsetsStep(List,List)')": [
+                        271
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/tiff/write/TiffImageWriterLossy.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterLossy', 'updateOffsetsStep(List)')": [
+                        54,
+                        55
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff.write#TiffImageWriterLossy', 'updateOffsetsStep(List)')": [
+                        54
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/formats/wbmp/WbmpImageParser.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.wbmp#WbmpImageParser', 'writeMultiByteInteger(OutputStream,int)')": [
+                        160
+                    ],
+                    "('org.apache.commons.sanselan.formats.wbmp#WbmpImageParser', 'readImage(WbmpHeader,InputStream)')": [
+                        224
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.wbmp#WbmpImageParser', 'writeMultiByteInteger(OutputStream,int)')": [
+                        160
+                    ],
+                    "('org.apache.commons.sanselan.formats.wbmp#WbmpImageParser', 'readImage(WbmpHeader,InputStream)')": [
+                        224
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/icc/IccProfileInfo.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.icc#IccProfileInfo', 'dump(String)')": [
+                        86
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.icc#IccProfileInfo', 'dump(String)')": [
+                        86
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/icc/IccTag.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.icc#IccTag', 'setData(byte)')": [
+                        48
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.icc#IccTag', 'setData(byte)')": [
+                        48
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/palette/MedianCutQuantizer.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.palette#MedianCutQuantizer', 'groupColors1(BufferedImage,int,int)')": [
+                        187
+                    ],
+                    "('org.apache.commons.sanselan.palette#MedianCutQuantizer', 'groupColors(BufferedImage,int)')": [
+                        223
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/sanselan/util/UnicodeUtils.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.util#UnicodeUtils', None)": [
+                        331
+                    ]
+                }
+            }
+        }
+    },
+    "16744621ecbf16d45438631a67e2752e74a150ba": {
+        "authored_data": "2011 Dec 20 18:47",
+        "commit.message": "Rewrite unnecessarily complicated test logic\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1221426 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "14cd0bb6e79d31499d8486608d71a7569778ca80",
+        "changes": {
+            "src/test/java/org/apache/commons/sanselan/formats/jpeg/exif/WriteTagsTest.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        25
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#WriteTagsTest', 'test')": [
+                        30,
+                        32,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#WriteTagsTest', 'test2SHORTS')": [
+                        28,
+                        30,
+                        31,
+                        32,
+                        33
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#WriteTagsTest', None)": [
+                        34
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#WriteTagsTest', 'testSHORTS')": [
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41
+                    ]
+                }
+            }
+        }
+    },
+    "14cd0bb6e79d31499d8486608d71a7569778ca80": {
+        "authored_data": "2011 Dec 20 18:29",
+        "commit.message": "Fix up unthrown Exceptions\n- for Junit3 test methods, not point throwing anything other than Exception\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/sanselan/trunk@1221410 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "f38bb00547aabe63adbe3d4b976459153c89e3df",
+        "changes": {
+            "src/test/java/org/apache/commons/sanselan/SanselanGuessFormatTest.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        24
+                    ],
+                    "('org.apache.commons.sanselan#SanselanGuessFormatTest', 'testGuess_all')": [
+                        42
+                    ],
+                    "('org.apache.commons.sanselan#SanselanGuessFormatTest', 'testGuess_unknown')": [
+                        64
+                    ],
+                    "('org.apache.commons.sanselan#SanselanGuessFormatTest', 'testGuess(ImageFormat,String)')": [
+                        68,
+                        69
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan#SanselanGuessFormatTest', 'testGuess_all')": [
+                        40,
+                        41
+                    ],
+                    "('org.apache.commons.sanselan#SanselanGuessFormatTest', 'testGuess_unknown')": [
+                        63
+                    ],
+                    "('org.apache.commons.sanselan#SanselanGuessFormatTest', 'testGuess(ImageFormat,String)')": [
+                        67,
+                        68
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/common/bytesource/ByteSourceDataTest.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.common.bytesource#ByteSourceDataTest', 'test')": [
+                        125
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.common.bytesource#ByteSourceDataTest', 'test')": [
+                        125
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/common/bytesource/ByteSourceImageTest.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.common.bytesource#ByteSourceImageTest', 'test')": [
+                        41,
+                        42,
+                        43
+                    ],
+                    "('org.apache.commons.sanselan.common.bytesource#ByteSourceImageTest', 'checkGetBufferedImage(File,byte)')": [
+                        99,
+                        100
+                    ],
+                    "('org.apache.commons.sanselan.common.bytesource#ByteSourceImageTest', 'checkGetImageSize(File,byte)')": [
+                        116,
+                        117
+                    ],
+                    "('org.apache.commons.sanselan.common.bytesource#ByteSourceImageTest', 'checkGuessFormat(File,byte)')": [
+                        130,
+                        131
+                    ],
+                    "('org.apache.commons.sanselan.common.bytesource#ByteSourceImageTest', 'checkGetICCProfileBytes(File,byte)')": [
+                        147,
+                        148
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.common.bytesource#ByteSourceImageTest', 'test')": [
+                        41
+                    ],
+                    "('org.apache.commons.sanselan.common.bytesource#ByteSourceImageTest', 'checkGetBufferedImage(File,byte)')": [
+                        97
+                    ],
+                    "('org.apache.commons.sanselan.common.bytesource#ByteSourceImageTest', 'checkGetImageSize(File,byte)')": [
+                        113
+                    ],
+                    "('org.apache.commons.sanselan.common.bytesource#ByteSourceImageTest', 'checkGuessFormat(File,byte)')": [
+                        126
+                    ],
+                    "('org.apache.commons.sanselan.common.bytesource#ByteSourceImageTest', 'checkGetICCProfileBytes(File,byte)')": [
+                        142
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/bmp/BmpReadTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        28
+                    ],
+                    "('org.apache.commons.sanselan.formats.bmp#BmpReadTest', 'test')": [
+                        36
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.bmp#BmpReadTest', 'test')": [
+                        34
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/bmp/BmpRoundtripTest.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.bmp#BmpRoundtripTest', 'testSmallBlackPixels')": [
+                        75,
+                        76,
+                        77
+                    ],
+                    "('org.apache.commons.sanselan.formats.bmp#BmpRoundtripTest', 'testSingleBlackPixel')": [
+                        83,
+                        84
+                    ],
+                    "('org.apache.commons.sanselan.formats.bmp#BmpRoundtripTest', 'testSmallRedPixels')": [
+                        91,
+                        92
+                    ],
+                    "('org.apache.commons.sanselan.formats.bmp#BmpRoundtripTest', 'testSingleRedPixel')": [
+                        98,
+                        99
+                    ],
+                    "('org.apache.commons.sanselan.formats.bmp#BmpRoundtripTest', 'testSmallAscendingPixels')": [
+                        105,
+                        106
+                    ],
+                    "('org.apache.commons.sanselan.formats.bmp#BmpRoundtripTest', 'testSmallRandomPixels')": [
+                        112,
+                        113,
+                        114
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.bmp#BmpRoundtripTest', 'testSmallBlackPixels')": [
+                        75
+                    ],
+                    "('org.apache.commons.sanselan.formats.bmp#BmpRoundtripTest', 'testSingleBlackPixel')": [
+                        81
+                    ],
+                    "('org.apache.commons.sanselan.formats.bmp#BmpRoundtripTest', 'testSmallRedPixels')": [
+                        88
+                    ],
+                    "('org.apache.commons.sanselan.formats.bmp#BmpRoundtripTest', 'testSingleRedPixel')": [
+                        94
+                    ],
+                    "('org.apache.commons.sanselan.formats.bmp#BmpRoundtripTest', 'testSmallAscendingPixels')": [
+                        100
+                    ],
+                    "('org.apache.commons.sanselan.formats.bmp#BmpRoundtripTest', 'testSmallRandomPixels')": [
+                        106
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/dcx/DcxReadTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        28
+                    ],
+                    "('org.apache.commons.sanselan.formats.dcx#DcxReadTest', 'test')": [
+                        36
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.dcx#DcxReadTest', 'test')": [
+                        34
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/gif/GifReadTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        26
+                    ],
+                    "('org.apache.commons.sanselan.formats.gif#GifReadTest', 'test')": [
+                        34
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.gif#GifReadTest', 'test')": [
+                        32
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/icns/IcnsReadTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        28
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsReadTest', 'test')": [
+                        36
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.icns#IcnsReadTest', 'test')": [
+                        34
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/icns/IcnsRoundTripTest.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsRoundTripTest', 'test1BPPIconMaskVersus8BPPMask')": [
+                        56
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsRoundTripTest', 'test8BPPIcon8BPPMask')": [
+                        97
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsRoundTripTest', 'test8BPPIcon8BPPMaskVersus1BPPMask')": [
+                        136,
+                        137
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsRoundTripTest', 'test8BPPIcon1BPPMaskVersus8BPPMask')": [
+                        200,
+                        201
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsRoundTripTest', 'test8BPPIconNoMask')": [
+                        264
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsRoundTripTest', 'test32BPPMaskedIcon')": [
+                        290
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsRoundTripTest', 'test32BPPHalfMaskedIcon')": [
+                        351
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsRoundTripTest', 'test32BPPMaskMissingIcon')": [
+                        409
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.icns#IcnsRoundTripTest', 'test1BPPIconMaskVersus8BPPMask')": [
+                        55
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsRoundTripTest', 'test8BPPIcon8BPPMask')": [
+                        96
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsRoundTripTest', 'test8BPPIcon8BPPMaskVersus1BPPMask')": [
+                        135
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsRoundTripTest', 'test8BPPIcon1BPPMaskVersus8BPPMask')": [
+                        198
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsRoundTripTest', 'test8BPPIconNoMask')": [
+                        261
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsRoundTripTest', 'test32BPPMaskedIcon')": [
+                        287
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsRoundTripTest', 'test32BPPHalfMaskedIcon')": [
+                        348
+                    ],
+                    "('org.apache.commons.sanselan.formats.icns#IcnsRoundTripTest', 'test32BPPMaskMissingIcon')": [
+                        406
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/ico/IcoReadTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        28
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoReadTest', 'test')": [
+                        36
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.ico#IcoReadTest', 'test')": [
+                        34
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/ico/IcoRoundtripTest.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', None)": [
+                        283,
+                        284
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'writeICONDIR(BinaryOutputStream,int,int,int)')": [
+                        321
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'writeICONDIRENTRY(BinaryOutputStream,int,int,int,int,int,int,int)')": [
+                        330
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'writeBITMAPINFOHEADER(BinaryOutputStream,int,int,int,int,int,int,int)')": [
+                        344
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'testNormalIcons')": [
+                        360
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'testBadICONDIRENTRYIcons')": [
+                        384
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'testColorsUsed')": [
+                        416
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'testZeroColorPlanes')": [
+                        440
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'testBitfieldCompression')": [
+                        475
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'test32bitMask')": [
+                        494
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'testAlphaVersusANDMask')": [
+                        512
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'testFullyTransparent32bitRGBA')": [
+                        529
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', None)": [
+                        283
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'writeICONDIR(BinaryOutputStream,int,int,int)')": [
+                        320
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'writeICONDIRENTRY(BinaryOutputStream,int,int,int,int,int,int,int)')": [
+                        329
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'writeBITMAPINFOHEADER(BinaryOutputStream,int,int,int,int,int,int,int)')": [
+                        343
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'testNormalIcons')": [
+                        359
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'testBadICONDIRENTRYIcons')": [
+                        383
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'testColorsUsed')": [
+                        415
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'testZeroColorPlanes')": [
+                        439
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'testBitfieldCompression')": [
+                        474
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'test32bitMask')": [
+                        493
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'testAlphaVersusANDMask')": [
+                        511
+                    ],
+                    "('org.apache.commons.sanselan.formats.ico#IcoRoundtripTest', 'testFullyTransparent32bitRGBA')": [
+                        528
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/jpeg/JpegReadTest.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        27
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg#JpegReadTest', 'test')": [
+                        35
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg#JpegReadTest', 'test')": [
+                        33
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/jpeg/JpegWithJpegThumbnailTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        26
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg#JpegWithJpegThumbnailTest', 'testSingleImage')": [
+                        34
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg#JpegWithJpegThumbnailTest', 'testSingleImage')": [
+                        32,
+                        33
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/jpeg/exif/AsciiFieldTest.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        28
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#AsciiFieldTest', 'testSingleImage')": [
+                        38
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#AsciiFieldTest', 'testSingleImage')": [
+                        36,
+                        37
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/jpeg/exif/ExifDumpTest.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        26,
+                        27
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#ExifDumpTest', 'test')": [
+                        42,
+                        43
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#ExifDumpTest', 'test')": [
+                        39
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/jpeg/exif/ExifRewriteTest.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#ExifRewriteTest', 'testRemove')": [
+                        54,
+                        55
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#ExifRewriteTest', 'testInsert')": [
+                        96,
+                        97
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#ExifRewriteTest', 'testRewriteLossy')": [
+                        263,
+                        264
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#ExifRewriteTest', 'testRewriteLossless')": [
+                        280,
+                        281
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#ExifRewriteTest', 'testRemove')": [
+                        54
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#ExifRewriteTest', 'testInsert')": [
+                        95
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#ExifRewriteTest', 'testRewriteLossy')": [
+                        261
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#ExifRewriteTest', 'testRewriteLossless')": [
+                        277
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/jpeg/exif/SpecificExifTagTest.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#SpecificExifTagTest', 'testSingleImage')": [
+                        45,
+                        46
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#SpecificExifTagTest', 'testAllImages')": [
+                        52,
+                        53
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#SpecificExifTagTest', 'testSingleImage')": [
+                        45
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#SpecificExifTagTest', 'testAllImages')": [
+                        51
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/jpeg/exif/WriteExifMetadataExampleTest.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        24,
+                        25
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#WriteExifMetadataExampleTest', 'test')": [
+                        40,
+                        41
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#WriteExifMetadataExampleTest', 'testInsert')": [
+                        71,
+                        72
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#WriteExifMetadataExampleTest', 'test')": [
+                        37
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.exif#WriteExifMetadataExampleTest', 'testInsert')": [
+                        67
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/jpeg/iptc/IptcDumpTest.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        26
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.iptc#IptcDumpTest', 'test')": [
+                        37
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.iptc#IptcDumpTest', 'test')": [
+                        35
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/jpeg/iptc/IptcUpdateTest.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        30,
+                        31
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.iptc#IptcUpdateTest', 'testRemove')": [
+                        63,
+                        64
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.iptc#IptcUpdateTest', 'testRemoveInsertUpdate')": [
+                        118,
+                        119
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.iptc#IptcUpdateTest', 'testAddIptcData')": [
+                        330,
+                        331
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.iptc#IptcUpdateTest', 'testRemove')": [
+                        60
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.iptc#IptcUpdateTest', 'testRemoveInsertUpdate')": [
+                        114
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.iptc#IptcUpdateTest', 'testAddIptcData')": [
+                        325
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/jpeg/xmp/JpegXmpDumpTest.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        26
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegXmpDumpTest', 'test')": [
+                        35
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegXmpDumpTest', 'test')": [
+                        33
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/jpeg/xmp/JpegXmpRewriteTest.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        29,
+                        30
+                    ],
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegXmpRewriteTest', 'testRemoveInsertUpdate')": [
+                        40,
+                        41
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.jpeg.xmp#JpegXmpRewriteTest', 'testRemoveInsertUpdate')": [
+                        37
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/pcx/PcxReadTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        28
+                    ],
+                    "('org.apache.commons.sanselan.formats.pcx#PcxReadTest', 'test')": [
+                        36
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.pcx#PcxReadTest', 'test')": [
+                        34
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/png/ConvertPngToGifTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        27,
+                        28
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#ConvertPngToGifTest', 'test')": [
+                        36,
+                        37
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.png#ConvertPngToGifTest', 'test')": [
+                        33,
+                        34
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/png/PngMultipleRoundtripTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        28,
+                        29
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngMultipleRoundtripTest', 'test')": [
+                        36,
+                        37
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.png#PngMultipleRoundtripTest', 'test')": [
+                        33
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/png/PngReadTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        26
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngReadTest', 'test')": [
+                        36
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.png#PngReadTest', 'test')": [
+                        34
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/png/PngTextTest.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        30,
+                        31
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngTextTest', 'test')": [
+                        41,
+                        42
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.png#PngTextTest', 'test')": [
+                        38
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/png/PngWriteForceTrueColorText.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.png#PngWriteForceTrueColorText', 'test')": [
+                        33
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.png#PngWriteForceTrueColorText', 'test')": [
+                        33,
+                        34
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/png/PngWriteReadTest.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.png#PngWriteReadTest', 'test')": [
+                        79,
+                        80
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngWriteReadTest', 'testTransparency')": [
+                        101
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.png#PngWriteReadTest', 'test')": [
+                        79
+                    ],
+                    "('org.apache.commons.sanselan.formats.png#PngWriteReadTest', 'testTransparency')": [
+                        100
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/tiff/TiffLzwTest.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffLzwTest', 'testTrivial')": [
+                        34
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffLzwTest', 'testMedium')": [
+                        40
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffLzwTest', 'testTrivial')": [
+                        34
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffLzwTest', 'testMedium')": [
+                        40
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/tiff/TiffReadTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        26
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffReadTest', 'test')": [
+                        34
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffReadTest', 'test')": [
+                        32
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/tiff/TiffRoundtripTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        29,
+                        30
+                    ],
+                    "('org.apache.commons.sanselan.formats.tiff#TiffRoundtripTest', 'test')": [
+                        37,
+                        38
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.tiff#TiffRoundtripTest', 'test')": [
+                        34,
+                        35
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/wbmp/WbmpReadTest.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        26
+                    ],
+                    "('org.apache.commons.sanselan.formats.wbmp#WbmpReadTest', 'test')": [
+                        34
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.wbmp#WbmpReadTest', 'test')": [
+                        32
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/xbm/XbmReadTest.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        26
+                    ],
+                    "('org.apache.commons.sanselan.formats.xbm#XbmReadTest', 'test')": [
+                        34
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.xbm#XbmReadTest', 'test')": [
+                        32
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/xmp/XmpDumpTest.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        24
+                    ],
+                    "('org.apache.commons.sanselan.formats.xmp#XmpDumpTest', 'test')": [
+                        32
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.xmp#XmpDumpTest', 'test')": [
+                        30
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/xmp/XmpUpdateTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        28,
+                        29
+                    ],
+                    "('org.apache.commons.sanselan.formats.xmp#XmpUpdateTest', 'test')": [
+                        37,
+                        38
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.xmp#XmpUpdateTest', 'test')": [
+                        34
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/formats/xpm/XpmReadTest.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        26
+                    ],
+                    "('org.apache.commons.sanselan.formats.xpm#XpmReadTest', 'test')": [
+                        34
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.formats.xpm#XpmReadTest', 'test')": [
+                        32
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/sanselan/roundtrip/RoundtripTest.java": {
+                "old": {
+                    "('org.apache.commons.sanselan.roundtrip#RoundtripTest', 'testBitmapRoundtrip')": [
+                        282,
+                        283
+                    ],
+                    "('org.apache.commons.sanselan.roundtrip#RoundtripTest', 'testGrayscaleRoundtrip')": [
+                        315,
+                        316
+                    ],
+                    "('org.apache.commons.sanselan.roundtrip#RoundtripTest', 'testLimitedColorRoundtrip')": [
+                        352,
+                        353
+                    ],
+                    "('org.apache.commons.sanselan.roundtrip#RoundtripTest', 'testFullColorRoundtrip')": [
+                        386,
+                        387
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.sanselan.roundtrip#RoundtripTest', 'testBitmapRoundtrip')": [
+                        282
+                    ],
+                    "('org.apache.commons.sanselan.roundtrip#RoundtripTest', 'testGrayscaleRoundtrip')": [
+                        314
+                    ],
+                    "('org.apache.commons.sanselan.roundtrip#RoundtripTest', 'testLimitedColorRoundtrip')": [
+                        350
+                    ],
+                    "('org.apache.commons.sanselan.roundtrip#RoundtripTest', 'testFullColorRoundtrip')": [
+                        383
+                    ]
+                }
+            }
+        }
+    }
+}

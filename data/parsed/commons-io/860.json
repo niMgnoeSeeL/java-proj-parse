@@ -1,0 +1,908 @@
+{
+    "394158da4a719ba6beb56692145124d9d2f00583": {
+        "authored_data": "2021 Feb 14 16:51",
+        "commit.message": "Re-implement FileSystemUtils internal timeouts with\njava.time.Duration.\n",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "daa5d8cd8bb18327d84fe8815b842a57ce3c3f5b",
+        "changes": {
+            "src/main/java/org/apache/commons/io/FileSystemUtils.java": {
+                "old": {
+                    "('org.apache.commons.io#FileSystemUtils', 'freeSpace(String)')": [
+                        148
+                    ],
+                    "('org.apache.commons.io#FileSystemUtils', 'freeSpaceKb(String,long)')": [
+                        210
+                    ],
+                    "('org.apache.commons.io#FileSystemUtils', 'freeSpaceOS(String,int,boolean,long)')": [
+                        274
+                    ],
+                    "('org.apache.commons.io#FileSystemUtils', 'freeSpaceWindows(String,long)')": [
+                        303
+                    ],
+                    "('org.apache.commons.io#FileSystemUtils', 'freeSpaceUnix(String,boolean,boolean,long)')": [
+                        398
+                    ],
+                    "('org.apache.commons.io#FileSystemUtils', 'performCommand(String,int,long)')": [
+                        482,
+                        499
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io#FileSystemUtils', 'freeSpace(String)')": [
+                        148
+                    ],
+                    "('org.apache.commons.io#FileSystemUtils', 'freeSpaceKb(String,long)')": [
+                        210
+                    ],
+                    "('org.apache.commons.io#FileSystemUtils', 'freeSpaceOS(String,int,boolean,Duration)')": [
+                        274
+                    ],
+                    "('org.apache.commons.io#FileSystemUtils', 'freeSpaceWindows(String,Duration)')": [
+                        303
+                    ],
+                    "('org.apache.commons.io#FileSystemUtils', 'freeSpaceUnix(String,boolean,boolean,Duration)')": [
+                        398
+                    ],
+                    "('org.apache.commons.io#FileSystemUtils', 'performCommand(String,int,Duration)')": [
+                        482,
+                        499
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/FileSystemUtilsTestCase.java": {
+                "old": {
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceOS_String_NullPath')": [
+                        97,
+                        102
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceOS_String_InitError')": [
+                        112,
+                        117
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceOS_String_Other')": [
+                        127,
+                        132
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceOS_String_Windows')": [
+                        142,
+                        146,
+                        147
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceOS_String_Unix')": [
+                        154,
+                        158,
+                        159
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_ParseCommaFormatBytes')": [
+                        180
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_ParseCommaFormatBytes_Big')": [
+                        200
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_ParseCommaFormatBytes_Small')": [
+                        220
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_EmptyPath')": [
+                        239
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_NormalResponse')": [
+                        257
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_StripDrive')": [
+                        275
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_quoted')": [
+                        293
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_EmptyResponse')": [
+                        301
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_EmptyMultiLineResponse')": [
+                        311
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_InvalidTextResponse')": [
+                        318
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_NoSuchDirectoryResponse')": [
+                        330
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_EmptyPath')": [
+                        341,
+                        346,
+                        351,
+                        356
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_NormalResponseLinux')": [
+                        370
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_NormalResponseFreeBSD')": [
+                        380
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_NormalResponseKbLinux')": [
+                        392
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_NormalResponseKbFreeBSD')": [
+                        403
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_NormalResponseKbSolaris')": [
+                        414
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_LongResponse')": [
+                        424
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_LongResponseKb')": [
+                        434
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_EmptyResponse')": [
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_InvalidResponse1')": [
+                        470,
+                        471,
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_InvalidResponse2')": [
+                        498,
+                        499,
+                        500,
+                        501,
+                        502,
+                        503,
+                        504,
+                        505,
+                        506,
+                        507,
+                        508,
+                        509,
+                        510,
+                        511,
+                        512,
+                        513
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_InvalidResponse3')": [
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_InvalidResponse4')": [
+                        554,
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', None)": [
+                        42,
+                        43
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceOS_String_NullPath')": [
+                        100,
+                        105
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceOS_String_InitError')": [
+                        115,
+                        120
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceOS_String_Other')": [
+                        130,
+                        135
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceOS_String_Windows')": [
+                        145,
+                        149,
+                        150
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceOS_String_Unix')": [
+                        157,
+                        161,
+                        162
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_ParseCommaFormatBytes')": [
+                        183
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_ParseCommaFormatBytes_Big')": [
+                        203
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_ParseCommaFormatBytes_Small')": [
+                        223
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_EmptyPath')": [
+                        242
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_NormalResponse')": [
+                        260
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_StripDrive')": [
+                        278
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_quoted')": [
+                        296
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_EmptyResponse')": [
+                        304
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_EmptyMultiLineResponse')": [
+                        314
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_InvalidTextResponse')": [
+                        321
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceWindows_String_NoSuchDirectoryResponse')": [
+                        333
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_EmptyPath')": [
+                        344,
+                        349,
+                        354,
+                        359
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_NormalResponseLinux')": [
+                        373
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_NormalResponseFreeBSD')": [
+                        383
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_NormalResponseKbLinux')": [
+                        395
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_NormalResponseKbFreeBSD')": [
+                        406
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_NormalResponseKbSolaris')": [
+                        417
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_LongResponse')": [
+                        427
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_LongResponseKb')": [
+                        437
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_EmptyResponse')": [
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_InvalidResponse1')": [
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_InvalidResponse2')": [
+                        501,
+                        502,
+                        503,
+                        504,
+                        505,
+                        506,
+                        507,
+                        508,
+                        509,
+                        510,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_InvalidResponse3')": [
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544
+                    ],
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpaceUnix_String_InvalidResponse4')": [
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569,
+                        570,
+                        571,
+                        572
+                    ]
+                }
+            }
+        }
+    },
+    "daa5d8cd8bb18327d84fe8815b842a57ce3c3f5b": {
+        "authored_data": "2021 Feb 14 16:09",
+        "commit.message": "Re-implement package-private class ThreadMonitor timeouts with\njava.time.Duration.\n",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "5c3971765186c596659dd81793c2b6a01cabf6aa",
+        "changes": {
+            "src/main/java/org/apache/commons/io/FileSystemUtils.java": {
+                "old": {
+                    "('org.apache.commons.io#FileSystemUtils', 'performCommand(String,int,long)')": [
+                        498
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.commons.io#FileSystemUtils', 'performCommand(String,int,long)')": [
+                        499
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/io/ThreadMonitor.java": {
+                "old": {
+                    "('org.apache.commons.io#ThreadMonitor', None)": [
+                        43,
+                        89,
+                        94,
+                        116,
+                        121
+                    ],
+                    "('org.apache.commons.io#ThreadMonitor', 'start(long)')": [
+                        53
+                    ],
+                    "('org.apache.commons.io#ThreadMonitor', 'start(Thread,long)')": [
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72
+                    ],
+                    "('org.apache.commons.io#ThreadMonitor', 'stop(Thread)')": [
+                        82
+                    ],
+                    "('org.apache.commons.io#ThreadMonitor', 'sleep(long)')": [
+                        124
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19
+                    ],
+                    "('org.apache.commons.io#ThreadMonitor', None)": [
+                        45,
+                        91,
+                        96,
+                        118,
+                        123
+                    ],
+                    "('org.apache.commons.io#ThreadMonitor', 'start(Duration)')": [
+                        55
+                    ],
+                    "('org.apache.commons.io#ThreadMonitor', 'start(Thread,Duration)')": [
+                        68,
+                        69,
+                        70,
+                        72,
+                        73,
+                        74,
+                        75
+                    ],
+                    "('org.apache.commons.io#ThreadMonitor', 'stop(Thread)')": [
+                        84
+                    ],
+                    "('org.apache.commons.io#ThreadMonitor', 'sleep(Duration)')": [
+                        126,
+                        127,
+                        128
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/ThreadMonitorTestCase.java": {
+                "old": {
+                    "('org.apache.commons.io#ThreadMonitorTestCase', 'testTimeout')": [
+                        36
+                    ],
+                    "('org.apache.commons.io#ThreadMonitorTestCase', 'testCompletedWithoutTimeout')": [
+                        51
+                    ],
+                    "('org.apache.commons.io#ThreadMonitorTestCase', 'testNoTimeout')": [
+                        67,
+                        77
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23
+                    ],
+                    "('org.apache.commons.io#ThreadMonitorTestCase', 'testTimeout')": [
+                        38
+                    ],
+                    "('org.apache.commons.io#ThreadMonitorTestCase', 'testCompletedWithoutTimeout')": [
+                        53
+                    ],
+                    "('org.apache.commons.io#ThreadMonitorTestCase', 'testNoTimeout')": [
+                        69,
+                        79
+                    ]
+                }
+            }
+        }
+    },
+    "9f0074839bac413e75c943b2619d9a07b45bad1a": {
+        "authored_data": "2021 Feb 10 14:37",
+        "commit.message": "Fix Typos in JavaDoc, Comments and Tests (#201)\n\n* Fixed incorrect/missing JavaDoc.\r\n\r\n* Fixed misc. typos in comments and tests.\r\n\r\n* Fixed typos in exception messages.",
+        "commit.author.name": "Felix Rilling",
+        "pcid": "7a7b1418528a05e4633955205d4fffca451b8c4a",
+        "changes": {
+            "src/main/java/org/apache/commons/io/FileUtils.java": {
+                "old": {
+                    "('org.apache.commons.io#FileUtils', None)": [
+                        2195,
+                        2628,
+                        3055
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io#FileUtils', None)": [
+                        2195,
+                        2628,
+                        3055
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/io/FilenameUtils.java": {
+                "old": {
+                    "('org.apache.commons.io#FilenameUtils', 'wildcardMatch(String,String,IOCase)')": [
+                        1433
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io#FilenameUtils', 'wildcardMatch(String,String,IOCase)')": [
+                        1433
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/io/input/XmlStreamReader.java": {
+                "old": {
+                    "('org.apache.commons.io.input#XmlStreamReader', None)": [
+                        515
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.input#XmlStreamReader', None)": [
+                        515
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/io/output/AbstractByteArrayOutputStream.java": {
+                "old": {
+                    "('org.apache.commons.io.output#AbstractByteArrayOutputStream', None)": [
+                        304
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.output#AbstractByteArrayOutputStream', None)": [
+                        304
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/io/output/WriterOutputStream.java": {
+                "old": {
+                    "('org.apache.commons.io.output#WriterOutputStream', 'checkIbmJdkWithBrokenUTF16(Charset)')": [
+                        336,
+                        343
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.output#WriterOutputStream', 'checkIbmJdkWithBrokenUTF16(Charset)')": [
+                        336,
+                        343
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/FileSystemUtilsTestCase.java": {
+                "old": {
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpace_String')": [
+                        75
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io#FileSystemUtilsTestCase', 'testGetFreeSpace_String')": [
+                        75
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/FileUtilsDirectoryContainsTestCase.java": {
+                "old": {
+                    "('org.apache.commons.io#FileUtilsDirectoryContainsTestCase', 'testFileDoesNotExistBug')": [
+                        159
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io#FileUtilsDirectoryContainsTestCase', 'testFileDoesNotExistBug')": [
+                        159
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/input/BufferedFileChannelInputStreamTest.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/input/NullInputStreamTest.java": {
+                "old": {
+                    "('org.apache.commons.io.input#NullInputStreamTest', 'testRead')": [
+                        49
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.input#NullInputStreamTest', 'testRead')": [
+                        49
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/input/XmlStreamReaderTest.java": {
+                "old": {
+                    "('org.apache.commons.io.input#XmlStreamReaderTest', 'getXmlStream(String,String,String,String)')": [
+                        484
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.input#XmlStreamReaderTest', 'getXmlStream(String,String,String,String)')": [
+                        484
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/input/XmlStreamReaderUtilitiesTest.java": {
+                "old": {
+                    "('org.apache.commons.io.input#XmlStreamReaderUtilitiesTest', 'testCalculateRawEncodingAdditonalUTF16')": [
+                        174
+                    ],
+                    "('org.apache.commons.io.input#XmlStreamReaderUtilitiesTest', 'testCalculateRawEncodingAdditonalUTF32')": [
+                        189
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.input#XmlStreamReaderUtilitiesTest', 'testCalculateRawEncodingAdditionalUTF16')": [
+                        174
+                    ],
+                    "('org.apache.commons.io.input#XmlStreamReaderUtilitiesTest', 'testCalculateRawEncodingAdditionalUTF32')": [
+                        189
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/input/buffer/CircularBufferInputStreamTest.java": {
+                "old": {
+                    "('org.apache.commons.io.input.buffer#CircularBufferInputStreamTest', None)": [
+                        31
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.input.buffer#CircularBufferInputStreamTest', None)": [
+                        31
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/output/DeferredFileOutputStreamTest.java": {
+                "old": {
+                    "('org.apache.commons.io.output#DeferredFileOutputStreamTest', 'testWriteToLarge(int)')": [
+                        218
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.output#DeferredFileOutputStreamTest', 'testWriteToLarge(int)')": [
+                        218
+                    ]
+                }
+            }
+        }
+    },
+    "7a7b1418528a05e4633955205d4fffca451b8c4a": {
+        "authored_data": "2021 Feb 10 14:34",
+        "commit.message": "Apply, refactor, clean up\nhttps://github.com/apache/commons-io/pull/203 by Andrew Shcheglov\n(ashcheglov on GitHub).\n",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "91e2c95b2c7d9b6f23c08b871c5cea7d4d950941",
+        "changes": {
+            "src/main/java/org/apache/commons/io/file/CopyDirectoryVisitor.java": {
+                "old": {
+                    "('org.apache.commons.io.file#CopyDirectoryVisitor', 'equals(Object)')": [
+                        102
+                    ],
+                    "('org.apache.commons.io.file#CopyDirectoryVisitor', 'preVisitDirectory(Path,BasicFileAttributes)')": [
+                        147
+                    ],
+                    "('org.apache.commons.io.file#CopyDirectoryVisitor', 'visitFile(Path,BasicFileAttributes)')": [
+                        156
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.commons.io.file#CopyDirectoryVisitor', 'equals(Object)')": [
+                        103
+                    ],
+                    "('org.apache.commons.io.file#CopyDirectoryVisitor', 'preVisitDirectory(Path,BasicFileAttributes)')": [
+                        148
+                    ],
+                    "('org.apache.commons.io.file#CopyDirectoryVisitor', None)": [
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        166,
+                        167
+                    ],
+                    "('org.apache.commons.io.file#CopyDirectoryVisitor', 'resolveRelativeAsString(Path)')": [
+                        164,
+                        165
+                    ],
+                    "('org.apache.commons.io.file#CopyDirectoryVisitor', 'visitFile(Path,BasicFileAttributes)')": [
+                        170
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/file/PathUtilsTest.java": {
+                "new": {
+                    "(None, None)": [
+                        25,
+                        27,
+                        28,
+                        32,
+                        34
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsTest', None)": [
+                        44,
+                        45,
+                        46,
+                        47,
+                        56,
+                        69,
+                        70,
+                        71,
+                        89,
+                        90,
+                        91,
+                        92,
+                        112,
+                        113,
+                        114,
+                        115,
+                        136,
+                        137,
+                        138,
+                        139,
+                        158,
+                        159
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsTest', 'openArchive(Path,boolean)')": [
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsTest', 'testCopyDirectoryForDifferentFilesystemsWithAbsolutePath')": [
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsTest', 'testCopyDirectoryForDifferentFilesystemsWithAbsolutePathReverse')": [
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsTest', 'testCopyDirectoryForDifferentFilesystemsWithRelativePath')": [
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsTest', 'testCopyDirectoryForDifferentFilesystemsWithRelativePathReverse')": [
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157
+                    ]
+                }
+            }
+        }
+    },
+    "91e2c95b2c7d9b6f23c08b871c5cea7d4d950941": {
+        "authored_data": "2021 Feb 10 14:16",
+        "commit.message": "Minor and tweaked refactoring from\nhttps://github.com/apache/commons-io/pull/203 by Andrew Shcheglov\n(ashcheglov on GitHub).\n",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "2d7fef18c6ec90bd30d7e29a14a5967011a2fc4f",
+        "changes": {
+            "src/main/java/org/apache/commons/io/file/PathUtils.java": {
+                "old": {
+                    "('org.apache.commons.io.file#PathUtils', 'copyDirectory(Path,Path,CopyOption)')": [
+                        230,
+                        231
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.file#PathUtils', 'copyDirectory(Path,Path,CopyOption)')": [
+                        229,
+                        231,
+                        232
+                    ]
+                }
+            }
+        }
+    }
+}

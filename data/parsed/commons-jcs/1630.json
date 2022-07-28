@@ -1,0 +1,4601 @@
+{
+    "775bef81b137bd049d07852540d8bda04fc89ad2": {
+        "authored_data": "2005 Jan 14 01:34",
+        "commit.message": "Fixed a small problem where the listener id when failing over was not getting updated by the server.\nBasic failover and clustering seems to be working.  I will test more.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@224195 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Aaron Smuts",
+        "pcid": "ceeb2053985f3b9a826454cc6053b77b071eda02",
+        "changes": {
+            "src/java/org/apache/jcs/auxiliary/remote/server/RemoteCacheServer.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', None)": [
+                        229
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'update(ICacheElement,long)')": [
+                        258,
+                        272,
+                        273,
+                        274,
+                        282,
+                        283,
+                        288,
+                        297,
+                        315,
+                        317,
+                        319,
+                        320,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        336
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'get(String,Serializable)')": [
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'remove(String,Serializable,long)')": [
+                        499,
+                        507
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'addCacheListener(String,ICacheListener)')": [
+                        706,
+                        707,
+                        709,
+                        710,
+                        711,
+                        712,
+                        713,
+                        714,
+                        715,
+                        716,
+                        717,
+                        718,
+                        719,
+                        720,
+                        721,
+                        722,
+                        724,
+                        725,
+                        726,
+                        727
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', None)": [
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'update(ICacheElement,long)')": [
+                        281,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        300,
+                        301,
+                        302,
+                        303,
+                        315,
+                        324,
+                        342,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        353,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        370
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'remove(String,Serializable,long)')": [
+                        526,
+                        534,
+                        539,
+                        540,
+                        541
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'addCacheListener(String,ICacheListener)')": [
+                        736,
+                        737,
+                        738,
+                        740,
+                        741,
+                        742,
+                        743,
+                        744,
+                        745,
+                        746,
+                        747,
+                        748,
+                        749,
+                        750,
+                        752,
+                        753,
+                        754,
+                        755,
+                        756,
+                        757,
+                        758,
+                        759,
+                        760,
+                        764
+                    ]
+                }
+            }
+        }
+    },
+    "ceeb2053985f3b9a826454cc6053b77b071eda02": {
+        "authored_data": "2005 Jan 13 09:12",
+        "commit.message": "Fixed a bug that caused remote push to fail.\n\nThe event queues have an isAlive and an isWorking status.  Originally isAlive meant that it hadn't died.  No isAlive means are there any threads that are running.  isWorking used to mean that there were threads working; now it means that the queue is in working order.  This terminology isn't clear and lead to a bug.  I will come up with new names.\n\nThe remote server used to check to see if a queue was alive before trying to send an update to a local.  When we made the queues shutdown from inactivity, they started setting the isAlive to false.  The remote server would then think they were bad and not try to add events.  I now made the remote server check to see if the queue is working.\n\nupdated to bug fix version 1.2.1\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@224194 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Aaron Smuts",
+        "pcid": "d77360819f1b726aed7dd1a91b37c08bc25dadf2",
+        "changes": {
+            "auxiliary-builds/jdk14/src/java/org/apache/jcs/auxiliary/disk/bdbje/BDBJECache.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.disk.bdbje#BDBJECache', None)": [
+                        44
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.bdbje#BDBJECache', None)": [
+                        45
+                    ]
+                }
+            },
+            "auxiliary-builds/jdk14/src/java/org/apache/jcs/auxiliary/disk/bdbje/BDBJECacheAttributes.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.disk.bdbje#BDBJECacheAttributes', None)": [
+                        26,
+                        27
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.bdbje#BDBJECacheAttributes', None)": [
+                        27,
+                        28
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/AbstractDiskCache.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', None)": [
+                        69,
+                        72,
+                        121,
+                        127,
+                        128,
+                        130,
+                        134,
+                        138,
+                        140,
+                        142,
+                        158,
+                        383,
+                        384
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', 'initPurgatory')": [
+                        148,
+                        151,
+                        153
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', 'dispose')": [
+                        321
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', 'getStatistics')": [
+                        356,
+                        358,
+                        360,
+                        365,
+                        370,
+                        377
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', None)": [
+                        69,
+                        72,
+                        121,
+                        127,
+                        128,
+                        130,
+                        134,
+                        138,
+                        140,
+                        142,
+                        158,
+                        384,
+                        385
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', 'initPurgatory')": [
+                        148,
+                        151,
+                        153
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', 'dispose')": [
+                        321,
+                        322
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', 'getStatistics')": [
+                        357,
+                        359,
+                        361,
+                        366,
+                        371,
+                        378
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/LateralCacheNoWait.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', None)": [
+                        66,
+                        67,
+                        70,
+                        71,
+                        221,
+                        263,
+                        266
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', 'getStatus')": [
+                        206
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', 'resetEventQ')": [
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        243,
+                        244
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', 'getStatistics')": [
+                        286
+                    ],
+                    "(None, None)": [
+                        292
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', None)": [
+                        66,
+                        67,
+                        70,
+                        71,
+                        221,
+                        263,
+                        266
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', 'getStatus')": [
+                        206
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', 'resetEventQ')": [
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        243,
+                        244
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', 'getStatistics')": [
+                        286
+                    ],
+                    "(None, None)": [
+                        292
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/RemoteCacheNoWait.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', None)": [
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        72,
+                        264,
+                        267
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', 'getStatus')": [
+                        207
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', 'resetEventQ')": [
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', 'getStatistics')": [
+                        287,
+                        294
+                    ],
+                    "(None, None)": [
+                        300
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', None)": [
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        72,
+                        264,
+                        267
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', 'getStatus')": [
+                        207
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', 'resetEventQ')": [
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', 'getStatistics')": [
+                        287,
+                        294
+                    ],
+                    "(None, None)": [
+                        300
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/server/RemoteCacheServer.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'update(ICacheElement,long)')": [
+                        340
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'getEventQList(CacheListeners,long)')": [
+                        365
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'cleanupEventQMap(Map)')": [
+                        649,
+                        652
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'addCacheListener(String,ICacheListener)')": [
+                        723,
+                        724,
+                        725,
+                        726,
+                        727,
+                        728,
+                        730
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'update(ICacheElement,long)')": [
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        345
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'getEventQList(CacheListeners,long)')": [
+                        370
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'cleanupEventQMap(Map)')": [
+                        654,
+                        655,
+                        656,
+                        657,
+                        658,
+                        661
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'addCacheListener(String,ICacheListener)')": [
+                        732,
+                        733,
+                        734,
+                        735,
+                        736,
+                        737,
+                        739
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/PooledCacheEventQueue.java": {
+                "old": {
+                    "(None, None)": [
+                        40,
+                        44,
+                        49,
+                        52
+                    ],
+                    "('org.apache.jcs.engine#PooledCacheEventQueue', None)": [
+                        56,
+                        58,
+                        91,
+                        139,
+                        140,
+                        199,
+                        293,
+                        315,
+                        380,
+                        458,
+                        473,
+                        495,
+                        505,
+                        516,
+                        526,
+                        538,
+                        547,
+                        557,
+                        569,
+                        578,
+                        611
+                    ],
+                    "('org.apache.jcs.engine#PooledCacheEventQueue', 'getStatistics')": [
+                        355
+                    ],
+                    "('org.apache.jcs.engine#PooledCacheEventQueue', 'isEmpty')": [
+                        618,
+                        619,
+                        620,
+                        629
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        40,
+                        44,
+                        49,
+                        52
+                    ],
+                    "('org.apache.jcs.engine#PooledCacheEventQueue', None)": [
+                        56,
+                        58,
+                        91,
+                        139,
+                        140,
+                        199,
+                        296,
+                        318,
+                        383,
+                        461,
+                        476,
+                        498,
+                        508,
+                        519,
+                        529,
+                        541,
+                        550,
+                        560,
+                        572,
+                        581,
+                        614
+                    ],
+                    "('org.apache.jcs.engine#PooledCacheEventQueue', 'destroy')": [
+                        206,
+                        207,
+                        208
+                    ],
+                    "('org.apache.jcs.engine#PooledCacheEventQueue', 'getStatistics')": [
+                        358
+                    ],
+                    "('org.apache.jcs.engine#PooledCacheEventQueue', 'isEmpty')": [
+                        621,
+                        622,
+                        623,
+                        632
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/behavior/ICacheEventQueue.java": {
+                "old": {
+                    "(None, None)": [
+                        34,
+                        36,
+                        39,
+                        43,
+                        44,
+                        45,
+                        48,
+                        52,
+                        101,
+                        109,
+                        110,
+                        112
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        36,
+                        39,
+                        43,
+                        44,
+                        45,
+                        48,
+                        52,
+                        101,
+                        102,
+                        103,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        118,
+                        119,
+                        121
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/control/CompositeCache.java": {
+                "new": {
+                    "('org.apache.jcs.engine.control#CompositeCache', 'dispose(boolean)')": [
+                        864
+                    ]
+                }
+            }
+        }
+    },
+    "d77360819f1b726aed7dd1a91b37c08bc25dadf2": {
+        "authored_data": "2005 Jan 12 01:23",
+        "commit.message": "Optional, configurable thread pools can be set for all auxiliaries.  By default\nthe single queue is used. (Will document later.)\nShrinkers for all regions now share one thread and are executed by a Doug Lea\nClock Daemon.\nThe disk cache now has more configuration options exposed.  You can set the purgatory size,\nrecycle bin size, etc.  Alos, you can set a bound on the purgatory.  This solves the possibility\nor an ever growing purgatory with a bounded queue.\nUped version to 1.2-dev to mark the changes.\nUpdated some documentation.  I need to rebuild the site.  I published the new\ndisk cache config page already.\nThe disk cache options are described on the web site.\n\njcs.auxiliary.DC.attributes.MaxPurgatorySize=10000\njcs.auxiliary.DC.attributes.MaxKeySize=10000\njcs.auxiliary.DC.attributes.MaxRecycleBinSize=5000\njcs.auxiliary.DC.attributes.OptimizeAtRemoveCount=300000\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@224193 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Aaron Smuts",
+        "pcid": "cd841455437d74bc9868ac4faeaf8011509752bb",
+        "changes": {
+            "src/java/org/apache/jcs/auxiliary/disk/AbstractDiskCache.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        32
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', None)": [
+                        76,
+                        112,
+                        113,
+                        120,
+                        121,
+                        122,
+                        123,
+                        473
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', 'removeAll')": [
+                        272
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        27,
+                        33
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', None)": [
+                        69,
+                        70,
+                        71,
+                        72,
+                        81,
+                        82,
+                        118,
+                        119,
+                        120,
+                        121,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        156,
+                        157,
+                        158,
+                        508
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', 'initPurgatory')": [
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', 'removeAll')": [
+                        307
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/LRUMapJCS.java": {
+                "old": {
+                    "(None, None)": [
+                        5
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        5
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/hsql/HSQLCache.java": {
+                "old": {
+                    "(None, None)": [
+                        39
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.hsql#HSQLCache', None)": [
+                        77
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        40
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.hsql#HSQLCache', None)": [
+                        77
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/hsql/HSQLCacheAttributes.java": {
+                "old": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.hsql#HSQLCacheAttributes', None)": [
+                        28,
+                        29
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.hsql#HSQLCacheAttributes', None)": [
+                        28
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/indexed/IndexedDiskCache.java": {
+                "old": {
+                    "(None, None)": [
+                        35
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', None)": [
+                        69,
+                        108,
+                        158,
+                        166,
+                        167,
+                        170
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', 'loadKeys')": [
+                        197,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', 'reset')": [
+                        762,
+                        763,
+                        764,
+                        765,
+                        766
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', 'moveKeyDataToTemp(Serializable,LRUMap,IndexedDisk)')": [
+                        1100
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', None)": [
+                        69,
+                        108,
+                        158,
+                        166,
+                        167,
+                        179,
+                        774,
+                        775,
+                        776,
+                        777,
+                        778,
+                        779,
+                        780,
+                        799,
+                        800,
+                        801,
+                        802,
+                        803,
+                        821,
+                        822,
+                        823
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', 'loadKeys')": [
+                        197,
+                        198,
+                        199,
+                        209,
+                        210
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', 'reset')": [
+                        759,
+                        760,
+                        761
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', 'initRecycleBin')": [
+                        781,
+                        782,
+                        783,
+                        784,
+                        785,
+                        786,
+                        787,
+                        788,
+                        789,
+                        790,
+                        791,
+                        792,
+                        793,
+                        794,
+                        795,
+                        796,
+                        797,
+                        798
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', 'initKeyMap')": [
+                        804,
+                        805,
+                        806,
+                        807,
+                        808,
+                        809,
+                        810,
+                        811,
+                        812,
+                        813,
+                        814,
+                        815,
+                        816,
+                        817,
+                        818,
+                        819,
+                        820
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', 'moveKeyDataToTemp(Serializable,LRUMap,IndexedDisk)')": [
+                        1145
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/indexed/IndexedDiskCacheAttributes.java": {
+                "old": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCacheAttributes', None)": [
+                        28,
+                        29,
+                        30,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        67
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCacheAttributes', 'setDiskPath(String)')": [
+                        53,
+                        54,
+                        55
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCacheAttributes', 'getDiskPath')": [
+                        64,
+                        65,
+                        66
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCacheAttributes', 'toString')": [
+                        141
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCacheAttributes', None)": [
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        37,
+                        38,
+                        39,
+                        48,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        128,
+                        129,
+                        130,
+                        131
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCacheAttributes', 'setMaxKeySize(int)')": [
+                        70,
+                        71,
+                        72
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCacheAttributes', 'setMaxRecycleBinSize(int)')": [
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCacheAttributes', 'getMaxRecycleBinSize')": [
+                        125,
+                        126,
+                        127
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCacheAttributes', 'toString')": [
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/jisp/JISPCache.java": {
+                "old": {
+                    "(None, None)": [
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.jisp#JISPCache', None)": [
+                        70
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.jisp#JISPCache', None)": [
+                        71
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/jisp/JISPCacheAttributes.java": {
+                "old": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.jisp#JISPCacheAttributes', None)": [
+                        28,
+                        29,
+                        31,
+                        32,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.jisp#JISPCacheAttributes', 'setDiskPath(String)')": [
+                        47,
+                        48,
+                        49
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.jisp#JISPCacheAttributes', 'getDiskPath')": [
+                        57,
+                        58,
+                        59
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.jisp#JISPCacheAttributes', None)": [
+                        28
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/memory/AbstractMemoryCache.java": {
+                "old": {
+                    "('org.apache.jcs.engine.memory#AbstractMemoryCache', None)": [
+                        73,
+                        74,
+                        75,
+                        76
+                    ],
+                    "('org.apache.jcs.engine.memory#AbstractMemoryCache', 'initialize(CompositeCache)')": [
+                        100,
+                        102,
+                        103,
+                        104,
+                        105
+                    ],
+                    "('org.apache.jcs.engine.memory#AbstractMemoryCache', 'dispose')": [
+                        177,
+                        178
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33,
+                        34,
+                        35,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        326
+                    ],
+                    "('org.apache.jcs.engine.memory#AbstractMemoryCache', None)": [
+                        76,
+                        77,
+                        78,
+                        110,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319
+                    ],
+                    "('org.apache.jcs.engine.memory#AbstractMemoryCache', 'initialize(CompositeCache)')": [
+                        102,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109
+                    ],
+                    "('org.apache.jcs.engine.memory#AbstractMemoryCache', 'dispose')": [
+                        182,
+                        183
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/memory/shrinking/ShrinkerThread.java": {
+                "old": {
+                    "('org.apache.jcs.engine.memory.shrinking#ShrinkerThread', None)": [
+                        43,
+                        49,
+                        50,
+                        51,
+                        60,
+                        61,
+                        62,
+                        74,
+                        75,
+                        76,
+                        99,
+                        100,
+                        109,
+                        110,
+                        111
+                    ],
+                    "('org.apache.jcs.engine.memory.shrinking#ShrinkerThread', 'kill')": [
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108
+                    ],
+                    "('org.apache.jcs.engine.memory.shrinking#ShrinkerThread', 'run')": [
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131
+                    ],
+                    "('org.apache.jcs.engine.memory.shrinking#ShrinkerThread', 'shrink')": [
+                        265
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.engine.memory.shrinking#ShrinkerThread', None)": [
+                        43
+                    ],
+                    "('org.apache.jcs.engine.memory.shrinking#ShrinkerThread', 'run')": [
+                        94
+                    ],
+                    "('org.apache.jcs.engine.memory.shrinking#ShrinkerThread', 'shrink')": [
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229
+                    ]
+                }
+            }
+        }
+    },
+    "cd841455437d74bc9868ac4faeaf8011509752bb": {
+        "authored_data": "2005 Jan 07 22:31",
+        "commit.message": "Added the ability to set auxiliaries to use a thread pools in the event queue.  By default none are used and no\nthreadpool configuration is necessary.  Everything is as is unless you configure it otherwise.\n\nNo version update.  I need to make sure the indexed disk cache can function\nwith more than one thread pulling out of the queue.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@224192 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Aaron Smuts",
+        "pcid": "91f290c6290c23b13f8661545ff7e24de17b3746",
+        "changes": {
+            "auxiliary-builds/jdk14/src/java/org/apache/jcs/auxiliary/disk/bdbje/BDBJECache.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.disk.bdbje#BDBJECache', None)": [
+                        43
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.bdbje#BDBJECache', None)": [
+                        44
+                    ]
+                }
+            },
+            "auxiliary-builds/jdk14/src/java/org/apache/jcs/auxiliary/disk/bdbje/BDBJECacheAttributes.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.disk.bdbje#BDBJECacheAttributes', None)": [
+                        25,
+                        28,
+                        29,
+                        30,
+                        31,
+                        36,
+                        37,
+                        38,
+                        39,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        67
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.bdbje#BDBJECacheAttributes', 'setCacheName(String)')": [
+                        40,
+                        41,
+                        42
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.bdbje#BDBJECacheAttributes', 'getCacheName')": [
+                        48,
+                        49,
+                        50
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.bdbje#BDBJECacheAttributes', 'setName(String)')": [
+                        56,
+                        57,
+                        58
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.bdbje#BDBJECacheAttributes', 'getName')": [
+                        64,
+                        65,
+                        66
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.bdbje#BDBJECacheAttributes', None)": [
+                        26
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/AuxiliaryCacheAttributes.java": {
+                "old": {
+                    "(None, None)": [
+                        30,
+                        31
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/AbstractDiskCache.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', None)": [
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        116
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        34,
+                        36
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', None)": [
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        119,
+                        120,
+                        121
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/hsql/HSQLCache.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.disk.hsql#HSQLCache', None)": [
+                        76
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        39
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.hsql#HSQLCache', None)": [
+                        77
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/hsql/HSQLCacheAttributes.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.disk.hsql#HSQLCacheAttributes', None)": [
+                        27,
+                        29,
+                        30,
+                        31,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        98,
+                        99
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.hsql#HSQLCacheAttributes', 'setCacheName(String)')": [
+                        65,
+                        66,
+                        67
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.hsql#HSQLCacheAttributes', 'getCacheName')": [
+                        75,
+                        76,
+                        77
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.hsql#HSQLCacheAttributes', 'getName')": [
+                        85,
+                        86,
+                        87
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.hsql#HSQLCacheAttributes', 'setName(String)')": [
+                        95,
+                        96,
+                        97
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.hsql#HSQLCacheAttributes', None)": [
+                        28,
+                        29
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/indexed/IndexedDiskCache.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', None)": [
+                        107
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', None)": [
+                        108
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/indexed/IndexedDiskCacheAttributes.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCacheAttributes', None)": [
+                        27,
+                        29,
+                        30,
+                        31,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        112,
+                        113
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCacheAttributes', 'setCacheName(String)')": [
+                        76,
+                        77,
+                        78
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCacheAttributes', 'getCacheName')": [
+                        87,
+                        88,
+                        89
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCacheAttributes', 'getName')": [
+                        98,
+                        99,
+                        100
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCacheAttributes', 'setName(String)')": [
+                        109,
+                        110,
+                        111
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCacheAttributes', None)": [
+                        28,
+                        29,
+                        69
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/jisp/JISPCache.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.disk.jisp#JISPCache', None)": [
+                        69
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.jisp#JISPCache', None)": [
+                        70
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/jisp/JISPCacheAttributes.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.disk.jisp#JISPCacheAttributes', None)": [
+                        27,
+                        29,
+                        30,
+                        31,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        124,
+                        125
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.jisp#JISPCacheAttributes', 'setCacheName(String)')": [
+                        91,
+                        92,
+                        93
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.jisp#JISPCacheAttributes', 'getCacheName')": [
+                        101,
+                        102,
+                        103
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.jisp#JISPCacheAttributes', 'getName')": [
+                        111,
+                        112,
+                        113
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.jisp#JISPCacheAttributes', 'setName(String)')": [
+                        121,
+                        122,
+                        123
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.jisp#JISPCacheAttributes', None)": [
+                        28,
+                        29,
+                        85
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/javagroups/JavaGroupsCacheAttributes.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.javagroups#JavaGroupsCacheAttributes', None)": [
+                        47,
+                        49,
+                        50,
+                        51,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        118,
+                        119
+                    ],
+                    "('org.apache.jcs.auxiliary.javagroups#JavaGroupsCacheAttributes', 'getCacheName')": [
+                        91,
+                        92,
+                        93
+                    ],
+                    "('org.apache.jcs.auxiliary.javagroups#JavaGroupsCacheAttributes', 'setCacheName(String)')": [
+                        99,
+                        100,
+                        101
+                    ],
+                    "('org.apache.jcs.auxiliary.javagroups#JavaGroupsCacheAttributes', 'getName')": [
+                        107,
+                        108,
+                        109
+                    ],
+                    "('org.apache.jcs.auxiliary.javagroups#JavaGroupsCacheAttributes', 'setName(String)')": [
+                        115,
+                        116,
+                        117
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.jcs.auxiliary.javagroups#JavaGroupsCacheAttributes', None)": [
+                        48,
+                        49,
+                        85
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/LateralCache.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', None)": [
+                        59,
+                        90
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'toString')": [
+                        97
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'get(Serializable)')": [
+                        132,
+                        143
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'remove(Serializable)')": [
+                        171
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'removeAll')": [
+                        192
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'dispose')": [
+                        208,
+                        214
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        308
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', None)": [
+                        60,
+                        91,
+                        301,
+                        302,
+                        303,
+                        304
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'toString')": [
+                        98
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'get(Serializable)')": [
+                        133,
+                        144
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'remove(Serializable)')": [
+                        172
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'removeAll')": [
+                        193
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'dispose')": [
+                        209,
+                        215
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'getAuxiliaryCacheAttributes')": [
+                        305,
+                        306,
+                        307
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/LateralCacheAttributes.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheAttributes', None)": [
+                        29,
+                        55,
+                        56,
+                        57,
+                        58,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        381,
+                        382
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheAttributes', 'setCacheName(String)')": [
+                        345,
+                        346,
+                        347
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheAttributes', 'getCacheName')": [
+                        356,
+                        357,
+                        358
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheAttributes', 'getName')": [
+                        367,
+                        368,
+                        369
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheAttributes', 'setName(String)')": [
+                        378,
+                        379,
+                        380
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheAttributes', None)": [
+                        31,
+                        32,
+                        338
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/LateralCacheNoWait.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', None)": [
+                        66,
+                        68
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', 'resetEventQ')": [
+                        236,
+                        238
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', None)": [
+                        66,
+                        67,
+                        68,
+                        70,
+                        71,
+                        72
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', 'resetEventQ')": [
+                        240,
+                        241,
+                        243,
+                        244,
+                        245
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/RemoteCache.java": {
+                "old": {
+                    "(None, None)": [
+                        24,
+                        26,
+                        27,
+                        31,
+                        34,
+                        35,
+                        37,
+                        40,
+                        41,
+                        42,
+                        43,
+                        53
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', None)": [
+                        70
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'getStatistics')": [
+                        451,
+                        456
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        28,
+                        30,
+                        36,
+                        42,
+                        541
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', None)": [
+                        63,
+                        534,
+                        535,
+                        536,
+                        537
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'getStatistics')": [
+                        444,
+                        449
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'getAuxiliaryCacheAttributes')": [
+                        538,
+                        539,
+                        540
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/RemoteCacheAttributes.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheAttributes', None)": [
+                        30,
+                        32,
+                        33,
+                        34,
+                        35,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        214,
+                        215
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheAttributes', 'setCacheName(String)')": [
+                        178,
+                        179,
+                        180
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheAttributes', 'getCacheName')": [
+                        189,
+                        190,
+                        191
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheAttributes', 'getName')": [
+                        200,
+                        201,
+                        202
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheAttributes', 'setName(String)')": [
+                        211,
+                        212,
+                        213
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheAttributes', None)": [
+                        31,
+                        32,
+                        169
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/RemoteCacheNoWait.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        35
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', None)": [
+                        66
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', 'resetEventQ')": [
+                        235
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        35
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', None)": [
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', 'resetEventQ')": [
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/RemoteUtils.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote#RemoteUtils', 'loadProps(String)')": [
+                        77,
+                        83
+                    ]
+                },
+                "new": [
+                    "JavaSyntaxError",
+                    "src/java/org/apache/jcs/auxiliary/remote/RemoteUtils.java",
+                    [
+                        30,
+                        78,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        104
+                    ]
+                ]
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/server/RemoteCacheServer.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        26,
+                        30,
+                        36,
+                        37,
+                        44,
+                        45,
+                        47,
+                        51,
+                        54,
+                        55,
+                        56
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'update(ICacheElement,long)')": [
+                        344
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'addCacheListener(String,ICacheListener)')": [
+                        726,
+                        727
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        34,
+                        35,
+                        36,
+                        43
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'update(ICacheElement,long)')": [
+                        334,
+                        338,
+                        339,
+                        340,
+                        341
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'addCacheListener(String,ICacheListener)')": [
+                        723,
+                        724,
+                        725,
+                        726,
+                        727,
+                        728,
+                        729,
+                        730,
+                        731
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/server/RemoteCacheServerAttributes.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServerAttributes', None)": [
+                        30,
+                        32,
+                        33,
+                        34,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        165,
+                        166,
+                        167
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServerAttributes', 'setCacheName(String)')": [
+                        129,
+                        130,
+                        131
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServerAttributes', 'getCacheName')": [
+                        140,
+                        141,
+                        142
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServerAttributes', 'getName')": [
+                        151,
+                        152,
+                        153
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServerAttributes', 'setName(String)')": [
+                        162,
+                        163,
+                        164
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServerAttributes', None)": [
+                        31,
+                        32,
+                        122
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/server/RemoteCacheServerFactory.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServerFactory', 'startup(String,int,String)')": [
+                        83
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServerFactory', 'startup(String,int,String)')": [
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        89
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/CacheEventQueue.java": {
+                "old": {
+                    "('org.apache.jcs.engine#CacheEventQueue', 'getStatistics')": [
+                        381,
+                        404
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.engine#CacheEventQueue', None)": [
+                        51,
+                        52,
+                        127,
+                        128,
+                        129,
+                        130,
+                        134,
+                        135
+                    ],
+                    "('org.apache.jcs.engine#CacheEventQueue', 'getQueueType')": [
+                        131,
+                        132,
+                        133
+                    ],
+                    "('org.apache.jcs.engine#CacheEventQueue', 'getStatistics')": [
+                        391,
+                        414
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/behavior/ICacheEventQueue.java": {
+                "new": {
+                    "(None, None)": [
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/utils/threadpool/PoolConfiguration.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        23
+                    ],
+                    "('org.apache.jcs.utils.threadpool#PoolConfiguration', None)": [
+                        25,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        41,
+                        49,
+                        57,
+                        58,
+                        59,
+                        132,
+                        133,
+                        134,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142
+                    ],
+                    "('org.apache.jcs.utils.threadpool#PoolConfiguration', 'setAbortWhenBlocked(boolean)')": [
+                        135,
+                        136,
+                        137
+                    ],
+                    "('org.apache.jcs.utils.threadpool#PoolConfiguration', 'isAbortWhenBlocked')": [
+                        143,
+                        144,
+                        145
+                    ],
+                    "('org.apache.jcs.utils.threadpool#PoolConfiguration', 'toString')": [
+                        175
+                    ],
+                    "('org.apache.jcs.utils.threadpool#PoolConfiguration', 'clone')": [
+                        185,
+                        186
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        23,
+                        25
+                    ],
+                    "('org.apache.jcs.utils.threadpool#PoolConfiguration', None)": [
+                        27,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        63,
+                        67,
+                        75,
+                        83,
+                        84,
+                        85,
+                        158,
+                        159,
+                        160,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201
+                    ],
+                    "('org.apache.jcs.utils.threadpool#PoolConfiguration', 'setUseBoundary(boolean)')": [
+                        52,
+                        53,
+                        54
+                    ],
+                    "('org.apache.jcs.utils.threadpool#PoolConfiguration', 'isUseBoundary')": [
+                        60,
+                        61,
+                        62
+                    ],
+                    "('org.apache.jcs.utils.threadpool#PoolConfiguration', 'setWhenBlockedPolicy(String)')": [
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194
+                    ],
+                    "('org.apache.jcs.utils.threadpool#PoolConfiguration', 'getWhenBlockedPolicy')": [
+                        202,
+                        203,
+                        204
+                    ],
+                    "('org.apache.jcs.utils.threadpool#PoolConfiguration', 'toString')": [
+                        230,
+                        235
+                    ],
+                    "('org.apache.jcs.utils.threadpool#PoolConfiguration', 'clone')": [
+                        245,
+                        246,
+                        247
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/utils/threadpool/ThreadPoolManager.java": {
+                "old": {
+                    "('org.apache.jcs.utils.threadpool#ThreadPoolManager', None)": [
+                        72,
+                        80,
+                        118,
+                        119
+                    ],
+                    "('org.apache.jcs.utils.threadpool#ThreadPoolManager', 'createPool(PoolConfiguration)')": [
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        127,
+                        131,
+                        137
+                    ],
+                    "('org.apache.jcs.utils.threadpool#ThreadPoolManager', 'getPool(String)')": [
+                        167,
+                        168,
+                        169,
+                        173
+                    ],
+                    "('org.apache.jcs.utils.threadpool#ThreadPoolManager', 'configure')": [
+                        314,
+                        316
+                    ],
+                    "('org.apache.jcs.utils.threadpool#ThreadPoolManager', 'loadConfig(String)')": [
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        32,
+                        33
+                    ],
+                    "('org.apache.jcs.utils.threadpool#ThreadPoolManager', None)": [
+                        75,
+                        76,
+                        77,
+                        85,
+                        123,
+                        124
+                    ],
+                    "('org.apache.jcs.utils.threadpool#ThreadPoolManager', 'createPool(PoolConfiguration)')": [
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        150,
+                        151,
+                        152,
+                        156,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        176
+                    ],
+                    "('org.apache.jcs.utils.threadpool#ThreadPoolManager', 'getPool(String)')": [
+                        206,
+                        207,
+                        208,
+                        212
+                    ],
+                    "('org.apache.jcs.utils.threadpool#ThreadPoolManager', 'configure')": [
+                        353,
+                        355
+                    ],
+                    "('org.apache.jcs.utils.threadpool#ThreadPoolManager', 'loadConfig(String)')": [
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        397,
+                        411,
+                        425,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446
+                    ]
+                }
+            },
+            "src/test/org/apache/jcs/engine/TestEventQueueConcurrent.java": {
+                "old": {
+                    "('org.apache.jcs.engine#TestEventQueueConcurrent', 'runPutTest(int,int)')": [
+                        184
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.engine#TestEventQueueConcurrent', 'runPutTest(int,int)')": [
+                        184
+                    ]
+                }
+            }
+        }
+    },
+    "91f290c6290c23b13f8661545ff7e24de17b3746": {
+        "authored_data": "2005 Jan 06 04:44",
+        "commit.message": "Fixed bug in new code where the future result was not getting returned.\nAdded get statis method to CompositeCacheManager.\nAdded license to threadpool management classes.\nUpdated temp build jar, smae version as earlier.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@224191 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Aaron Smuts",
+        "pcid": "2445d3795cfa1208954cd1b63661b10140742ae1",
+        "changes": {
+            "src/java/org/apache/jcs/auxiliary/remote/RemoteCache.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', None)": [
+                        72,
+                        98,
+                        105,
+                        116,
+                        183,
+                        192,
+                        223,
+                        226,
+                        278,
+                        409,
+                        412,
+                        448
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'update(ICacheElement)')": [
+                        168
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'get(Serializable)')": [
+                        202,
+                        203,
+                        204,
+                        205,
+                        206
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'getUsingPool(Serializable)')": [
+                        257,
+                        262,
+                        275,
+                        276
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'getStatistics')": [
+                        427,
+                        435,
+                        440
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', None)": [
+                        72,
+                        98,
+                        105,
+                        116,
+                        190,
+                        199,
+                        230,
+                        233,
+                        295,
+                        426,
+                        429,
+                        465
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'update(ICacheElement)')": [
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        187,
+                        188,
+                        189
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'get(Serializable)')": [
+                        209,
+                        210,
+                        211,
+                        212,
+                        213
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'getUsingPool(Serializable)')": [
+                        264,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'getStatistics')": [
+                        444,
+                        452,
+                        457
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/server/RemoteCacheServer.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'getStats')": [
+                        876,
+                        877
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'getStats')": [
+                        876
+                    ],
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', None)": [
+                        877
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/control/CompositeCache.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCache', 'getStats')": [
+                        1001
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCache', None)": [
+                        1008,
+                        1046
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCache', 'getStatistics')": [
+                        1015,
+                        1021,
+                        1028,
+                        1032,
+                        1043
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.engine.control#CompositeCache', 'getStats')": [
+                        1000
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCache', None)": [
+                        1007,
+                        1045
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCache', 'getStatistics')": [
+                        1014,
+                        1020,
+                        1027,
+                        1031,
+                        1042
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/control/CompositeCacheManager.java": {
+                "old": {
+                    "(None, None)": [
+                        2
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCacheManager', 'configure(Properties)')": [
+                        205
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        40,
+                        41,
+                        475,
+                        476
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCacheManager', 'configure(Properties)')": [
+                        207
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCacheManager', None)": [
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCacheManager', 'getStats')": [
+                        450,
+                        451,
+                        452
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCacheManager', 'getStatistics')": [
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/utils/threadpool/PoolConfiguration.java": {
+                "old": {
+                    "(None, None)": [
+                        5,
+                        7
+                    ],
+                    "('org.apache.jcs.utils.threadpool#PoolConfiguration', None)": [
+                        25,
+                        33
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        21,
+                        23
+                    ],
+                    "('org.apache.jcs.utils.threadpool#PoolConfiguration', None)": [
+                        41,
+                        49
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/utils/threadpool/ThreadPoolManager.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        23,
+                        27,
+                        31,
+                        33,
+                        36,
+                        40,
+                        41,
+                        44,
+                        46
+                    ],
+                    "('org.apache.jcs.utils.threadpool#ThreadPoolManager', None)": [
+                        91,
+                        100,
+                        128,
+                        144,
+                        146,
+                        147,
+                        185,
+                        205,
+                        215,
+                        226,
+                        248,
+                        308
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        37,
+                        39,
+                        43,
+                        47,
+                        49,
+                        52,
+                        56,
+                        57,
+                        60,
+                        62
+                    ],
+                    "('org.apache.jcs.utils.threadpool#ThreadPoolManager', None)": [
+                        107,
+                        116,
+                        144,
+                        160,
+                        162,
+                        163,
+                        201,
+                        221,
+                        231,
+                        242,
+                        264,
+                        324
+                    ]
+                }
+            }
+        }
+    },
+    "2445d3795cfa1208954cd1b63661b10140742ae1": {
+        "authored_data": "2005 Jan 06 01:27",
+        "commit.message": "Put in a solution for the RMI bug.  Now, gets can be done asynchronously with a configurable timeout.\n  You can specify that your remote region should timeout gets.\n\n  see the cache.ccf in the src/conf for details\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@224190 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Aaron Smuts",
+        "pcid": "a9e34ad03f07d5bc6e4e5a5c3a4e0474961b27c9",
+        "changes": {
+            "src/java/org/apache/jcs/auxiliary/lateral/LateralCacheNoWait.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', 'getStats')": [
+                        247
+                    ],
+                    "(None, None)": [
+                        248
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        36,
+                        37,
+                        38,
+                        39,
+                        285
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', 'getStats')": [
+                        254
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', None)": [
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', 'getStatistics')": [
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/RemoteCache.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'get(Serializable)')": [
+                        163
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'getStats')": [
+                        306
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', None)": [
+                        307,
+                        308
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', None)": [
+                        70,
+                        71,
+                        72,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        192,
+                        193,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        277,
+                        278,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        448
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'get(Serializable)')": [
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'getUsingPool(Serializable)')": [
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'getStats')": [
+                        406
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'getStatistics')": [
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/RemoteCacheAttributes.java": {
+                "new": {
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheAttributes', None)": [
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        457,
+                        458,
+                        459,
+                        460,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheAttributes', 'getThreadPoolName')": [
+                        431,
+                        432,
+                        433
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheAttributes', 'setThreadPoolName(String)')": [
+                        440,
+                        441,
+                        442
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheAttributes', 'getGetTimeoutMillis')": [
+                        461,
+                        462,
+                        463
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheAttributes', 'setGetTimeoutMillis(int)')": [
+                        470,
+                        471,
+                        472
+                    ],
+                    "(None, None)": [
+                        473,
+                        474,
+                        475
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/RemoteCacheNoWait.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', 'getStats')": [
+                        244
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        39,
+                        40,
+                        41,
+                        42,
+                        289
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', 'getStats')": [
+                        251
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', None)": [
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', 'getStatistics')": [
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/RemoteCacheNoWaitFacade.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWaitFacade', 'getStats')": [
+                        305
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        35,
+                        36,
+                        37,
+                        38,
+                        353
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWaitFacade', 'getStats')": [
+                        312
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWaitFacade', None)": [
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWaitFacade', 'getStatistics')": [
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352
+                    ]
+                }
+            },
+            "src/test/org/apache/jcs/auxiliary/remote/RemoteCacheClientTest.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        23,
+                        26,
+                        28,
+                        34,
+                        37,
+                        39
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheClientTest', 'setListenerId(long)')": [
+                        290
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheClientTest', 'getListenerId')": [
+                        303
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheClientTest', 'setListenerId(long)')": [
+                        283
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheClientTest', 'getListenerId')": [
+                        296
+                    ]
+                }
+            },
+            "src/test/org/apache/jcs/servlet/SessionExampleServlet.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        34
+                    ]
+                }
+            }
+        }
+    },
+    "a9e34ad03f07d5bc6e4e5a5c3a4e0474961b27c9": {
+        "authored_data": "2005 Jan 06 01:21",
+        "commit.message": "1.  Put in a solution for the RMI bug.  Now, gets can be done asynchronously with a configurable timeout.\nYou can specify that your remote region should timeout gets.\n\nsee the cache.ccf in the src/conf for details\n\n\n#-1 means no timeout, this is the default\n# if the timeout is -1, no threadpool will be used.\njcs.auxiliary.RC.attributes.GetTimeoutMillis=5000\njcs.auxiliary.RC.attributes.ThreadPoolName=remote_cache_client\n\nHere RC is my auxiliary name.  I tell it to time out at 5 seconds and to use the thread pool named remote_cache_client.\n\nYou can define pools in the file.  Below I define defaults for a thread pool and the settings for the pool I want the remote cache\nclient to use.\n\nIf the timeout is less than 0, no threadpool will be used.\n\n##############################################################\n################## THREAD POOL CONFIGURATION ###################\n# default thread pool config\nthread_pool.default.boundarySize=75\nthread_pool.default.maximumPoolSize=150\nthread_pool.default.minimumPoolSize=4\nthread_pool.default.keepAliveTime=350000\nthread_pool.default.abortWhenBlocked=false\nthread_pool.default.startUpSize=4\n\n# remote cache client thread pool config\nthread_pool.remote_cache_client.boundarySize=75\nthread_pool.remote_cache_client.maximumPoolSize=150\nthread_pool.remote_cache_client.minimumPoolSize=4\nthread_pool.remote_cache_client.keepAliveTime=350000\nthread_pool.remote_cache_client.abortWhenBlocked=false\nthread_pool.remote_cache_client.startUpSize=4\n\n\n\n\n\n2.  Changed stats gathering mechanism.  I will update the admin jsp to make use of the\nmore easily formattable data.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@224189 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Aaron Smuts",
+        "pcid": "f0338d0d0f7fc29abd504ba4f05069b4adf9ca60",
+        "changes": {
+            "src/experimental/org/apache/jcs/engine/PooledCacheEventQueue.java": {
+                "old": {
+                    "('org.apache.jcs.engine#PooledCacheEventQueue', None)": [
+                        100,
+                        113,
+                        268,
+                        269
+                    ],
+                    "('org.apache.jcs.engine#PooledCacheEventQueue', 'getStats')": [
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267
+                    ],
+                    "(None, None)": [
+                        471
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        28,
+                        29,
+                        30,
+                        31,
+                        523
+                    ],
+                    "('org.apache.jcs.engine#PooledCacheEventQueue', None)": [
+                        105,
+                        118,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        320,
+                        321
+                    ],
+                    "('org.apache.jcs.engine#PooledCacheEventQueue', 'getStats')": [
+                        264
+                    ],
+                    "('org.apache.jcs.engine#PooledCacheEventQueue', 'getStatistics')": [
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/admin/JCSAdminBean.java": {
+                "new": {
+                    "('org.apache.jcs.admin#JCSAdminBean', None)": [
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/indexed/IndexedDiskCache.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        26,
+                        29,
+                        30,
+                        41
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', 'getStats')": [
+                        1242,
+                        1243,
+                        1244,
+                        1245,
+                        1246,
+                        1247,
+                        1248,
+                        1249,
+                        1250,
+                        1251,
+                        1252,
+                        1253,
+                        1254,
+                        1255,
+                        1256,
+                        1257,
+                        1258,
+                        1259,
+                        1260
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', None)": [
+                        1261,
+                        1262
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        22,
+                        23,
+                        25,
+                        28,
+                        29,
+                        42,
+                        43,
+                        44,
+                        45,
+                        47,
+                        48
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', 'getStats')": [
+                        1248
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', None)": [
+                        1249,
+                        1250,
+                        1251,
+                        1252,
+                        1253,
+                        1254,
+                        1255,
+                        1256,
+                        1312,
+                        1313
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', 'getStatistics')": [
+                        1257,
+                        1258,
+                        1259,
+                        1260,
+                        1261,
+                        1262,
+                        1263,
+                        1264,
+                        1265,
+                        1266,
+                        1267,
+                        1268,
+                        1269,
+                        1270,
+                        1271,
+                        1272,
+                        1273,
+                        1274,
+                        1275,
+                        1276,
+                        1277,
+                        1278,
+                        1279,
+                        1280,
+                        1281,
+                        1282,
+                        1283,
+                        1284,
+                        1285,
+                        1286,
+                        1287,
+                        1288,
+                        1289,
+                        1290,
+                        1291,
+                        1292,
+                        1293,
+                        1294,
+                        1295,
+                        1296,
+                        1297,
+                        1298,
+                        1299,
+                        1300,
+                        1301,
+                        1302,
+                        1303,
+                        1304,
+                        1305,
+                        1306,
+                        1307,
+                        1308,
+                        1309,
+                        1310,
+                        1311
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/javagroups/JavaGroupsCache.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.javagroups#JavaGroupsCache', 'getStats')": [
+                        361
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        30,
+                        31,
+                        32,
+                        45,
+                        46,
+                        47
+                    ],
+                    "('org.apache.jcs.auxiliary.javagroups#JavaGroupsCache', 'getStats')": [
+                        368
+                    ],
+                    "('org.apache.jcs.auxiliary.javagroups#JavaGroupsCache', None)": [
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        392,
+                        393
+                    ],
+                    "('org.apache.jcs.auxiliary.javagroups#JavaGroupsCache', 'getStatistics')": [
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/LateralCacheNoWaitFacade.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWaitFacade', 'getStats')": [
+                        239
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        32,
+                        33,
+                        34,
+                        35
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWaitFacade', 'getStats')": [
+                        244
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWaitFacade', None)": [
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWaitFacade', 'getStatistics')": [
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/behavior/IRemoteCacheAttributes.java": {
+                "old": {
+                    "(None, None)": [
+                        250
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/memory/MemoryCache.java": {
+                "old": {
+                    "(None, None)": [
+                        60,
+                        61,
+                        62,
+                        64,
+                        65
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        61,
+                        62,
+                        63,
+                        65,
+                        66,
+                        67
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/memory/lru/LRUMemoryCache.java": {
+                "old": {
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', None)": [
+                        629,
+                        636,
+                        637,
+                        651,
+                        652
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'getStats')": [
+                        630,
+                        631,
+                        632,
+                        633,
+                        634,
+                        635
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'getCnts')": [
+                        638,
+                        639,
+                        640,
+                        641,
+                        642,
+                        643,
+                        644,
+                        645,
+                        646,
+                        647,
+                        648,
+                        649,
+                        650
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'getInfo')": [
+                        653,
+                        654,
+                        655,
+                        656,
+                        657,
+                        658,
+                        659
+                    ],
+                    "(None, None)": [
+                        660
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        38,
+                        39,
+                        40,
+                        41,
+                        696,
+                        697
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', None)": [
+                        508,
+                        509,
+                        510,
+                        511,
+                        512,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522,
+                        617,
+                        618,
+                        619,
+                        620,
+                        621,
+                        622,
+                        650,
+                        651,
+                        652,
+                        653
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'getStatistics')": [
+                        654,
+                        655,
+                        656,
+                        657,
+                        658,
+                        659,
+                        660,
+                        661,
+                        662,
+                        663,
+                        664,
+                        665,
+                        666,
+                        667,
+                        668,
+                        669,
+                        670,
+                        671,
+                        672,
+                        673,
+                        674,
+                        675,
+                        676,
+                        677,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682,
+                        683,
+                        684,
+                        685,
+                        686,
+                        687,
+                        688,
+                        689,
+                        690,
+                        691,
+                        692,
+                        693,
+                        694,
+                        695
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/memory/mru/MRUMemoryCache.java": {
+                "old": {
+                    "('org.apache.jcs.engine.memory.mru#MRUMemoryCache', None)": [
+                        50,
+                        51
+                    ],
+                    "('org.apache.jcs.engine.memory.mru#MRUMemoryCache', 'get(Serializable)')": [
+                        232,
+                        250,
+                        251,
+                        257
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        35,
+                        36,
+                        37,
+                        38,
+                        459
+                    ],
+                    "('org.apache.jcs.engine.memory.mru#MRUMemoryCache', None)": [
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419
+                    ],
+                    "('org.apache.jcs.engine.memory.mru#MRUMemoryCache', 'update(ICacheElement)')": [
+                        90,
+                        91
+                    ],
+                    "('org.apache.jcs.engine.memory.mru#MRUMemoryCache', 'get(Serializable)')": [
+                        243,
+                        261,
+                        262
+                    ],
+                    "('org.apache.jcs.engine.memory.mru#MRUMemoryCache', 'getStatistics')": [
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458
+                    ]
+                }
+            },
+            "src/test/org/apache/jcs/access/TestCacheAccess.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        25,
+                        26,
+                        27,
+                        31,
+                        33,
+                        34,
+                        35
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        27,
+                        28,
+                        29,
+                        30
+                    ]
+                }
+            },
+            "src/test/org/apache/jcs/engine/memory/lru/TestLRUMemoryCache.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        29
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#TestLRUMemoryCache', 'runTestForRegion(String)')": [
+                        140,
+                        149
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#TestLRUMemoryCache', 'runTestForRegion(String)')": [
+                        139,
+                        148
+                    ]
+                }
+            }
+        }
+    },
+    "f0338d0d0f7fc29abd504ba4f05069b4adf9ca60": {
+        "authored_data": "2005 Jan 06 01:18",
+        "commit.message": "1.  Put in a solution for the RMI bug.  Now, gets can be done asynchronously with a configurable timeout.\nYou can specify that your remote region should timeout gets.\n\n\n#-1 means no timeout, this is the default\n# if the timeout is -1, no threadpool will be used.\njcs.auxiliary.RC.attributes.GetTimeoutMillis=5000\njcs.auxiliary.RC.attributes.ThreadPoolName=remote_cache_client\n\nHere RC is my auxiliary name.  I tell it to time out at 5 seconds and to use the thread pool named remote_cache_client.\n\nYou can define pools in the file.  Below I define defaults for a thread pool and the settings for the pool I want the remote cache\nclient to use.\n\nIf the timeout is less than 0, no threadpool will be used.\n\n##############################################################\n################## THREAD POOL CONFIGURATION ###################\n# default thread pool config\nthread_pool.default.boundarySize=75\nthread_pool.default.maximumPoolSize=150\nthread_pool.default.minimumPoolSize=4\nthread_pool.default.keepAliveTime=350000\nthread_pool.default.abortWhenBlocked=false\nthread_pool.default.startUpSize=4\n\n# remote cache client thread pool config\nthread_pool.remote_cache_client.boundarySize=75\nthread_pool.remote_cache_client.maximumPoolSize=150\nthread_pool.remote_cache_client.minimumPoolSize=4\nthread_pool.remote_cache_client.keepAliveTime=350000\nthread_pool.remote_cache_client.abortWhenBlocked=false\nthread_pool.remote_cache_client.startUpSize=4\n\n\n\n\n\n2.  Changed stats gathering mechanism.  I will update the admin jsp to make use of the\nmore easily formattable data.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@224188 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Aaron Smuts",
+        "pcid": "61f626395606f22eba446a02d169e9e7347aa580",
+        "changes": {
+            "src/experimental/org/apache/jcs/engine/memory/arc/ARCMemoryCache.java": {
+                "old": {
+                    "('org.apache.jcs.engine.memory.arc#ARCMemoryCache', 'replace(ElementDescriptor)')": [
+                        408,
+                        446
+                    ],
+                    "('org.apache.jcs.engine.memory.arc#ARCMemoryCache', 'getStats')": [
+                        530,
+                        531,
+                        532,
+                        533
+                    ],
+                    "('org.apache.jcs.engine.memory.arc#ARCMemoryCache', None)": [
+                        534,
+                        535,
+                        549,
+                        550,
+                        562,
+                        563
+                    ],
+                    "('org.apache.jcs.engine.memory.arc#ARCMemoryCache', 'getCnts')": [
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548
+                    ],
+                    "('org.apache.jcs.engine.memory.arc#ARCMemoryCache', 'getInfo')": [
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        34,
+                        35,
+                        36,
+                        37
+                    ],
+                    "('org.apache.jcs.engine.memory.arc#ARCMemoryCache', 'replace(ElementDescriptor)')": [
+                        413,
+                        451
+                    ],
+                    "('org.apache.jcs.engine.memory.arc#ARCMemoryCache', 'getStats')": [
+                        535
+                    ],
+                    "('org.apache.jcs.engine.memory.arc#ARCMemoryCache', None)": [
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        605,
+                        606
+                    ],
+                    "('org.apache.jcs.engine.memory.arc#ARCMemoryCache', 'getStatistics')": [
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569,
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        575,
+                        576,
+                        577,
+                        578,
+                        579,
+                        580,
+                        581,
+                        582,
+                        583,
+                        584,
+                        585,
+                        586,
+                        587,
+                        588,
+                        589,
+                        590,
+                        591,
+                        592,
+                        593,
+                        594,
+                        595,
+                        596,
+                        597,
+                        598,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/access/CacheAccess.java": {
+                "old": {
+                    "('org.apache.jcs.access#CacheAccess', None)": [
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/AuxiliaryCache.java": {
+                "old": {
+                    "(None, None)": [
+                        66
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/disk/AbstractDiskCache.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', 'getStats')": [
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', None)": [
+                        305,
+                        306
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        26,
+                        38,
+                        39,
+                        40,
+                        41
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', 'getStats')": [
+                        305
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', None)": [
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        343,
+                        344
+                    ],
+                    "('org.apache.jcs.auxiliary.disk#AbstractDiskCache', 'getStatistics')": [
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/CacheEventQueue.java": {
+                "old": {
+                    "('org.apache.jcs.engine#CacheEventQueue', None)": [
+                        352,
+                        383,
+                        384,
+                        385
+                    ],
+                    "('org.apache.jcs.engine#CacheEventQueue', 'getStats')": [
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        380,
+                        381,
+                        382
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        28,
+                        29,
+                        30,
+                        31
+                    ],
+                    "('org.apache.jcs.engine#CacheEventQueue', None)": [
+                        357,
+                        358,
+                        359,
+                        360,
+                        414,
+                        415,
+                        416
+                    ],
+                    "('org.apache.jcs.engine#CacheEventQueue', 'getStatistics')": [
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/behavior/ICacheEventQueue.java": {
+                "old": {
+                    "(None, None)": [
+                        87,
+                        88,
+                        89,
+                        91,
+                        92,
+                        93
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        89,
+                        90,
+                        91,
+                        93
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/control/CompositeCache.java": {
+                "old": {
+                    "('org.apache.jcs.engine.control#CompositeCache', 'getStats')": [
+                        994,
+                        995,
+                        996,
+                        997,
+                        998,
+                        999,
+                        1000,
+                        1001,
+                        1002,
+                        1003,
+                        1004,
+                        1005,
+                        1006,
+                        1007,
+                        1008,
+                        1009
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCache', None)": [
+                        1011
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCache', 'getStats')": [
+                        1001,
+                        1002
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCache', None)": [
+                        1003,
+                        1004,
+                        1005,
+                        1006,
+                        1007,
+                        1008,
+                        1009,
+                        1010,
+                        1046
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCache', 'getStatistics')": [
+                        1011,
+                        1012,
+                        1013,
+                        1014,
+                        1015,
+                        1016,
+                        1017,
+                        1018,
+                        1019,
+                        1020,
+                        1021,
+                        1022,
+                        1023,
+                        1024,
+                        1025,
+                        1026,
+                        1027,
+                        1028,
+                        1029,
+                        1030,
+                        1031,
+                        1032,
+                        1033,
+                        1034,
+                        1035,
+                        1036,
+                        1037,
+                        1038,
+                        1039,
+                        1040,
+                        1041,
+                        1042,
+                        1043,
+                        1044
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/control/CompositeCacheManager.java": {
+                "old": {
+                    "('org.apache.jcs.engine.control#CompositeCacheManager', 'configure(Properties)')": [
+                        200,
+                        201,
+                        202,
+                        203
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCacheManager', None)": [
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        40
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCacheManager', None)": [
+                        120
+                    ],
+                    "('org.apache.jcs.engine.control#CompositeCacheManager', 'configure(Properties)')": [
+                        202,
+                        203,
+                        204,
+                        205,
+                        206
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/memory/AbstractMemoryCache.java": {
+                "old": {
+                    "('org.apache.jcs.engine.memory#AbstractMemoryCache', None)": [
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        188,
+                        189
+                    ],
+                    "('org.apache.jcs.engine.memory#AbstractMemoryCache', 'getStats')": [
+                        185,
+                        186,
+                        187
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30,
+                        31
+                    ],
+                    "('org.apache.jcs.engine.memory#AbstractMemoryCache', None)": [
+                        182,
+                        183,
+                        184,
+                        185,
+                        191,
+                        192
+                    ],
+                    "('org.apache.jcs.engine.memory#AbstractMemoryCache', 'getStatistics')": [
+                        186,
+                        187,
+                        188,
+                        189,
+                        190
+                    ]
+                }
+            }
+        }
+    }
+}

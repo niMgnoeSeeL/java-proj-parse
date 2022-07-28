@@ -1,0 +1,986 @@
+{
+    "1d4766b9f16ed6b33a26d44c3f0531ae85f0f370": {
+        "authored_data": "2006 Jul 23 14:27",
+        "commit.message": "Allow subclasses to block skip directory processing\nAdd start and end callback methods\nImprove documentation\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@424748 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stephen Colebourne",
+        "pcid": "c112e3b950937cb0d7dd755ab84966eb42ab6b0e",
+        "changes": {
+            "src/java/org/apache/commons/io/FileFinder.java": {
+                "old": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        40,
+                        41,
+                        42,
+                        52,
+                        53,
+                        54,
+                        55,
+                        57,
+                        58,
+                        59,
+                        71,
+                        72,
+                        73,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        251
+                    ],
+                    "('org.apache.commons.io#FileFinder', None)": [
+                        114,
+                        115,
+                        116,
+                        123,
+                        124,
+                        126,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249
+                    ],
+                    "('org.apache.commons.io#FileFinder', 'find(File)')": [
+                        173
+                    ],
+                    "('org.apache.commons.io#FileFinder', 'handleDirectory(File,int,List)')": [
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196
+                    ],
+                    "('org.apache.commons.io#FileFinder', 'handleDirectoryStart(File,int,List)')": [
+                        214,
+                        215
+                    ],
+                    "('org.apache.commons.io#FileFinder', 'handleFile(File,int,List)')": [
+                        241,
+                        242
+                    ],
+                    "('org.apache.commons.io#FileFinder', 'handleRestricted(File)')": [
+                        250
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        41,
+                        42,
+                        52,
+                        53,
+                        55,
+                        56,
+                        57,
+                        69,
+                        70,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        293,
+                        294,
+                        295
+                    ],
+                    "('org.apache.commons.io#FileFinder', None)": [
+                        111,
+                        112,
+                        113,
+                        120,
+                        122,
+                        130,
+                        131,
+                        132,
+                        133,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291
+                    ],
+                    "('org.apache.commons.io#FileFinder', 'find(File)')": [
+                        170
+                    ],
+                    "('org.apache.commons.io#FileFinder', 'examine(File)')": [
+                        180,
+                        182,
+                        183,
+                        184
+                    ],
+                    "('org.apache.commons.io#FileFinder', 'examine(File,int,List)')": [
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209
+                    ],
+                    "('org.apache.commons.io#FileFinder', 'handleStart(File,List)')": [
+                        226
+                    ],
+                    "('org.apache.commons.io#FileFinder', 'handleDirectoryStart(File,int,List)')": [
+                        245,
+                        246,
+                        247
+                    ],
+                    "('org.apache.commons.io#FileFinder', 'handleFile(File,int,List)')": [
+                        259,
+                        260
+                    ],
+                    "('org.apache.commons.io#FileFinder', 'handleRestricted(File)')": [
+                        268
+                    ],
+                    "('org.apache.commons.io#FileFinder', 'handleEnd(List)')": [
+                        292
+                    ]
+                }
+            }
+        }
+    },
+    "c112e3b950937cb0d7dd755ab84966eb42ab6b0e": {
+        "authored_data": "2006 Jul 23 14:22",
+        "commit.message": "Javadoc - unify paragraph tags to code readable style\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@424747 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stephen Colebourne",
+        "pcid": "b3e812386927743ad9b68486a7270fb3d677d6e8",
+        "changes": {
+            "src/java/org/apache/commons/io/CopyUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        29,
+                        33,
+                        34,
+                        35,
+                        44,
+                        45,
+                        46,
+                        49,
+                        50,
+                        51,
+                        53,
+                        54,
+                        55,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        71,
+                        72,
+                        73,
+                        78,
+                        79,
+                        80,
+                        97,
+                        98,
+                        101,
+                        102,
+                        103
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        29,
+                        33,
+                        34,
+                        35,
+                        44,
+                        45,
+                        46,
+                        49,
+                        50,
+                        51,
+                        53,
+                        54,
+                        55,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        70,
+                        71,
+                        72,
+                        77,
+                        78,
+                        79,
+                        96,
+                        97,
+                        100,
+                        101,
+                        102
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/io/input/SwappedDataInputStream.java": {
+                "old": {
+                    "(None, None)": [
+                        29,
+                        30
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        30
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/io/output/DeferredFileOutputStream.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        30,
+                        31,
+                        32,
+                        35
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        30,
+                        31,
+                        32,
+                        35
+                    ]
+                }
+            }
+        }
+    },
+    "b3e812386927743ad9b68486a7270fb3d677d6e8": {
+        "authored_data": "2006 Jul 23 14:18",
+        "commit.message": "TrueFileFilter/FalseFileFilter/DirectoryFileFilter new constants\n  - New singleton instance constants (TRUE/FALSE/DIRECTORY)\n  - The new constants are more JDK 1.5 friendly with regards to static imports\n    (whereas if everything uses INSTANCE, then they just clash)\n  - The old INSTANCE constants are still present and have not been deprecated\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@424745 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stephen Colebourne",
+        "pcid": "9286d357ac99a3a3cd0171bed3c32f8967ad5aa5",
+        "changes": {
+            "src/java/org/apache/commons/io/filefilter/DirectoryFileFilter.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        36,
+                        61
+                    ],
+                    "('org.apache.commons.io.filefilter#DirectoryFileFilter', None)": [
+                        42,
+                        43,
+                        44,
+                        45,
+                        51,
+                        54
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        36,
+                        71
+                    ],
+                    "('org.apache.commons.io.filefilter#DirectoryFileFilter', None)": [
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        61,
+                        64
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/io/filefilter/FalseFileFilter.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        22,
+                        25,
+                        60
+                    ],
+                    "('org.apache.commons.io.filefilter#FalseFileFilter', None)": [
+                        30,
+                        31,
+                        32,
+                        33,
+                        39,
+                        42,
+                        49,
+                        52
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        22,
+                        25,
+                        70
+                    ],
+                    "('org.apache.commons.io.filefilter#FalseFileFilter', None)": [
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        49,
+                        52,
+                        59,
+                        62
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/io/filefilter/FileFilterUtils.java": {
+                "old": {
+                    "('org.apache.commons.io.filefilter#FileFilterUtils', 'directoryFileFilter')": [
+                        82
+                    ],
+                    "('org.apache.commons.io.filefilter#FileFilterUtils', 'trueFileFilter')": [
+                        134
+                    ],
+                    "('org.apache.commons.io.filefilter#FileFilterUtils', 'falseFileFilter')": [
+                        143
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.filefilter#FileFilterUtils', 'directoryFileFilter')": [
+                        82
+                    ],
+                    "('org.apache.commons.io.filefilter#FileFilterUtils', 'trueFileFilter')": [
+                        134
+                    ],
+                    "('org.apache.commons.io.filefilter#FileFilterUtils', 'falseFileFilter')": [
+                        143
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/io/filefilter/TrueFileFilter.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        22,
+                        25,
+                        60
+                    ],
+                    "('org.apache.commons.io.filefilter#TrueFileFilter', None)": [
+                        30,
+                        31,
+                        32,
+                        33,
+                        39,
+                        42,
+                        49,
+                        52
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        22,
+                        25,
+                        70
+                    ],
+                    "('org.apache.commons.io.filefilter#TrueFileFilter', None)": [
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        49,
+                        52,
+                        59,
+                        62
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/io/filefilter/FileFilterTestCase.java": {
+                "new": {
+                    "('org.apache.commons.io.filefilter#FileFilterTestCase', 'testDirectory')": [
+                        139,
+                        140
+                    ],
+                    "('org.apache.commons.io.filefilter#FileFilterTestCase', 'testTrue')": [
+                        287
+                    ],
+                    "('org.apache.commons.io.filefilter#FileFilterTestCase', 'testFalse')": [
+                        295
+                    ]
+                }
+            }
+        }
+    },
+    "9286d357ac99a3a3cd0171bed3c32f8967ad5aa5": {
+        "authored_data": "2006 Jul 23 13:58",
+        "commit.message": "Add FileFileFilter that accepts files and not directories\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@424742 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stephen Colebourne",
+        "pcid": "e656ba3ab9c24c6ff639834f513094ed97740704",
+        "changes": {
+            "src/java/org/apache/commons/io/filefilter/FileFilterUtils.java": {
+                "old": {
+                    "('org.apache.commons.io.filefilter#FileFilterUtils', None)": [
+                        79,
+                        84
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.filefilter#FileFilterUtils', None)": [
+                        79,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        92,
+                        93
+                    ],
+                    "('org.apache.commons.io.filefilter#FileFilterUtils', 'fileFileFilter')": [
+                        90,
+                        91
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/io/filefilter/FileFilterTestCase.java": {
+                "new": {
+                    "('org.apache.commons.io.filefilter#FileFilterTestCase', None)": [
+                        139,
+                        140
+                    ],
+                    "('org.apache.commons.io.filefilter#FileFilterTestCase', 'testFiles')": [
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153
+                    ]
+                }
+            }
+        }
+    },
+    "8a87b167d3eeb8af40e932116aee00532e6a9495": {
+        "authored_data": "2006 Jul 22 17:12",
+        "commit.message": "Correct mail-archive links and a couple of minor javadoc/checkstyle corrections\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@424607 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Niall Pemberton",
+        "pcid": "1f8990a4200055e2acaf654367cdece4f25302a3",
+        "changes": {
+            "src/java/org/apache/commons/io/filefilter/NameFileFilter.java": {
+                "new": {
+                    "('org.apache.commons.io.filefilter#NameFileFilter', None)": [
+                        66
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/io/output/LockableFileWriter.java": {
+                "new": {
+                    "('org.apache.commons.io.output#LockableFileWriter', None)": [
+                        226
+                    ]
+                }
+            }
+        }
+    },
+    "1f8990a4200055e2acaf654367cdece4f25302a3": {
+        "authored_data": "2006 Jul 22 16:53",
+        "commit.message": "IO-85  IOFileFilter implementations for File.canRead(), File.canWrite(), File.isHidden() and empty files/directories\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@424601 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Niall Pemberton",
+        "pcid": "180e6c3087d177ee0d10c677cd462bf55edf5e51",
+        "changes": {
+            "src/test/org/apache/commons/io/filefilter/FileFilterTestCase.java": {
+                "new": {
+                    "('org.apache.commons.io.filefilter#FileFilterTestCase', 'testHidden')": [
+                        628,
+                        629,
+                        630,
+                        631,
+                        632,
+                        633,
+                        634,
+                        635
+                    ],
+                    "('org.apache.commons.io.filefilter#FileFilterTestCase', None)": [
+                        636,
+                        637,
+                        646,
+                        647,
+                        657,
+                        658,
+                        683,
+                        684
+                    ],
+                    "('org.apache.commons.io.filefilter#FileFilterTestCase', 'testCanRead')": [
+                        638,
+                        639,
+                        640,
+                        641,
+                        642,
+                        643,
+                        644,
+                        645
+                    ],
+                    "('org.apache.commons.io.filefilter#FileFilterTestCase', 'testCanWrite')": [
+                        648,
+                        649,
+                        650,
+                        651,
+                        652,
+                        653,
+                        654,
+                        655,
+                        656
+                    ],
+                    "('org.apache.commons.io.filefilter#FileFilterTestCase', 'testEmpty')": [
+                        659,
+                        660,
+                        661,
+                        662,
+                        663,
+                        664,
+                        665,
+                        666,
+                        667,
+                        668,
+                        669,
+                        670,
+                        671,
+                        672,
+                        673,
+                        674,
+                        675,
+                        676,
+                        677,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682
+                    ]
+                }
+            }
+        }
+    },
+    "180e6c3087d177ee0d10c677cd462bf55edf5e51": {
+        "authored_data": "2006 Jul 13 07:54",
+        "commit.message": "now deprecated\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@421532 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Henri Yandell",
+        "pcid": "c0368c858af413d6ab217b0f2a860a8f7e3ac702",
+        "changes": {
+            "src/java/org/apache/commons/io/input/CountingInputStream.java": {
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/io/output/CountingOutputStream.java": {
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25
+                    ]
+                }
+            }
+        }
+    },
+    "c0368c858af413d6ab217b0f2a860a8f7e3ac702": {
+        "authored_data": "2006 Jul 02 20:00",
+        "commit.message": "Add case sensitivity support to NameFileFilter\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@418643 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stephen Colebourne",
+        "pcid": "30bf8b4fd4f4435a3cb475ab9c415b8d9fef6ea8",
+        "changes": {
+            "src/java/org/apache/commons/io/filefilter/NameFileFilter.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        123
+                    ],
+                    "('org.apache.commons.io.filefilter#NameFileFilter', None)": [
+                        50,
+                        53,
+                        56,
+                        57,
+                        58,
+                        59,
+                        63,
+                        79,
+                        107
+                    ],
+                    "('org.apache.commons.io.filefilter#NameFileFilter', 'accept(File)')": [
+                        101
+                    ],
+                    "('org.apache.commons.io.filefilter#NameFileFilter', 'accept(File,String)')": [
+                        116,
+                        117
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        20,
+                        21,
+                        167
+                    ],
+                    "('org.apache.commons.io.filefilter#NameFileFilter', None)": [
+                        50,
+                        51,
+                        54,
+                        57,
+                        60,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        105,
+                        109,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        132,
+                        135,
+                        151
+                    ],
+                    "('org.apache.commons.io.filefilter#NameFileFilter', 'accept(File)')": [
+                        145
+                    ],
+                    "('org.apache.commons.io.filefilter#NameFileFilter', 'accept(File,String)')": [
+                        160,
+                        161
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/io/filefilter/FileFilterTestCase.java": {
+                "new": {
+                    "('org.apache.commons.io.filefilter#FileFilterTestCase', 'testNameFilter')": [
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219
+                    ]
+                }
+            }
+        }
+    },
+    "30bf8b4fd4f4435a3cb475ab9c415b8d9fef6ea8": {
+        "authored_data": "2006 Jul 02 19:47",
+        "commit.message": "Javadoc\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@418642 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stephen Colebourne",
+        "pcid": "eff391033a01a092d943db90513412b08bb01525",
+        "changes": {
+            "src/java/org/apache/commons/io/filefilter/WildcardFileFilter.java": {
+                "old": {
+                    "(None, None)": [
+                        32
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32
+                    ],
+                    "('org.apache.commons.io.filefilter#WildcardFileFilter', None)": [
+                        69,
+                        70,
+                        71,
+                        82,
+                        83,
+                        84
+                    ]
+                }
+            }
+        }
+    }
+}
