@@ -1,0 +1,172 @@
+{
+    "fdf0356ac7a98e669b2b39400a4112884b0b1bcc": {
+        "authored_data": "2021 Jun 28 15:33",
+        "commit.message": "Remove hardcoded constants to improve readability\n",
+        "commit.author.name": "Alexander Reelsen",
+        "pcid": "4de60e8b68fb749e5380ecef018511bed946bee8",
+        "changes": {
+            "src/main/java/org/apache/commons/codec/language/MatchRatingApproachEncoder.java": {
+                "old": {
+                    "('org.apache.commons.codec.language#MatchRatingApproachEncoder', None)": [
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44
+                    ],
+                    "('org.apache.commons.codec.language#MatchRatingApproachEncoder', 'getFirst3Last3(String)')": [
+                        162,
+                        163,
+                        164
+                    ],
+                    "('org.apache.commons.codec.language#MatchRatingApproachEncoder', 'getMinRating(int)')": [
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        195
+                    ],
+                    "('org.apache.commons.codec.language#MatchRatingApproachEncoder', 'isEncodeEquals(String,String)')": [
+                        246
+                    ],
+                    "('org.apache.commons.codec.language#MatchRatingApproachEncoder', 'leftToRightThenRightToLeftProcessing(String,String)')": [
+                        338,
+                        339,
+                        340
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.codec.language#MatchRatingApproachEncoder', 'getFirst3Last3(String)')": [
+                        156,
+                        157,
+                        158
+                    ],
+                    "('org.apache.commons.codec.language#MatchRatingApproachEncoder', 'getMinRating(int)')": [
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        189
+                    ],
+                    "('org.apache.commons.codec.language#MatchRatingApproachEncoder', 'isEncodeEquals(String,String)')": [
+                        240
+                    ],
+                    "('org.apache.commons.codec.language#MatchRatingApproachEncoder', 'leftToRightThenRightToLeftProcessing(String,String)')": [
+                        332,
+                        333,
+                        334
+                    ]
+                }
+            }
+        }
+    },
+    "6b67d6f093a821ede0b393f260b407d035289e07": {
+        "authored_data": "2021 May 10 19:36",
+        "commit.message": "CODEC-301: Reduce byte[] allocations by reusing buffers\n\n* Reduces byte[] allocations from 280MB to <4MB when reading a 133MB base64 stream. Messured with JFR.\n* Keep reusing inital buffer when decoding BaseN\n* Attempt to fill up the user-provided buffer\n    Previously we only filled up to a maximum of 8KB - encoding-overhead (e.g. 6KB for Base64) even if the provided\n    buffer was bigger.\n* Reuse hasData method for checking pos/readPos markers\n",
+        "commit.author.name": "Alexander Pinske",
+        "pcid": "a66b760e7327a8abf57e9e8a5c82cfdd957770de",
+        "changes": {
+            "src/main/java/org/apache/commons/codec/binary/BaseNCodec.java": {
+                "old": {
+                    "('org.apache.commons.codec.binary#BaseNCodec', 'available(Context)')": [
+                        397
+                    ],
+                    "('org.apache.commons.codec.binary#BaseNCodec', 'hasData(Context)')": [
+                        635
+                    ],
+                    "('org.apache.commons.codec.binary#BaseNCodec', 'readResults(byte,int,int,Context)')": [
+                        714,
+                        718,
+                        719
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.codec.binary#BaseNCodec', 'available(Context)')": [
+                        397
+                    ],
+                    "('org.apache.commons.codec.binary#BaseNCodec', 'hasData(Context)')": [
+                        635
+                    ],
+                    "('org.apache.commons.codec.binary#BaseNCodec', 'readResults(byte,int,int,Context)')": [
+                        714,
+                        718,
+                        719,
+                        720,
+                        721,
+                        722,
+                        723
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/codec/binary/BaseNCodecInputStream.java": {
+                "old": {
+                    "('org.apache.commons.codec.binary#BaseNCodecInputStream', 'read(byte,int,int)')": [
+                        172,
+                        174,
+                        182
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.codec.binary#BaseNCodecInputStream', None)": [
+                        42,
+                        43,
+                        50
+                    ],
+                    "('org.apache.commons.codec.binary#BaseNCodecInputStream', 'read(byte,int,int)')": [
+                        175,
+                        176,
+                        178,
+                        179,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/codec/binary/Base64InputStreamTest.java": {
+                "new": {
+                    "('org.apache.commons.codec.binary#Base64InputStreamTest', None)": [
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        433,
+                        434,
+                        435
+                    ],
+                    "('org.apache.commons.codec.binary#Base64InputStreamTest', 'testReadMultipleBufferSizes')": [
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432
+                    ]
+                }
+            }
+        }
+    }
+}

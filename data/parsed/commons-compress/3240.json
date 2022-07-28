@@ -1,0 +1,533 @@
+{
+    "11349c5f52e0355a11ced6234ae424da73c9503b": {
+        "authored_data": "2009 Mar 31 23:49",
+        "commit.message": "Extract generic octal formatting method to simplify code and eliminate array copies\nChange leading padding to zeroes as that is more compatible (and required for Posix)\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@760737 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "26d12c5255694810aa8a21381ffc5381229f5df3",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/tar/TarUtils.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', 'getOctalBytes(long,byte,int,int)')": [
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', None)": [
+                        170,
+                        189
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', 'getLongOctalBytes(long,byte,int,int)')": [
+                        178,
+                        179,
+                        180,
+                        181
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', 'getCheckSumOctalBytes(long,byte,int,int)')": [
+                        198,
+                        199,
+                        200,
+                        201
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', None)": [
+                        37,
+                        38,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        154,
+                        155,
+                        156,
+                        157,
+                        161,
+                        164,
+                        185,
+                        186,
+                        206
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', 'formatUnsignedOctalString(long,byte,int,int)')": [
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', 'getOctalBytes(long,byte,int,int)')": [
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', 'getLongOctalBytes(long,byte,int,int)')": [
+                        194,
+                        195,
+                        196,
+                        197,
+                        198
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', 'getCheckSumOctalBytes(long,byte,int,int)')": [
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220
+                    ]
+                }
+            }
+        }
+    },
+    "26d12c5255694810aa8a21381ffc5381229f5df3": {
+        "authored_data": "2009 Mar 31 18:45",
+        "commit.message": "Reject illegal sizes\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@760566 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "b4e2915b1a395e4b9d142e460b3482d9a5c319c4",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveEntry.java": {
+                "new": {
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveEntry', None)": [
+                        485,
+                        486
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveEntry', 'setSize(long)')": [
+                        489,
+                        490,
+                        491
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/archivers/tar/TarArchiveEntryTest.java": {
+                "new": {
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveEntryTest', None)": [
+                        98
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveEntryTest', 'testMaxFileSize')": [
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111
+                    ],
+                    "(None, None)": [
+                        112,
+                        113,
+                        114
+                    ]
+                }
+            }
+        }
+    },
+    "b4e2915b1a395e4b9d142e460b3482d9a5c319c4": {
+        "authored_data": "2009 Mar 31 18:44",
+        "commit.message": "Ensure name length is correct even if one char != one byte\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@760565 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "ae3c158e05af20843fb5ea72deb5b7fb1fefbd54",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveOutputStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveOutputStream', 'putArchiveEntry(ArchiveEntry)')": [
+                        179,
+                        181,
+                        182
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveOutputStream', 'putArchiveEntry(ArchiveEntry)')": [
+                        179,
+                        180,
+                        182,
+                        183
+                    ]
+                }
+            }
+        }
+    },
+    "ae3c158e05af20843fb5ea72deb5b7fb1fefbd54": {
+        "authored_data": "2009 Mar 31 16:24",
+        "commit.message": "Attempt at Javadoc - needs refining...\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@760507 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "2de1b50cf85e39683ce39133075ba35a70e0505a",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/tar/TarUtils.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', None)": [
+                        32,
+                        33,
+                        34,
+                        35,
+                        37,
+                        70,
+                        71,
+                        72,
+                        74,
+                        75,
+                        76,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', 'parseOctal(byte,int,int)')": [
+                        40,
+                        46,
+                        50,
+                        55,
+                        62
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', 'parseName(byte,int,int)')": [
+                        77,
+                        82,
+                        86
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', 'getOctalBytes(long,byte,int,int)')": [
+                        127,
+                        129,
+                        144
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', None)": [
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        39,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        79,
+                        80,
+                        81,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', 'parseOctal(byte,int,int)')": [
+                        42,
+                        48,
+                        52,
+                        53,
+                        58,
+                        65
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', 'parseName(byte,int,int)')": [
+                        82,
+                        87,
+                        91
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', 'getNameBytes(StringBuffer,byte,int,int)')": [
+                        115,
+                        120
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', 'getOctalBytes(long,byte,int,int)')": [
+                        144,
+                        146,
+                        161
+                    ]
+                }
+            }
+        }
+    },
+    "2de1b50cf85e39683ce39133075ba35a70e0505a": {
+        "authored_data": "2009 Mar 31 13:01",
+        "commit.message": "Only set size if File#isFile() is true\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@760426 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "888f7e2f37d42bd52b4c64d9cb09f5046897a3e3",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/ar/ArArchiveEntry.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.ar#ArArchiveEntry', None)": [
+                        61
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.ar#ArArchiveEntry', None)": [
+                        61
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveEntry.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.cpio#CpioArchiveEntry', None)": [
+                        255
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.cpio#CpioArchiveEntry', None)": [
+                        255
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveEntry.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', None)": [
+                        90
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', None)": [
+                        90,
+                        91,
+                        92
+                    ]
+                }
+            }
+        }
+    },
+    "888f7e2f37d42bd52b4c64d9cb09f5046897a3e3": {
+        "authored_data": "2009 Mar 31 11:05",
+        "commit.message": "Changed filename in single file archive, so need to update test cases\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@760396 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "7df097f4103f8a7ed91ffc7ab84b30bc2968cc08",
+        "changes": {
+            "src/test/java/org/apache/commons/compress/AbstractTestCase.java": {
+                "old": {
+                    "('org.apache.commons.compress#AbstractTestCase', None)": [
+                        202
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress#AbstractTestCase', None)": [
+                        202
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/changes/ChangeSetTestCase.java": {
+                "old": {
+                    "('org.apache.commons.compress.changes#ChangeSetTestCase', 'testDeleteAddToOneFileArchive')": [
+                        649,
+                        665,
+                        666
+                    ],
+                    "('org.apache.commons.compress.changes#ChangeSetTestCase', 'testAddDeleteToOneFileArchive')": [
+                        717,
+                        718
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.changes#ChangeSetTestCase', 'testDeleteAddToOneFileArchive')": [
+                        649,
+                        665,
+                        666
+                    ],
+                    "('org.apache.commons.compress.changes#ChangeSetTestCase', 'testAddDeleteToOneFileArchive')": [
+                        717,
+                        718
+                    ]
+                }
+            }
+        }
+    },
+    "7df097f4103f8a7ed91ffc7ab84b30bc2968cc08": {
+        "authored_data": "2009 Mar 31 10:55",
+        "commit.message": "Allow for unknown size\nFix bug - use actual size read rather than buffer size when comparing data\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@760394 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "0869c9166c76832f87979925d769ced006ac35e5",
+        "changes": {
+            "src/test/java/org/apache/commons/compress/IOMethodsTest.java": {
+                "old": {
+                    "('org.apache.commons.compress#IOMethodsTest', 'compareReads(String)')": [
+                        126,
+                        127,
+                        128,
+                        148,
+                        149,
+                        153,
+                        154
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress#IOMethodsTest', 'compareReads(String)')": [
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        151,
+                        152,
+                        153,
+                        157,
+                        158
+                    ]
+                }
+            }
+        }
+    },
+    "0869c9166c76832f87979925d769ced006ac35e5": {
+        "authored_data": "2009 Mar 31 10:53",
+        "commit.message": "Allow for unknown size\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@760393 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "f7f6b188661d473a66b9aa21fae5a4cc11240bed",
+        "changes": {
+            "src/test/java/org/apache/commons/compress/AbstractTestCase.java": {
+                "old": {
+                    "('org.apache.commons.compress#AbstractTestCase', 'checkArchiveContent(ArchiveInputStream,List)')": [
+                        276
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress#AbstractTestCase', 'checkArchiveContent(ArchiveInputStream,List)')": [
+                        276,
+                        277,
+                        278,
+                        279
+                    ]
+                }
+            }
+        }
+    },
+    "f7f6b188661d473a66b9aa21fae5a4cc11240bed": {
+        "authored_data": "2009 Mar 31 10:36",
+        "commit.message": "Javadoc\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@760392 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "e46c02b4d59a2a9cc053f2693444f6cbd92a1b12",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41
+                    ]
+                }
+            }
+        }
+    },
+    "e46c02b4d59a2a9cc053f2693444f6cbd92a1b12": {
+        "authored_data": "2009 Mar 31 10:35",
+        "commit.message": "Set some attributes from the File\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@760390 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "fb7053dad79af390fd6511de22e4dbe2f9f915e4",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveEntry.java": {
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', None)": [
+                        90,
+                        91
+                    ]
+                }
+            }
+        }
+    }
+}

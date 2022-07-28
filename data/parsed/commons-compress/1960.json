@@ -1,0 +1,982 @@
+{
+    "33c95771c804abc02223f24a0234343b93ffde56": {
+        "authored_data": "2015 Jan 13 17:26",
+        "commit.message": "COMPRESS-290 Fixed error message with large groupid\n\nThis is a bit of a simple solution to the issue, since there are obviously lots of other options that\ncould have similar updates. The reality is that most recent macs that are initialized to run in corporate\nnetworks tend to get large GID's for the users. So I just fixed the one we actually have complaints about\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1651417 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Kristian Rosenvold",
+        "pcid": "2bf135d0e5f17a7e0ada98ad5d1d95eb813b11a6",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveOutputStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveOutputStream', 'failForBigNumbers(TarArchiveEntry)')": [
+                        609
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveOutputStream', 'failForBigNumber(String,long,long)')": [
+                        624,
+                        625
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveOutputStream', 'failForBigNumbers(TarArchiveEntry)')": [
+                        609
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveOutputStream', 'failForBigNumber(String,long,long)')": [
+                        622
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveOutputStream', None)": [
+                        623,
+                        624,
+                        627,
+                        628
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveOutputStream', 'failForBigNumberWithPosixMessage(String,long,long)')": [
+                        625,
+                        626
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveOutputStream', 'failForBigNumber(String,long,long,String)')": [
+                        629,
+                        632,
+                        633
+                    ]
+                }
+            }
+        }
+    },
+    "2bf135d0e5f17a7e0ada98ad5d1d95eb813b11a6": {
+        "authored_data": "2015 Jan 13 06:59",
+        "commit.message": "Changed from nThreads to receiving an ExecutorService\n\nThere are a lot of different models/versions of executorservices, also\nvarying according to client JDK level. Give client full control of how the\nexecutor service is created and also possibly how to schedule tasks through\na slightly lower-level cerateCallable/submit api.\n\nTermination of ExecutorService is still controlled by ParallelScatterZipCreator,\nas must be.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1651285 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Kristian Rosenvold",
+        "pcid": "7d99a02fc8bed02f6071a928f3828d2c76f8d1e4",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ParallelScatterZipCreator.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', None)": [
+                        47,
+                        54,
+                        74,
+                        87,
+                        93,
+                        94,
+                        95,
+                        96,
+                        102,
+                        105,
+                        106,
+                        107,
+                        116
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', 'addArchiveEntry(ZipArchiveEntry,InputStreamSupplier)')": [
+                        125,
+                        126,
+                        127,
+                        128,
+                        137,
+                        138,
+                        139
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', 'writeTo(ZipArchiveOutputStream)')": [
+                        164
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        43,
+                        44,
+                        45,
+                        46
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', None)": [
+                        51,
+                        58,
+                        78,
+                        91,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        107,
+                        108,
+                        111,
+                        112,
+                        113,
+                        114,
+                        123,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        168
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', 'addArchiveEntry(ZipArchiveEntry,InputStreamSupplier)')": [
+                        128
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', 'submit(Callable)')": [
+                        135,
+                        136
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', 'createCallable(ZipArchiveEntry,InputStreamSupplier)')": [
+                        152,
+                        157,
+                        158,
+                        159
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', 'writeTo(ZipArchiveOutputStream)')": [
+                        193
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/archivers/zip/ParallelScatterZipCreatorTest.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreatorTest', 'concurrent')": [
+                        50
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreatorTest', 'removeEntriesFoundInZipFile(File,Map)')": [
+                        61
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreatorTest', 'writeEntries(ParallelScatterZipCreator)')": [
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30,
+                        31,
+                        32,
+                        131
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreatorTest', None)": [
+                        38,
+                        39,
+                        55,
+                        56,
+                        57,
+                        108,
+                        122,
+                        123
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreatorTest', 'concurrent')": [
+                        52,
+                        53,
+                        54
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreatorTest', 'callableApi')": [
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        79
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreatorTest', 'removeEntriesFoundInZipFile(File,Map)')": [
+                        90
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreatorTest', 'writeEntries(ParallelScatterZipCreator)')": [
+                        97,
+                        98,
+                        99
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreatorTest', 'writeEntriesAsCallable(ParallelScatterZipCreator)')": [
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreatorTest', 'createZipArchiveEntry(Map,int,byte)')": [
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130
+                    ]
+                }
+            }
+        }
+    },
+    "7d99a02fc8bed02f6071a928f3828d2c76f8d1e4": {
+        "authored_data": "2015 Jan 12 17:02",
+        "commit.message": "Fixed last findbug issue, which was real\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1651142 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Kristian Rosenvold",
+        "pcid": "dd0109a00a076699240e81ee47db20374b65e546",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ParallelScatterZipCreator.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', 'addArchiveEntry(ZipArchiveEntry,InputStreamSupplier)')": [
+                        123,
+                        124,
+                        132
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', 'writeTo(ZipArchiveOutputStream)')": [
+                        150
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        29
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', None)": [
+                        48,
+                        153
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', 'addArchiveEntry(ZipArchiveEntry,InputStreamSupplier)')": [
+                        126,
+                        127,
+                        135,
+                        139
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', 'writeTo(ZipArchiveOutputStream)')": [
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162
+                    ]
+                }
+            }
+        }
+    },
+    "dd0109a00a076699240e81ee47db20374b65e546": {
+        "authored_data": "2015 Jan 12 13:47",
+        "commit.message": "make getParseableExtraFields and getAllExtraFileds symmetric\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1651091 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "f7070b2c01020438d4a7712ae304b53ced16febc",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveEntry.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getExtraFields')": [
+                        327,
+                        328
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getParseableExtraFields')": [
+                        346
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getExtraFields')": [
+                        327
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getParseableExtraFieldsNoCopy')": [
+                        345
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', None)": [
+                        350,
+                        351
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getParseableExtraFields')": [
+                        352,
+                        353,
+                        354
+                    ]
+                }
+            }
+        }
+    },
+    "f7070b2c01020438d4a7712ae304b53ced16febc": {
+        "authored_data": "2015 Jan 11 05:32",
+        "commit.message": "make closed flag volatile as suggested by Dawid Weiss - COMPRESS-297\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1650873 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "646e03cbab5d0af719efbb22dcf0ee037aa531cc",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipFile.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', None)": [
+                        137
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', None)": [
+                        137
+                    ]
+                }
+            }
+        }
+    },
+    "646e03cbab5d0af719efbb22dcf0ee037aa531cc": {
+        "authored_data": "2015 Jan 10 19:00",
+        "commit.message": "Fixed one findbugs warning, ignored another\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1650794 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Kristian Rosenvold",
+        "pcid": "09aecce588d736955b803c9df908013960699836",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/StreamCompressor.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#StreamCompressor', None)": [
+                        53
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#StreamCompressor', None)": [
+                        53
+                    ]
+                }
+            }
+        }
+    },
+    "09aecce588d736955b803c9df908013960699836": {
+        "authored_data": "2015 Jan 10 16:15",
+        "commit.message": "Fixed style issues as reported by IntelliJ\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1650766 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Kristian Rosenvold",
+        "pcid": "516c38fd95fff30841f9af370f50cf1f7733c209",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/dump/Dirent.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.dump#Dirent', 'toString')": [
+                        82
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.dump#Dirent', 'toString')": [
+                        82
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/dump/DumpArchiveInputStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.dump#DumpArchiveInputStream', None)": [
+                        130
+                    ],
+                    "('org.apache.commons.compress.archivers.dump#DumpArchiveInputStream', 'getNextEntry')": [
+                        309
+                    ],
+                    "('org.apache.commons.compress.archivers.dump#DumpArchiveInputStream', 'readDirectoryEntry(DumpArchiveEntry)')": [
+                        330,
+                        332,
+                        370,
+                        387
+                    ],
+                    "('org.apache.commons.compress.archivers.dump#DumpArchiveInputStream', 'getPath(DumpArchiveEntry)')": [
+                        416,
+                        421,
+                        431
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.dump#DumpArchiveInputStream', None)": [
+                        130
+                    ],
+                    "('org.apache.commons.compress.archivers.dump#DumpArchiveInputStream', 'getNextEntry')": [
+                        309
+                    ],
+                    "('org.apache.commons.compress.archivers.dump#DumpArchiveInputStream', 'readDirectoryEntry(DumpArchiveEntry)')": [
+                        330,
+                        332,
+                        370,
+                        387
+                    ],
+                    "('org.apache.commons.compress.archivers.dump#DumpArchiveInputStream', 'getPath(DumpArchiveEntry)')": [
+                        416,
+                        421,
+                        431
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/sevenz/CLI.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.sevenz#CLI', None)": [
+                        61
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.sevenz#CLI', None)": [
+                        61
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/sevenz/DeltaDecoder.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.sevenz#DeltaDecoder', 'getOptionsFromCoder(Coder,InputStream)')": [
+                        57
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.sevenz#DeltaDecoder', 'getOptionsFromCoder(Coder,InputStream)')": [
+                        57
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/sevenz/LZMA2Decoder.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.sevenz#LZMA2Decoder', 'getOptionsFromCoder(Coder,InputStream)')": [
+                        65
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.sevenz#LZMA2Decoder', 'getOptionsFromCoder(Coder,InputStream)')": [
+                        65
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/sevenz/SevenZFile.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.sevenz#SevenZFile', 'readHeaders(byte)')": [
+                        166
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.sevenz#SevenZFile', 'readHeaders(byte)')": [
+                        166
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/sevenz/SevenZOutputFile.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.sevenz#SevenZOutputFile', 'writeFileEmptyFiles(DataOutput)')": [
+                        493,
+                        494,
+                        495
+                    ],
+                    "('org.apache.commons.compress.archivers.sevenz#SevenZOutputFile', 'writeFileAntiItems(DataOutput)')": [
+                        516,
+                        517,
+                        518
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.sevenz#SevenZOutputFile', 'writeFileEmptyFiles(DataOutput)')": [
+                        493,
+                        494,
+                        495
+                    ],
+                    "('org.apache.commons.compress.archivers.sevenz#SevenZOutputFile', 'writeFileAntiItems(DataOutput)')": [
+                        516,
+                        517,
+                        518
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveEntry.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveEntry', 'getName')": [
+                        381
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveEntry', 'getLinkName')": [
+                        408
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveEntry', 'getUserName')": [
+                        464
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveEntry', 'getGroupName')": [
+                        482
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveEntry', 'normalizeFileName(String,boolean)')": [
+                        1038
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveEntry', 'getName')": [
+                        381
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveEntry', 'getLinkName')": [
+                        408
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveEntry', 'getUserName')": [
+                        464
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveEntry', 'getGroupName')": [
+                        482
+                    ],
+                    "('org.apache.commons.compress.archivers.tar#TarArchiveEntry', 'normalizeFileName(String,boolean)')": [
+                        1038
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/tar/TarUtils.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', None)": [
+                        65,
+                        66
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.tar#TarUtils', None)": [
+                        65
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/zip/ParallelScatterZipCreator.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', None)": [
+                        43,
+                        52,
+                        67
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', None)": [
+                        43,
+                        52,
+                        67
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveOutputStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'createCentralFileHeader(ZipArchiveEntry)')": [
+                        1145
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'createCentralFileHeader(ZipArchiveEntry)')": [
+                        1145
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipMethod.java": {
+                "old": {
+                    "(None, None)": [
+                        178,
+                        211
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        178,
+                        211
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/compressors/z/ZCompressorInputStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.compressors.z#ZCompressorInputStream', 'decompressNextSymbol')": [
+                        147
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.compressors.z#ZCompressorInputStream', 'decompressNextSymbol')": [
+                        147
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/AbstractTestCase.java": {
+                "old": {
+                    "('org.apache.commons.compress#AbstractTestCase', None)": [
+                        124,
+                        125
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress#AbstractTestCase', None)": [
+                        124
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/archivers/LongPathTest.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers#LongPathTest', 'testArchive')": [
+                        143,
+                        144,
+                        145,
+                        148
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers#LongPathTest', 'testArchive')": [
+                        143,
+                        144,
+                        147
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/archivers/zip/UTF8ZipFilesTest.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#UTF8ZipFilesTest', 'testUtf8Interoperability')": [
+                        369,
+                        370
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#UTF8ZipFilesTest', 'testUtf8Interoperability')": [
+                        369,
+                        370
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/compressors/snappy/FramedSnappyCompressorInputStreamTest.java": {
+                "old": {
+                    "('org.apache.commons.compress.compressors.snappy#FramedSnappyCompressorInputStreamTest', 'testUnskippableChunk')": [
+                        157
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.compressors.snappy#FramedSnappyCompressorInputStreamTest', 'testUnskippableChunk')": [
+                        157
+                    ]
+                }
+            }
+        }
+    },
+    "516c38fd95fff30841f9af370f50cf1f7733c209": {
+        "authored_data": "2015 Jan 09 19:13",
+        "commit.message": "Changed ZipArchiveEntry to use more optimized data structure for\nan overall performance improvement of about 10% for the use case\n\"many small files\", for instance a jar file.\n\nLinkedHashMap was not a very good structure for such small lists\nand performs badly in terms of locality\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1650632 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Kristian Rosenvold",
+        "pcid": "deeb355c2253b49f39f0be7bf16de1e119f69581",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveEntry.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', None)": [
+                        84,
+                        141,
+                        350,
+                        351
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'clone')": [
+                        183
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'setExtraFields(ZipExtraField)')": [
+                        310,
+                        315
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getExtraFields')": [
+                        326
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getExtraFields(boolean)')": [
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'addExtraField(ZipExtraField)')": [
+                        365,
+                        367
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'addAsFirstExtraField(ZipExtraField)')": [
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'removeExtraField(ZipShort)')": [
+                        402
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getExtraField(ZipShort)')": [
+                        428
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'setExtra')": [
+                        473
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getCentralDirectoryExtra')": [
+                        504
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'setName(String)')": [
+                        531
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', None)": [
+                        83,
+                        88,
+                        141,
+                        344,
+                        345,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        362,
+                        363,
+                        366,
+                        367,
+                        372,
+                        373,
+                        376,
+                        377,
+                        381
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'clone')": [
+                        183
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'setExtraFields(ZipExtraField)')": [
+                        310,
+                        315,
+                        318
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getExtraFields')": [
+                        327,
+                        328
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getExtraFields(boolean)')": [
+                        341,
+                        342,
+                        343
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getParseableExtraFields')": [
+                        346,
+                        348,
+                        349,
+                        350
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getAllExtraFieldsNoCopy')": [
+                        357,
+                        358,
+                        359,
+                        360,
+                        361
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'copyOf(ZipExtraField)')": [
+                        364,
+                        365
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getMergedFields')": [
+                        368,
+                        369,
+                        370,
+                        371
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getUnparseableOnly')": [
+                        374,
+                        375
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getAllExtraFields')": [
+                        378,
+                        379,
+                        380
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'addExtraField(ZipExtraField)')": [
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'addAsFirstExtraField(ZipExtraField)')": [
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'removeExtraField(ZipShort)')": [
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        451
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getExtraField(ZipShort)')": [
+                        475,
+                        476,
+                        477,
+                        478,
+                        479
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'setExtra')": [
+                        524
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'getCentralDirectoryExtra')": [
+                        555
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', 'setName(String)')": [
+                        582
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveOutputStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'createLocalFileHeader(ZipArchiveEntry,ByteBuffer,boolean,boolean)')": [
+                        1026,
+                        1027,
+                        1028,
+                        1029
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'createLocalFileHeader(ZipArchiveEntry,ByteBuffer,boolean,boolean)')": [
+                        1026
+                    ]
+                }
+            }
+        }
+    },
+    "deeb355c2253b49f39f0be7bf16de1e119f69581": {
+        "authored_data": "2015 Jan 09 17:58",
+        "commit.message": "replace a few magic numbers with constants\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1650615 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "a1362359e3b4b364112e60e79f4b6ebf335ba69c",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ParallelScatterZipCreator.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', 'addArchiveEntry(ZipArchiveEntry,InputStreamSupplier)')": [
+                        119
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ParallelScatterZipCreator', 'addArchiveEntry(ZipArchiveEntry,InputStreamSupplier)')": [
+                        119,
+                        120,
+                        121
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveEntry.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', None)": [
+                        70
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveEntry', None)": [
+                        56,
+                        71
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveInputStream', 'getNextZipEntry')": [
+                        277
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveInputStream', 'getNextZipEntry')": [
+                        277
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveOutputStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'addRawArchiveEntry(ZipArchiveEntry,InputStream)')": [
+                        548,
+                        550
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'validateSizeInformation(Zip64Mode)')": [
+                        781
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'addRawArchiveEntry(ZipArchiveEntry,InputStream)')": [
+                        548,
+                        550
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'validateSizeInformation(Zip64Mode)')": [
+                        781
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipMethod.java": {
+                "old": {
+                    "(None, None)": [
+                        167
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        167,
+                        168,
+                        169,
+                        183,
+                        184,
+                        185,
+                        186
+                    ]
+                }
+            }
+        }
+    },
+    "a1362359e3b4b364112e60e79f4b6ebf335ba69c": {
+        "authored_data": "2015 Jan 09 17:37",
+        "commit.message": "use for loop rather than iterator\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1650609 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "ebef905b2bd446da972b9c74cf2e76b59666ec0c",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveOutputStream.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'writeCentralDirectoryInChunks')": [
+                        451,
+                        452,
+                        454,
+                        455,
+                        457,
+                        458,
+                        459,
+                        464
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'writeCentralDirectoryInChunks')": [
+                        451,
+                        453,
+                        454,
+                        459
+                    ]
+                }
+            }
+        }
+    }
+}

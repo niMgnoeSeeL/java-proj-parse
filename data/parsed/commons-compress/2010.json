@@ -1,0 +1,645 @@
+{
+    "e214adb4b9164910d62614dbd7b3043cb0cc3467": {
+        "authored_data": "2014 Dec 22 15:24",
+        "commit.message": "COMPRESS-296 Parallel compression. Added StreamCompressor and ScatterZipOutputStream.\n\nStreamCompressor is an extract of the deflation algorithm from ZipArchiveOutputStream, which unfortunately\nwas too conflated with writing a file in a particular structure. Using the actual zip file format as an\nintermediate format for scatter-streams turned out to be fairly inefficient. ScatterZipOuputStream\nis 2-3x faster than using a zip file as intermediate format.\n\nIt would be possibly to refactor ZipArchiveOutputStream to use StreamCompressor, but there would\nbe a slight break in backward compatibility regarding the protected writeOut method, which\nis moved to the streamCompressor class.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1647329 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Kristian Rosenvold",
+        "pcid": "8a4ea62fe7fab06f6b3bb311b43c5fed3cfce3d8",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveOutputStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', None)": [
+                        505,
+                        506,
+                        507,
+                        508,
+                        509,
+                        510,
+                        511,
+                        512,
+                        513
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'cloneWith(File)')": [
+                        514,
+                        515,
+                        516,
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/archivers/ZipTestCase.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers#ZipTestCase', None)": [
+                        296,
+                        307,
+                        308
+                    ],
+                    "('org.apache.commons.compress.archivers#ZipTestCase', 'testCloneZipOutputStream')": [
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306
+                    ]
+                }
+            }
+        }
+    },
+    "8a4ea62fe7fab06f6b3bb311b43c5fed3cfce3d8": {
+        "authored_data": "2014 Dec 18 20:58",
+        "commit.message": "COMPRESS-296 Parallel compression. Add support for cloning ZipArchiveOutputStream\n\nWith these changes it is possible to realize parallel compression. There is one more class coming that coordinates it all\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1646532 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Kristian Rosenvold",
+        "pcid": "9067b02c65bf4316e0541579bdb883c6d3d07852",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveOutputStream.java": {
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', None)": [
+                        505,
+                        506,
+                        507,
+                        508,
+                        509,
+                        510,
+                        511,
+                        512,
+                        513
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'cloneWith(File)')": [
+                        514,
+                        515,
+                        516,
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/archivers/ZipTestCase.java": {
+                "new": {
+                    "('org.apache.commons.compress.archivers#ZipTestCase', 'testCloneZipOutputStream')": [
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306
+                    ],
+                    "('org.apache.commons.compress.archivers#ZipTestCase', None)": [
+                        307,
+                        308
+                    ]
+                }
+            }
+        }
+    },
+    "9067b02c65bf4316e0541579bdb883c6d3d07852": {
+        "authored_data": "2014 Dec 18 20:51",
+        "commit.message": "COMPRESS-295 Add support for transferring a zip entry from one zip file to another\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1646531 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Kristian Rosenvold",
+        "pcid": "b543381be02f07e47e72eaafa862aa8d5f6af186",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveOutputStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'closeArchiveEntry')": [
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        449,
+                        455
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        27
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'closeArchiveEntry')": [
+                        437,
+                        445
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', None)": [
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        461,
+                        462,
+                        474,
+                        475,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        811,
+                        812,
+                        829
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'closeCopiedEntry')": [
+                        456,
+                        457,
+                        458,
+                        459,
+                        460
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'doCloseEntry(long,long)')": [
+                        463,
+                        464,
+                        466
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'preClose')": [
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'addRawArchiveEntry(ZipArchiveEntry,InputStream)')": [
+                        499,
+                        500,
+                        501,
+                        502,
+                        503,
+                        504
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'copyFromZipInputStream(InputStream)')": [
+                        813,
+                        814,
+                        815,
+                        816,
+                        817,
+                        818,
+                        819,
+                        820,
+                        821,
+                        822,
+                        823,
+                        824,
+                        825,
+                        826,
+                        827,
+                        828
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipFile.java": {
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', None)": [
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', 'getRawInputStream(ZipArchiveEntry)')": [
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', 'copyRawEntries(ZipArchiveOutputStream,ZipArchiveEntryPredicate)')": [
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/AbstractTestCase.java": {
+                "old": {
+                    "('org.apache.commons.compress#AbstractTestCase', 'createTempDirAndFile')": [
+                        395,
+                        396
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress#AbstractTestCase', 'createTempDirAndFile')": [
+                        395
+                    ],
+                    "('org.apache.commons.compress#AbstractTestCase', None)": [
+                        405,
+                        406
+                    ],
+                    "('org.apache.commons.compress#AbstractTestCase', 'createTempDir')": [
+                        407,
+                        408,
+                        409,
+                        410
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/archivers/ZipTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        26,
+                        28
+                    ],
+                    "('org.apache.commons.compress.archivers#ZipTestCase', None)": [
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        320,
+                        321,
+                        329,
+                        330,
+                        334,
+                        335,
+                        339,
+                        340,
+                        341,
+                        353,
+                        354,
+                        355,
+                        363
+                    ],
+                    "('org.apache.commons.compress.archivers#ZipTestCase', 'testCopyRawEntriesFromFile')": [
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319
+                    ],
+                    "('org.apache.commons.compress.archivers#ZipTestCase', 'createReferenceFile(File)')": [
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328
+                    ],
+                    "('org.apache.commons.compress.archivers#ZipTestCase', 'createFirstEntry(ZipArchiveOutputStream)')": [
+                        331,
+                        332,
+                        333
+                    ],
+                    "('org.apache.commons.compress.archivers#ZipTestCase', 'createSecondEntry(ZipArchiveOutputStream)')": [
+                        336,
+                        337,
+                        338
+                    ],
+                    "('org.apache.commons.compress.archivers#ZipTestCase', 'assertSameFileContents(File,File)')": [
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352
+                    ],
+                    "('org.apache.commons.compress.archivers#ZipTestCase', 'createArchiveEntry(String,ZipArchiveOutputStream,String)')": [
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362
+                    ]
+                }
+            }
+        }
+    },
+    "b543381be02f07e47e72eaafa862aa8d5f6af186": {
+        "authored_data": "2014 Nov 14 05:20",
+        "commit.message": "I think a number is greater, not bigger\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1639573 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "0f5e88e5124841c8d198d215daee07d06d573ea1",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/utils/BitInputStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.utils#BitInputStream', 'readBits(int)')": [
+                        81
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.utils#BitInputStream', 'readBits(int)')": [
+                        81
+                    ]
+                }
+            }
+        }
+    },
+    "0f5e88e5124841c8d198d215daee07d06d573ea1": {
+        "authored_data": "2014 Nov 14 05:19",
+        "commit.message": "base BitStream on BitInputStream\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1639572 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "75bffff2618da3168e70d422de4cd34a2fffad76",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/BitStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#BitStream', None)": [
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        55,
+                        56,
+                        57
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#BitStream', 'fillCache')": [
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#BitStream', 'nextBit')": [
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#BitStream', 'nextBits(int)')": [
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#BitStream', 'nextByte')": [
+                        113
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#BitStream', None)": [
+                        33,
+                        36
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#BitStream', 'nextBit')": [
+                        45
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#BitStream', 'nextBits(int)')": [
+                        55
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#BitStream', 'nextByte')": [
+                        59
+                    ]
+                }
+            }
+        }
+    },
+    "75bffff2618da3168e70d422de4cd34a2fffad76": {
+        "authored_data": "2014 Nov 14 05:18",
+        "commit.message": "document readBits EOF behavior explicitly\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1639571 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "f23353746af71874ae353d4182a5efab48d0bca0",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/utils/BitInputStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.utils#BitInputStream', None)": [
+                        76
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.utils#BitInputStream', None)": [
+                        76,
+                        77
+                    ]
+                }
+            }
+        }
+    },
+    "f23353746af71874ae353d4182a5efab48d0bca0": {
+        "authored_data": "2014 Nov 14 05:16",
+        "commit.message": "make exception message less ambiguos\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1639570 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "840a20e10b88734211f814cec99177e3bcd06a4a",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/utils/BitInputStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.utils#BitInputStream', 'readBits(int)')": [
+                        80
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.utils#BitInputStream', 'readBits(int)')": [
+                        80
+                    ]
+                }
+            }
+        }
+    },
+    "840a20e10b88734211f814cec99177e3bcd06a4a": {
+        "authored_data": "2014 Nov 13 14:50",
+        "commit.message": "cache bit masks\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1639351 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "cb4b6e016d9486ec06b6f41b44292360d6031502",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/utils/BitInputStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.utils#BitInputStream', 'readBits(int)')": [
+                        70,
+                        71,
+                        87,
+                        90,
+                        93
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.utils#BitInputStream', None)": [
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40
+                    ],
+                    "('org.apache.commons.compress.utils#BitInputStream', 'readBits(int)')": [
+                        79,
+                        80,
+                        98,
+                        101
+                    ]
+                }
+            }
+        }
+    },
+    "cb4b6e016d9486ec06b6f41b44292360d6031502": {
+        "authored_data": "2014 Nov 12 20:02",
+        "commit.message": "BitInputStream can only read a maximum of 31 bits a time or it can't signal EOF\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1639021 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "43a7d7bca178a090f8388d85ef88cdc21431aaf6",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/utils/BitInputStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.utils#BitInputStream', None)": [
+                        62,
+                        65
+                    ],
+                    "('org.apache.commons.compress.utils#BitInputStream', 'readBits(int)')": [
+                        69
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.utils#BitInputStream', None)": [
+                        62,
+                        65,
+                        67
+                    ],
+                    "('org.apache.commons.compress.utils#BitInputStream', 'readBits(int)')": [
+                        70
+                    ]
+                }
+            }
+        }
+    }
+}

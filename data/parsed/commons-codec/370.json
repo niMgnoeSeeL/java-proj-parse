@@ -1,0 +1,701 @@
+{
+    "625cedf140f383f3f5c4f992906a4bb6b809dfd7": {
+        "authored_data": "2019 Dec 04 15:54",
+        "commit.message": "[CODEC-272] Add RandomAccessFile digest methods #31.\n\n- This is a slightly different version from\nhttps://github.com/apache/commons-codec/pull/31/\n- Refactor updateDigest(MessageDigest,RandomAccessFile) into an new\nprivate updateDigest(MessageDigest,FileChannel) as possible public\ncandidate.\n- Do NOT seek to 0 on a RandomAccessFile before calling updateDigest():\nWe do not do this for ByteBuffer input, so do not do it here and be\nconsistent to assume that when the caller says 'digest this' then do it\nfrom where the input stands (like a stream).\n- Add methods in the file to keep methods in alphabetical order.\n- Closes #31.\n",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "3ab9ce4b76848afd2da7dca3e37c46259dd70866",
+        "changes": {
+            "src/main/java/org/apache/commons/codec/digest/DigestUtils.java": {
+                "old": {
+                    "('org.apache.commons.codec.digest#DigestUtils', None)": [
+                        991,
+                        992,
+                        993,
+                        994,
+                        995,
+                        996,
+                        997,
+                        1000,
+                        1001,
+                        1002,
+                        1003,
+                        1004,
+                        1005,
+                        1006,
+                        1007,
+                        1008,
+                        1009,
+                        1012,
+                        1013,
+                        1014,
+                        1015,
+                        1016,
+                        1017,
+                        1018,
+                        1019,
+                        1020,
+                        1021,
+                        1024,
+                        1025,
+                        1026,
+                        1027,
+                        1028,
+                        1029,
+                        1030,
+                        1031,
+                        1032,
+                        1033,
+                        1036,
+                        1037,
+                        1038,
+                        1050,
+                        1051,
+                        1052,
+                        1053,
+                        1054,
+                        1055,
+                        1056,
+                        1057,
+                        1058,
+                        1059,
+                        1060,
+                        1061,
+                        1064,
+                        1065,
+                        1066,
+                        1067,
+                        1068,
+                        1069,
+                        1070,
+                        1071,
+                        1072,
+                        1073,
+                        1074,
+                        1075,
+                        1078,
+                        1079,
+                        1080,
+                        1081,
+                        1082,
+                        1083,
+                        1084,
+                        1085,
+                        1086,
+                        1087,
+                        1088,
+                        1089,
+                        1092,
+                        1093,
+                        1094,
+                        1095,
+                        1096,
+                        1097,
+                        1098,
+                        1099,
+                        1100,
+                        1101,
+                        1102,
+                        1103
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'sha3_224Hex(byte)')": [
+                        998,
+                        999
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'sha3_256Hex(byte)')": [
+                        1010,
+                        1011
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'sha3_384Hex(byte)')": [
+                        1022,
+                        1023
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'sha3_512Hex(byte)')": [
+                        1034,
+                        1035
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'sha3_224Hex(InputStream)')": [
+                        1062,
+                        1063
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'sha3_256Hex(InputStream)')": [
+                        1076,
+                        1077
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'sha3_384Hex(InputStream)')": [
+                        1090,
+                        1091
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'sha3_512Hex(InputStream)')": [
+                        1104,
+                        1105
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        27
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', None)": [
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        131,
+                        132,
+                        133,
+                        727,
+                        728,
+                        729,
+                        730,
+                        731,
+                        732,
+                        733,
+                        734,
+                        735,
+                        736,
+                        737,
+                        738,
+                        741,
+                        742,
+                        743,
+                        744,
+                        745,
+                        746,
+                        747,
+                        748,
+                        749,
+                        750,
+                        803,
+                        804,
+                        805,
+                        806,
+                        807,
+                        808,
+                        809,
+                        810,
+                        811,
+                        812,
+                        813,
+                        814,
+                        817,
+                        818,
+                        819,
+                        820,
+                        821,
+                        822,
+                        823,
+                        824,
+                        825,
+                        826,
+                        879,
+                        880,
+                        881,
+                        882,
+                        883,
+                        884,
+                        885,
+                        886,
+                        887,
+                        888,
+                        889,
+                        890,
+                        893,
+                        894,
+                        895,
+                        896,
+                        897,
+                        898,
+                        899,
+                        900,
+                        901,
+                        902,
+                        955,
+                        956,
+                        957,
+                        958,
+                        959,
+                        960,
+                        961,
+                        962,
+                        963,
+                        964,
+                        965,
+                        966,
+                        969,
+                        970,
+                        971,
+                        972,
+                        973,
+                        974,
+                        975,
+                        976,
+                        977,
+                        978,
+                        1226,
+                        1227,
+                        1228,
+                        1229,
+                        1230,
+                        1231,
+                        1232,
+                        1233,
+                        1234,
+                        1235,
+                        1244,
+                        1245,
+                        1246,
+                        1268,
+                        1269,
+                        1270,
+                        1271,
+                        1272,
+                        1273,
+                        1274,
+                        1275,
+                        1276,
+                        1277,
+                        1278,
+                        1279
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'digest(MessageDigest,RandomAccessFile)')": [
+                        129,
+                        130
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'sha3_224Hex(byte)')": [
+                        725,
+                        726
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'sha3_224Hex(InputStream)')": [
+                        739,
+                        740
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'sha3_256Hex(byte)')": [
+                        801,
+                        802
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'sha3_256Hex(InputStream)')": [
+                        815,
+                        816
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'sha3_384Hex(byte)')": [
+                        877,
+                        878
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'sha3_384Hex(InputStream)')": [
+                        891,
+                        892
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'sha3_512Hex(byte)')": [
+                        953,
+                        954
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'sha3_512Hex(InputStream)')": [
+                        967,
+                        968
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'updateDigest(MessageDigest,FileChannel)')": [
+                        1236,
+                        1237,
+                        1238,
+                        1239,
+                        1240,
+                        1241,
+                        1242,
+                        1243
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtils', 'updateDigest(MessageDigest,RandomAccessFile)')": [
+                        1280,
+                        1281,
+                        1282
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/codec/digest/DigestUtilsTest.java": {
+                "new": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtilsTest', None)": [
+                        51,
+                        52,
+                        53,
+                        54,
+                        69,
+                        70
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtilsTest', 'getTestRandomAccessFile')": [
+                        71,
+                        72
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtilsTest', 'setUp')": [
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87
+                    ],
+                    "('org.apache.commons.codec.digest#DigestUtilsTest', 'tearDown')": [
+                        94,
+                        95,
+                        96,
+                        97
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/codec/digest/MessageDigestAlgorithmsTest.java": {
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.commons.codec.digest#MessageDigestAlgorithmsTest', 'getTestRandomAccessFile')": [
+                        110,
+                        111
+                    ],
+                    "('org.apache.commons.codec.digest#MessageDigestAlgorithmsTest', None)": [
+                        112,
+                        113,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178
+                    ],
+                    "('org.apache.commons.codec.digest#MessageDigestAlgorithmsTest', 'testNonBlockingDigestRandomAccessFile')": [
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173
+                    ]
+                }
+            }
+        }
+    },
+    "3ab9ce4b76848afd2da7dca3e37c46259dd70866": {
+        "authored_data": "2019 Dec 03 11:37",
+        "commit.message": "Remove extra blank line.",
+        "commit.author.name": "aherbert",
+        "pcid": "0002aaffbe7c14f42c9da00c243f44f2504b0145",
+        "changes": {
+            "src/main/java/org/apache/commons/codec/digest/MurmurHash3.java": {
+                "old": {
+                    "('org.apache.commons.codec.digest#MurmurHash3', None)": [
+                        65
+                    ]
+                }
+            }
+        }
+    },
+    "fc9a12fcca1e80adfe12280a944adcb864ae1f78": {
+        "authored_data": "2019 Dec 03 11:34",
+        "commit.message": "Update hash32 primitive helper methods to refer to hash32x86.\n\nSince the sign extension bug in hash32 is not relevant the javadoc can\npoint to the hash32x86 implementation which does not have the bug.\n\nThe result is the same. The unit tests have been updated to show this.",
+        "commit.author.name": "aherbert",
+        "pcid": "7ade1367c6856043b2bea455c3dbe96fb78e2813",
+        "changes": {
+            "src/main/java/org/apache/commons/codec/digest/MurmurHash3.java": {
+                "old": {
+                    "('org.apache.commons.codec.digest#MurmurHash3', None)": [
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        119,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        144,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        177,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        200
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.codec.digest#MurmurHash3', None)": [
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        116,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        138,
+                        161,
+                        162,
+                        163,
+                        164,
+                        168,
+                        180,
+                        181,
+                        182,
+                        183,
+                        188
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/codec/digest/MurmurHash3Test.java": {
+                "old": {
+                    "('org.apache.commons.codec.digest#MurmurHash3Test', 'testHash32LongLong')": [
+                        108
+                    ],
+                    "('org.apache.commons.codec.digest#MurmurHash3Test', 'testHash32LongLongSeed')": [
+                        130
+                    ],
+                    "('org.apache.commons.codec.digest#MurmurHash3Test', 'testHash32Long')": [
+                        150
+                    ],
+                    "('org.apache.commons.codec.digest#MurmurHash3Test', 'testHash32LongSeed')": [
+                        169
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.codec.digest#MurmurHash3Test', 'testHash32LongLong')": [
+                        108
+                    ],
+                    "('org.apache.commons.codec.digest#MurmurHash3Test', 'testHash32LongLongSeed')": [
+                        130
+                    ],
+                    "('org.apache.commons.codec.digest#MurmurHash3Test', 'testHash32Long')": [
+                        150
+                    ],
+                    "('org.apache.commons.codec.digest#MurmurHash3Test', 'testHash32LongSeed')": [
+                        169
+                    ]
+                }
+            }
+        }
+    },
+    "7ade1367c6856043b2bea455c3dbe96fb78e2813": {
+        "authored_data": "2019 Dec 03 11:24",
+        "commit.message": "[CODEC-268] Deprecate hash methods using String.getBytes()\n\nA character encoding should be used to get the string bytes.\n",
+        "commit.author.name": "aherbert",
+        "pcid": "9125e28ceaca3d3adc2a4e9ab5775334af1f25bb",
+        "changes": {
+            "src/main/java/org/apache/commons/codec/digest/MurmurHash3.java": {
+                "old": {
+                    "('org.apache.commons.codec.digest#MurmurHash3', None)": [
+                        256,
+                        754
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.codec.digest#MurmurHash3', None)": [
+                        256,
+                        257,
+                        755,
+                        756,
+                        757,
+                        758
+                    ]
+                }
+            }
+        }
+    },
+    "9125e28ceaca3d3adc2a4e9ab5775334af1f25bb": {
+        "authored_data": "2019 Dec 03 11:15",
+        "commit.message": "[CODEC-268] Deprecate the NULL_HASHCODE.",
+        "commit.author.name": "aherbert",
+        "pcid": "6d544a50c9d7d3717bd9f3261db830db76ba2b64",
+        "changes": {
+            "src/main/java/org/apache/commons/codec/digest/MurmurHash3.java": {
+                "old": {
+                    "('org.apache.commons.codec.digest#MurmurHash3', None)": [
+                        56
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.codec.digest#MurmurHash3', None)": [
+                        56,
+                        57,
+                        58,
+                        59
+                    ]
+                }
+            }
+        }
+    },
+    "6d544a50c9d7d3717bd9f3261db830db76ba2b64": {
+        "authored_data": "2019 Dec 03 11:13",
+        "commit.message": "Remove trailing whitespace",
+        "commit.author.name": "aherbert",
+        "pcid": "df4a27c9b87d7d2afec56492f96c7e549a32fbf5",
+        "changes": {
+            "src/test/java/org/apache/commons/codec/binary/Base64Test.java": {
+                "old": {
+                    "('org.apache.commons.codec.binary#Base64Test', 'testCodec265')": [
+                        1405
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.codec.binary#Base64Test', 'testCodec265')": [
+                        1405
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/codec/digest/MurmurHash3Test.java": {
+                "old": {
+                    "('org.apache.commons.codec.digest#MurmurHash3Test', None)": [
+                        719
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.codec.digest#MurmurHash3Test', None)": [
+                        719
+                    ]
+                }
+            }
+        }
+    },
+    "df4a27c9b87d7d2afec56492f96c7e549a32fbf5": {
+        "authored_data": "2019 Dec 03 11:12",
+        "commit.message": "[CODEC-268] Deprecate MurmurHash4.hash64\n\nThis is not part of the MurmurHash3 implementation. It was ported from\nApache Hive. The hash collision properties are unknown for this method.\n\nUpdated the javadoc to make it clear that the method does not return a\nhash that matches either part of the 128-bit hash function.\n",
+        "commit.author.name": "aherbert",
+        "pcid": "9a84b3a53b37204c6ae9549ba41037c60f15479b",
+        "changes": {
+            "src/main/java/org/apache/commons/codec/digest/MurmurHash3.java": {
+                "old": {
+                    "(None, None)": [
+                        42
+                    ],
+                    "('org.apache.commons.codec.digest#MurmurHash3', None)": [
+                        432,
+                        433,
+                        448,
+                        469,
+                        470,
+                        485,
+                        504,
+                        505,
+                        520,
+                        541,
+                        542,
+                        555,
+                        564,
+                        565,
+                        579,
+                        588,
+                        589,
+                        605,
+                        964
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        42,
+                        43,
+                        44
+                    ],
+                    "('org.apache.commons.codec.digest#MurmurHash3', None)": [
+                        433,
+                        434,
+                        436,
+                        437,
+                        438,
+                        453,
+                        454,
+                        455,
+                        456,
+                        476,
+                        477,
+                        479,
+                        480,
+                        481,
+                        496,
+                        497,
+                        498,
+                        499,
+                        517,
+                        518,
+                        520,
+                        521,
+                        522,
+                        537,
+                        538,
+                        539,
+                        540,
+                        560,
+                        561,
+                        563,
+                        564,
+                        565,
+                        578,
+                        579,
+                        580,
+                        581,
+                        589,
+                        590,
+                        592,
+                        593,
+                        594,
+                        608,
+                        609,
+                        610,
+                        611,
+                        619,
+                        620,
+                        622,
+                        638,
+                        639,
+                        640,
+                        641,
+                        1000
+                    ]
+                }
+            }
+        }
+    },
+    "9a84b3a53b37204c6ae9549ba41037c60f15479b": {
+        "authored_data": "2019 Nov 26 14:43",
+        "commit.message": "[CODEC-265] Reinstate Base64 HugeLineSeparator test.\n\nThe fix for better memory allocation in CODEC-265 fixes the encoding\nusing a line separator bigger than the default buffer size.\n",
+        "commit.author.name": "aherbert",
+        "pcid": "2ee118ddabc071a84298944881854db41c85e528",
+        "changes": {
+            "src/test/java/org/apache/commons/codec/binary/Base64Test.java": {
+                "old": {
+                    "('org.apache.commons.codec.binary#Base64Test', None)": [
+                        1309
+                    ]
+                }
+            }
+        }
+    }
+}
