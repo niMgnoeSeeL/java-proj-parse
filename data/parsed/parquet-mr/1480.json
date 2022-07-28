@@ -1,0 +1,1243 @@
+{
+    "a48f56f85ab758796ba072b8140fed6f712dd8fb": {
+        "authored_data": "2013 Sep 19 13:23",
+        "commit.message": "Re-add FIXED_LEN_BYTE_ARRAY to oneOfEach and plumb through FIXED support for example Group. Test still fails and need to solve read issues.\n",
+        "commit.author.name": "David Z. Chen",
+        "pcid": "8305bdb1937a24bc7e778ec497ceafb8b883be42",
+        "changes": {
+            "parquet-column/src/main/java/parquet/example/data/Group.java": {
+                "new": {
+                    "(None, None)": [
+                        20
+                    ],
+                    "('parquet.example.data#Group', 'add(String,FixedBinary)')": [
+                        55,
+                        56
+                    ],
+                    "('parquet.example.data#Group', None)": [
+                        57,
+                        58,
+                        77,
+                        130,
+                        131
+                    ],
+                    "('parquet.example.data#Group', 'add(int,FixedBinary)')": [
+                        78
+                    ],
+                    "('parquet.example.data#Group', 'append(String,FixedBinary)')": [
+                        127,
+                        128,
+                        129
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/example/data/GroupValueSource.java": {
+                "new": {
+                    "(None, None)": [
+                        19
+                    ],
+                    "('parquet.example.data#GroupValueSource', 'getFixedBinary(String,int)')": [
+                        48,
+                        49
+                    ],
+                    "('parquet.example.data#GroupValueSource', None)": [
+                        50,
+                        51,
+                        65
+                    ],
+                    "('parquet.example.data#GroupValueSource', 'getFixedBinary(int,int)')": [
+                        64
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/example/data/simple/Primitive.java": {
+                "new": {
+                    "(None, None)": [
+                        19
+                    ],
+                    "('parquet.example.data.simple#Primitive', 'getFixedBinary')": [
+                        44,
+                        45
+                    ],
+                    "('parquet.example.data.simple#Primitive', None)": [
+                        46,
+                        47
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/example/data/simple/SimpleGroup.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('parquet.example.data.simple#SimpleGroup', 'getFixedBinary(int,int)')": [
+                        140,
+                        141
+                    ],
+                    "('parquet.example.data.simple#SimpleGroup', None)": [
+                        142,
+                        143,
+                        144,
+                        172,
+                        173,
+                        174
+                    ],
+                    "('parquet.example.data.simple#SimpleGroup', 'add(int,FixedBinary)')": [
+                        170,
+                        171
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/example/data/simple/convert/SimplePrimitiveConverter.java": {
+                "old": {
+                    "('parquet.example.data.simple.convert#SimplePrimitiveConverter', None)": [
+                        26,
+                        27,
+                        28,
+                        29
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19
+                    ],
+                    "('parquet.example.data.simple.convert#SimplePrimitiveConverter', None)": [
+                        27,
+                        28,
+                        29,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45
+                    ],
+                    "('parquet.example.data.simple.convert#SimplePrimitiveConverter', 'addBinary(Binary)')": [
+                        38
+                    ],
+                    "('parquet.example.data.simple.convert#SimplePrimitiveConverter', 'addFixedBinary(FixedBinary)')": [
+                        46
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/io/ValidatingRecordConsumer.java": {
+                "old": {
+                    "('parquet.io#ValidatingRecordConsumer', 'addFixedBinary(FixedBinary)')": [
+                        184
+                    ]
+                },
+                "new": {
+                    "('parquet.io#ValidatingRecordConsumer', 'addFixedBinary(FixedBinary)')": [
+                        184
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/parquet/io/TestColumnIO.java": {
+                "old": {
+                    "('parquet.io#TestColumnIO', 'testOneOfEach')": [
+                        342
+                    ],
+                    "('parquet.io#TestColumnIO', 'testSchema(MessageType,List)')": [
+                        430,
+                        433,
+                        436,
+                        442,
+                        443,
+                        446
+                    ]
+                },
+                "new": {
+                    "('parquet.io#TestColumnIO', None)": [
+                        74
+                    ],
+                    "('parquet.io#TestColumnIO', 'testOneOfEach')": [
+                        343,
+                        344
+                    ],
+                    "('parquet.io#TestColumnIO', 'testSchema(MessageType,List)')": [
+                        432,
+                        433,
+                        438,
+                        439,
+                        440,
+                        441,
+                        447,
+                        448,
+                        449,
+                        452,
+                        453
+                    ]
+                }
+            }
+        }
+    },
+    "8305bdb1937a24bc7e778ec497ceafb8b883be42": {
+        "authored_data": "2013 Sep 19 10:01",
+        "commit.message": "Add FixedBinary type by creating a wrapper class around Binary and plumb FixedBinary through for read and write support for FIXED_LEN_BYTE_ARRAY. Undo change to add FIXED field to oneOfEach schema for parquet-column TestColumnIO for now.\n",
+        "commit.author.name": "David Z. Chen",
+        "pcid": "201d80c57a711c232539732df1c109f045ec09a1",
+        "changes": {
+            "parquet-avro/src/main/java/parquet/avro/AvroIndexedRecordConverter.java": {
+                "old": {
+                    "('parquet.avro#AvroIndexedRecordConverter', None)": [
+                        286
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('parquet.avro#AvroIndexedRecordConverter', None)": [
+                        287
+                    ]
+                }
+            },
+            "parquet-avro/src/main/java/parquet/avro/AvroWriteSupport.java": {
+                "old": {
+                    "('parquet.avro#AvroWriteSupport', 'writeValue(Type,Schema,Object)')": [
+                        202
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('parquet.avro#AvroWriteSupport', 'writeValue(Type,Schema,Object)')": [
+                        203,
+                        204
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/column/ColumnReader.java": {
+                "new": {
+                    "(None, None)": [
+                        18,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/column/ColumnWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        66
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        67
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/column/impl/ColumnReaderImpl.java": {
+                "old": {
+                    "('parquet.column.impl#ColumnReaderImpl', None)": [
+                        98
+                    ],
+                    "('parquet.column.impl#ColumnReaderImpl', 'bind(PrimitiveTypeName)')": [
+                        269,
+                        270,
+                        271,
+                        278
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35
+                    ],
+                    "('parquet.column.impl#ColumnReaderImpl', None)": [
+                        99,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        434
+                    ],
+                    "('parquet.column.impl#ColumnReaderImpl', 'bind(PrimitiveTypeName)')": [
+                        277,
+                        278,
+                        279,
+                        286
+                    ],
+                    "('parquet.column.impl#ColumnReaderImpl', 'getFixedBinary')": [
+                        431,
+                        432,
+                        433
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/column/impl/ColumnWriterImpl.java": {
+                "old": {
+                    "('parquet.column.impl#ColumnWriterImpl', 'writeFixed(Binary,int,int)')": [
+                        210
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        40
+                    ],
+                    "('parquet.column.impl#ColumnWriterImpl', 'write(FixedBinary,int,int)')": [
+                        211
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/column/values/ValuesReader.java": {
+                "new": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('parquet.column.values#ValuesReader', None)": [
+                        81,
+                        82,
+                        83,
+                        84,
+                        87
+                    ],
+                    "('parquet.column.values#ValuesReader', 'readFixedBytes')": [
+                        85,
+                        86
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/column/values/ValuesWriter.java": {
+                "old": {
+                    "('parquet.column.values#ValuesWriter', 'writeFixedBytes(Binary)')": [
+                        92
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('parquet.column.values#ValuesWriter', 'writeFixedBytes(FixedBinary)')": [
+                        93
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/column/values/plain/FixedLenByteArrayPlainValuesReader.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('parquet.column.values.plain#FixedLenByteArrayPlainValuesReader', None)": [
+                        29
+                    ],
+                    "('parquet.column.values.plain#FixedLenByteArrayPlainValuesReader', 'readBytes')": [
+                        39,
+                        43
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('parquet.column.values.plain#FixedLenByteArrayPlainValuesReader', None)": [
+                        29
+                    ],
+                    "('parquet.column.values.plain#FixedLenByteArrayPlainValuesReader', 'readFixedBytes')": [
+                        39,
+                        43
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/column/values/plain/PlainValuesWriter.java": {
+                "old": {
+                    "('parquet.column.values.plain#PlainValuesWriter', 'writeFixedBytes(Binary)')": [
+                        51
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('parquet.column.values.plain#PlainValuesWriter', 'writeFixedBytes(FixedBinary)')": [
+                        52
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/io/MessageColumnIO.java": {
+                "old": {
+                    "('parquet.io#MessageColumnIO', None)": [
+                        261,
+                        264
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28
+                    ],
+                    "('parquet.io#MessageColumnIO', None)": [
+                        262,
+                        265
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/io/RecordConsumerLoggingWrapper.java": {
+                "old": {
+                    "('parquet.io#RecordConsumerLoggingWrapper', 'addFixedBinary(Binary)')": [
+                        119
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20
+                    ],
+                    "('parquet.io#RecordConsumerLoggingWrapper', 'addFixedBinary(FixedBinary)')": [
+                        120
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/io/ValidatingRecordConsumer.java": {
+                "old": {
+                    "('parquet.io#ValidatingRecordConsumer', 'addFixedBinary(Binary)')": [
+                        182
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', 'addFixedBinary(FixedBinary)')": [
+                        183
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/io/api/Binary.java": {
+                "old": {
+                    "('parquet.io.api#Binary', None)": [
+                        80
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/io/api/PrimitiveConverter.java": {
+                "old": {
+                    "('parquet.io.api#PrimitiveConverter', 'addFixedBinary(Binary)')": [
+                        76
+                    ]
+                },
+                "new": {
+                    "('parquet.io.api#PrimitiveConverter', 'addFixedBinary(FixedBinary)')": [
+                        76
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/io/api/RecordConsumer.java": {
+                "old": {
+                    "('parquet.io.api#RecordConsumer', 'addFixedBinary(Binary)')": [
+                        117
+                    ]
+                },
+                "new": {
+                    "('parquet.io.api#RecordConsumer', 'addFixedBinary(FixedBinary)')": [
+                        117
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/parquet/io/ConverterConsumer.java": {
+                "old": {
+                    "('parquet.io#ConverterConsumer', 'addFixedBinary(Binary)')": [
+                        105
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('parquet.io#ConverterConsumer', 'addFixedBinary(FixedBinary)')": [
+                        106
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/parquet/io/ExpectationValidatingRecordConsumer.java": {
+                "old": {
+                    "('parquet.io#ExpectationValidatingRecordConsumer', 'addFixedBinary(Binary)')": [
+                        91
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('parquet.io#ExpectationValidatingRecordConsumer', 'addFixedBinary(FixedBinary)')": [
+                        92
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/parquet/io/TestColumnIO.java": {
+                "old": {
+                    "('parquet.io#TestColumnIO', None)": [
+                        73
+                    ],
+                    "('parquet.io#TestColumnIO', 'testOneOfEach')": [
+                        342,
+                        343
+                    ],
+                    "('parquet.io#TestColumnIO', 'testWriteWithGroupWriter')": [
+                        575
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        52
+                    ],
+                    "('parquet.io#TestColumnIO', 'testOneOfEach')": [
+                        342
+                    ],
+                    "('parquet.io#TestColumnIO', 'testWriteWithGroupWriter')": [
+                        574
+                    ]
+                }
+            }
+        }
+    },
+    "562e8111552be8fbbe701c02dddfa3a3496a5f47": {
+        "authored_data": "2013 Sep 18 18:13",
+        "commit.message": "make binary dictionary encoding use fastutils; fix tests\n",
+        "commit.author.name": "julien",
+        "pcid": "0570f46ce688f9361f4264c36cc3723074e459e8",
+        "changes": {
+            "parquet-column/src/main/java/parquet/column/values/dictionary/DictionaryValuesWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        35,
+                        36
+                    ],
+                    "('parquet.column.values.dictionary#DictionaryValuesWriter', None)": [
+                        219,
+                        232,
+                        233,
+                        236,
+                        237
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33
+                    ],
+                    "('parquet.column.values.dictionary#DictionaryValuesWriter', None)": [
+                        219,
+                        227,
+                        233,
+                        234,
+                        237,
+                        238
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/parquet/column/values/dictionary/TestDictionary.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        558
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testBinaryDictionary')": [
+                        54,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        96,
+                        97,
+                        98,
+                        99
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', None)": [
+                        100,
+                        101,
+                        102,
+                        103,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        206,
+                        294,
+                        295,
+                        296,
+                        297,
+                        382,
+                        383,
+                        384,
+                        385,
+                        428,
+                        470,
+                        471,
+                        516
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testFirstPageFallBack')": [
+                        107,
+                        108,
+                        110,
+                        111,
+                        112,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testBinaryDictionaryInefficiency')": [
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testLongDictionary')": [
+                        215,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testLongDictionaryInefficiency')": [
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testDoubleDictionary')": [
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testDoubleDictionaryInefficiency')": [
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testIntDictionary')": [
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testIntDictionaryInefficiency')": [
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testFloatDictionary')": [
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        499,
+                        500
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testFloatDictionaryInefficiency')": [
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testBinaryDictionary')": [
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        65
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', None)": [
+                        66,
+                        82,
+                        83,
+                        84,
+                        85,
+                        254,
+                        255,
+                        260,
+                        261,
+                        262,
+                        267,
+                        268,
+                        269,
+                        273,
+                        274,
+                        275,
+                        279,
+                        280,
+                        281
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testFirstPageFallBack')": [
+                        70,
+                        72,
+                        74,
+                        75,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testSecondPageFallBack')": [
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testLongDictionary')": [
+                        115,
+                        116,
+                        121,
+                        122,
+                        123,
+                        124
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testDoubleDictionary')": [
+                        150,
+                        151,
+                        152,
+                        157,
+                        158,
+                        159,
+                        160
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testIntDictionary')": [
+                        186,
+                        187,
+                        192,
+                        193,
+                        194,
+                        195
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'testFloatDictionary')": [
+                        222,
+                        223,
+                        228,
+                        229,
+                        230,
+                        231
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'initDicReader(ValuesWriter,PrimitiveTypeName)')": [
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'checkDistinct(int,BytesInput,ValuesReader,String)')": [
+                        256,
+                        257,
+                        258,
+                        259
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'checkRepeated(int,BytesInput,ValuesReader,String)')": [
+                        263,
+                        264,
+                        265,
+                        266
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'writeDistinct(int,ValuesWriter,String)')": [
+                        270,
+                        271,
+                        272
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'writeRepeated(int,ValuesWriter,String)')": [
+                        276,
+                        277,
+                        278
+                    ],
+                    "('parquet.column.values.dictionary#TestDictionary', 'getBytesAndCheckEncoding(ValuesWriter,Encoding)')": [
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287
+                    ]
+                }
+            }
+        }
+    },
+    "e8c2a399a79cfd2905dd8d8e7c0e58bec68ece7b": {
+        "authored_data": "2013 Sep 18 17:02",
+        "commit.message": "better log messages\n",
+        "commit.author.name": "julien",
+        "pcid": "0f9e39b7fc3743ed641c9c28dbc0f0f26493f476",
+        "changes": {
+            "parquet-hadoop/src/main/java/parquet/hadoop/InternalParquetRecordWriter.java": {
+                "old": {
+                    "('parquet.hadoop#InternalParquetRecordWriter', 'checkBlockSizeReached')": [
+                        113,
+                        123
+                    ],
+                    "('parquet.hadoop#InternalParquetRecordWriter', 'flushStore')": [
+                        130
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('parquet.hadoop#InternalParquetRecordWriter', 'checkBlockSizeReached')": [
+                        114,
+                        124
+                    ],
+                    "('parquet.hadoop#InternalParquetRecordWriter', 'flushStore')": [
+                        131
+                    ]
+                }
+            }
+        }
+    },
+    "08b45b0c1c5a8b7766544ba01dd9861d8b0fbfb4": {
+        "authored_data": "2013 Sep 18 10:14",
+        "commit.message": "Add fixed_len_byte_array to oneOfEach in TestColumnIO.\n",
+        "commit.author.name": "David Z. Chen",
+        "pcid": "4e82ab632d39b236d302ff4283cae0a94f7cdbc0",
+        "changes": {
+            "parquet-column/src/test/java/parquet/io/TestColumnIO.java": {
+                "old": {
+                    "(None, None)": [
+                        62
+                    ],
+                    "('parquet.io#TestColumnIO', None)": [
+                        141,
+                        142,
+                        175,
+                        235,
+                        277
+                    ],
+                    "('parquet.io#TestColumnIO', 'testColumnIO')": [
+                        313,
+                        319
+                    ],
+                    "('parquet.io#TestColumnIO', 'testOneOfEach')": [
+                        343
+                    ],
+                    "('parquet.io#TestColumnIO', 'testRequiredOfRequired')": [
+                        350,
+                        351
+                    ],
+                    "('parquet.io#TestColumnIO', 'testWriteWithGroupWriter')": [
+                        553,
+                        555
+                    ]
+                },
+                "new": {
+                    "('parquet.io#TestColumnIO', None)": [
+                        73
+                    ],
+                    "('parquet.io#TestColumnIO', 'testOneOfEach')": [
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343
+                    ]
+                }
+            }
+        }
+    },
+    "4f1493b0aa663111871404b026064ea35a5234e2": {
+        "authored_data": "2013 Sep 18 01:04",
+        "commit.message": "Fix broken tests. Test failures encountered previously were due to broken tests.\n",
+        "commit.author.name": "David Z. Chen",
+        "pcid": "f8ac0f01deb15cf7b54ec9355dd57f6b96471b0d",
+        "changes": {
+            "parquet-avro/src/test/java/parquet/avro/TestAvroSchemaConverter.java": {
+                "new": {
+                    "('parquet.avro#TestAvroSchemaConverter', 'testAllTypes')": [
+                        66,
+                        67,
+                        68
+                    ]
+                }
+            },
+            "parquet-avro/src/test/java/parquet/avro/TestReadWrite.java": {
+                "old": {
+                    "('parquet.avro#TestReadWrite', 'test')": [
+                        48,
+                        49,
+                        54,
+                        55,
+                        59,
+                        75,
+                        76,
+                        80,
+                        81,
+                        100
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29,
+                        36
+                    ],
+                    "('parquet.avro#TestReadWrite', 'test')": [
+                        55,
+                        56,
+                        60,
+                        61,
+                        62,
+                        63,
+                        79,
+                        101
+                    ]
+                }
+            }
+        }
+    }
+}

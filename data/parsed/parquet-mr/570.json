@@ -1,0 +1,1434 @@
+{
+    "f203d809d7b94501a2e5409c667ba86206480f90": {
+        "authored_data": "2015 Sep 11 22:14",
+        "commit.message": "PARQUET-363: Allow empty schema groups.\n\nThis removes the check added in PARQUET-278 that rejects schema groups\nthat have no fields. Selecting 0 columns from a file is allowed and used\nby Hive and SparkSQL to implement queries like `select count(1) ...`\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #263 from rdblue/PARQUET-363-allow-empty-groups and squashes the following commits:\n\nab370f1 [Ryan Blue] PARQUET-363: Update Type builder tests to allow empty groups.\n926932b [Ryan Blue] PARQUET-363: Add write-side schema validation.\n365f30d [Ryan Blue] PARQUET-363: Allow empty schema groups.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "9962a0fd02fe2ef06765271605b06729af8b2e59",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/schema/GroupType.java": {
+                "old": {
+                    "('org.apache.parquet.schema#GroupType', None)": [
+                        91,
+                        92,
+                        93
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/schema/Types.java": {
+                "old": {
+                    "('org.apache.parquet.schema#Types', None)": [
+                        622,
+                        623
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/schema/TestMessageType.java": {
+                "old": {
+                    "('org.apache.parquet.schema#TestMessageType', None)": [
+                        149
+                    ],
+                    "('org.apache.parquet.schema#TestMessageType', 'testEmptyGroup')": [
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158
+                    ],
+                    "(None, None)": [
+                        159,
+                        160,
+                        161
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/schema/TestTypeBuilders.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.parquet.schema#TestTypeBuilders', 'testEmptyGroup')": [
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176
+                    ],
+                    "('org.apache.parquet.schema#TestTypeBuilders', None)": [
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        189,
+                        190
+                    ],
+                    "('org.apache.parquet.schema#TestTypeBuilders', 'testEmptyMessage')": [
+                        184,
+                        185,
+                        186,
+                        187,
+                        188
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.schema#TestTypeBuilders', 'testEmptyGroup')": [
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163
+                    ],
+                    "('org.apache.parquet.schema#TestTypeBuilders', None)": [
+                        164,
+                        165,
+                        166
+                    ],
+                    "('org.apache.parquet.schema#TestTypeBuilders', 'testEmptyMessage')": [
+                        168,
+                        169,
+                        170
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileWriter.java": {
+                "new": {
+                    "(None, None)": [
+                        60
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', None)": [
+                        209
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/example/GroupWriteSupport.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop.example#GroupWriteSupport', None)": [
+                        48
+                    ],
+                    "('org.apache.parquet.hadoop.example#GroupWriteSupport', 'init(Configuration)')": [
+                        53
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop.example#GroupWriteSupport', None)": [
+                        48,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56
+                    ],
+                    "('org.apache.parquet.hadoop.example#GroupWriteSupport', 'init(Configuration)')": [
+                        60,
+                        61,
+                        62,
+                        63
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/hadoop/TestParquetWriter.java": {
+                "new": {
+                    "(None, None)": [
+                        22,
+                        37,
+                        38,
+                        41,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        65,
+                        165
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetWriter', None)": [
+                        141,
+                        142,
+                        143,
+                        144,
+                        145
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetWriter', 'testBadWriteSchema')": [
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/hadoop/TestUtils.java": {
+                "new": {
+                    "(None, None)": [
+                        22,
+                        27,
+                        57,
+                        58
+                    ],
+                    "('org.apache.parquet.hadoop#TestUtils', None)": [
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48
+                    ],
+                    "('org.apache.parquet.hadoop#TestUtils', 'assertThrows(String,Class,Callable)')": [
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56
+                    ]
+                }
+            }
+        }
+    },
+    "9962a0fd02fe2ef06765271605b06729af8b2e59": {
+        "authored_data": "2015 Sep 11 17:31",
+        "commit.message": "PARQUET-335: Remove Avro check for MAP_KEY_VALUE.\n\nThis is not required by the map type spec. This does not affect data\nwritten by the Avro object model because this bug is in the conversion\nfrom a Parquet schema to an Avro schema. Files written with parquet-avro\ndo not convert the underlying schema because they use the Avro schema.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #241 from rdblue/PARQUET-335-remove-key-value-check and squashes the following commits:\n\n1fd9541 [Ryan Blue] PARQUET-335: Test that MAP_KEY_VALUE is not required.\n247cc76 [Ryan Blue] PARQUET-335: Remove Avro check for MAP_KEY_VALUE.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "04f524d5ad91b1cdda66dfde4089f2f83f4528aa",
+        "changes": {
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroSchemaConverter.java": {
+                "old": {
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'convertField(Type)')": [
+                        306
+                    ]
+                }
+            },
+            "parquet-avro/src/test/java/org/apache/parquet/avro/TestAvroSchemaConverter.java": {
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', None)": [
+                        396,
+                        413,
+                        414
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testParquetMapWithoutMapKeyValueAnnotation')": [
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412
+                    ]
+                }
+            }
+        }
+    },
+    "04f524d5ad91b1cdda66dfde4089f2f83f4528aa": {
+        "authored_data": "2015 Aug 20 22:23",
+        "commit.message": "PARQUET-361: Add semver prerelease logic.\n\nThis also adds more versions where PARQUET-251 is fixed.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #261 from rdblue/PARQUET-361-add-semver-prerelease and squashes the following commits:\n\nc01142d [Ryan Blue] PARQUET-361: Add semver prerelease logic.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "2c90a9dad1c9a7cdab6af48c4bd7f7dcecf3fbb7",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/CorruptStatistics.java": {
+                "old": {
+                    "('org.apache.parquet#CorruptStatistics', 'shouldIgnoreStatistics(String,PrimitiveTypeName)')": [
+                        78
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet#CorruptStatistics', None)": [
+                        44,
+                        45
+                    ],
+                    "('org.apache.parquet#CorruptStatistics', 'shouldIgnoreStatistics(String,PrimitiveTypeName)')": [
+                        80,
+                        81,
+                        82
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/CorruptStatisticsTest.java": {
+                "new": {
+                    "('org.apache.parquet#CorruptStatisticsTest', None)": [
+                        78,
+                        79
+                    ],
+                    "('org.apache.parquet#CorruptStatisticsTest', 'testDistributionCorruptStatistics')": [
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90
+                    ],
+                    "(None, None)": [
+                        91
+                    ]
+                }
+            },
+            "parquet-common/src/main/java/org/apache/parquet/SemanticVersion.java": {
+                "old": {
+                    "('org.apache.parquet#SemanticVersion', None)": [
+                        33,
+                        34,
+                        51,
+                        52,
+                        53,
+                        61,
+                        115,
+                        116
+                    ],
+                    "('org.apache.parquet#SemanticVersion', 'parse(String)')": [
+                        74,
+                        80,
+                        81,
+                        82,
+                        92
+                    ],
+                    "('org.apache.parquet#SemanticVersion', 'compareTo(SemanticVersion)')": [
+                        114
+                    ],
+                    "('org.apache.parquet#SemanticVersion', 'compareIntegers(int,int)')": [
+                        117
+                    ],
+                    "('org.apache.parquet#SemanticVersion', 'compareBooleans(boolean,boolean)')": [
+                        121
+                    ],
+                    "('org.apache.parquet#SemanticVersion', 'toString')": [
+                        144
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22
+                    ],
+                    "('org.apache.parquet#SemanticVersion', None)": [
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        45,
+                        46,
+                        48,
+                        49,
+                        50,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        160,
+                        161,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273
+                    ],
+                    "('org.apache.parquet#SemanticVersion', 'parse(String)')": [
+                        112,
+                        113,
+                        114,
+                        115,
+                        122
+                    ],
+                    "('org.apache.parquet#SemanticVersion', 'compareTo(SemanticVersion)')": [
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159
+                    ],
+                    "('org.apache.parquet#SemanticVersion', 'compareIntegers(int,int)')": [
+                        162
+                    ],
+                    "('org.apache.parquet#SemanticVersion', 'compareBooleans(boolean,boolean)')": [
+                        166
+                    ],
+                    "('org.apache.parquet#SemanticVersion', 'toString')": [
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200
+                    ]
+                }
+            },
+            "parquet-common/src/test/java/org/apache/parquet/SemanticVersionTest.java": {
+                "old": {
+                    "('org.apache.parquet#SemanticVersionTest', 'testParse')": [
+                        54,
+                        55
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24
+                    ],
+                    "('org.apache.parquet#SemanticVersionTest', 'testSemverPrereleaseExamples')": [
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63
+                    ],
+                    "('org.apache.parquet#SemanticVersionTest', None)": [
+                        64,
+                        65,
+                        66,
+                        74,
+                        75,
+                        76,
+                        80,
+                        81,
+                        82,
+                        92,
+                        93,
+                        94,
+                        104,
+                        105,
+                        109,
+                        110
+                    ],
+                    "('org.apache.parquet#SemanticVersionTest', 'testSemverBuildInfoExamples')": [
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73
+                    ],
+                    "('org.apache.parquet#SemanticVersionTest', 'testUnknownComparisons')": [
+                        77,
+                        78,
+                        79
+                    ],
+                    "('org.apache.parquet#SemanticVersionTest', 'testDistributionVersions')": [
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91
+                    ],
+                    "('org.apache.parquet#SemanticVersionTest', 'testParse')": [
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103
+                    ],
+                    "('org.apache.parquet#SemanticVersionTest', 'assertLessThan(String,String)')": [
+                        106,
+                        107,
+                        108
+                    ],
+                    "('org.apache.parquet#SemanticVersionTest', 'assertEqualTo(String,String)')": [
+                        111,
+                        112
+                    ]
+                }
+            }
+        }
+    },
+    "01fbf81e34a36cedf505f20b1c52306afceedc3e": {
+        "authored_data": "2015 Aug 20 21:21",
+        "commit.message": "PARQUET-343 Caching nulls on group node to improve write performance on wide schema sparse data\n\nFor really wide schema with sparse data, If a group node is empty, it could have a huge number of leaves underneath it. Calling writeMull for each leaf every time when it's ancestor group node is null is in-effcient and is bad for data locality in the memory especially when the number of leaves is huge.\n\nInstead, null can be cached on the group node. Flushing is only triggered when a group node becomes non-null from null. This way, all the cached null values will be flushed to the leaf nodes in a tight loop and improves write performance.\n\nWe tested this approach combined with PARQUET-341 on a really large schema and gave us ~2X improvement on write performance\n\nAuthor: Tianshuo Deng <tdeng@twitter.com>\n\nCloses #249 from tsdeng/batch_null and squashes the following commits:\n\n0a61646 [Tianshuo Deng] use curly braces even for 1 line if statements\na8964c0 [Tianshuo Deng] optimize writeNullToLeaves\n5309612 [Tianshuo Deng] optimize cacheNullForGroup\necbdfca [Tianshuo Deng] add comments\ned692c0 [Tianshuo Deng] WIP\n0cae1b6 [Tianshuo Deng] remove unused class\n8e07db4 [Tianshuo Deng] refactor\ndead618 [Tianshuo Deng] reformat\nc3c0c70 [Tianshuo Deng] refactor\n636ab52 [Tianshuo Deng] remove unused method\n767b4fd [Tianshuo Deng] use parent definition level\n8f251a0 [Tianshuo Deng] use IntArrayList\nc549c84 [Tianshuo Deng] fix\n9583d04 [Tianshuo Deng] wIP\nd8cb878 [Tianshuo Deng] WIP\n35f1fa1 [Tianshuo Deng] cache columnWriter for each parent\n46fd464 [Tianshuo Deng] address comments\n8c83964 [Tianshuo Deng] flush null directly to leaves\n",
+        "commit.author.name": "Tianshuo Deng",
+        "pcid": "3f36b7b50bdda3eeca632ad5440bb82b8e34cb40",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/io/MessageColumnIO.java": {
+                "old": {
+                    "(None, None)": [
+                        56
+                    ],
+                    "('org.apache.parquet.io#MessageColumnIO', None)": [
+                        157,
+                        158,
+                        178,
+                        179,
+                        180,
+                        185,
+                        230,
+                        241,
+                        258,
+                        279,
+                        283,
+                        297,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        318,
+                        319,
+                        322,
+                        332,
+                        339
+                    ],
+                    "('org.apache.parquet.io#MessageColumnIO', 'getType')": [
+                        424
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33,
+                        50,
+                        51
+                    ],
+                    "('org.apache.parquet.io#MessageColumnIO', None)": [
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        191,
+                        192,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        229,
+                        274,
+                        285,
+                        302,
+                        323,
+                        327,
+                        341,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        391,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        419,
+                        426,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494
+                    ],
+                    "('org.apache.parquet.io#MessageColumnIO', 'getType')": [
+                        517
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/io/ValidatingRecordConsumer.java": {
+                "new": {
+                    "('org.apache.parquet.io#ValidatingRecordConsumer', None)": [
+                        129,
+                        132
+                    ],
+                    "('org.apache.parquet.io#ValidatingRecordConsumer', 'flush')": [
+                        130,
+                        131
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/io/api/RecordConsumer.java": {
+                "new": {
+                    "('org.apache.parquet.io.api#RecordConsumer', None)": [
+                        128,
+                        129,
+                        130,
+                        131
+                    ],
+                    "('org.apache.parquet.io.api#RecordConsumer', 'flush')": [
+                        132
+                    ],
+                    "(None, None)": [
+                        133,
+                        134
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/io/TestColumnIO.java": {
+                "old": {
+                    "('org.apache.parquet.io#TestColumnIO', 'writeGroups(MessageType,MemPageStore,Group)')": [
+                        291
+                    ],
+                    "('org.apache.parquet.io#TestColumnIO', 'testColumnIO')": [
+                        313
+                    ],
+                    "('org.apache.parquet.io#TestColumnIO', 'testSchema(MessageType,List)')": [
+                        465
+                    ],
+                    "('org.apache.parquet.io#TestColumnIO', 'testPushParser')": [
+                        511
+                    ],
+                    "('org.apache.parquet.io#TestColumnIO', 'testWriteWithGroupWriter')": [
+                        587
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.io#TestColumnIO', 'writeGroups(MessageType,MemPageStore,Group)')": [
+                        291,
+                        292,
+                        296
+                    ],
+                    "('org.apache.parquet.io#TestColumnIO', 'testColumnIO')": [
+                        315,
+                        316,
+                        319,
+                        320
+                    ],
+                    "('org.apache.parquet.io#TestColumnIO', 'testSchema(MessageType,List)')": [
+                        469,
+                        471,
+                        475
+                    ],
+                    "('org.apache.parquet.io#TestColumnIO', 'testPushParser')": [
+                        518,
+                        519,
+                        520
+                    ],
+                    "('org.apache.parquet.io#TestColumnIO', 'testWriteWithGroupWriter')": [
+                        596,
+                        597,
+                        600
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/io/TestFiltered.java": {
+                "old": {
+                    "('org.apache.parquet.io#TestFiltered', 'writeTestRecords(MessageColumnIO,int)')": [
+                        262
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.parquet.io#TestFiltered', 'writeTestRecords(MessageColumnIO,int)')": [
+                        263,
+                        264,
+                        269
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordReader.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', None)": [
+                        65
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'initialize(MessageType,FileMetaData,Path,List,Configuration)')": [
+                        177
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'checkRead')": [
+                        139
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordWriter.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', 'initStore')": [
+                        109
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        40
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', None)": [
+                        67
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', 'initStore')": [
+                        111,
+                        112
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', 'flushRowGroupToStore')": [
+                        160
+                    ]
+                }
+            },
+            "parquet-thrift/src/test/java/org/apache/parquet/thrift/TestParquetReadProtocol.java": {
+                "new": {
+                    "('org.apache.parquet.thrift#TestParquetReadProtocol', 'validate(T)')": [
+                        157
+                    ]
+                }
+            }
+        }
+    },
+    "3f36b7b50bdda3eeca632ad5440bb82b8e34cb40": {
+        "authored_data": "2015 Aug 20 20:52",
+        "commit.message": "PARQUET-362 - Fix parquet buffered writer being oversensitive to union schema changes\n\nParquet does prevent records with unknown union fields to be written as it would\ncreate a TProtocol violation. But it also prevents records with unions having one their field\nitself having an unknown field (which is acceptable if it is a struct).\n\nAuthor: Laurent Goujon <lgoujon@twitter.com>\n\nCloses #262 from laurentgo/fix-parquet-union-write-bug and squashes the following commits:\n\nd15ee74 [Laurent Goujon] Fix parquet buffered writer being oversentive to union changes\n",
+        "commit.author.name": "Laurent Goujon",
+        "pcid": "2f956f46580e5b4752173e885d37a20fe31a78d8",
+        "changes": {
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/BufferedProtocolReadToWrite.java": {
+                "old": {
+                    "('org.apache.parquet.thrift#BufferedProtocolReadToWrite', 'readOneStruct(TProtocol,List,StructType)')": [
+                        389,
+                        390,
+                        391,
+                        392,
+                        393
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.thrift#BufferedProtocolReadToWrite', 'readOneStruct(TProtocol,List,StructType)')": [
+                        378,
+                        379,
+                        380,
+                        392
+                    ]
+                }
+            },
+            "parquet-thrift/src/test/java/org/apache/parquet/thrift/TestProtocolReadToWrite.java": {
+                "new": {
+                    "('org.apache.parquet.thrift#TestProtocolReadToWrite', None)": [
+                        223,
+                        259
+                    ],
+                    "('org.apache.parquet.thrift#TestProtocolReadToWrite', 'testUnionWithStructWithUnknownField')": [
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258
+                    ]
+                }
+            }
+        }
+    },
+    "2f956f46580e5b4752173e885d37a20fe31a78d8": {
+        "authored_data": "2015 Aug 05 23:29",
+        "commit.message": "PARQUET-341 improve write performance for wide schema sparse data\n\nIn write path, when there are tons of sparse data, most of time is spent on writing nulls.\nCurrently writing nulls has the same code path as writing values, which is reclusive traverse all the leaves when a group is null.\nDue to the fact that when a group is null all the leaves beneath it should be written with null value with the same repetition level and definition level, we can eliminate the recursion call to get the leaves\n\nThis PR caches the leaves for each group node. So when a group node is null, their leaves can be flushed with null values directly.\n\nWe tested it with a really wide schema on one of our production data. It improves the performance by ~20%\n\nAuthor: Tianshuo Deng <tdeng@twitter.com>\n\nCloses #247 from tsdeng/flush_null_directly and squashes the following commits:\n\n253f2e3 [Tianshuo Deng] address comments\n8676cd7 [Tianshuo Deng] flush null directly to leaves\n",
+        "commit.author.name": "Tianshuo Deng",
+        "pcid": "b86f68e39dc7b6a7c2bff1e4fea3bb7c28d103f0",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/io/MessageColumnIO.java": {
+                "old": {
+                    "('org.apache.parquet.io#MessageColumnIO', None)": [
+                        184,
+                        274,
+                        275,
+                        276,
+                        277
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        24,
+                        26
+                    ],
+                    "('org.apache.parquet.io#MessageColumnIO', None)": [
+                        178,
+                        179,
+                        180,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        205,
+                        207,
+                        209,
+                        210,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordReader.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'checkRead')": [
+                        139
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', None)": [
+                        65
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'initialize(MessageType,FileMetaData,Path,List,Configuration)')": [
+                        177
+                    ]
+                }
+            }
+        }
+    },
+    "b86f68e39dc7b6a7c2bff1e4fea3bb7c28d103f0": {
+        "authored_data": "2015 Jul 31 23:57",
+        "commit.message": "PARQUET-346: Minor fixes for PARQUET-350, PARQUET-348, PARQUET-346, PARQUET-345\n\nPARQUET-346:\nThriftSchemaConverter throws for unknown struct or union type\nThis is triggered when passing a StructType that comes from old file metadata\n\nPARQUET-350:\nThriftRecordConverter throws NPE for unrecognized enum values\nThis is just some better error reporting.\n\nPARQUET-348:\nshouldIgnoreStatistics too noisy\nThis is just a case of way over logging something, to the point that it make the logs unreadable\n\nPARQUET-345\nThriftMetaData toString() should not try to load class reflectively\nThis is a case where the error reporting itself crashes, which results in the real error message getting lost\n\nAuthor: Alex Levenson <alexlevenson@twitter.com>\n\nCloses #252 from isnotinvain/alexlevenson/various-fixes and squashes the following commits:\n\n9b5cb0e [Alex Levenson] Add comments, cleanup some minor use of ThriftSchemaConverter\n376343e [Alex Levenson] Fix test\nd9d5dad [Alex Levenson] add license headers\ne26dc0c [Alex Levenson] Add tests\n8d9dde0 [Alex Levenson] Fixes for PARQUET-350, PARQUET-348, PARQUET-346, PARQUET-345\n",
+        "commit.author.name": "Alex Levenson",
+        "pcid": "454fc3655509f1f4f47ce44acaff7c1566ede108",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/CorruptStatistics.java": {
+                "old": {
+                    "('org.apache.parquet#CorruptStatistics', 'shouldIgnoreStatistics(String,PrimitiveTypeName)')": [
+                        55,
+                        68,
+                        75,
+                        77,
+                        86,
+                        91,
+                        96
+                    ],
+                    "('org.apache.parquet#CorruptStatistics', 'warnParseError(String,Throwable)')": [
+                        101,
+                        102
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        114
+                    ],
+                    "('org.apache.parquet#CorruptStatistics', None)": [
+                        36,
+                        37,
+                        108,
+                        109,
+                        110
+                    ],
+                    "('org.apache.parquet#CorruptStatistics', 'shouldIgnoreStatistics(String,PrimitiveTypeName)')": [
+                        59,
+                        72,
+                        79,
+                        81,
+                        90,
+                        95,
+                        100
+                    ],
+                    "('org.apache.parquet#CorruptStatistics', 'warnParseErrorOnce(String,Throwable)')": [
+                        105,
+                        106,
+                        107
+                    ],
+                    "('org.apache.parquet#CorruptStatistics', 'warnOnce(String)')": [
+                        111,
+                        112,
+                        113
+                    ]
+                }
+            },
+            "parquet-scrooge/src/test/java/org/apache/parquet/scrooge/ScroogeStructConverterTest.java": {
+                "old": {
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'shouldConvertConsistentlyWithThriftStructConverter(Class)')": [
+                        64
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'toParquetSchema(ThriftType)')": [
+                        71,
+                        72
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'shouldConvertConsistentlyWithThriftStructConverter(Class)')": [
+                        64
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'toParquetSchema(ThriftType)')": [
+                        71
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/hadoop/thrift/AbstractThriftWriteSupport.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop.thrift#AbstractThriftWriteSupport', 'init(Class)')": [
+                        87,
+                        88
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop.thrift#AbstractThriftWriteSupport', 'init(Class)')": [
+                        87
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/hadoop/thrift/TBaseWriteSupport.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop.thrift#TBaseWriteSupport', 'getThriftStruct')": [
+                        50,
+                        51
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop.thrift#TBaseWriteSupport', 'getThriftStruct')": [
+                        50
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/hadoop/thrift/ThriftBytesWriteSupport.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop.thrift#ThriftBytesWriteSupport', 'init(Configuration)')": [
+                        111,
+                        112,
+                        113
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop.thrift#ThriftBytesWriteSupport', 'init(Configuration)')": [
+                        111,
+                        112
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/ThriftMetaData.java": {
+                "old": {
+                    "('org.apache.parquet.thrift#ThriftMetaData', 'toString')": [
+                        131
+                    ],
+                    "(None, None)": [
+                        133
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.thrift#ThriftMetaData', 'toString')": [
+                        131
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/ThriftRecordConverter.java": {
+                "old": {
+                    "('org.apache.parquet.thrift#ThriftRecordConverter', None)": [
+                        65,
+                        78,
+                        157,
+                        206,
+                        249,
+                        312,
+                        403,
+                        432,
+                        435,
+                        436,
+                        448,
+                        464,
+                        526,
+                        564,
+                        601,
+                        638,
+                        699,
+                        797
+                    ],
+                    "('org.apache.parquet.thrift#ThriftRecordConverter', 'newConverter(List,Type,ThriftField)')": [
+                        866
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.parquet.thrift#ThriftRecordConverter', None)": [
+                        66,
+                        79,
+                        158,
+                        207,
+                        250,
+                        313,
+                        404,
+                        433,
+                        436,
+                        437,
+                        441,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        475,
+                        537,
+                        575,
+                        612,
+                        649,
+                        710,
+                        808
+                    ],
+                    "('org.apache.parquet.thrift#ThriftRecordConverter', 'newConverter(List,Type,ThriftField)')": [
+                        877
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/ThriftSchemaConvertVisitor.java": {
+                "old": {
+                    "('org.apache.parquet.thrift#ThriftSchemaConvertVisitor', None)": [
+                        79,
+                        80,
+                        83,
+                        84
+                    ],
+                    "('org.apache.parquet.thrift#ThriftSchemaConvertVisitor', 'convert(StructType,FieldProjectionFilter)')": [
+                        88
+                    ],
+                    "('org.apache.parquet.thrift#ThriftSchemaConvertVisitor', 'visit(MapType,State)')": [
+                        137,
+                        163
+                    ],
+                    "('org.apache.parquet.thrift#ThriftSchemaConvertVisitor', 'visitListLike(ThriftField,State,boolean)')": [
+                        184
+                    ],
+                    "('org.apache.parquet.thrift#ThriftSchemaConvertVisitor', 'visit(StructType,State)')": [
+                        213,
+                        226,
+                        235
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.thrift#ThriftSchemaConvertVisitor', None)": [
+                        79,
+                        80,
+                        81,
+                        84,
+                        85,
+                        86,
+                        87,
+                        90,
+                        91
+                    ],
+                    "('org.apache.parquet.thrift#ThriftSchemaConvertVisitor', 'convert(StructType,FieldProjectionFilter)')": [
+                        89
+                    ],
+                    "('org.apache.parquet.thrift#ThriftSchemaConvertVisitor', 'convert(StructType,FieldProjectionFilter,boolean)')": [
+                        92,
+                        95
+                    ],
+                    "('org.apache.parquet.thrift#ThriftSchemaConvertVisitor', 'visit(MapType,State)')": [
+                        144,
+                        170
+                    ],
+                    "('org.apache.parquet.thrift#ThriftSchemaConvertVisitor', 'visitListLike(ThriftField,State,boolean)')": [
+                        191
+                    ],
+                    "('org.apache.parquet.thrift#ThriftSchemaConvertVisitor', 'visit(StructType,State)')": [
+                        220,
+                        233,
+                        242
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/ThriftSchemaConverter.java": {
+                "old": {
+                    "('org.apache.parquet.thrift#ThriftSchemaConverter', 'convert(StructType)')": [
+                        60
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.thrift#ThriftSchemaConverter', None)": [
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74
+                    ],
+                    "('org.apache.parquet.thrift#ThriftSchemaConverter', 'convert(StructType)')": [
+                        66
+                    ],
+                    "('org.apache.parquet.thrift#ThriftSchemaConverter', 'convertWithoutProjection(StructType)')": [
+                        75,
+                        76
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/struct/CompatibilityRunner.java": {
+                "old": {
+                    "('org.apache.parquet.thrift.struct#CompatibilityRunner', 'generateJson(LinkedList)')": [
+                        98
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.thrift.struct#CompatibilityRunner', 'generateJson(LinkedList)')": [
+                        98
+                    ]
+                }
+            },
+            "parquet-thrift/src/test/java/org/apache/parquet/thrift/TestProtocolReadToWrite.java": {
+                "old": {
+                    "('org.apache.parquet.thrift#TestProtocolReadToWrite', 'writeReadCompare(TBase)')": [
+                        95
+                    ],
+                    "('org.apache.parquet.thrift#TestProtocolReadToWrite', 'testIncompatibleSchemaRecord')": [
+                        113
+                    ],
+                    "('org.apache.parquet.thrift#TestProtocolReadToWrite', 'testUnrecognizedUnionMemberSchema')": [
+                        137
+                    ],
+                    "('org.apache.parquet.thrift#TestProtocolReadToWrite', 'testUnionWithExtraOrNoValues')": [
+                        167
+                    ],
+                    "('org.apache.parquet.thrift#TestProtocolReadToWrite', 'testEnumMissingSchema')": [
+                        232
+                    ],
+                    "('org.apache.parquet.thrift#TestProtocolReadToWrite', 'testMissingFieldHandling')": [
+                        271
+                    ],
+                    "('org.apache.parquet.thrift#TestProtocolReadToWrite', 'TestExtraFieldWhenFieldIndexIsNotStartFromZero')": [
+                        309
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.thrift#TestProtocolReadToWrite', 'writeReadCompare(TBase)')": [
+                        95
+                    ],
+                    "('org.apache.parquet.thrift#TestProtocolReadToWrite', 'testIncompatibleSchemaRecord')": [
+                        113
+                    ],
+                    "('org.apache.parquet.thrift#TestProtocolReadToWrite', 'testUnrecognizedUnionMemberSchema')": [
+                        137
+                    ],
+                    "('org.apache.parquet.thrift#TestProtocolReadToWrite', 'testUnionWithExtraOrNoValues')": [
+                        167
+                    ],
+                    "('org.apache.parquet.thrift#TestProtocolReadToWrite', 'testEnumMissingSchema')": [
+                        232
+                    ],
+                    "('org.apache.parquet.thrift#TestProtocolReadToWrite', 'testMissingFieldHandling')": [
+                        271
+                    ],
+                    "('org.apache.parquet.thrift#TestProtocolReadToWrite', 'TestExtraFieldWhenFieldIndexIsNotStartFromZero')": [
+                        309
+                    ]
+                }
+            },
+            "parquet-thrift/src/test/java/org/apache/parquet/thrift/TestThriftToPigCompatibility.java": {
+                "old": {
+                    "('org.apache.parquet.thrift#TestThriftToPigCompatibility', 'validateSameTupleAsEB(T)')": [
+                        157
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.thrift#TestThriftToPigCompatibility', 'validateSameTupleAsEB(T)')": [
+                        157
+                    ]
+                }
+            },
+            "parquet-thrift/src/test/java/org/apache/parquet/thrift/struct/CompatibilityCheckerTest.java": {
+                "old": {
+                    "('org.apache.parquet.thrift.struct#CompatibilityCheckerTest', 'struct(Class)')": [
+                        119
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.thrift.struct#CompatibilityCheckerTest', 'struct(Class)')": [
+                        119
+                    ]
+                }
+            }
+        }
+    }
+}

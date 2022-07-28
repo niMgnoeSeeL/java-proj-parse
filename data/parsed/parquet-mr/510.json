@@ -1,0 +1,2042 @@
+{
+    "bd0b5af025fab9cad8f94260138741c252f45fc8": {
+        "authored_data": "2016 Jun 30 16:54",
+        "commit.message": "PARQUET-612: Add compression codec to FileEncodingsIT.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #343 from rdblue/PARQUET-612-test-compression and squashes the following commits:\n\na5b7dbb [Ryan Blue] PARQUET-612: Add compression codec to FileEncodingsIT.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "7f8e952abc4d2fc4b96c97a51aa25fcf6ed8af02",
+        "changes": {
+            "parquet-hadoop/src/test/java/org/apache/parquet/encodings/FileEncodingsIT.java": {
+                "old": {
+                    "('org.apache.parquet.encodings#FileEncodingsIT', 'getParameters')": [
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92
+                    ],
+                    "('org.apache.parquet.encodings#FileEncodingsIT', None)": [
+                        93,
+                        94,
+                        95,
+                        96,
+                        306,
+                        350
+                    ],
+                    "('org.apache.parquet.encodings#FileEncodingsIT', 'testFileEncodingsWithoutDictionary')": [
+                        121,
+                        122
+                    ],
+                    "('org.apache.parquet.encodings#FileEncodingsIT', 'testFileEncodingsWithDictionary')": [
+                        139,
+                        140
+                    ],
+                    "('org.apache.parquet.encodings#FileEncodingsIT', 'writeValuesToFile(Path,PrimitiveTypeName,List,int,int,boolean,WriterVersion)')": [
+                        172,
+                        173
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        28,
+                        29,
+                        38,
+                        42
+                    ],
+                    "('org.apache.parquet.encodings#FileEncodingsIT', None)": [
+                        86,
+                        117,
+                        118,
+                        119,
+                        121,
+                        337,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        424
+                    ],
+                    "('org.apache.parquet.encodings#FileEncodingsIT', 'getParameters')": [
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116
+                    ],
+                    "('org.apache.parquet.encodings#FileEncodingsIT', 'testFileEncodingsWithoutDictionary')": [
+                        145,
+                        146
+                    ],
+                    "('org.apache.parquet.encodings#FileEncodingsIT', 'testFileEncodingsWithDictionary')": [
+                        163,
+                        164
+                    ],
+                    "('org.apache.parquet.encodings#FileEncodingsIT', 'writeValuesToFile(Path,PrimitiveTypeName,List,int,int,boolean,WriterVersion)')": [
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204
+                    ]
+                }
+            }
+        }
+    },
+    "7f8e952abc4d2fc4b96c97a51aa25fcf6ed8af02": {
+        "authored_data": "2016 Jun 30 16:50",
+        "commit.message": "PARQUET-642: Improve performance of ByteBuffer based read / write paths\n\nWhile trying out the newest Parquet version, we noticed that the changes to start using ByteBuffers: https://github.com/apache/parquet-mr/commit/6b605a4ea05b66e1a6bf843353abcb4834a4ced8 and https://github.com/apache/parquet-mr/commit/6b24a1d1b5e2792a7821ad172a45e38d2b04f9b8 (mostly avro but a couple of ByteBuffer changes) caused our jobs to slow down a bit.\n\nRead overhead: 4-6% (in MB_Millis)\nWrite overhead: 6-10% (MB_Millis).\n\nSeems like this seems to be due to the encoding / decoding of Strings in the [Binary class](https://github.com/apache/parquet-mr/blob/master/parquet-column/src/main/java/org/apache/parquet/io/api/Binary.java):\n[toStringUsingUTF8()](https://github.com/apache/parquet-mr/blob/master/parquet-column/src/main/java/org/apache/parquet/io/api/Binary.java#L388) - for reads\n[encodeUTF8()](https://github.com/apache/parquet-mr/blob/master/parquet-column/src/main/java/org/apache/parquet/io/api/Binary.java#L236) - for writes\n\nWith these changes we see around 5% improvement in MB_Millis while running the job on our Hadoop cluster.\n\nAdded some microbenchmark details to the jira.\n\nNote that I've left the behavior the same for the avro write path - it still uses CharSequence and the Charset based encoders.\n\nAuthor: Piyush Narang <pnarang@twitter.com>\n\nCloses #347 from piyushnarang/bytebuffer-encoding-fix-pr and squashes the following commits:\n\n43c5bdd [Piyush Narang] Keep avro on char sequence\n2d50c8c [Piyush Narang] Update Binary approach\n9e58237 [Piyush Narang] Proof of concept fixes\n",
+        "commit.author.name": "Piyush Narang",
+        "pcid": "9c40a7bb3c9aca51d17490960c988dfb7b5acebb",
+        "changes": {
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroWriteSupport.java": {
+                "old": {
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'fromAvroString(Object)')": [
+                        367
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'fromAvroString(Object)')": [
+                        367
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/io/api/Binary.java": {
+                "old": {
+                    "('org.apache.parquet.io.api#Binary', None)": [
+                        217,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        560,
+                        561
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromString(String)')": [
+                        558,
+                        559
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromString(CharSequence)')": [
+                        562
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('org.apache.parquet.io.api#Binary', None)": [
+                        218,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        591,
+                        592
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromCharSequence(CharSequence)')": [
+                        593,
+                        594
+                    ]
+                }
+            }
+        }
+    },
+    "9c40a7bb3c9aca51d17490960c988dfb7b5acebb": {
+        "authored_data": "2016 Jun 30 16:47",
+        "commit.message": "PARQUET-645: Fix null handling in DictionaryFilter.\n\nThis fixes how null is handled by `DictionaryFilter` for equals predicates. Null is never in the dictionary and is encoded by the definition level, so the `DictionaryFilter` would never find the value in the dictionary and would incorrectly filter row groups whenever the filter was `col == null`.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #348 from rdblue/PARQUET-645-fix-null-dictionary-filter and squashes the following commits:\n\nae8dd41 [Ryan Blue] PARQUET-645: Fix null handling in DictionaryFilter.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "1f470253c46471033048383c027192e757480492",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/filter2/dictionarylevel/DictionaryFilter.java": {
+                "new": {
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'visit(Eq)')": [
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'visit(NotEq)')": [
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/filter2/dictionarylevel/DictionaryFilterTest.java": {
+                "new": {
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilterTest', 'testEqBinary')": [
+                        196,
+                        197,
+                        198
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilterTest', 'testNotEqBinary')": [
+                        217,
+                        218,
+                        219
+                    ]
+                }
+            }
+        }
+    },
+    "1f470253c46471033048383c027192e757480492": {
+        "authored_data": "2016 Jun 30 16:41",
+        "commit.message": "PARQUET-544: Add closed flag to allow for closeable contract adherence\n\nThe closeable interface states:\n> Closes this stream and releases any system resources associated with it. If the stream is already closed then invoking this method has no effect.\n\nAs InternalParquetRecordWriter implements this interface we should adhere to this contract.\n\nAuthor: Mark Reddy <mark.l.reddy@gmail.com>\n\nCloses #345 from markreddy/PARQUET-544-adhere-to-closeable-contract and squashes the following commits:\n\n135db9b [Mark Reddy] PARQUET-544: add closed flag to allow for adherence to closeable contract\n",
+        "commit.author.name": "Mark Reddy",
+        "pcid": "da69d4b764f4d13d38a4f7fe7462ef0c7d17c619",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordWriter.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', 'close')": [
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        113,
+                        114
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', None)": [
+                        59,
+                        60
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', 'close')": [
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118
+                    ]
+                }
+            }
+        }
+    },
+    "da69d4b764f4d13d38a4f7fe7462ef0c7d17c619": {
+        "authored_data": "2016 May 05 20:56",
+        "commit.message": "PARQUET-367: \"parquet-cat -j\" doesn't show all records.\n\nAdded JsonRecordFormatter which formats SimpleRecords into an structure that can be used with ObjectMapper to create a valid json structure. Unit test included.\n\nAuthor: Reuben Kuhnert <reuben.kuhnert@cloudera.com>\n\nCloses #281 from sircodesalotOfTheRound/fix-parquet-cat and squashes the following commits:\n\n67207ef [Reuben Kuhnert] PARQUET-367: \"parquet-cat -j\" doesn't show all records.\n",
+        "commit.author.name": "Reuben Kuhnert",
+        "pcid": "c3f3830f771f26a537d2930b00b270451bbc5627",
+        "changes": {
+            "parquet-tools/src/main/java/org/apache/parquet/tools/command/CatCommand.java": {
+                "old": {
+                    "('org.apache.parquet.tools.command#CatCommand', 'execute(CommandLine)')": [
+                        76
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        30,
+                        32,
+                        36
+                    ],
+                    "('org.apache.parquet.tools.command#CatCommand', 'execute(CommandLine)')": [
+                        78,
+                        79,
+                        80,
+                        83
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/org/apache/parquet/tools/read/SimpleRecord.java": {
+                "new": {
+                    "('org.apache.parquet.tools.read#SimpleRecord', 'toJsonObject')": [
+                        114
+                    ]
+                }
+            }
+        }
+    },
+    "c3f3830f771f26a537d2930b00b270451bbc5627": {
+        "authored_data": "2016 May 05 20:54",
+        "commit.message": "PARQUET-372: Do not write stats larger than 4k.\n\nThis updates the stats conversion to check whether the min and max\nvalues for page stats are larger than 4k. If so, no statistics for a\npage are written.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #275 from rdblue/PARQUET-372-fix-min-max-for-long-values and squashes the following commits:\n\n61e05d9 [Ryan Blue] PARQUET-372: Add comment to explain not truncating values.\nfbbc1c4 [Ryan Blue] PARQUET-372: Do not write stats larger than 4k.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "39a3cd0f4210dbec1ae8ef39a87d34b76eac91a3",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/column/statistics/BinaryStatistics.java": {
+                "new": {
+                    "('org.apache.parquet.column.statistics#BinaryStatistics', 'isSmallerThan(long)')": [
+                        71,
+                        72
+                    ],
+                    "('org.apache.parquet.column.statistics#BinaryStatistics', None)": [
+                        73,
+                        74,
+                        75,
+                        85,
+                        86,
+                        87,
+                        88,
+                        94,
+                        95,
+                        96,
+                        97,
+                        114,
+                        115,
+                        116,
+                        117,
+                        122,
+                        123,
+                        124,
+                        125,
+                        130,
+                        131,
+                        132,
+                        133
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/statistics/BooleanStatistics.java": {
+                "new": {
+                    "('org.apache.parquet.column.statistics#BooleanStatistics', 'isSmallerThan(long)')": [
+                        65,
+                        66
+                    ],
+                    "('org.apache.parquet.column.statistics#BooleanStatistics', None)": [
+                        67,
+                        68,
+                        69
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/statistics/DoubleStatistics.java": {
+                "new": {
+                    "('org.apache.parquet.column.statistics#DoubleStatistics', 'isSmallerThan(long)')": [
+                        65,
+                        66
+                    ],
+                    "('org.apache.parquet.column.statistics#DoubleStatistics', None)": [
+                        67,
+                        68,
+                        69
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/statistics/FloatStatistics.java": {
+                "new": {
+                    "('org.apache.parquet.column.statistics#FloatStatistics', 'isSmallerThan(long)')": [
+                        65,
+                        66
+                    ],
+                    "('org.apache.parquet.column.statistics#FloatStatistics', None)": [
+                        67,
+                        68,
+                        69
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/statistics/IntStatistics.java": {
+                "new": {
+                    "('org.apache.parquet.column.statistics#IntStatistics', 'isSmallerThan(long)')": [
+                        65,
+                        66
+                    ],
+                    "('org.apache.parquet.column.statistics#IntStatistics', None)": [
+                        67,
+                        68,
+                        69
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/statistics/LongStatistics.java": {
+                "new": {
+                    "('org.apache.parquet.column.statistics#LongStatistics', 'isSmallerThan(long)')": [
+                        65,
+                        66
+                    ],
+                    "('org.apache.parquet.column.statistics#LongStatistics', None)": [
+                        67,
+                        68,
+                        69
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/statistics/Statistics.java": {
+                "new": {
+                    "('org.apache.parquet.column.statistics#Statistics', None)": [
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        200,
+                        201
+                    ],
+                    "('org.apache.parquet.column.statistics#Statistics', 'isSmallerThan(long)')": [
+                        199
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/format/converter/ParquetMetadataConverter.java": {
+                "old": {
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toParquetStatistics(org)')": [
+                        287
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', None)": [
+                        80,
+                        301
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toParquetStatistics(org)')": [
+                        288,
+                        289,
+                        290,
+                        291,
+                        292
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/format/converter/TestParquetMetadataConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        360
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        48,
+                        49,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        62,
+                        517
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', None)": [
+                        369,
+                        370,
+                        371,
+                        408,
+                        409,
+                        410,
+                        429,
+                        430,
+                        431,
+                        450,
+                        451,
+                        452,
+                        473,
+                        474,
+                        475,
+                        496,
+                        497,
+                        498
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testBinaryStats')": [
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testIntegerStats')": [
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testLongStats')": [
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testFloatStats')": [
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testDoubleStats')": [
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testBooleanStats')": [
+                        499,
+                        500,
+                        501,
+                        502,
+                        503,
+                        504,
+                        505,
+                        506,
+                        507,
+                        508,
+                        509,
+                        510,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/statistics/TestStatistics.java": {
+                "new": {
+                    "('org.apache.parquet.statistics#TestStatistics', None)": [
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293
+                    ]
+                }
+            }
+        }
+    },
+    "39a3cd0f4210dbec1ae8ef39a87d34b76eac91a3": {
+        "authored_data": "2016 Apr 25 22:05",
+        "commit.message": "PARQUET-560: Synchronize writes to the finishCalled variable\n\nReads of the `finishCalled` variable are properly synchronized, but writes are not -- so there's some sort of inconsistent synch. going on here. This PR fixes that.\n\n/cc @rdblue can you please take a look?\n\nAuthor: Nezih Yigitbasi <nyigitbasi@netflix.com>\n\nCloses #334 from nezihyigitbasi/sc-synch-fix and squashes the following commits:\n\na85cf0c [Nezih Yigitbasi] Synchronize writes to the finishCalled variable\n",
+        "commit.author.name": "Nezih Yigitbasi",
+        "pcid": "2f22533ef41533e2b839a6b41b262dca59e6dbf9",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/codec/SnappyCompressor.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop.codec#SnappyCompressor', 'finish')": [
+                        116
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop.codec#SnappyCompressor', 'finish')": [
+                        116
+                    ]
+                }
+            }
+        }
+    },
+    "2f22533ef41533e2b839a6b41b262dca59e6dbf9": {
+        "authored_data": "2016 Apr 23 00:42",
+        "commit.message": "PARQUET-569: Separate metadata filtering for ranges and offsets.\n\nRange filtering should use the row group midpoint and offset filtering\nshould use the start offset.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #337 from rdblue/PARQUET-569-fix-metadata-filter and squashes the following commits:\n\n6171af4 [Ryan Blue] PARQUET-569: Add tests for new offset metadata filter.\n3fe2d5e [Ryan Blue] PARQUET-569: Separate metadata filtering for ranges and offsets.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "3dd2210e79a8eb84378c370b32652f9a53f87a93",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/format/converter/ParquetMetadataConverter.java": {
+                "old": {
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'offsets(long)')": [
+                        504
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', None)": [
+                        530,
+                        531,
+                        532,
+                        533,
+                        539,
+                        554,
+                        565,
+                        568
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'filterFileMetaData(FileMetaData,OffsetMetadataFilter)')": [
+                        588
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream,MetadataFilter)')": [
+                        634
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', None)": [
+                        481,
+                        536,
+                        561,
+                        564,
+                        614,
+                        615
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'offsets(long)')": [
+                        505
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'filterFileMetaDataByMidpoint(FileMetaData,RangeMetadataFilter)')": [
+                        584
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'filterFileMetaDataByStart(FileMetaData,OffsetMetadataFilter)')": [
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612,
+                        613
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream,MetadataFilter)')": [
+                        643,
+                        644,
+                        645,
+                        646,
+                        647,
+                        648
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/format/converter/TestParquetMetadataConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'filter(FileMetaData,long,long)')": [
+                        173
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        31,
+                        47
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'filter(FileMetaData,long,long)')": [
+                        175,
+                        176
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', None)": [
+                        177,
+                        178,
+                        183,
+                        184,
+                        270,
+                        271,
+                        272
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'find(FileMetaData,Long)')": [
+                        179,
+                        180,
+                        181,
+                        182
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'find(FileMetaData,long)')": [
+                        185,
+                        186,
+                        187,
+                        188
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testFindRowGroups')": [
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269
+                    ]
+                }
+            }
+        }
+    },
+    "3dd2210e79a8eb84378c370b32652f9a53f87a93": {
+        "authored_data": "2016 Apr 23 00:39",
+        "commit.message": "PARQUET-548: Add EncodingStats.\n\nThis adds `EncodingStats`, which tracks the number of pages for each encoding, separated into dictionary and data pages. It also adds convenience functions that are useful for dictionary filtering, like `hasDictionaryEncodedPages` and `hasNonDictionaryEncodedPages`.\n\n`EncodingStats` have a unit test in parquet-column and an integration test in parquet-hadoop that writes a file and verifies the stats are present and correct when it is read.\n\nThis includes commits from #330 because it updates the dictionary filter. I'll rebase and remove them once it is merged.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #332 from rdblue/PARQUET-548-add-encoding-stats and squashes the following commits:\n\n5f148e6 [Ryan Blue] PARQUET-548: Fixes for review comments.\ndc332d3 [Ryan Blue] PARQUET-548: Add EncodingStats.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "8bcfe6c55e2588c1047368b4edbf733d1c1d5381",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/filter2/dictionarylevel/DictionaryFilter.java": {
+                "new": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'hasNonDictionaryPages(ColumnChunkMetaData)')": [
+                        333,
+                        334,
+                        335,
+                        336,
+                        337
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/format/converter/ParquetMetadataConverter.java": {
+                "new": {
+                    "(None, None)": [
+                        41,
+                        62
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'addRowGroup(ParquetMetadata,List,BlockMetaData)')": [
+                        188,
+                        189,
+                        190
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', None)": [
+                        238,
+                        239,
+                        262,
+                        263
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'convertEncodingStats(List)')": [
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'convertEncodingStats(EncodingStats)')": [
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetMetadata(FileMetaData)')": [
+                        665
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ColumnChunkPageWriteStore.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ColumnChunkPageWriteStore', None)": [
+                        66,
+                        119,
+                        120,
+                        121,
+                        164,
+                        185,
+                        186,
+                        187,
+                        193,
+                        199
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('org.apache.parquet.hadoop#ColumnChunkPageWriteStore', None)": [
+                        67,
+                        68,
+                        69,
+                        70,
+                        123,
+                        124,
+                        125,
+                        168,
+                        189,
+                        190,
+                        191,
+                        192,
+                        198,
+                        204,
+                        205,
+                        206
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/DictionaryPageReader.java": {
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.parquet.hadoop#DictionaryPageReader', 'hasDictionaryPage(ColumnChunkMetaData)')": [
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileWriter.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPages(BytesInput,long,long,Statistics,List)')": [
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        434
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        52
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', None)": [
+                        122,
+                        244,
+                        245,
+                        266
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'startColumn(ColumnDescriptor,long,CompressionCodecName)')": [
+                        306
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDictionaryPage(DictionaryPage)')": [
+                        341
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Encoding,Encoding,Encoding)')": [
+                        378
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Statistics,Encoding,Encoding,Encoding)')": [
+                        418
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPages(BytesInput,long,long,Statistics,Set,Set,List)')": [
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'endColumn')": [
+                        466
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'appendRowGroup(FSDataInputStream,BlockMetaData,boolean)')": [
+                        564
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/metadata/ColumnChunkMetaData.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop.metadata#ColumnChunkMetaData', 'get(ColumnPath,PrimitiveTypeName,CompressionCodecName,Set,long,long,long,long,long)')": [
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67
+                    ],
+                    "('org.apache.parquet.hadoop.metadata#ColumnChunkMetaData', None)": [
+                        68,
+                        69,
+                        70,
+                        71
+                    ],
+                    "('org.apache.parquet.hadoop.metadata#ColumnChunkMetaData', 'get(ColumnPath,PrimitiveTypeName,CompressionCodecName,Set,Statistics,long,long,long,long,long)')": [
+                        90,
+                        99
+                    ],
+                    "('org.apache.parquet.hadoop.metadata#IntColumnChunkMetaData', None)": [
+                        234
+                    ],
+                    "('org.apache.parquet.hadoop.metadata#LongColumnChunkMetaData', None)": [
+                        338
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.parquet.hadoop.metadata#ColumnChunkMetaData', 'get(ColumnPath,PrimitiveTypeName,CompressionCodecName,Set,long,long,long,long,long)')": [
+                        46,
+                        47,
+                        48
+                    ],
+                    "('org.apache.parquet.hadoop.metadata#ColumnChunkMetaData', None)": [
+                        49,
+                        50,
+                        51,
+                        66,
+                        67,
+                        131,
+                        132,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        203
+                    ],
+                    "('org.apache.parquet.hadoop.metadata#ColumnChunkMetaData', 'get(ColumnPath,PrimitiveTypeName,CompressionCodecName,Set,Statistics,long,long,long,long,long)')": [
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65
+                    ],
+                    "('org.apache.parquet.hadoop.metadata#ColumnChunkMetaData', 'get(ColumnPath,PrimitiveTypeName,CompressionCodecName,EncodingStats,Set,Statistics,long,long,long,long,long)')": [
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        87,
+                        88,
+                        97,
+                        98
+                    ],
+                    "('org.apache.parquet.hadoop.metadata#ColumnChunkMetaData', 'getEncodingStats')": [
+                        201,
+                        202
+                    ],
+                    "('org.apache.parquet.hadoop.metadata#IntColumnChunkMetaData', None)": [
+                        236,
+                        244
+                    ],
+                    "('org.apache.parquet.hadoop.metadata#LongColumnChunkMetaData', None)": [
+                        341,
+                        349
+                    ]
+                }
+            }
+        }
+    },
+    "8bcfe6c55e2588c1047368b4edbf733d1c1d5381": {
+        "authored_data": "2015 Mar 25 02:33",
+        "commit.message": "PARQUET-225: Add support for INT64 delta encoding.\n\nAuthor: Vassil Lunchev <vassil@leanplum.com>\n\nCloses #154 from lunchev:int64 and squashes the following commits:\n\n84a40fe [Vassil Lunchev] INT64 support for Delta Encoding\n4389af4 [Vassil Lunchev] splitting delta INT32 and delta INT64\ne5e8fe2 [Vassil Lunchev] split delta encoding tests for INT32 and for INT64\neb4383a [Ryan Blue] PARQUET-225: Avoid multiple small copies in delta int/long encoding.\n",
+        "commit.author.name": "Vassil Lunchev",
+        "pcid": "741944332d5bd90112b610a8b5f2eeefe51e08bc",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/column/Encoding.java": {
+                "old": {
+                    "(None, None)": [
+                        166,
+                        167
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        167,
+                        168
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/ParquetProperties.java": {
+                "old": {
+                    "(None, None)": [
+                        35
+                    ],
+                    "('org.apache.parquet.column#ParquetProperties', 'writerToFallbackTo(ColumnDescriptor)')": [
+                        215,
+                        217
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35,
+                        36
+                    ],
+                    "('org.apache.parquet.column#ParquetProperties', 'writerToFallbackTo(ColumnDescriptor)')": [
+                        216,
+                        217,
+                        218
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/delta/DeltaBinaryPackingValuesReader.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesReader', None)": [
+                        43,
+                        48
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        77
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesReader', 'allocateValuesBuffer')": [
+                        97
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesReader', 'loadNewBlockToBuffer')": [
+                        120,
+                        130
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesReader', 'unpackMiniBlock(BytePacker)')": [
+                        147
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesReader', 'unpack8Values(BytePacker)')": [
+                        153
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        27
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesReader', None)": [
+                        45,
+                        50,
+                        112,
+                        113,
+                        114
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        79
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesReader', 'allocateValuesBuffer')": [
+                        99
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesReader', 'readInteger')": [
+                        110,
+                        111
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesReader', 'readLong')": [
+                        115
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesReader', 'loadNewBlockToBuffer')": [
+                        128,
+                        138
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesReader', 'unpackMiniBlock(BytePackerForLong)')": [
+                        155
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesReader', 'unpack8Values(BytePackerForLong)')": [
+                        161
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/delta/DeltaBinaryPackingValuesWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesWriter', None)": [
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        64,
+                        69,
+                        74,
+                        76,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        95,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        122,
+                        123,
+                        132,
+                        153,
+                        154,
+                        155,
+                        187,
+                        188,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        223,
+                        224,
+                        225,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesWriter', 'writeInteger(int)')": [
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesWriter', 'flushBlockBuffer')": [
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesWriter', 'writeBitWidthForMiniBlock(int)')": [
+                        189
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesWriter', 'writeMinDelta')": [
+                        197,
+                        198,
+                        199,
+                        200,
+                        201
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesWriter', 'calculateBitWidthsForDeltaBlockBuffer(int)')": [
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesWriter', 'getMiniBlockCountToFlush(double)')": [
+                        226
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesWriter', 'getBytes')": [
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesWriter', 'reset')": [
+                        258
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesWriter', 'close')": [
+                        266
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesWriter', None)": [
+                        53,
+                        59,
+                        64,
+                        69,
+                        71,
+                        78,
+                        84,
+                        86
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesWriter', 'writeBitWidthForMiniBlock(int)')": [
+                        102
+                    ],
+                    "('org.apache.parquet.column.values.delta#DeltaBinaryPackingValuesWriter', 'getMiniBlockCountToFlush(double)')": [
+                        110
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/deltalengthbytearray/DeltaLengthByteArrayValuesWriter.java": {
+                "old": {
+                    "('org.apache.parquet.column.values.deltalengthbytearray#DeltaLengthByteArrayValuesWriter', None)": [
+                        55
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.parquet.column.values.deltalengthbytearray#DeltaLengthByteArrayValuesWriter', None)": [
+                        56
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/deltastrings/DeltaByteArrayWriter.java": {
+                "old": {
+                    "('org.apache.parquet.column.values.deltastrings#DeltaByteArrayWriter', None)": [
+                        46
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.parquet.column.values.deltastrings#DeltaByteArrayWriter', None)": [
+                        47,
+                        48
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/column/values/delta/benchmark/BenchmarkIntegerOutputSize.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        25
+                    ],
+                    "('org.apache.parquet.column.values.delta.benchmark#BenchmarkIntegerOutputSize', 'testRandomIntegers(IntFunc,int)')": [
+                        81,
+                        82
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        25,
+                        27
+                    ],
+                    "('org.apache.parquet.column.values.delta.benchmark#BenchmarkIntegerOutputSize', 'testRandomIntegers(IntFunc,int)')": [
+                        83,
+                        84,
+                        85,
+                        86
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/column/values/delta/benchmark/BenchmarkReadingRandomIntegers.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38
+                    ],
+                    "('org.apache.parquet.column.values.delta.benchmark#BenchmarkReadingRandomIntegers', 'prepare')": [
+                        59,
+                        60
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35
+                    ],
+                    "('org.apache.parquet.column.values.delta.benchmark#BenchmarkReadingRandomIntegers', 'prepare')": [
+                        60,
+                        61,
+                        62,
+                        63
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/column/values/delta/benchmark/RandomWritingBenchmarkTest.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32
+                    ],
+                    "('org.apache.parquet.column.values.delta.benchmark#RandomWritingBenchmarkTest', 'writeDeltaPackingTest')": [
+                        54
+                    ],
+                    "('org.apache.parquet.column.values.delta.benchmark#RandomWritingBenchmarkTest', 'writeDeltaPackingTest2')": [
+                        68
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31
+                    ],
+                    "('org.apache.parquet.column.values.delta.benchmark#RandomWritingBenchmarkTest', 'writeDeltaPackingTest')": [
+                        57,
+                        58
+                    ],
+                    "('org.apache.parquet.column.values.delta.benchmark#RandomWritingBenchmarkTest', 'writeDeltaPackingTest2')": [
+                        72,
+                        73
+                    ]
+                }
+            },
+            "parquet-common/src/main/java/org/apache/parquet/bytes/BytesUtils.java": {
+                "new": {
+                    "('org.apache.parquet.bytes#BytesUtils', None)": [
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        247,
+                        248,
+                        258,
+                        259,
+                        266,
+                        267,
+                        270,
+                        271,
+                        272
+                    ],
+                    "('org.apache.parquet.bytes#BytesUtils', 'readZigZagVarLong(InputStream)')": [
+                        243,
+                        244,
+                        245,
+                        246
+                    ],
+                    "('org.apache.parquet.bytes#BytesUtils', 'readUnsignedVarLong(InputStream)')": [
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257
+                    ],
+                    "('org.apache.parquet.bytes#BytesUtils', 'writeUnsignedVarLong(long,OutputStream)')": [
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265
+                    ],
+                    "('org.apache.parquet.bytes#BytesUtils', 'writeZigZagVarLong(long,OutputStream)')": [
+                        268,
+                        269
+                    ]
+                }
+            },
+            "parquet-encoding/src/main/java/org/apache/parquet/bytes/BytesInput.java": {
+                "old": {
+                    "('org.apache.parquet.bytes#BytesInput', None)": [
+                        323
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.bytes#BytesInput', None)": [
+                        128,
+                        129,
+                        130,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        142,
+                        143,
+                        144,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360
+                    ],
+                    "('org.apache.parquet.bytes#BytesInput', 'fromUnsignedVarLong(long)')": [
+                        131,
+                        132
+                    ],
+                    "('org.apache.parquet.bytes#BytesInput', 'fromZigZagVarLong(long)')": [
+                        139,
+                        140,
+                        141
+                    ]
+                }
+            },
+            "parquet-encoding/src/main/java/org/apache/parquet/column/values/bitpacking/Packer.java": {
+                "old": {
+                    "(None, None)": [
+                        84,
+                        86
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        42,
+                        43,
+                        44,
+                        45,
+                        61,
+                        62,
+                        63,
+                        64,
+                        73,
+                        74,
+                        75,
+                        76,
+                        95,
+                        96,
+                        99,
+                        100,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118
+                    ]
+                }
+            },
+            "parquet-encoding/src/test/java/org/apache/parquet/column/values/bitpacking/TestBitPacking.java": {
+                "new": {
+                    "('org.apache.parquet.column.values.bitpacking#TestBitPacking', 'toString(long)')": [
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestBitPacking', None)": [
+                        211,
+                        212
+                    ]
+                }
+            },
+            "parquet-encoding/src/test/java/org/apache/parquet/column/values/bitpacking/TestByteBitPacking.java": {
+                "old": {
+                    "(None, None)": [
+                        28
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', None)": [
+                        49,
+                        50,
+                        65,
+                        66,
+                        80,
+                        81,
+                        90,
+                        91,
+                        92,
+                        100,
+                        101
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'testPackUnPackLong')": [
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'packUnpack32(BytePackerForLong,long,long)')": [
+                        75,
+                        76,
+                        77,
+                        78,
+                        79
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'packUnpack8(BytePackerForLong,long,long)')": [
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'generateValues(int)')": [
+                        97,
+                        98,
+                        99
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'generateValuesLong(int)')": [
+                        102,
+                        103,
+                        104,
+                        105,
+                        106
+                    ]
+                }
+            },
+            "parquet-generator/src/main/java/org/apache/parquet/encoding/bitpacking/ByteBasedBitPackingGenerator.java": {
+                "old": {
+                    "(None, None)": [
+                        30,
+                        31
+                    ],
+                    "('org.apache.parquet.encoding.bitpacking#ByteBasedBitPackingGenerator', None)": [
+                        37,
+                        38,
+                        44,
+                        45,
+                        108
+                    ],
+                    "('org.apache.parquet.encoding.bitpacking#ByteBasedBitPackingGenerator', 'main(String)')": [
+                        42,
+                        43
+                    ],
+                    "('org.apache.parquet.encoding.bitpacking#ByteBasedBitPackingGenerator', 'generateScheme(String,boolean,String)')": [
+                        46,
+                        68,
+                        70,
+                        75,
+                        76,
+                        81,
+                        82
+                    ],
+                    "('org.apache.parquet.encoding.bitpacking#ByteBasedBitPackingGenerator', 'generateClass(FileWriter,int,boolean)')": [
+                        89,
+                        90,
+                        97,
+                        98,
+                        101,
+                        102,
+                        103,
+                        104
+                    ],
+                    "('org.apache.parquet.encoding.bitpacking#ByteBasedBitPackingGenerator', 'getShift(FileWriter,int,boolean,int,int)')": [
+                        109,
+                        136,
+                        144
+                    ],
+                    "('org.apache.parquet.encoding.bitpacking#ByteBasedBitPackingGenerator', 'generatePack(FileWriter,int,int,boolean)')": [
+                        180,
+                        181,
+                        182,
+                        194,
+                        197,
+                        198,
+                        199,
+                        200,
+                        202
+                    ],
+                    "('org.apache.parquet.encoding.bitpacking#ByteBasedBitPackingGenerator', 'generateUnpack(FileWriter,int,int,boolean,boolean)')": [
+                        209,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        219,
+                        232,
+                        235,
+                        236,
+                        237,
+                        238,
+                        247
+                    ],
+                    "('org.apache.parquet.encoding.bitpacking#ByteBasedBitPackingGenerator', 'genMask(int)')": [
+                        255,
+                        256
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.encoding.bitpacking#ByteBasedBitPackingGenerator', None)": [
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        55,
+                        56,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135
+                    ],
+                    "('org.apache.parquet.encoding.bitpacking#ByteBasedBitPackingGenerator', 'main(String)')": [
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54
+                    ],
+                    "('org.apache.parquet.encoding.bitpacking#ByteBasedBitPackingGenerator', 'generateScheme(boolean,boolean,String)')": [
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        85,
+                        87,
+                        92,
+                        93,
+                        98,
+                        99
+                    ],
+                    "('org.apache.parquet.encoding.bitpacking#ByteBasedBitPackingGenerator', 'generateClass(FileWriter,int,boolean,boolean)')": [
+                        106,
+                        107,
+                        108,
+                        115,
+                        116,
+                        119,
+                        120,
+                        121,
+                        122
+                    ],
+                    "('org.apache.parquet.encoding.bitpacking#ByteBasedBitPackingGenerator', 'getShift(FileWriter,int,boolean,boolean,int,int)')": [
+                        136,
+                        150,
+                        158,
+                        165,
+                        166,
+                        167,
+                        168,
+                        176
+                    ],
+                    "('org.apache.parquet.encoding.bitpacking#ByteBasedBitPackingGenerator', 'generatePack(FileWriter,int,int,boolean,boolean)')": [
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        228,
+                        231,
+                        232,
+                        233,
+                        234,
+                        236
+                    ],
+                    "('org.apache.parquet.encoding.bitpacking#ByteBasedBitPackingGenerator', 'generateUnpack(FileWriter,int,int,boolean,boolean,boolean)')": [
+                        243,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        252,
+                        265,
+                        266,
+                        269,
+                        270,
+                        271,
+                        272,
+                        274,
+                        282,
+                        283,
+                        284,
+                        285
+                    ],
+                    "('org.apache.parquet.encoding.bitpacking#ByteBasedBitPackingGenerator', 'genMask(int,boolean)')": [
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300
+                    ]
+                }
+            }
+        }
+    }
+}

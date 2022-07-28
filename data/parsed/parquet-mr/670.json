@@ -1,0 +1,1360 @@
+{
+    "2e3c05359a0e21be44d307104eea3134afcef5f0": {
+        "authored_data": "2015 Mar 13 20:36",
+        "commit.message": "PARQUET-197 : Gen parquet metadata from cascading\n\nretry of PARQUET-197\n\nfixed support for hadoop2 API\n\nAuthor: Tianshuo Deng <tdeng@twitter.com>\n\nCloses #141 from tsdeng/gen_parquet_meta and squashes the following commits:\n\nd1211a0 [Tianshuo Deng] fix hadoop2 API\n8686ce4 [Tianshuo Deng] gem parquet metadata\n",
+        "commit.author.name": "Tianshuo Deng",
+        "pcid": "9ee3a16179cb65f5fe4170257ab7cde558f1dbeb",
+        "changes": {
+            "parquet-cascading/src/main/java/parquet/cascading/ParquetTBaseScheme.java": {
+                "old": {
+                    "('parquet.cascading#ParquetTBaseScheme', 'sinkConfInit(FlowProcess,Tap,JobConf)')": [
+                        76
+                    ]
+                },
+                "new": {
+                    "('parquet.cascading#ParquetTBaseScheme', 'sinkConfInit(FlowProcess,Tap,JobConf)')": [
+                        76
+                    ]
+                }
+            },
+            "parquet-cascading/src/main/java/parquet/cascading/ParquetTupleScheme.java": {
+                "old": {
+                    "('parquet.cascading#ParquetTupleScheme', 'sinkConfInit(FlowProcess,Tap,JobConf)')": [
+                        174
+                    ]
+                },
+                "new": {
+                    "('parquet.cascading#ParquetTupleScheme', 'sinkConfInit(FlowProcess,Tap,JobConf)')": [
+                        174
+                    ]
+                }
+            },
+            "parquet-cascading/src/test/java/parquet/cascading/TestParquetTBaseScheme.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        9,
+                        11
+                    ],
+                    "('parquet.cascading#TestParquetTBaseScheme', 'testWrite')": [
+                        67,
+                        78
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        9,
+                        11,
+                        42,
+                        58,
+                        59
+                    ],
+                    "('parquet.cascading#TestParquetTBaseScheme', 'testWrite')": [
+                        70,
+                        71,
+                        82,
+                        83,
+                        86,
+                        87,
+                        88,
+                        89
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetOutputCommitter.java": {
+                "new": {
+                    "('parquet.hadoop#ParquetOutputCommitter', 'commitJob(JobContext)')": [
+                        48
+                    ],
+                    "('parquet.hadoop#ParquetOutputCommitter', None)": [
+                        49,
+                        50
+                    ],
+                    "('parquet.hadoop#ParquetOutputCommitter', 'writeMetaDataFile(Configuration,Path)')": [
+                        51
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/mapred/DeprecatedParquetOutputFormat.java": {
+                "new": {
+                    "('parquet.hadoop.mapred#DeprecatedParquetOutputFormat', None)": [
+                        56,
+                        57
+                    ],
+                    "('parquet.hadoop.mapred#DeprecatedParquetOutputFormat', 'setAsOutputFormat(JobConf)')": [
+                        58,
+                        59,
+                        60
+                    ]
+                }
+            },
+            "parquet-scrooge/src/main/java/parquet/scrooge/ParquetScroogeScheme.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        30
+                    ],
+                    "('parquet.scrooge#ParquetScroogeScheme', 'sinkConfInit(FlowProcess,Tap,JobConf)')": [
+                        59
+                    ]
+                },
+                "new": {
+                    "('parquet.scrooge#ParquetScroogeScheme', 'sinkConfInit(FlowProcess,Tap,JobConf)')": [
+                        56
+                    ]
+                }
+            }
+        }
+    },
+    "9ee3a16179cb65f5fe4170257ab7cde558f1dbeb": {
+        "authored_data": "2015 Mar 13 19:54",
+        "commit.message": "PARQUET-217 Use simpler heuristic in MemoryManager\n\nWe found that the heuristic of throwing when:\n```\nminMemoryAllocation > 0 && newSize/maxColCount < minMemoryAllocation\n```\nin MemoryManager is not really valid when you have many (3k +) columns, due to the division by the number of columns.\nThis check throws immediately when writing a single file with a 3GB heap and > 3K columns.\n\nThis PR introduces a simpler heuristic, which is a min scale, and we throw when the MemoryManager's scale gets too small. By default I chose 25%, but I'm happy to change that to something else.\n\nFor backwards compatibility I've left the original check in, but it's not executed by default anymore, to get this behavior the min chunk size will have to be set in the hadoop configuration. I'm also open to removing it entirely if we don't think we need it anymore.\n\nWhat do you think?\n@danielcweeks @rdblue @dongche @julienledem\n\nAuthor: Alex Levenson <alexlevenson@twitter.com>\n\nCloses #143 from isnotinvain/alexlevenson/mem-manager-heuristic and squashes the following commits:\n\nacda66f [Alex Levenson] Add units to exception\n10237c6 [Alex Levenson] Decouple DEFAULT_MIN_MEMORY_ALLOCATION from DEFAULT_PAGE_SIZE\n29c9881 [Alex Levenson] Use an absolute minimum on rowgroup size, only apply when scale < 1\n8877125 [Alex Levenson] Merge branch 'master' into alexlevenson/mem-manager-heuristic\ne5117a0 [Alex Levenson] Merge branch 'master' into alexlevenson/mem-manager-heuristic\n6ee5f46 [Alex Levenson] Use simpler heuristic in MemoryManager\n",
+        "commit.author.name": "Alex Levenson",
+        "pcid": "77826fda8751bd5c0acbca5d0c3887e9a6b10f65",
+        "changes": {
+            "parquet-hadoop/src/main/java/parquet/hadoop/MemoryManager.java": {
+                "old": {
+                    "('parquet.hadoop#MemoryManager', None)": [
+                        43
+                    ],
+                    "('parquet.hadoop#MemoryManager', 'updateAllocation')": [
+                        124,
+                        125,
+                        126,
+                        127
+                    ]
+                },
+                "new": {
+                    "('parquet.hadoop#MemoryManager', None)": [
+                        43
+                    ],
+                    "('parquet.hadoop#MemoryManager', 'updateAllocation')": [
+                        124,
+                        125,
+                        126,
+                        127
+                    ]
+                }
+            }
+        }
+    },
+    "77826fda8751bd5c0acbca5d0c3887e9a6b10f65": {
+        "authored_data": "2015 Mar 12 21:25",
+        "commit.message": "PARQUET-215 Discard records with unrecognized union members in the thrift write path\n\nFixes Parquet-215, adds a test case for it, and fixes some tests that were quietly not doing anything previously to actually exercise the code they were intended to exercise. (they were tests that catch exceptions and make assertions about them, but never enforced that the exception was actually thrown, and in one case, it never was).\n\nAuthor: Alex Levenson <alexlevenson@twitter.com>\n\nCloses #146 from isnotinvain/alexlevenson/unrecognized-union and squashes the following commits:\n\n7bec4a6 [Alex Levenson] Add license header\nb0d8e6c [Alex Levenson] Merge branch 'master' into alexlevenson/unrecognized-union\ne152bc8 [Alex Levenson] Update comment\n97232b7 [Alex Levenson] Address comments\nc542199 [Alex Levenson] Go back to using boolean for isUnion\n2e18dbd [Alex Levenson] Remove exclusion\n0a60c46 [Alex Levenson] Support isUnion being unknown\nb0dfdf9 [Alex Levenson] Fix tests\n68940d7 [Alex Levenson] Discard records with unrecognized union members in the thrift write path\n",
+        "commit.author.name": "Alex Levenson",
+        "pcid": "b58789c5badc4f9680ec5724568af05a84670e22",
+        "changes": {
+            "parquet-scrooge/src/main/java/parquet/scrooge/ScroogeStructConverter.java": {
+                "old": {
+                    "('parquet.scrooge#ScroogeStructConverter', 'convertCompanionClassToStruct(Class)')": [
+                        83
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('parquet.scrooge#ScroogeStructConverter', 'convertCompanionClassToStruct(Class)')": [
+                        84,
+                        85,
+                        86,
+                        87,
+                        88
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/parquet/thrift/BufferedProtocolReadToWrite.java": {
+                "old": {
+                    "('parquet.thrift#BufferedProtocolReadToWrite', 'readOneStruct(TProtocol,List,StructType)')": [
+                        361,
+                        362,
+                        363,
+                        364,
+                        365
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24
+                    ],
+                    "('parquet.thrift#BufferedProtocolReadToWrite', 'readOneStruct(TProtocol,List,StructType)')": [
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/parquet/thrift/ThriftSchemaConverter.java": {
+                "old": {
+                    "('parquet.thrift#ThriftSchemaConverter', None)": [
+                        96
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        35
+                    ],
+                    "('parquet.thrift#ThriftSchemaConverter', None)": [
+                        49,
+                        52,
+                        103
+                    ],
+                    "('parquet.thrift#ThriftSchemaConverter', 'structOrUnionType(Class)')": [
+                        50,
+                        51
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/parquet/thrift/struct/ThriftType.java": {
+                "old": {
+                    "('parquet.thrift.struct#ThriftType', None)": [
+                        178,
+                        179
+                    ]
+                },
+                "new": {
+                    "('parquet.thrift.struct#ThriftType', None)": [
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        201,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234
+                    ]
+                }
+            },
+            "parquet-thrift/src/test/java/parquet/thrift/TestProtocolReadToWrite.java": {
+                "old": {
+                    "('parquet.thrift#TestProtocolReadToWrite', 'testIncompatibleSchemaRecord')": [
+                        121
+                    ],
+                    "('parquet.thrift#TestProtocolReadToWrite', 'testEnumMissingSchema')": [
+                        148,
+                        151
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        44
+                    ],
+                    "('parquet.thrift#TestProtocolReadToWrite', 'testIncompatibleSchemaRecord')": [
+                        122,
+                        123
+                    ],
+                    "('parquet.thrift#TestProtocolReadToWrite', None)": [
+                        134,
+                        162,
+                        163
+                    ],
+                    "('parquet.thrift#TestProtocolReadToWrite', 'testUnrecognizedUnionMemberSchema')": [
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161
+                    ],
+                    "('parquet.thrift#TestProtocolReadToWrite', 'testEnumMissingSchema')": [
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        186,
+                        187,
+                        190
+                    ]
+                }
+            }
+        }
+    },
+    "b58789c5badc4f9680ec5724568af05a84670e22": {
+        "authored_data": "2015 Mar 11 22:21",
+        "commit.message": "PARQUET-180: Update use of TBinaryProtocol#setReadLength.\n\nThis is no longer supported in thrift 0.9.2 and was only used\ndefensively. The reason to remove it now is to avoid linker errors when\nthe wrong version of thrift is found in the classpath.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #118 from rdblue/PARQUET-180 and squashes the following commits:\n\n5100424 [Ryan Blue] PARQUET-180: Dynamic use of TBinaryProtocol#setReadLength.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "031a762d105bceda2049204ba54b8f8737f359b4",
+        "changes": {
+            "parquet-thrift/src/main/java/parquet/hadoop/thrift/ThriftBytesWriteSupport.java": {
+                "old": {
+                    "('parquet.hadoop.thrift#ThriftBytesWriteSupport', 'protocol(BytesWritable)')": [
+                        129
+                    ]
+                },
+                "new": {
+                    "('parquet.hadoop.thrift#ThriftBytesWriteSupport', None)": [
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131
+                    ],
+                    "('parquet.hadoop.thrift#ThriftBytesWriteSupport', 'protocol(BytesWritable)')": [
+                        139,
+                        142
+                    ]
+                }
+            }
+        }
+    },
+    "031a762d105bceda2049204ba54b8f8737f359b4": {
+        "authored_data": "2015 Mar 11 22:11",
+        "commit.message": "PARQUET-172: Add parquet-thrift binary tests.\n\nThese tests validate that there is no encoding problem with parquet-thrift or parquet-scrooge. See https://github.com/laurencer/parquet-mr-bug\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #145 from rdblue/PARQUET-172-add-thrift-binary-test and squashes the following commits:\n\n6856414 [Ryan Blue] PARQUET-172: Add parquet-thrift binary tests.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "5acc6a5502bffaa66be7e859849856de0ea27acb",
+        "changes": {
+            "parquet-scrooge/src/test/java/parquet/scrooge/ScroogeStructConverterTest.java": {
+                "new": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('parquet.scrooge#ScroogeStructConverterTest', None)": [
+                        47,
+                        49
+                    ],
+                    "('parquet.scrooge#ScroogeStructConverterTest', 'testBinary')": [
+                        50,
+                        51,
+                        52,
+                        53
+                    ]
+                }
+            }
+        }
+    },
+    "5acc6a5502bffaa66be7e859849856de0ea27acb": {
+        "authored_data": "2015 Mar 10 13:04",
+        "commit.message": "PARQUET-97: make ProtoParquetReader#builder static\n\nAuthor: Viktor Szathma\u0301ry <phraktle@gmail.com>\n\nCloses #63 from phraktle/fix_ppr_factory and squashes the following commits:\n\n8b67439 [Viktor Szathma\u0301ry] make ProtoParquetReader#builder static\n9c8fcd5 [Viktor Szathma\u0301ry] make ProtoParquetReader#builder static\n",
+        "commit.author.name": "Viktor Szathma\u0301ry",
+        "pcid": "a0c77b6a442e2c4a355a4b145898bed976f23bb4",
+        "changes": {
+            "parquet-protobuf/src/main/java/parquet/proto/ProtoParquetReader.java": {
+                "old": {
+                    "('parquet.proto#ProtoParquetReader', 'builder(Path)')": [
+                        36
+                    ]
+                },
+                "new": {
+                    "('parquet.proto#ProtoParquetReader', 'builder(Path)')": [
+                        36
+                    ]
+                }
+            }
+        }
+    },
+    "a0c77b6a442e2c4a355a4b145898bed976f23bb4": {
+        "authored_data": "2015 Mar 09 19:59",
+        "commit.message": "PARQUET-111: Update headers in parquet-tools, remove NOTICE.\n\nThis commit update the copyright headers in parquet-tools from ARRIS to the standard Apache license header. This needs ARRIS or @wesleypeck to \"provide written permission for the ASF to make such removal or relocation of the notices\". Please +1 this commit, or submit a PR with similar changes. Thanks!\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #114 from rdblue/PARQUET-111-parquet-tools-changes and squashes the following commits:\n\n87eb75f [Ryan Blue] PARQUET-111: Update headers in parquet-tools, remove NOTICE.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "cd89c8885d4c1004c615a3a9d60028635409a9d0",
+        "changes": {
+            "parquet-tools/src/main/java/parquet/tools/Main.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/command/ArgsOnlyCommand.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/command/CatCommand.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/command/Command.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/command/DumpCommand.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/command/HeadCommand.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/command/Registry.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/command/ShowMetaCommand.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/command/ShowSchemaCommand.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/read/SimpleReadSupport.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/read/SimpleRecord.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/read/SimpleRecordConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/read/SimpleRecordMaterializer.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/util/MetadataUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/util/PrettyPrintWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                    ]
+                }
+            }
+        }
+    },
+    "3fc28541f001ce6e4a7afa91fec8d21bfeaa17db": {
+        "authored_data": "2015 Mar 07 01:06",
+        "commit.message": "PARQUET-193: Implement nested types compatibility rules in Avro\n\nThis depends on PARQUET-191 and PARQUET-192.\n\nThis replaces #83.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #128 from rdblue/PARQUET-193-implement-compatilibity-avro and squashes the following commits:\n\nbd0491e [Ryan Blue] PARQUET-193: Implement nested types rules in Avro.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "12ee6b442bbf6557c06ecd7c1f7ae2fceeae55d6",
+        "changes": {
+            "parquet-avro/src/main/java/parquet/avro/AvroIndexedRecordConverter.java": {
+                "old": {
+                    "('parquet.avro#AvroIndexedRecordConverter', 'newConverter(Schema,Type,GenericData,ParentValueContainer)')": [
+                        144,
+                        146
+                    ],
+                    "('parquet.avro#AvroIndexedRecordConverter', None)": [
+                        446,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        528,
+                        529,
+                        530,
+                        531,
+                        556,
+                        565,
+                        566
+                    ]
+                },
+                "new": {
+                    "('parquet.avro#AvroIndexedRecordConverter', 'newConverter(Schema,Type,GenericData,ParentValueContainer)')": [
+                        144,
+                        146
+                    ],
+                    "('parquet.avro#AvroIndexedRecordConverter', None)": [
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        461,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        497,
+                        498,
+                        499,
+                        500,
+                        501,
+                        502,
+                        503,
+                        504,
+                        505,
+                        506,
+                        507,
+                        508,
+                        509,
+                        510,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516,
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569,
+                        570,
+                        571,
+                        572,
+                        627,
+                        628,
+                        629,
+                        630,
+                        631,
+                        632,
+                        657,
+                        666,
+                        667
+                    ]
+                }
+            },
+            "parquet-avro/src/main/java/parquet/avro/AvroReadSupport.java": {
+                "old": {
+                    "('parquet.avro#AvroReadSupport', None)": [
+                        41
+                    ],
+                    "('parquet.avro#AvroReadSupport', 'init(Configuration,Map,MessageType)')": [
+                        66,
+                        67,
+                        73,
+                        82
+                    ],
+                    "('parquet.avro#AvroReadSupport', 'prepareForRead(Configuration,Map,MessageType,ReadContext)')": [
+                        86,
+                        98
+                    ]
+                },
+                "new": {
+                    "('parquet.avro#AvroReadSupport', None)": [
+                        41
+                    ],
+                    "('parquet.avro#AvroReadSupport', 'init(Configuration,Map,MessageType)')": [
+                        66,
+                        67,
+                        68,
+                        69,
+                        75,
+                        84
+                    ],
+                    "('parquet.avro#AvroReadSupport', 'prepareForRead(Configuration,Map,MessageType,ReadContext)')": [
+                        88,
+                        89,
+                        90,
+                        102
+                    ]
+                }
+            },
+            "parquet-avro/src/main/java/parquet/avro/AvroSchemaConverter.java": {
+                "old": {
+                    "('parquet.avro#AvroSchemaConverter', None)": [
+                        70
+                    ],
+                    "('parquet.avro#AvroSchemaConverter', 'convertField(Type)')": [
+                        257,
+                        258,
+                        261,
+                        287
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('parquet.avro#AvroSchemaConverter', None)": [
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        86,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        346
+                    ],
+                    "('parquet.avro#AvroSchemaConverter', 'convertField(Type)')": [
+                        273,
+                        274,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288
+                    ],
+                    "('parquet.avro#AvroSchemaConverter', 'isElementType(Type,String)')": [
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345
+                    ]
+                }
+            },
+            "parquet-avro/src/main/java/parquet/avro/AvroWriteSupport.java": {
+                "old": {
+                    "('parquet.avro#AvroWriteSupport', None)": [
+                        45,
+                        119
+                    ],
+                    "('parquet.avro#AvroWriteSupport', 'writeArray(GroupType,Schema,Iterable)')": [
+                        121,
+                        123
+                    ],
+                    "('parquet.avro#AvroWriteSupport', 'writeMap(GroupType,Schema,Map)')": [
+                        144
+                    ],
+                    "('parquet.avro#AvroWriteSupport', 'writeUnion(GroupType,Schema,Object)')": [
+                        168,
+                        181,
+                        185
+                    ],
+                    "('parquet.avro#AvroWriteSupport', 'writeValue(Type,Schema,Object)')": [
+                        215
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('parquet.avro#AvroWriteSupport', None)": [
+                        46,
+                        120
+                    ],
+                    "('parquet.avro#AvroWriteSupport', 'writeArray(GroupType,Schema,Collection)')": [
+                        122,
+                        124
+                    ],
+                    "('parquet.avro#AvroWriteSupport', 'writeMap(GroupType,Schema,Map)')": [
+                        145
+                    ],
+                    "('parquet.avro#AvroWriteSupport', 'writeUnion(GroupType,Schema,Object)')": [
+                        169,
+                        182,
+                        186
+                    ],
+                    "('parquet.avro#AvroWriteSupport', 'writeValue(Type,Schema,Object)')": [
+                        216
+                    ]
+                }
+            }
+        }
+    }
+}

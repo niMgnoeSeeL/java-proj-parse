@@ -1,0 +1,3635 @@
+{
+    "09d28fe7995db1a4da2c651d362007d2082c663c": {
+        "authored_data": "2016 Dec 05 23:27",
+        "commit.message": "PARQUET-783: Close the underlying stream when an H2SeekableInputStream is closed\n\nThis PR addresses https://issues.apache.org/jira/browse/PARQUET-783.\n\n`ParquetFileReader` opens a `SeekableInputStream` to read a footer. In the process, it opens a new `FSDataInputStream` and wraps it. However, `H2SeekableInputStream` does not override the `close` method. Therefore, when `ParquetFileReader` closes it, the underlying `FSDataInputStream` is not closed. As a result, these stale connections can exhaust a clusters' data nodes' connection resources and lead to mysterious HDFS read failures in HDFS clients, e.g.\n\n```\norg.apache.hadoop.hdfs.BlockMissingException: Could not obtain block: BP-905337612-172.16.70.103-1444328960665:blk_1720536852_646811517\n```\n\nAuthor: Michael Allman <michael@videoamp.com>\n\nCloses #388 from mallman/parquet-783-close_underlying_inputstream and squashes the following commits:\n\nf4b27c1 [Michael Allman] PARQUET-783 Close the underlying stream when an H2SeekableInputStream is closed\n",
+        "commit.author.name": "Michael Allman",
+        "pcid": "4453aa3bffb632886d2c1406c6547e655dba2bb7",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/util/H2SeekableInputStream.java": {
+                "new": {
+                    "('org.apache.parquet.hadoop.util#H2SeekableInputStream', None)": [
+                        45,
+                        46,
+                        47
+                    ],
+                    "('org.apache.parquet.hadoop.util#H2SeekableInputStream', 'close')": [
+                        48,
+                        49
+                    ]
+                }
+            }
+        }
+    },
+    "cf991604d75d446d02baddc536c7c05b43cd8dea": {
+        "authored_data": "2016 Nov 09 16:58",
+        "commit.message": "PARQUET-755: create parquet-arrow module with schema converter\n\nAuthor: Julien Le Dem <julien@dremio.com>\n\nCloses #381 from julienledem/parquet_arrow and squashes the following commits:\n\n9792683 [Julien Le Dem] PARQUET-755: create parquet-arrow module with schema converter introduces SchemaMapping add repeated mapping\n",
+        "commit.author.name": "Julien Le Dem",
+        "pcid": "0ed977ab4574b8fb8f7b978804582bd7ba7d7221",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/schema/Types.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        9,
+                        11
+                    ],
+                    "('org.apache.parquet.schema#Types', None)": [
+                        1074
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        9,
+                        11
+                    ],
+                    "('org.apache.parquet.schema#Types', None)": [
+                        1074,
+                        1078
+                    ]
+                }
+            }
+        }
+    },
+    "e5cd652aeb3305ef2b82a7925cce3a132bf6f5ae": {
+        "authored_data": "2016 Oct 26 16:47",
+        "commit.message": "PARQUET-753: Fixed GroupType.union() to handle original type\n\nalso fixed GroupType.equals() to compare the original type and 2 unit tests that weren't setting the original type properly on the expected results\n\nAuthor: adeneche <adeneche@apache.org>\nAuthor: adeneche <adeneche@gmail.com>\n\nCloses #380 from adeneche/fix-grouptype-union and squashes the following commits:\n\nb04af7d [adeneche] reverted unnecessary formatting changes\n5461a57 [adeneche] Fixed unit tests in TestPigSchemaConverter that were failing because of my fix to GroupType.equals()\nec91315 [adeneche] fixed expected error message in TestMessageType#testMergeSchema\na1d7f63 [adeneche] Fixed GroupType.union() to handle original type\n",
+        "commit.author.name": "adeneche",
+        "pcid": "df9d8e415436292ae33e1ca0b8da256640de9710",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/schema/GroupType.java": {
+                "old": {
+                    "('org.apache.parquet.schema#GroupType', 'hashCode')": [
+                        246
+                    ],
+                    "('org.apache.parquet.schema#GroupType', 'union(Type,boolean)')": [
+                        350
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('org.apache.parquet.schema#GroupType', 'hashCode')": [
+                        247
+                    ],
+                    "('org.apache.parquet.schema#GroupType', 'equals(Type)')": [
+                        258
+                    ],
+                    "('org.apache.parquet.schema#GroupType', 'union(Type,boolean)')": [
+                        352
+                    ],
+                    "('org.apache.parquet.schema#GroupType', 'mergeFields(GroupType,boolean)')": [
+                        380,
+                        381,
+                        382
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/parser/TestParquetParser.java": {
+                "old": {
+                    "('org.apache.parquet.parser#TestParquetParser', 'testMAPAnnotations')": [
+                        172,
+                        173
+                    ],
+                    "('org.apache.parquet.parser#TestParquetParser', 'testLISTAnnotation')": [
+                        197
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.parser#TestParquetParser', 'testMAPAnnotations')": [
+                        172,
+                        173
+                    ],
+                    "('org.apache.parquet.parser#TestParquetParser', 'testLISTAnnotation')": [
+                        197
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/schema/TestMessageType.java": {
+                "old": {
+                    "('org.apache.parquet.schema#TestMessageType', 'testMergeSchema')": [
+                        147
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.parquet.schema#TestMessageType', 'testMergeSchema')": [
+                        148
+                    ],
+                    "('org.apache.parquet.schema#TestMessageType', 'testMergeSchemaWithOriginalType')": [
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188
+                    ],
+                    "('org.apache.parquet.schema#TestMessageType', None)": [
+                        189,
+                        190,
+                        191
+                    ]
+                }
+            },
+            "parquet-pig/src/test/java/org/apache/parquet/pig/TestPigSchemaConverter.java": {
+                "old": {
+                    "('org.apache.parquet.pig#TestPigSchemaConverter', 'testTupleBag')": [
+                        117,
+                        118,
+                        120,
+                        121
+                    ],
+                    "('org.apache.parquet.pig#TestPigSchemaConverter', 'testTupleBagWithAnonymousInnerField')": [
+                        132,
+                        133,
+                        135,
+                        136
+                    ],
+                    "('org.apache.parquet.pig#TestPigSchemaConverter', 'testMap')": [
+                        147,
+                        148,
+                        149,
+                        150,
+                        152,
+                        153
+                    ],
+                    "('org.apache.parquet.pig#TestPigSchemaConverter', 'testMap2')": [
+                        164,
+                        165,
+                        166
+                    ],
+                    "('org.apache.parquet.pig#TestPigSchemaConverter', 'testMap3')": [
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182
+                    ],
+                    "('org.apache.parquet.pig#TestPigSchemaConverter', 'testMap4')": [
+                        195,
+                        196,
+                        197,
+                        198
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.pig#TestPigSchemaConverter', 'testTupleBag')": [
+                        117,
+                        118,
+                        120,
+                        121
+                    ],
+                    "('org.apache.parquet.pig#TestPigSchemaConverter', 'testTupleBagWithAnonymousInnerField')": [
+                        132,
+                        133,
+                        135,
+                        136
+                    ],
+                    "('org.apache.parquet.pig#TestPigSchemaConverter', 'testMap')": [
+                        147,
+                        148,
+                        149,
+                        150,
+                        152,
+                        153
+                    ],
+                    "('org.apache.parquet.pig#TestPigSchemaConverter', 'testMap2')": [
+                        164,
+                        165,
+                        166
+                    ],
+                    "('org.apache.parquet.pig#TestPigSchemaConverter', 'testMap3')": [
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182
+                    ],
+                    "('org.apache.parquet.pig#TestPigSchemaConverter', 'testMap4')": [
+                        195,
+                        196,
+                        197,
+                        198
+                    ]
+                }
+            }
+        }
+    },
+    "df9d8e415436292ae33e1ca0b8da256640de9710": {
+        "authored_data": "2016 Oct 26 16:09",
+        "commit.message": "PARQUET-423: Replace old Log class with SLF4J Logging\n\nAnd make writing files less noisy\n\nAuthor: Niels Basjes <nbasjes@bol.com>\n\nCloses #369 from nielsbasjes/PARQUET-423-2 and squashes the following commits:\n\nb31e30f [Niels Basjes] Merge branch 'master' of github.com:apache/parquet-mr into PARQUET-423-2\n2d4db4b [Niels Basjes] Merge branch 'PARQUET-423-2' of github.com:nielsbasjes/parquet-mr into PARQUET-423-2\n49fcaa7 [Niels Basjes] PARQUET-423: Remove debug logging statements in high performance sections during build time\naaaf4a6 [Niels Basjes] Merge branch 'PARQUET-423-2' of github.com:nielsbasjes/parquet-mr into PARQUET-423-2\n745666e [Niels Basjes] Undo needless change\n94e0c7a [Niels Basjes] PARQUET-423: Further optimize logging performance\nb72f924 [Niels Basjes] PARQUET-423: Improved the performance\ncb7eb61 [Niels Basjes] PARQUET-423: Workaround AVRO errors\n7d161b3 [Niels Basjes] PARQUET-423: Restore the old (obsolete) Log class\n05d6a47 [Niels Basjes] PARQUET-423: Replace old Log class with SLF4J Logging\n692ebfb [Niels Basjes] Undo needless change\nf1ede3d [Niels Basjes] PARQUET-423: Further optimize logging performance\na0c6b59 [Niels Basjes] PARQUET-423: Improved the performance\n67bef9b [Niels Basjes] PARQUET-423: Workaround AVRO errors\n87cd64f [Niels Basjes] PARQUET-423: Restore the old (obsolete) Log class\n96d97d5 [Niels Basjes] PARQUET-423: Replace old Log class with SLF4J Logging\n",
+        "commit.author.name": "Niels Basjes",
+        "pcid": "aa416b5e2cb3cd28eae161d53b1a32f482533510",
+        "changes": {
+            "parquet-avro/src/test/java/org/apache/parquet/avro/TestInputOutputFormat.java": {
+                "old": {
+                    "(None, None)": [
+                        39
+                    ],
+                    "('org.apache.parquet.avro#TestInputOutputFormat', None)": [
+                        46
+                    ],
+                    "('org.apache.parquet.avro#TestInputOutputFormat', 'waitForJob(Job)')": [
+                        135,
+                        138
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        39,
+                        40
+                    ],
+                    "('org.apache.parquet.avro#TestInputOutputFormat', None)": [
+                        47
+                    ],
+                    "('org.apache.parquet.avro#TestInputOutputFormat', 'waitForJob(Job)')": [
+                        136,
+                        139
+                    ]
+                }
+            },
+            "parquet-avro/src/test/java/org/apache/parquet/avro/TestReflectInputOutputFormat.java": {
+                "old": {
+                    "(None, None)": [
+                        40
+                    ],
+                    "('org.apache.parquet.avro#TestReflectInputOutputFormat', None)": [
+                        58
+                    ],
+                    "('org.apache.parquet.avro#TestReflectInputOutputFormat', 'waitForJob(Job)')": [
+                        480,
+                        483
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        48,
+                        49
+                    ],
+                    "('org.apache.parquet.avro#TestReflectInputOutputFormat', None)": [
+                        59
+                    ],
+                    "('org.apache.parquet.avro#TestReflectInputOutputFormat', 'waitForJob(Job)')": [
+                        481,
+                        484
+                    ]
+                }
+            },
+            "parquet-avro/src/test/java/org/apache/parquet/avro/TestSpecificInputOutputFormat.java": {
+                "old": {
+                    "(None, None)": [
+                        42
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificInputOutputFormat', None)": [
+                        50
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificInputOutputFormat', 'waitForJob(Job)')": [
+                        271,
+                        274
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        47,
+                        48
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificInputOutputFormat', None)": [
+                        51
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificInputOutputFormat', 'waitForJob(Job)')": [
+                        272,
+                        275
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/CorruptDeltaByteArrays.java": {
+                "old": {
+                    "('org.apache.parquet#CorruptDeltaByteArrays', None)": [
+                        25
+                    ],
+                    "('org.apache.parquet#CorruptDeltaByteArrays', 'requiresSequentialReads(ParsedVersion,Encoding)')": [
+                        46
+                    ],
+                    "('org.apache.parquet#CorruptDeltaByteArrays', 'requiresSequentialReads(SemanticVersion,Encoding)')": [
+                        64
+                    ],
+                    "('org.apache.parquet#CorruptDeltaByteArrays', 'requiresSequentialReads(String,Encoding)')": [
+                        78,
+                        79
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24
+                    ],
+                    "('org.apache.parquet#CorruptDeltaByteArrays', None)": [
+                        27
+                    ],
+                    "('org.apache.parquet#CorruptDeltaByteArrays', 'requiresSequentialReads(ParsedVersion,Encoding)')": [
+                        48
+                    ],
+                    "('org.apache.parquet#CorruptDeltaByteArrays', 'requiresSequentialReads(SemanticVersion,Encoding)')": [
+                        66
+                    ],
+                    "('org.apache.parquet#CorruptDeltaByteArrays', 'requiresSequentialReads(String,Encoding)')": [
+                        80
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/CorruptStatistics.java": {
+                "old": {
+                    "('org.apache.parquet#CorruptStatistics', None)": [
+                        38
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        28
+                    ],
+                    "('org.apache.parquet#CorruptStatistics', None)": [
+                        40
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/impl/ColumnReaderImpl.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        33
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnReaderImpl', None)": [
+                        62
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnReaderImpl', 'checkRead')": [
+                        526
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnReaderImpl', 'readPage')": [
+                        536
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnReaderImpl', 'readPageV1(DataPageV1)')": [
+                        593,
+                        594,
+                        597,
+                        600
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnReaderImpl', 'readPageV2(DataPageV2)')": [
+                        611
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        52,
+                        53
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnReaderImpl', None)": [
+                        62
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnReaderImpl', 'checkRead')": [
+                        526
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnReaderImpl', 'readPage')": [
+                        536
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnReaderImpl', 'readPageV1(DataPageV1)')": [
+                        593,
+                        594,
+                        597,
+                        600
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnReaderImpl', 'readPageV2(DataPageV2)')": [
+                        611
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/impl/ColumnWriterV1.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        35,
+                        36
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnWriterV1', None)": [
+                        45,
+                        46
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnWriterV1', 'log(Object,int,int)')": [
+                        77
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        35
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnWriterV1', None)": [
+                        44,
+                        45,
+                        46,
+                        47,
+                        48
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnWriterV1', 'log(Object,int,int)')": [
+                        79
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/impl/ColumnWriterV2.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        27,
+                        29
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnWriterV2', None)": [
+                        49,
+                        50
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnWriterV2', 'log(Object,int,int)')": [
+                        76
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36,
+                        37
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnWriterV2', None)": [
+                        46,
+                        47,
+                        48,
+                        49,
+                        50
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnWriterV2', 'log(Object,int,int)')": [
+                        76
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/bitpacking/BitPackingValuesReader.java": {
+                "old": {
+                    "(None, None)": [
+                        28
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#BitPackingValuesReader', None)": [
+                        41
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#BitPackingValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        76
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#BitPackingValuesReader', None)": [
+                        42
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#BitPackingValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        77
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/bitpacking/ByteBitPackingValuesReader.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#ByteBitPackingValuesReader', None)": [
+                        32
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#ByteBitPackingValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        72
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        28
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#ByteBitPackingValuesReader', None)": [
+                        33
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#ByteBitPackingValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        73
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/deltalengthbytearray/DeltaLengthByteArrayValuesReader.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        26
+                    ],
+                    "('org.apache.parquet.column.values.deltalengthbytearray#DeltaLengthByteArrayValuesReader', None)": [
+                        39
+                    ],
+                    "('org.apache.parquet.column.values.deltalengthbytearray#DeltaLengthByteArrayValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        51
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29
+                    ],
+                    "('org.apache.parquet.column.values.deltalengthbytearray#DeltaLengthByteArrayValuesReader', None)": [
+                        39
+                    ],
+                    "('org.apache.parquet.column.values.deltalengthbytearray#DeltaLengthByteArrayValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        51
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/deltalengthbytearray/DeltaLengthByteArrayValuesWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.parquet.column.values.deltalengthbytearray#DeltaLengthByteArrayValuesWriter', None)": [
+                        47
+                    ],
+                    "('org.apache.parquet.column.values.deltalengthbytearray#DeltaLengthByteArrayValuesWriter', 'getBytes')": [
+                        84
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33,
+                        34
+                    ],
+                    "('org.apache.parquet.column.values.deltalengthbytearray#DeltaLengthByteArrayValuesWriter', None)": [
+                        48
+                    ],
+                    "('org.apache.parquet.column.values.deltalengthbytearray#DeltaLengthByteArrayValuesWriter', 'getBytes')": [
+                        85
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/dictionary/DictionaryValuesReader.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        27
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#DictionaryValuesReader', None)": [
+                        42
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#DictionaryValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        59,
+                        60,
+                        62
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#DictionaryValuesReader', None)": [
+                        42
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#DictionaryValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        59,
+                        61
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/dictionary/DictionaryValuesWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        44
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#DictionaryValuesWriter', None)": [
+                        67
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#DictionaryValuesWriter', 'getBytes')": [
+                        161,
+                        177
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        57,
+                        58,
+                        59
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#DictionaryValuesWriter', None)": [
+                        68
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#DictionaryValuesWriter', 'getBytes')": [
+                        162,
+                        178
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/plain/BinaryPlainValuesReader.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        26
+                    ],
+                    "('org.apache.parquet.column.values.plain#BinaryPlainValuesReader', None)": [
+                        33
+                    ],
+                    "('org.apache.parquet.column.values.plain#BinaryPlainValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        66
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        30
+                    ],
+                    "('org.apache.parquet.column.values.plain#BinaryPlainValuesReader', None)": [
+                        33
+                    ],
+                    "('org.apache.parquet.column.values.plain#BinaryPlainValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        66
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/plain/BooleanPlainValuesReader.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        27
+                    ],
+                    "('org.apache.parquet.column.values.plain#BooleanPlainValuesReader', None)": [
+                        38
+                    ],
+                    "('org.apache.parquet.column.values.plain#BooleanPlainValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        67
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29
+                    ],
+                    "('org.apache.parquet.column.values.plain#BooleanPlainValuesReader', None)": [
+                        38
+                    ],
+                    "('org.apache.parquet.column.values.plain#BooleanPlainValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        67
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/plain/FixedLenByteArrayPlainValuesReader.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        27,
+                        28
+                    ],
+                    "('org.apache.parquet.column.values.plain#FixedLenByteArrayPlainValuesReader', None)": [
+                        36
+                    ],
+                    "('org.apache.parquet.column.values.plain#FixedLenByteArrayPlainValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        64
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27
+                    ],
+                    "('org.apache.parquet.column.values.plain#FixedLenByteArrayPlainValuesReader', None)": [
+                        35
+                    ],
+                    "('org.apache.parquet.column.values.plain#FixedLenByteArrayPlainValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        63
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/plain/FixedLenByteArrayPlainValuesWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.parquet.column.values.plain#FixedLenByteArrayPlainValuesWriter', None)": [
+                        39
+                    ],
+                    "('org.apache.parquet.column.values.plain#FixedLenByteArrayPlainValuesWriter', 'getBytes')": [
+                        79
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31,
+                        32
+                    ],
+                    "('org.apache.parquet.column.values.plain#FixedLenByteArrayPlainValuesWriter', None)": [
+                        40
+                    ],
+                    "('org.apache.parquet.column.values.plain#FixedLenByteArrayPlainValuesWriter', 'getBytes')": [
+                        80
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/plain/PlainValuesReader.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        27
+                    ],
+                    "('org.apache.parquet.column.values.plain#PlainValuesReader', None)": [
+                        39
+                    ],
+                    "('org.apache.parquet.column.values.plain#PlainValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        49
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29
+                    ],
+                    "('org.apache.parquet.column.values.plain#PlainValuesReader', None)": [
+                        38
+                    ],
+                    "('org.apache.parquet.column.values.plain#PlainValuesReader', 'initFromPage(int,ByteBuffer,int)')": [
+                        48
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/plain/PlainValuesWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.parquet.column.values.plain#PlainValuesWriter', None)": [
+                        41
+                    ],
+                    "('org.apache.parquet.column.values.plain#PlainValuesWriter', 'getBytes')": [
+                        120
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33
+                    ],
+                    "('org.apache.parquet.column.values.plain#PlainValuesWriter', None)": [
+                        42
+                    ],
+                    "('org.apache.parquet.column.values.plain#PlainValuesWriter', 'getBytes')": [
+                        121
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/rle/RunLengthBitPackingHybridDecoder.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        29
+                    ],
+                    "('org.apache.parquet.column.values.rle#RunLengthBitPackingHybridDecoder', None)": [
+                        42,
+                        56
+                    ],
+                    "('org.apache.parquet.column.values.rle#RunLengthBitPackingHybridDecoder', 'readNext')": [
+                        90,
+                        96
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33,
+                        34
+                    ],
+                    "('org.apache.parquet.column.values.rle#RunLengthBitPackingHybridDecoder', None)": [
+                        42,
+                        56
+                    ],
+                    "('org.apache.parquet.column.values.rle#RunLengthBitPackingHybridDecoder', 'readNext')": [
+                        90,
+                        96
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/rle/RunLengthBitPackingHybridEncoder.java": {
+                "old": {
+                    "(None, None)": [
+                        24,
+                        31,
+                        32
+                    ],
+                    "('org.apache.parquet.column.values.rle#RunLengthBitPackingHybridEncoder', None)": [
+                        63,
+                        121,
+                        122,
+                        123,
+                        124
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30,
+                        31,
+                        32
+                    ],
+                    "('org.apache.parquet.column.values.rle#RunLengthBitPackingHybridEncoder', None)": [
+                        63,
+                        121,
+                        122
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/example/data/Group.java": {
+                "old": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.parquet.example.data#Group', None)": [
+                        27,
+                        28
+                    ],
+                    "('org.apache.parquet.example.data#Group', 'addGroup(String)')": [
+                        67
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25
+                    ],
+                    "('org.apache.parquet.example.data#Group', None)": [
+                        28
+                    ],
+                    "('org.apache.parquet.example.data#Group', 'addGroup(String)')": [
+                        67,
+                        68,
+                        69
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/filter2/compat/FilterCompat.java": {
+                "old": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.parquet.filter2.compat#FilterCompat', None)": [
+                        43
+                    ],
+                    "('org.apache.parquet.filter2.compat#FilterCompat', 'get(FilterPredicate)')": [
+                        70,
+                        76
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25
+                    ],
+                    "('org.apache.parquet.filter2.compat#FilterCompat', None)": [
+                        44
+                    ],
+                    "('org.apache.parquet.filter2.compat#FilterCompat', 'get(FilterPredicate)')": [
+                        71,
+                        77
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/io/BaseRecordReader.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', None)": [
+                        31
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'currentLevel(int)')": [
+                        51
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'log(String)')": [
+                        55
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'startMessage')": [
+                        65
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'startGroup(String,int)')": [
+                        71
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'startField(String,int)')": [
+                        76
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'addPrimitiveINT64(String,int,long)')": [
+                        92
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'endField(String,int)')": [
+                        98
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'addPrimitiveBINARY(String,int,Binary)')": [
+                        108
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'addPrimitiveINT32(String,int,int)')": [
+                        115
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'endGroup(String,int)')": [
+                        126
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'endMessage')": [
+                        137
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', None)": [
+                        31
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'currentLevel(int)')": [
+                        51
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'log(String)')": [
+                        55
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'startMessage')": [
+                        65
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'startGroup(String,int)')": [
+                        71
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'startField(String,int)')": [
+                        76
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'addPrimitiveINT64(String,int,long)')": [
+                        92
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'endField(String,int)')": [
+                        98
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'addPrimitiveBINARY(String,int,Binary)')": [
+                        108
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'addPrimitiveINT32(String,int,int)')": [
+                        115
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'endGroup(String,int)')": [
+                        126
+                    ],
+                    "('org.apache.parquet.io#BaseRecordReader', 'endMessage')": [
+                        137
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/io/ColumnIO.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.parquet.io#ColumnIO', None)": [
+                        36,
+                        37
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/io/GroupColumnIO.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.parquet.io#GroupColumnIO', None)": [
+                        41
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31,
+                        32
+                    ],
+                    "('org.apache.parquet.io#GroupColumnIO', None)": [
+                        42
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/io/MessageColumnIO.java": {
+                "old": {
+                    "(None, None)": [
+                        28,
+                        33
+                    ],
+                    "('org.apache.parquet.io#MessageColumnIO', None)": [
+                        61,
+                        62,
+                        63,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        301,
+                        312,
+                        329,
+                        330,
+                        375,
+                        431,
+                        441,
+                        451,
+                        461,
+                        471,
+                        481
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        50,
+                        51,
+                        52
+                    ],
+                    "('org.apache.parquet.io#MessageColumnIO', None)": [
+                        62,
+                        63,
+                        64,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        306,
+                        317,
+                        334,
+                        379,
+                        435,
+                        445,
+                        455,
+                        465,
+                        475,
+                        485
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/io/RecordConsumerLoggingWrapper.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', None)": [
+                        33,
+                        34
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'startField(String,int)')": [
+                        53
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'logOpen(String)')": [
+                        58
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'log(Object)')": [
+                        69,
+                        70
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'startGroup')": [
+                        78,
+                        79
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'addInteger(int)')": [
+                        88
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'addLong(long)')": [
+                        97
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'addBoolean(boolean)')": [
+                        106
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'addBinary(Binary)')": [
+                        115
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'addFloat(float)')": [
+                        124
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'addDouble(double)')": [
+                        133
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'flush')": [
+                        142
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'endGroup')": [
+                        151,
+                        152
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'endField(String,int)')": [
+                        161
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'logClose(String)')": [
+                        166
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'startMessage')": [
+                        174
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'endMessage')": [
+                        184
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        26
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', None)": [
+                        35,
+                        73
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'startField(String,int)')": [
+                        54
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'logOpen(String)')": [
+                        59
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'log(Object,Object)')": [
+                        70,
+                        71,
+                        72
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'startGroup')": [
+                        81,
+                        82
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'addInteger(int)')": [
+                        91
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'addLong(long)')": [
+                        100
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'addBoolean(boolean)')": [
+                        109
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'addBinary(Binary)')": [
+                        118
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'addFloat(float)')": [
+                        127
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'addDouble(double)')": [
+                        136
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'flush')": [
+                        145
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'endGroup')": [
+                        154,
+                        155
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'endField(String,int)')": [
+                        164
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'logClose(String)')": [
+                        169
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'startMessage')": [
+                        177
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'endMessage')": [
+                        187
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/io/RecordReaderImplementation.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('org.apache.parquet.io#RecordReaderImplementation', None)": [
+                        48
+                    ],
+                    "('org.apache.parquet.io#RecordReaderImplementation', 'wrap(RecordConsumer)')": [
+                        379
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38,
+                        39
+                    ],
+                    "('org.apache.parquet.io#RecordReaderImplementation', None)": [
+                        49
+                    ],
+                    "('org.apache.parquet.io#RecordReaderImplementation', 'wrap(RecordConsumer)')": [
+                        380
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/io/ValidatingRecordConsumer.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.parquet.io#ValidatingRecordConsumer', None)": [
+                        43,
+                        44
+                    ],
+                    "('org.apache.parquet.io#ValidatingRecordConsumer', 'validate(PrimitiveTypeName)')": [
+                        142,
+                        164
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31,
+                        32
+                    ],
+                    "('org.apache.parquet.io#ValidatingRecordConsumer', None)": [
+                        44
+                    ],
+                    "('org.apache.parquet.io#ValidatingRecordConsumer', 'validate(PrimitiveTypeName)')": [
+                        142,
+                        164
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/schema/MessageTypeParser.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.parquet.schema#MessageTypeParser', None)": [
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        30
+                    ],
+                    "('org.apache.parquet.schema#MessageTypeParser', None)": [
+                        38
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/column/mem/TestMemColumn.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.parquet.column.mem#TestMemColumn', None)": [
+                        39
+                    ],
+                    "('org.apache.parquet.column.mem#TestMemColumn', 'testMemColumnSeveralPagesRepeated')": [
+                        137,
+                        151
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36,
+                        37
+                    ],
+                    "('org.apache.parquet.column.mem#TestMemColumn', None)": [
+                        40
+                    ],
+                    "('org.apache.parquet.column.mem#TestMemColumn', 'testMemColumnSeveralPagesRepeated')": [
+                        138,
+                        152
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/column/page/mem/MemPageReader.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        26
+                    ],
+                    "('org.apache.parquet.column.page.mem#MemPageReader', None)": [
+                        34
+                    ],
+                    "('org.apache.parquet.column.page.mem#MemPageReader', 'readPage')": [
+                        57
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        30
+                    ],
+                    "('org.apache.parquet.column.page.mem#MemPageReader', None)": [
+                        34
+                    ],
+                    "('org.apache.parquet.column.page.mem#MemPageReader', 'readPage')": [
+                        57
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/column/page/mem/MemPageStore.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26
+                    ],
+                    "('org.apache.parquet.column.page.mem#MemPageStore', None)": [
+                        37
+                    ],
+                    "('org.apache.parquet.column.page.mem#MemPageStore', 'getPageReader(ColumnDescriptor)')": [
+                        65
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34
+                    ],
+                    "('org.apache.parquet.column.page.mem#MemPageStore', None)": [
+                        38
+                    ],
+                    "('org.apache.parquet.column.page.mem#MemPageStore', 'getPageReader(ColumnDescriptor)')": [
+                        66
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/column/page/mem/MemPageWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37
+                    ],
+                    "('org.apache.parquet.column.page.mem#MemPageWriter', None)": [
+                        40,
+                        71
+                    ],
+                    "('org.apache.parquet.column.page.mem#MemPageWriter', 'writePage(BytesInput,int,Statistics,Encoding,Encoding,Encoding)')": [
+                        56
+                    ],
+                    "('org.apache.parquet.column.page.mem#MemPageWriter', 'writePageV2(int,int,int,BytesInput,BytesInput,Encoding,BytesInput,Statistics)')": [
+                        70
+                    ],
+                    "('org.apache.parquet.column.page.mem#MemPageWriter', 'writeDictionaryPage(DictionaryPage)')": [
+                        104
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        37
+                    ],
+                    "('org.apache.parquet.column.page.mem#MemPageWriter', None)": [
+                        40
+                    ],
+                    "('org.apache.parquet.column.page.mem#MemPageWriter', 'writePage(BytesInput,int,Statistics,Encoding,Encoding,Encoding)')": [
+                        56
+                    ],
+                    "('org.apache.parquet.column.page.mem#MemPageWriter', 'writePageV2(int,int,int,BytesInput,BytesInput,Encoding,BytesInput,Statistics)')": [
+                        70
+                    ],
+                    "('org.apache.parquet.column.page.mem#MemPageWriter', 'writeDictionaryPage(DictionaryPage)')": [
+                        103
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/column/values/bitpacking/TestBitPackingColumn.java": {
+                "old": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestBitPackingColumn', None)": [
+                        36
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestBitPackingColumn', 'validateEncodeDecode(int,int,String)')": [
+                        166,
+                        174,
+                        182
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33,
+                        34
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestBitPackingColumn', None)": [
+                        37
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestBitPackingColumn', 'validateEncodeDecode(int,int,String)')": [
+                        167,
+                        175,
+                        183
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/io/PerfTest.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        28,
+                        29,
+                        40,
+                        41
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/io/TestColumnIO.java": {
+                "old": {
+                    "(None, None)": [
+                        47
+                    ],
+                    "('org.apache.parquet.io#TestColumnIO', None)": [
+                        73
+                    ],
+                    "('org.apache.parquet.io#TestColumnIO', 'log(Object)')": [
+                        495
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        69,
+                        70
+                    ],
+                    "('org.apache.parquet.io#TestColumnIO', None)": [
+                        74
+                    ],
+                    "('org.apache.parquet.io#TestColumnIO', 'log(Object)')": [
+                        496
+                    ]
+                }
+            },
+            "parquet-common/src/main/java/org/apache/parquet/Closeables.java": {
+                "old": {
+                    "('org.apache.parquet#Closeables', None)": [
+                        30
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        26
+                    ],
+                    "('org.apache.parquet#Closeables', None)": [
+                        33
+                    ]
+                }
+            },
+            "parquet-common/src/main/java/org/apache/parquet/bytes/BytesUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        28
+                    ],
+                    "('org.apache.parquet.bytes#BytesUtils', None)": [
+                        37
+                    ],
+                    "('org.apache.parquet.bytes#BytesUtils', 'writeIntLittleEndian(OutputStream,int)')": [
+                        161
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29
+                    ],
+                    "('org.apache.parquet.bytes#BytesUtils', None)": [
+                        38
+                    ],
+                    "('org.apache.parquet.bytes#BytesUtils', 'writeIntLittleEndian(OutputStream,int)')": [
+                        162
+                    ]
+                }
+            },
+            "parquet-encoding/src/main/java/org/apache/parquet/bytes/BytesInput.java": {
+                "old": {
+                    "(None, None)": [
+                        32
+                    ],
+                    "('org.apache.parquet.bytes#BytesInput', None)": [
+                        47,
+                        231,
+                        243,
+                        249,
+                        263,
+                        281,
+                        282,
+                        284
+                    ],
+                    "('org.apache.parquet.bytes#BytesInput', 'from(byte)')": [
+                        93
+                    ],
+                    "('org.apache.parquet.bytes#BytesInput', 'from(byte,int,int)')": [
+                        98
+                    ],
+                    "('org.apache.parquet.bytes#BytesInput', 'toByteArray')": [
+                        192
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33
+                    ],
+                    "('org.apache.parquet.bytes#BytesInput', None)": [
+                        48,
+                        232,
+                        244,
+                        250,
+                        264,
+                        282,
+                        283,
+                        284,
+                        286
+                    ],
+                    "('org.apache.parquet.bytes#BytesInput', 'from(byte)')": [
+                        94
+                    ],
+                    "('org.apache.parquet.bytes#BytesInput', 'from(byte,int,int)')": [
+                        99
+                    ],
+                    "('org.apache.parquet.bytes#BytesInput', 'toByteArray')": [
+                        193
+                    ]
+                }
+            },
+            "parquet-encoding/src/main/java/org/apache/parquet/bytes/CapacityByteArrayOutputStream.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.parquet.bytes#CapacityByteArrayOutputStream', None)": [
+                        57
+                    ],
+                    "('org.apache.parquet.bytes#CapacityByteArrayOutputStream', 'addSlab(int)')": [
+                        170,
+                        174
+                    ],
+                    "('org.apache.parquet.bytes#CapacityByteArrayOutputStream', 'reset')": [
+                        268
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        35,
+                        36
+                    ],
+                    "('org.apache.parquet.bytes#CapacityByteArrayOutputStream', None)": [
+                        59
+                    ],
+                    "('org.apache.parquet.bytes#CapacityByteArrayOutputStream', 'addSlab(int)')": [
+                        172,
+                        176
+                    ],
+                    "('org.apache.parquet.bytes#CapacityByteArrayOutputStream', 'reset')": [
+                        270
+                    ]
+                }
+            },
+            "parquet-encoding/src/main/java/org/apache/parquet/column/values/bitpacking/ByteBasedBitPackingEncoder.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        28,
+                        29,
+                        30
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#ByteBasedBitPackingEncoder', None)": [
+                        39
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#ByteBasedBitPackingEncoder', 'toBytes')": [
+                        102
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        30
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#ByteBasedBitPackingEncoder', None)": [
+                        39
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#ByteBasedBitPackingEncoder', 'toBytes')": [
+                        102
+                    ]
+                }
+            },
+            "parquet-encoding/src/test/java/org/apache/parquet/column/values/bitpacking/TestBitPacking.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestBitPacking', None)": [
+                        35
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestBitPacking', 'validateEncodeDecode(int,int,String)')": [
+                        173,
+                        181
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestBitPacking', None)": [
+                        36
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestBitPacking', 'validateEncodeDecode(int,int,String)')": [
+                        174,
+                        182
+                    ]
+                }
+            },
+            "parquet-encoding/src/test/java/org/apache/parquet/column/values/bitpacking/TestByteBitPacking.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', None)": [
+                        34
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'testPackUnPack')": [
+                        41,
+                        45
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'testPackUnPackLong')": [
+                        55,
+                        60,
+                        63
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'packUnpack(BytePacker,int,int)')": [
+                        71
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'packUnpack32(BytePackerForLong,long,long)')": [
+                        78
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'packUnpack8(BytePackerForLong,long,long)')": [
+                        87
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'generateValues(int)')": [
+                        98
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'generateValuesLong(int)')": [
+                        108
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'testPackUnPackAgainstHandWritten')": [
+                        117,
+                        126,
+                        135,
+                        143
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'testPackUnPackAgainstLemire')": [
+                        152,
+                        154,
+                        181,
+                        187,
+                        191
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31,
+                        32
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', None)": [
+                        35
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'testPackUnPack')": [
+                        42,
+                        46
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'testPackUnPackLong')": [
+                        56,
+                        61,
+                        64
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'packUnpack(BytePacker,int,int)')": [
+                        72
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'packUnpack32(BytePackerForLong,long,long)')": [
+                        79
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'packUnpack8(BytePackerForLong,long,long)')": [
+                        88
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'generateValues(int)')": [
+                        99
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'generateValuesLong(int)')": [
+                        109
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'testPackUnPackAgainstHandWritten')": [
+                        118,
+                        127,
+                        136,
+                        144
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestByteBitPacking', 'testPackUnPackAgainstLemire')": [
+                        153,
+                        155,
+                        182,
+                        188,
+                        192
+                    ]
+                }
+            },
+            "parquet-encoding/src/test/java/org/apache/parquet/column/values/bitpacking/TestLemireBitPacking.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestLemireBitPacking', None)": [
+                        34
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestLemireBitPacking', 'testPackUnPack')": [
+                        42
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestLemireBitPacking', 'generateValues(int)')": [
+                        76
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestLemireBitPacking', 'testPackUnPackAgainstHandWritten')": [
+                        85,
+                        102,
+                        111,
+                        119
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31,
+                        32
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestLemireBitPacking', None)": [
+                        35
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestLemireBitPacking', 'testPackUnPack')": [
+                        43
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestLemireBitPacking', 'generateValues(int)')": [
+                        77
+                    ],
+                    "('org.apache.parquet.column.values.bitpacking#TestLemireBitPacking', 'testPackUnPackAgainstHandWritten')": [
+                        86,
+                        103,
+                        112,
+                        120
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/filter2/dictionarylevel/DictionaryFilter.java": {
+                "old": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', None)": [
+                        50
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'expandDictionary(ColumnChunkMetaData)')": [
+                        102
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', None)": [
+                        51
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'expandDictionary(ColumnChunkMetaData)')": [
+                        103
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/format/converter/ParquetMetadataConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        41
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', None)": [
+                        83
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream,MetadataFilter)')": [
+                        792,
+                        794
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        73,
+                        74
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', None)": [
+                        84
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream,MetadataFilter)')": [
+                        793,
+                        795
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ColumnChunkPageReadStore.java": {
+                "old": {
+                    "(None, None)": [
+                        28
+                    ],
+                    "('org.apache.parquet.hadoop#ColumnChunkPageReadStore', None)": [
+                        47
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38,
+                        39
+                    ],
+                    "('org.apache.parquet.hadoop#ColumnChunkPageReadStore', None)": [
+                        48
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ColumnChunkPageWriteStore.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        33
+                    ],
+                    "('org.apache.parquet.hadoop#ColumnChunkPageWriteStore', None)": [
+                        49,
+                        194,
+                        195
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        45,
+                        46
+                    ],
+                    "('org.apache.parquet.hadoop#ColumnChunkPageWriteStore', None)": [
+                        49,
+                        194,
+                        195
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/DirectCodecFactory.java": {
+                "old": {
+                    "(None, None)": [
+                        41
+                    ],
+                    "('org.apache.parquet.hadoop#DirectCodecFactory', None)": [
+                        50,
+                        375,
+                        391,
+                        411
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36,
+                        37
+                    ],
+                    "('org.apache.parquet.hadoop#DirectCodecFactory', None)": [
+                        51,
+                        376,
+                        392,
+                        412
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordReader.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        9,
+                        11,
+                        30,
+                        47
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', None)": [
+                        54
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'checkRead')": [
+                        113,
+                        133,
+                        134
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'initialize(ParquetFileReader,Configuration)')": [
+                        183
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'nextKeyValue')": [
+                        202,
+                        208,
+                        215,
+                        221
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        9,
+                        11,
+                        44,
+                        45
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', None)": [
+                        54
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'checkRead')": [
+                        113,
+                        133,
+                        134
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'initialize(ParquetFileReader,Configuration)')": [
+                        183
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'nextKeyValue')": [
+                        202,
+                        208,
+                        215,
+                        221
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        24,
+                        31
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', None)": [
+                        43,
+                        154
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', 'checkBlockSizeReached')": [
+                        142,
+                        152,
+                        153
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', 'flushRowGroupToStore')": [
+                        162,
+                        164
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        39,
+                        40
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', None)": [
+                        43
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', 'checkBlockSizeReached')": [
+                        142,
+                        152
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', 'flushRowGroupToStore')": [
+                        160,
+                        162
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/LruCache.java": {
+                "old": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.parquet.hadoop#LruCache', None)": [
+                        38,
+                        68
+                    ],
+                    "('org.apache.parquet.hadoop#LruCache', 'remove(K)')": [
+                        87,
+                        88,
+                        89
+                    ],
+                    "('org.apache.parquet.hadoop#LruCache', 'put(K,V)')": [
+                        104,
+                        105,
+                        106,
+                        113,
+                        114,
+                        115,
+                        122,
+                        124,
+                        126
+                    ],
+                    "('org.apache.parquet.hadoop#LruCache', 'getCurrentValue(K)')": [
+                        148,
+                        149,
+                        150,
+                        151
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22
+                    ],
+                    "('org.apache.parquet.hadoop#LruCache', None)": [
+                        39,
+                        69
+                    ],
+                    "('org.apache.parquet.hadoop#LruCache', 'remove(K)')": [
+                        88
+                    ],
+                    "('org.apache.parquet.hadoop#LruCache', 'put(K,V)')": [
+                        103,
+                        104,
+                        105,
+                        112,
+                        113,
+                        114,
+                        121,
+                        123,
+                        125
+                    ],
+                    "('org.apache.parquet.hadoop#LruCache', 'getCurrentValue(K)')": [
+                        147
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/MemoryManager.java": {
+                "old": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.parquet.hadoop#MemoryManager', None)": [
+                        43,
+                        62
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24
+                    ],
+                    "('org.apache.parquet.hadoop#MemoryManager', None)": [
+                        44,
+                        63
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileReader.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        69
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', None)": [
+                        109,
+                        929,
+                        930,
+                        931,
+                        1016
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readAllFootersInParallelUsingSummaryFiles(Configuration,Collection,boolean)')": [
+                        207,
+                        208,
+                        209
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'runAllInParallel(int,List)')": [
+                        217
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readSummaryMetadata(Configuration,Path,boolean)')": [
+                        363,
+                        366,
+                        367,
+                        368
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readFooter(ParquetMetadataConverter,long,String,SeekableInputStream,MetadataFilter)')": [
+                        475,
+                        476,
+                        477,
+                        483,
+                        484,
+                        485,
+                        495,
+                        496,
+                        497
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        98,
+                        99
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', None)": [
+                        109,
+                        919,
+                        1004
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readAllFootersInParallelUsingSummaryFiles(Configuration,Collection,boolean)')": [
+                        207
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'runAllInParallel(int,List)')": [
+                        215
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readSummaryMetadata(Configuration,Path,boolean)')": [
+                        361,
+                        364
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readFooter(ParquetMetadataConverter,long,String,SeekableInputStream,MetadataFilter)')": [
+                        471,
+                        477,
+                        487
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        44
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', None)": [
+                        78,
+                        908,
+                        909,
+                        910
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'start')": [
+                        277
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'startBlock(long)')": [
+                        288
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDictionaryPage(DictionaryPage)')": [
+                        328,
+                        341
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Encoding,Encoding,Encoding)')": [
+                        366,
+                        378
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Statistics,Encoding,Encoding,Encoding)')": [
+                        404,
+                        417
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPages(BytesInput,long,long,Statistics,Set,Set,List)')": [
+                        441,
+                        445
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'endColumn')": [
+                        463
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'endBlock')": [
+                        487
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'copy(SeekableInputStream,FSDataOutputStream,long,long)')": [
+                        614,
+                        615
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'end(Map)')": [
+                        640
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'serializeFooter(ParquetMetadata,FSDataOutputStream)')": [
+                        650
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        68,
+                        69
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', None)": [
+                        78,
+                        907
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'start')": [
+                        277
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'startBlock(long)')": [
+                        288
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDictionaryPage(DictionaryPage)')": [
+                        328,
+                        341
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Encoding,Encoding,Encoding)')": [
+                        366,
+                        378
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Statistics,Encoding,Encoding,Encoding)')": [
+                        404,
+                        417
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPages(BytesInput,long,long,Statistics,Set,Set,List)')": [
+                        441,
+                        445
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'endColumn')": [
+                        463
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'endBlock')": [
+                        487
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'copy(SeekableInputStream,FSDataOutputStream,long,long)')": [
+                        614
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'end(Map)')": [
+                        639
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'serializeFooter(ParquetMetadata,FSDataOutputStream)')": [
+                        649
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetInputFormat.java": {
+                "old": {
+                    "(None, None)": [
+                        54
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetInputFormat', None)": [
+                        96,
+                        516,
+                        517,
+                        518,
+                        519
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetInputFormat', 'getAllFileRecursively(List,Configuration)')": [
+                        385
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetInputFormat', 'getFooters(JobContext)')": [
+                        427,
+                        439,
+                        440,
+                        441,
+                        442
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetInputFormat', 'getFooters(Configuration,Collection)')": [
+                        483
+                    ],
+                    "('org.apache.parquet.hadoop#ClientSideMetadataSplitStrategy', None)": [
+                        692
+                    ],
+                    "('org.apache.parquet.hadoop#ClientSideMetadataSplitStrategy', 'getSplits(Configuration,List,long,long,ReadContext)')": [
+                        705,
+                        736
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        74,
+                        75
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetInputFormat', None)": [
+                        97,
+                        515,
+                        516,
+                        517
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetInputFormat', 'getAllFileRecursively(List,Configuration)')": [
+                        386
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetInputFormat', 'getFooters(JobContext)')": [
+                        428,
+                        440,
+                        441
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetInputFormat', 'getFooters(Configuration,Collection)')": [
+                        482
+                    ],
+                    "('org.apache.parquet.hadoop#ClientSideMetadataSplitStrategy', None)": [
+                        690
+                    ],
+                    "('org.apache.parquet.hadoop#ClientSideMetadataSplitStrategy', 'getSplits(Configuration,List,long,long,ReadContext)')": [
+                        703,
+                        734
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetOutputCommitter.java": {
+                "old": {
+                    "(None, None)": [
+                        32
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputCommitter', None)": [
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        35
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputCommitter', None)": [
+                        38
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetOutputFormat.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        38
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', None)": [
+                        104
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'getRecordWriter(Configuration,Path,CompressionCodecName)')": [
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        45,
+                        46
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', None)": [
+                        104
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'getRecordWriter(Configuration,Path,CompressionCodecName)')": [
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetRecordReader.java": {
+                "old": {
+                    "(None, None)": [
+                        44
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetRecordReader', None)": [
+                        70
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        57,
+                        58
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetRecordReader', None)": [
+                        71
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/UnmaterializableRecordCounter.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.parquet.hadoop#UnmaterializableRecordCounter', None)": [
+                        46
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        26
+                    ],
+                    "('org.apache.parquet.hadoop#UnmaterializableRecordCounter', None)": [
+                        47
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/codec/CodecConfig.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        30,
+                        31
+                    ],
+                    "('org.apache.parquet.hadoop.codec#CodecConfig', None)": [
+                        42
+                    ],
+                    "('org.apache.parquet.hadoop.codec#CodecConfig', 'getCodec')": [
+                        92,
+                        96
+                    ],
+                    "('org.apache.parquet.hadoop.codec#CodecConfig', 'getHadoopCompressionCodec')": [
+                        105,
+                        108,
+                        109,
+                        112
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29
+                    ],
+                    "('org.apache.parquet.hadoop.codec#CodecConfig', None)": [
+                        41
+                    ],
+                    "('org.apache.parquet.hadoop.codec#CodecConfig', 'getCodec')": [
+                        91,
+                        95
+                    ],
+                    "('org.apache.parquet.hadoop.codec#CodecConfig', 'getHadoopCompressionCodec')": [
+                        104,
+                        107,
+                        110
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/util/HadoopStreams.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.parquet.hadoop.util#HadoopStreams', None)": [
+                        34
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27
+                    ],
+                    "('org.apache.parquet.hadoop.util#HadoopStreams', None)": [
+                        36
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/util/SerializationUtil.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.parquet.hadoop.util#SerializationUtil', None)": [
+                        42
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33,
+                        34
+                    ],
+                    "('org.apache.parquet.hadoop.util#SerializationUtil', None)": [
+                        43
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/hadoop/TestParquetFileWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', None)": [
+                        74
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'validateFooters(List)')": [
+                        611
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        70,
+                        71
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', None)": [
+                        75
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'validateFooters(List)')": [
+                        612
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/hadoop/example/TestInputOutputFormat.java": {
+                "old": {
+                    "(None, None)": [
+                        56
+                    ],
+                    "('org.apache.parquet.hadoop.example#TestInputOutputFormat', None)": [
+                        70
+                    ],
+                    "('org.apache.parquet.hadoop.example#TestInputOutputFormat', 'waitForJob(Job)')": [
+                        351,
+                        354
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        67,
+                        68
+                    ],
+                    "('org.apache.parquet.hadoop.example#TestInputOutputFormat', None)": [
+                        71
+                    ],
+                    "('org.apache.parquet.hadoop.example#TestInputOutputFormat', 'waitForJob(Job)')": [
+                        352,
+                        355
+                    ]
+                }
+            },
+            "parquet-hive/parquet-hive-binding/parquet-hive-0.10-binding/src/main/java/org/apache/parquet/hive/internal/Hive010Binding.java": {
+                "old": {
+                    "(None, None)": [
+                        41
+                    ],
+                    "('org.apache.parquet.hive.internal#Hive010Binding', None)": [
+                        49
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        40,
+                        41
+                    ],
+                    "('org.apache.parquet.hive.internal#Hive010Binding', None)": [
+                        50
+                    ]
+                }
+            },
+            "parquet-hive/parquet-hive-binding/parquet-hive-0.12-binding/src/main/java/org/apache/parquet/hive/internal/Hive012Binding.java": {
+                "old": {
+                    "(None, None)": [
+                        42
+                    ],
+                    "('org.apache.parquet.hive.internal#Hive012Binding', None)": [
+                        50
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        41,
+                        42
+                    ],
+                    "('org.apache.parquet.hive.internal#Hive012Binding', None)": [
+                        51
+                    ]
+                }
+            },
+            "parquet-hive/parquet-hive-binding/parquet-hive-binding-factory/src/main/java/org/apache/parquet/hive/HiveBindingFactory.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.parquet.hive#HiveBindingFactory', None)": [
+                        33
+                    ],
+                    "('org.apache.parquet.hive#HiveBindingFactory', 'create(ClassLoader)')": [
+                        71
+                    ],
+                    "('org.apache.parquet.hive#HiveBindingFactory', 'createInternal(Class)')": [
+                        88,
+                        89,
+                        100,
+                        101,
+                        113
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        26
+                    ],
+                    "('org.apache.parquet.hive#HiveBindingFactory', None)": [
+                        34
+                    ],
+                    "('org.apache.parquet.hive#HiveBindingFactory', 'create(ClassLoader)')": [
+                        72
+                    ],
+                    "('org.apache.parquet.hive#HiveBindingFactory', 'createInternal(Class)')": [
+                        89,
+                        100,
+                        112
+                    ]
+                }
+            },
+            "parquet-hive/parquet-hive-storage-handler/src/main/java/org/apache/hadoop/hive/ql/io/parquet/MapredParquetOutputFormat.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        28
+                    ],
+                    "('org.apache.hadoop.hive.ql.io.parquet#MapredParquetOutputFormat', None)": [
+                        58
+                    ],
+                    "('org.apache.hadoop.hive.ql.io.parquet#MapredParquetOutputFormat', 'getHiveRecordWriter(JobConf,Path,Class,boolean,Properties,Progressable)')": [
+                        99
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        47,
+                        48
+                    ],
+                    "('org.apache.hadoop.hive.ql.io.parquet#MapredParquetOutputFormat', None)": [
+                        58
+                    ],
+                    "('org.apache.hadoop.hive.ql.io.parquet#MapredParquetOutputFormat', 'getHiveRecordWriter(JobConf,Path,Class,boolean,Properties,Progressable)')": [
+                        99
+                    ]
+                }
+            },
+            "parquet-hive/parquet-hive-storage-handler/src/main/java/org/apache/hadoop/hive/ql/io/parquet/read/ParquetRecordReaderWrapper.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        26
+                    ],
+                    "('org.apache.hadoop.hive.ql.io.parquet.read#ParquetRecordReaderWrapper', None)": [
+                        51
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        47,
+                        48
+                    ],
+                    "('org.apache.hadoop.hive.ql.io.parquet.read#ParquetRecordReaderWrapper', None)": [
+                        51
+                    ]
+                }
+            },
+            "parquet-hive/parquet-hive-storage-handler/src/main/java/org/apache/hadoop/hive/ql/io/parquet/write/ParquetRecordWriterWrapper.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        24
+                    ],
+                    "('org.apache.hadoop.hive.ql.io.parquet.write#ParquetRecordWriterWrapper', None)": [
+                        43,
+                        61,
+                        64
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37,
+                        38
+                    ],
+                    "('org.apache.hadoop.hive.ql.io.parquet.write#ParquetRecordWriterWrapper', None)": [
+                        43,
+                        61,
+                        64
+                    ]
+                }
+            },
+            "parquet-pig/src/main/java/org/apache/parquet/pig/ParquetLoader.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        77
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', None)": [
+                        91
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'setLocation(String,Job)')": [
+                        160,
+                        162
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getInputFormat')": [
+                        204
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'prepareToRead(RecordReader,PigSplit)')": [
+                        251
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getPartitionKeys(String,Job)')": [
+                        271,
+                        273
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getSchema(String,Job)')": [
+                        281,
+                        283
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getStatistics(String,Job)')": [
+                        326,
+                        328
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'setPartitionFilter(Expression)')": [
+                        350
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'setPushdownPredicate(Expression)')": [
+                        468,
+                        471
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        79,
+                        80
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', None)": [
+                        91
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'setLocation(String,Job)')": [
+                        160,
+                        162
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getInputFormat')": [
+                        204
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'prepareToRead(RecordReader,PigSplit)')": [
+                        251
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getPartitionKeys(String,Job)')": [
+                        271,
+                        273
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getSchema(String,Job)')": [
+                        281,
+                        283
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getStatistics(String,Job)')": [
+                        326,
+                        328
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'setPartitionFilter(Expression)')": [
+                        350
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'setPushdownPredicate(Expression)')": [
+                        468,
+                        471
+                    ]
+                }
+            },
+            "parquet-pig/src/main/java/org/apache/parquet/pig/PigSchemaConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        39
+                    ],
+                    "('org.apache.parquet.pig#PigSchemaConverter', None)": [
+                        63
+                    ],
+                    "('org.apache.parquet.pig#PigSchemaConverter', 'filter(MessageType,Schema,RequiredFieldList)')": [
+                        459,
+                        461
+                    ],
+                    "('org.apache.parquet.pig#PigSchemaConverter', 'filter(Type,FieldSchema)')": [
+                        469
+                    ],
+                    "('org.apache.parquet.pig#PigSchemaConverter', 'filterTuple(GroupType,FieldSchema)')": [
+                        489
+                    ],
+                    "('org.apache.parquet.pig#PigSchemaConverter', 'filterMap(GroupType,FieldSchema)')": [
+                        494
+                    ],
+                    "('org.apache.parquet.pig#PigSchemaConverter', 'filterBag(GroupType,FieldSchema)')": [
+                        507
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        47,
+                        48
+                    ],
+                    "('org.apache.parquet.pig#PigSchemaConverter', None)": [
+                        63
+                    ],
+                    "('org.apache.parquet.pig#PigSchemaConverter', 'filter(MessageType,Schema,RequiredFieldList)')": [
+                        459,
+                        461
+                    ],
+                    "('org.apache.parquet.pig#PigSchemaConverter', 'filter(Type,FieldSchema)')": [
+                        469
+                    ],
+                    "('org.apache.parquet.pig#PigSchemaConverter', 'filterTuple(GroupType,FieldSchema)')": [
+                        489
+                    ],
+                    "('org.apache.parquet.pig#PigSchemaConverter', 'filterMap(GroupType,FieldSchema)')": [
+                        494
+                    ],
+                    "('org.apache.parquet.pig#PigSchemaConverter', 'filterBag(GroupType,FieldSchema)')": [
+                        507
+                    ]
+                }
+            },
+            "parquet-pig/src/main/java/org/apache/parquet/pig/TupleReadSupport.java": {
+                "old": {
+                    "(None, None)": [
+                        36
+                    ],
+                    "('org.apache.parquet.pig#TupleReadSupport', None)": [
+                        57
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        43,
+                        44
+                    ],
+                    "('org.apache.parquet.pig#TupleReadSupport', None)": [
+                        58
+                    ]
+                }
+            },
+            "parquet-pig/src/test/java/org/apache/parquet/pig/PerfTest2.java": {
+                "old": {
+                    "(None, None)": [
+                        51
+                    ],
+                    "('org.apache.parquet.pig#PerfTest2', 'load(String,int,StringBuilder)')": [
+                        176
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        52,
+                        53
+                    ],
+                    "('org.apache.parquet.pig#PerfTest2', None)": [
+                        63,
+                        64,
+                        65
+                    ],
+                    "('org.apache.parquet.pig#PerfTest2', 'load(String,int,StringBuilder)')": [
+                        180
+                    ]
+                }
+            },
+            "parquet-pig/src/test/java/org/apache/parquet/pig/TestTupleRecordConsumer.java": {
+                "old": {
+                    "(None, None)": [
+                        43
+                    ],
+                    "('org.apache.parquet.pig#TestTupleRecordConsumer', None)": [
+                        56
+                    ],
+                    "('org.apache.parquet.pig#TestTupleRecordConsumer', 'testFromTuple(String,List)')": [
+                        130
+                    ],
+                    "('org.apache.parquet.pig#TestTupleRecordConsumer', 'testFromGroups(String,List)')": [
+                        154,
+                        161,
+                        169
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        53,
+                        54
+                    ],
+                    "('org.apache.parquet.pig#TestTupleRecordConsumer', None)": [
+                        57
+                    ],
+                    "('org.apache.parquet.pig#TestTupleRecordConsumer', 'testFromTuple(String,List)')": [
+                        131
+                    ],
+                    "('org.apache.parquet.pig#TestTupleRecordConsumer', 'testFromGroups(String,List)')": [
+                        155,
+                        162,
+                        170
+                    ]
+                }
+            },
+            "parquet-pig/src/test/java/org/apache/parquet/pig/TupleConsumerPerfTest.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ]
+                }
+            },
+            "parquet-protobuf/src/main/java/org/apache/parquet/proto/ProtoReadSupport.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.parquet.proto#ProtoReadSupport', None)": [
+                        38
+                    ],
+                    "('org.apache.parquet.proto#ProtoReadSupport', 'init(InitContext)')": [
+                        65,
+                        69
+                    ],
+                    "('org.apache.parquet.proto#ProtoReadSupport', 'prepareForRead(Configuration,Map,MessageType,ReadContext)')": [
+                        88
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29
+                    ],
+                    "('org.apache.parquet.proto#ProtoReadSupport', None)": [
+                        39
+                    ],
+                    "('org.apache.parquet.proto#ProtoReadSupport', 'init(InitContext)')": [
+                        66,
+                        70
+                    ],
+                    "('org.apache.parquet.proto#ProtoReadSupport', 'prepareForRead(Configuration,Map,MessageType,ReadContext)')": [
+                        89
+                    ]
+                }
+            },
+            "parquet-protobuf/src/main/java/org/apache/parquet/proto/ProtoSchemaConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        32
+                    ],
+                    "('org.apache.parquet.proto#ProtoSchemaConverter', None)": [
+                        52
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        42,
+                        43
+                    ],
+                    "('org.apache.parquet.proto#ProtoSchemaConverter', None)": [
+                        53
+                    ]
+                }
+            },
+            "parquet-protobuf/src/main/java/org/apache/parquet/proto/ProtoWriteSupport.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('org.apache.parquet.proto#ProtoWriteSupport', None)": [
+                        51
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38,
+                        39
+                    ],
+                    "('org.apache.parquet.proto#ProtoWriteSupport', None)": [
+                        52
+                    ]
+                }
+            },
+            "parquet-protobuf/src/test/java/org/apache/parquet/proto/utils/WriteUsingMR.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.parquet.proto.utils#WriteUsingMR', None)": [
+                        47,
+                        64
+                    ],
+                    "('org.apache.parquet.proto.utils#WriteUsingMR', 'waitForJob(Job)')": [
+                        105
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33
+                    ],
+                    "('org.apache.parquet.proto.utils#WriteUsingMR', None)": [
+                        48,
+                        65
+                    ],
+                    "('org.apache.parquet.proto.utils#WriteUsingMR', 'waitForJob(Job)')": [
+                        106
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/hadoop/thrift/AbstractThriftWriteSupport.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#AbstractThriftWriteSupport', None)": [
+                        41
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36,
+                        37
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#AbstractThriftWriteSupport', None)": [
+                        42
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/hadoop/thrift/ThriftReadSupport.java": {
+                "old": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#ThriftReadSupport', None)": [
+                        49
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#ThriftReadSupport', 'getFieldProjectionFilter(Configuration)')": [
+                        131,
+                        132
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        46,
+                        47
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#ThriftReadSupport', None)": [
+                        50
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#ThriftReadSupport', 'getFieldProjectionFilter(Configuration)')": [
+                        132,
+                        133
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/ParquetReadProtocol.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        36,
+                        37
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', None)": [
+                        41
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readMessageBegin')": [
+                        66
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readMessageEnd')": [
+                        71
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readStructBegin')": [
+                        76
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readStructEnd')": [
+                        81
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readFieldBegin')": [
+                        86
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readFieldEnd')": [
+                        91
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readMapBegin')": [
+                        96
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readMapEnd')": [
+                        101
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readListBegin')": [
+                        106
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readListEnd')": [
+                        111
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readSetBegin')": [
+                        116
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readSetEnd')": [
+                        121
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readBool')": [
+                        126
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readByte')": [
+                        131
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readI16')": [
+                        136
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readI32')": [
+                        141
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readI64')": [
+                        146
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readDouble')": [
+                        151
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readString')": [
+                        156
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readBinary')": [
+                        161
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35,
+                        36
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', None)": [
+                        40
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readMessageBegin')": [
+                        65
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readMessageEnd')": [
+                        70
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readStructBegin')": [
+                        75
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readStructEnd')": [
+                        80
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readFieldBegin')": [
+                        85
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readFieldEnd')": [
+                        90
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readMapBegin')": [
+                        95
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readMapEnd')": [
+                        100
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readListBegin')": [
+                        105
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readListEnd')": [
+                        110
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readSetBegin')": [
+                        115
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readSetEnd')": [
+                        120
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readBool')": [
+                        125
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readByte')": [
+                        130
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readI16')": [
+                        135
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readI32')": [
+                        140
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readI64')": [
+                        145
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readDouble')": [
+                        150
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readString')": [
+                        155
+                    ],
+                    "('org.apache.parquet.thrift#ParquetReadProtocol', 'readBinary')": [
+                        160
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/ParquetWriteProtocol.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        35
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', None)": [
+                        412
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeMessageBegin(TMessage)')": [
+                        441
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeMessageEnd')": [
+                        451
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeStructBegin(TStruct)')": [
+                        461
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeStructEnd')": [
+                        471
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeFieldBegin(TField)')": [
+                        481
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeFieldEnd')": [
+                        491
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeFieldStop')": [
+                        501
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeMapBegin(TMap)')": [
+                        511
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeMapEnd')": [
+                        521
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeListBegin(TList)')": [
+                        531
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeListEnd')": [
+                        542
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeSetBegin(TSet)')": [
+                        553
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeSetEnd')": [
+                        563
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeBool(boolean)')": [
+                        573
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeByte(byte)')": [
+                        583
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeI16(short)')": [
+                        593
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeI32(int)')": [
+                        603
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeI64(long)')": [
+                        613
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeDouble(double)')": [
+                        623
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeString(String)')": [
+                        633
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeBinary(ByteBuffer)')": [
+                        643
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        49,
+                        50
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', None)": [
+                        412
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeMessageBegin(TMessage)')": [
+                        441
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeMessageEnd')": [
+                        451
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeStructBegin(TStruct)')": [
+                        461
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeStructEnd')": [
+                        471
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeFieldBegin(TField)')": [
+                        481
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeFieldEnd')": [
+                        491
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeFieldStop')": [
+                        501
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeMapBegin(TMap)')": [
+                        511
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeMapEnd')": [
+                        521
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeListBegin(TList)')": [
+                        531
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeListEnd')": [
+                        542
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeSetBegin(TSet)')": [
+                        553
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeSetEnd')": [
+                        563
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeBool(boolean)')": [
+                        573
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeByte(byte)')": [
+                        583
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeI16(short)')": [
+                        593
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeI32(int)')": [
+                        603
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeI64(long)')": [
+                        613
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeDouble(double)')": [
+                        623
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeString(String)')": [
+                        633
+                    ],
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeBinary(ByteBuffer)')": [
+                        643
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/ThriftMetaData.java": {
+                "old": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.parquet.thrift#ThriftMetaData', None)": [
+                        36
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27
+                    ],
+                    "('org.apache.parquet.thrift#ThriftMetaData', None)": [
+                        37
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/ThriftRecordConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        37
+                    ],
+                    "('org.apache.parquet.thrift#ThriftRecordConverter', None)": [
+                        69
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        58,
+                        59
+                    ],
+                    "('org.apache.parquet.thrift#ThriftRecordConverter', None)": [
+                        70
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/projection/StrictFieldProjectionFilter.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.parquet.thrift.projection#StrictFieldProjectionFilter', None)": [
+                        41
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27
+                    ],
+                    "('org.apache.parquet.thrift.projection#StrictFieldProjectionFilter', None)": [
+                        42
+                    ]
+                }
+            },
+            "parquet-thrift/src/test/java/org/apache/parquet/hadoop/thrift/TestInputOutputFormat.java": {
+                "old": {
+                    "(None, None)": [
+                        48
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#TestInputOutputFormat', None)": [
+                        61
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#TestInputOutputFormat', 'waitForJob(Job)')": [
+                        248,
+                        251
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        58,
+                        59
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#TestInputOutputFormat', None)": [
+                        62
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#TestInputOutputFormat', 'waitForJob(Job)')": [
+                        249,
+                        252
+                    ]
+                }
+            },
+            "parquet-thrift/src/test/java/org/apache/parquet/hadoop/thrift/TestParquetToThriftReadWriteAndProjection.java": {
+                "old": {
+                    "(None, None)": [
+                        41
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#TestParquetToThriftReadWriteAndProjection', None)": [
+                        53
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#TestParquetToThriftReadWriteAndProjection', 'shouldDoProjection(Configuration,T,T,Class)')": [
+                        377
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        44,
+                        45
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#TestParquetToThriftReadWriteAndProjection', None)": [
+                        54
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#TestParquetToThriftReadWriteAndProjection', 'shouldDoProjection(Configuration,T,T,Class)')": [
+                        378
+                    ]
+                }
+            },
+            "parquet-thrift/src/test/java/org/apache/parquet/hadoop/thrift/TestThriftToParquetFileWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        53
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#TestThriftToParquetFileWriter', None)": [
+                        70,
+                        71
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#TestThriftToParquetFileWriter', 'createFile(T)')": [
+                        273
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        67,
+                        68
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#TestThriftToParquetFileWriter', None)": [
+                        71
+                    ],
+                    "('org.apache.parquet.hadoop.thrift#TestThriftToParquetFileWriter', 'createFile(T)')": [
+                        273
+                    ]
+                }
+            },
+            "parquet-thrift/src/test/java/org/apache/parquet/thrift/TestParquetReadProtocol.java": {
+                "old": {
+                    "(None, None)": [
+                        41
+                    ],
+                    "('org.apache.parquet.thrift#TestParquetReadProtocol', None)": [
+                        64
+                    ],
+                    "('org.apache.parquet.thrift#TestParquetReadProtocol', 'validate(T)')": [
+                        149
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35,
+                        36
+                    ],
+                    "('org.apache.parquet.thrift#TestParquetReadProtocol', None)": [
+                        65
+                    ],
+                    "('org.apache.parquet.thrift#TestParquetReadProtocol', 'validate(T)')": [
+                        150
+                    ]
+                }
+            },
+            "parquet-thrift/src/test/java/org/apache/parquet/thrift/TestParquetWriteProtocol.java": {
+                "old": {
+                    "(None, None)": [
+                        42
+                    ],
+                    "('org.apache.parquet.thrift#TestParquetWriteProtocol', None)": [
+                        70
+                    ],
+                    "('org.apache.parquet.thrift#TestParquetWriteProtocol', 'validateThrift(String,TBase)')": [
+                        526
+                    ],
+                    "('org.apache.parquet.thrift#TestParquetWriteProtocol', 'validatePig(String,TBase)')": [
+                        538,
+                        540,
+                        545
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        35
+                    ],
+                    "('org.apache.parquet.thrift#TestParquetWriteProtocol', None)": [
+                        71
+                    ],
+                    "('org.apache.parquet.thrift#TestParquetWriteProtocol', 'validateThrift(String,TBase)')": [
+                        527
+                    ],
+                    "('org.apache.parquet.thrift#TestParquetWriteProtocol', 'validatePig(String,TBase)')": [
+                        539,
+                        541,
+                        546
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/org/apache/parquet/tools/command/MergeCommand.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        30
+                    ]
+                }
+            }
+        }
+    },
+    "ece4b70cce24b89483236b4cff079c10597d680a": {
+        "authored_data": "2016 Oct 19 00:45",
+        "commit.message": "PARQUET-751: Add setRequestedSchema to ParquetFileReader.\n\nThis fixes a bug introduced by dictionary filters, which reused an\nexisting file reader to avoid opening multiple input streams. Before\nthat commit, a new file reader was opened and passed the projection\ncolumns from the read context. The fix is to set the requested schema on\nthe file reader instead of creating a new instance.\n\nThis also adds a test to ensure that column projection works to catch\nbugs like this in the future.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #379 from rdblue/PARQUET-751-fix-column-projection and squashes the following commits:\n\n7ea0c16 [Ryan Blue] PARQUET-751: Fix column projection test.\n1da507e [Ryan Blue] PARQUET-751: Add setRequestedSchema to ParquetFileReader.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "1058b7d98f83c47d5f400c3c758f1cc898540988",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordReader.java": {
+                "new": {
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'initialize(ParquetFileReader,Configuration)')": [
+                        182
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileReader.java": {
+                "new": {
+                    "(None, None)": [
+                        98
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', None)": [
+                        676,
+                        677,
+                        682
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'setRequestedSchema(MessageType)')": [
+                        678,
+                        679,
+                        680,
+                        681
+                    ]
+                }
+            }
+        }
+    }
+}

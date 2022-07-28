@@ -1,0 +1,789 @@
+{
+    "fb46b941f7763314d667c437c06b1675e61c3d38": {
+        "authored_data": "2016 Feb 26 18:28",
+        "commit.message": "PARQUET-397: Implement Pig predicate pushdown\n\nThis is based on #296 from @danielcweeks and implements a few remaining review items.\n\nCloses #296.\n\nAuthor: Daniel Weeks <dweeks@netflix.com>\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #331 from rdblue/PARQUET-397-pig-predicate-pushdown and squashes the following commits:\n\nc7a9b02 [Ryan Blue] PARQUET-397: Address review comments.\n54e23a6 [Ryan Blue] PARQUET-397: Update Pig PPD to throw for bad expressions.\n388099b [Daniel Weeks] Cleaning up imports\n6b405b4 [Daniel Weeks] Merge remote-tracking branch 'rdblue/pig-predicate-pushdown' into pig-predicate-pushdown\nf1ef73e [Daniel Weeks] Fixed binary type and storing filter predicate\na39fdff [Ryan Blue] WIP: Handle a few error cases in Pig predicate pushdown.\n2666849 [Daniel Weeks] Fixed test to check the actual number of materialized rows from the reader\n7b019a6 [Daniel Weeks] update tests and logging\nf8ca447 [Daniel Weeks] Add predicate pushdown using filter2 api\n",
+        "commit.author.name": "Daniel Weeks",
+        "pcid": "c44f982e89b63a97190638cd12bd8bee2bafb883",
+        "changes": {
+            "parquet-pig/src/main/java/org/apache/parquet/pig/ParquetLoader.java": {
+                "old": {
+                    "('org.apache.parquet.pig#ParquetLoader', None)": [
+                        73
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33,
+                        34,
+                        38,
+                        39,
+                        49,
+                        50,
+                        51,
+                        52,
+                        54,
+                        55,
+                        56,
+                        59,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        577,
+                        578
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', None)": [
+                        90,
+                        92,
+                        93,
+                        94,
+                        199,
+                        420,
+                        445,
+                        446,
+                        447,
+                        464,
+                        465,
+                        466,
+                        474,
+                        475,
+                        517,
+                        518,
+                        552,
+                        553,
+                        554,
+                        567,
+                        568
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'setInput(String,Job)')": [
+                        195,
+                        196,
+                        197,
+                        198
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getPredicateFields(String,Job)')": [
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getSupportedExpressionTypes')": [
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'setPushdownPredicate(Expression)')": [
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'buildFilter(Expression)')": [
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        499,
+                        500,
+                        501,
+                        502,
+                        503,
+                        504,
+                        505,
+                        506,
+                        507,
+                        508,
+                        509,
+                        510,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'buildFilter(OpType,Column,Const)')": [
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'op(Expression,COL,Const)')": [
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getValue(Const,Class)')": [
+                        569,
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        575,
+                        576
+                    ]
+                }
+            },
+            "parquet-pig/src/test/java/org/apache/parquet/pig/TestParquetLoader.java": {
+                "old": {
+                    "('org.apache.parquet.pig#TestParquetLoader', 'testReqestedSchemaColumnPruning')": [
+                        178,
+                        179,
+                        180,
+                        181,
+                        182
+                    ],
+                    "('org.apache.parquet.pig#TestParquetLoader', 'testTypePersuasion')": [
+                        215
+                    ],
+                    "('org.apache.parquet.pig#TestParquetLoader', 'testColumnIndexAccess')": [
+                        271,
+                        275,
+                        288
+                    ],
+                    "('org.apache.parquet.pig#TestParquetLoader', 'testColumnIndexAccessProjection')": [
+                        309,
+                        310,
+                        311,
+                        312
+                    ],
+                    "('org.apache.parquet.pig#TestParquetLoader', None)": [
+                        328,
+                        329,
+                        330
+                    ],
+                    "('org.apache.parquet.pig#TestParquetLoader', 'testRead')": [
+                        331
+                    ],
+                    "(None, None)": [
+                        332
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        32,
+                        39
+                    ],
+                    "('org.apache.parquet.pig#TestParquetLoader', 'testReqestedSchemaColumnPruning')": [
+                        182,
+                        183,
+                        184,
+                        185,
+                        186
+                    ],
+                    "('org.apache.parquet.pig#TestParquetLoader', 'testTypePersuasion')": [
+                        219
+                    ],
+                    "('org.apache.parquet.pig#TestParquetLoader', 'testColumnIndexAccess')": [
+                        275,
+                        279,
+                        292
+                    ],
+                    "('org.apache.parquet.pig#TestParquetLoader', 'testColumnIndexAccessProjection')": [
+                        313,
+                        314,
+                        315,
+                        316
+                    ],
+                    "('org.apache.parquet.pig#TestParquetLoader', None)": [
+                        332,
+                        333,
+                        334
+                    ],
+                    "('org.apache.parquet.pig#TestParquetLoader', 'testPredicatePushdown')": [
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365
+                    ]
+                }
+            }
+        }
+    },
+    "c44f982e89b63a97190638cd12bd8bee2bafb883": {
+        "authored_data": "2016 Feb 22 02:36",
+        "commit.message": "PARQUET-529: Avoid evoking job.toString() in ParquetLoader\n\nWhen ran under hadoop2 environment and log level setting to `DEBUG`, ParquetLoader would evoke `job.toString()` in several methods, which might cause the whole application to stop due to :\n\n```\njava.lang.IllegalStateException: Job in state DEFINE instead of RUNNING\n\n\tat org.apache.hadoop.mapreduce.Job.ensureState(Job.java:283)\n\tat org.apache.hadoop.mapreduce.Job.toString(Job.java:452)\n\tat java.lang.String.valueOf(String.java:2847)\n\tat java.lang.StringBuilder.append(StringBuilder.java:128)\n\tat org.apache.parquet.pig.ParquetLoader.getSchema(ParquetLoader.java:260)\n\tat org.apache.parquet.pig.TestParquetLoader.testSchema(TestParquetLoader.java:54)\n    ...\n```\n\nThe reason is that in the hadoop 2.x branch, `org.apache.hadoop.mapreduce.Job.toString()` has added an `ensureState(JobState.RUNNING)` check; see [map-reduce: Job.java#452](http://grepcode.com/file/repo1.maven.org/maven2/org.apache.hadoop/hadoop-mapreduce-client-core/2.3.0/org/apache/hadoop/mapreduce/Job.java#452). In contrast, the hadoop 1.x branch does not contain such checks, so `ParquetLoader` works well.\n\nThis PR simply avoids evoking `job.toString()` in `ParquetLoader`.\n\nAuthor: proflin <proflin.me@gmail.com>\nAuthor: Liwei Lin <proflin.me@gmail.com>\n\nCloses #326 from proflin/PARQUET-529--Avoid-evoking-job.toString()-in-ParquetLoader and squashes the following commits:\n\nf464c7b [proflin] Add jobToString\n5d4c750 [proflin] PARQUET-529: Avoid evoking job.toString() in ParquetLoader.java\nbb4283a [Liwei Lin] Merge branch 'master' of https://github.com/proflin/parquet-mr\n839b458 [proflin] Merge remote-tracking branch 'refs/remotes/apache/master'\n",
+        "commit.author.name": "proflin",
+        "pcid": "944291b748bcfec4e2f3c17623884db7a17b9f21",
+        "changes": {
+            "parquet-pig/src/main/java/org/apache/parquet/pig/ParquetLoader.java": {
+                "old": {
+                    "('org.apache.parquet.pig#ParquetLoader', 'setLocation(String,Job)')": [
+                        140
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getPartitionKeys(String,Job)')": [
+                        243
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getSchema(String,Job)')": [
+                        250
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getStatistics(String,Job)')": [
+                        292
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.pig#ParquetLoader', 'setLocation(String,Job)')": [
+                        140,
+                        141,
+                        142,
+                        143
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getPartitionKeys(String,Job)')": [
+                        246,
+                        247,
+                        248,
+                        249
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getSchema(String,Job)')": [
+                        256,
+                        257,
+                        258,
+                        259
+                    ],
+                    "('org.apache.parquet.pig#ParquetLoader', 'getStatistics(String,Job)')": [
+                        301,
+                        302,
+                        303,
+                        304
+                    ]
+                }
+            }
+        }
+    },
+    "944291b748bcfec4e2f3c17623884db7a17b9f21": {
+        "authored_data": "2016 Feb 16 00:37",
+        "commit.message": "PARQUET-431: Make ParquetOutputFormat.memoryManager volatile\n\nCurrently ParquetOutputFormat.getRecordWriter() contains an unsynchronized lazy initialization of the non-volatile static field *memoryManager*.\n\nBecause the compiler or processor may reorder instructions, threads are not guaranteed to see a completely initialized object, when ParquetOutputFormat.getRecordWriter() is called by multiple threads.\n\nThis PR makes *memoryManager* volatile to correct the problem.\n\nAuthor: Liwei Lin <proflin.me@gmail.com>\nAuthor: proflin <proflin.me@gmail.com>\n\nCloses #313 from proflin/PARQUET-431 and squashes the following commits:\n\n1aa4a44 [Liwei Lin] empty commit to trigger CI\n5e94fa3 [Liwei Lin] Remove the volatile modifier for memoryManager\nd54bb99 [Liwei Lin] Undo the Deprecated anotation\nfd1df4e [Liwei Lin] Adds synchronization around the creation of memoryManager as well as getMemoryManager()\n615aa5a [proflin] PARQUET-431\n",
+        "commit.author.name": "Liwei Lin",
+        "pcid": "6c9ca4d4c0de4dff29b79f28ac5c51b4f6fed0da",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetOutputFormat.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'getRecordWriter(Configuration,Path,CompressionCodecName)')": [
+                        397,
+                        398,
+                        399
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', None)": [
+                        444
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'getMemoryManager')": [
+                        450
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'getRecordWriter(Configuration,Path,CompressionCodecName)')": [
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'getMemoryManager')": [
+                        452
+                    ]
+                }
+            }
+        }
+    },
+    "6c9ca4d4c0de4dff29b79f28ac5c51b4f6fed0da": {
+        "authored_data": "2016 Feb 16 00:35",
+        "commit.message": "PARQUET-430: Change to use Locale parameterized version of String.toUpperCase()/toLowerCase\n\nA String is being converted to upper or lowercase, using the platform's default encoding. This may result in improper conversions when used with international characters.\n\nFor instance, \"TITLE\".toLowerCase() in a Turkish locale returns \"t\u0131tle\", where '\u0131' -- without a dot -- is the LATIN SMALL LETTER DOTLESS I character. To obtain correct results for locale insensitive strings, we'd better use toLowerCase(Locale.ENGLISH).\n\nFor more information on this, please see:\n- http://stackoverflow.com/questions/11063102/using-locales-with-javas-tolowercase-and-touppercase\n- http://lotusnotus.com/lotusnotus_en.nsf/dx/dotless-i-tolowercase-and-touppercase-functions-use-responsibly.htm\n- http://java.sys-con.com/node/46241\n\nThis PR changes our use of String.toUpperCase()/toLowerCase() to String.toUpperCase(Locale.*ENGLISH*)/toLowerCase(*Locale.ENGLISH*)\n\nAuthor: proflin <proflin.me@gmail.com>\n\nCloses #312 from proflin/PARQUET-430 and squashes the following commits:\n\ned55822 [proflin] PARQUET-430\n",
+        "commit.author.name": "proflin",
+        "pcid": "c26fa78817f30cc3eb91165b783e07fb80d80f59",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/filter2/predicate/Operators.java": {
+                "old": {
+                    "('org.apache.parquet.filter2.predicate#Operators', None)": [
+                        132,
+                        261,
+                        389,
+                        445
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.parquet.filter2.predicate#Operators', None)": [
+                        133,
+                        262,
+                        390,
+                        446
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/schema/GroupType.java": {
+                "old": {
+                    "('org.apache.parquet.schema#GroupType', 'writeToStringBuilder(StringBuilder,String)')": [
+                        211
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.parquet.schema#GroupType', 'writeToStringBuilder(StringBuilder,String)')": [
+                        212
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/schema/MessageTypeParser.java": {
+                "old": {
+                    "('org.apache.parquet.schema#MessageTypeParser', 'asPrimitive(String,Tokenizer)')": [
+                        198
+                    ],
+                    "('org.apache.parquet.schema#MessageTypeParser', 'asRepetition(String,Tokenizer)')": [
+                        206
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.parquet.schema#MessageTypeParser', 'asPrimitive(String,Tokenizer)')": [
+                        199
+                    ],
+                    "('org.apache.parquet.schema#MessageTypeParser', 'asRepetition(String,Tokenizer)')": [
+                        207
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/schema/PrimitiveType.java": {
+                "old": {
+                    "('org.apache.parquet.schema#PrimitiveType', 'writeToStringBuilder(StringBuilder,String)')": [
+                        397
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.parquet.schema#PrimitiveType', 'writeToStringBuilder(StringBuilder,String)')": [
+                        398
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/metadata/CompressionCodecName.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        36
+                    ]
+                }
+            }
+        }
+    },
+    "c26fa78817f30cc3eb91165b783e07fb80d80f59": {
+        "authored_data": "2016 Feb 06 19:57",
+        "commit.message": "PARQUET-385 PARQUET-379: Fixes strict schema merging\n\nThis PR fixes strict mode schema merging. To merge two `PrimitiveType` `t1` and `t2`, they must satisfy the following conditions:\n\n1. `t1` and `t2` have the same primitive type name\n1. `t1` and `t2` either\n   - don't have original type, or\n   - have the same original type\n1. If `t1` and `t2` are both `FIXED_LEN_BYTE_ARRAY`, they should have the same length\n\nAlso, merged schema now preserves original name if there's any.\n\nAuthor: Cheng Lian <lian@databricks.com>\n\nCloses #315 from liancheng/fix-strict-schema-merge and squashes the following commits:\n\na29138c [Cheng Lian] Addresses PR comment\n1ac804e [Cheng Lian] Fixes strict schema merging\n",
+        "commit.author.name": "Cheng Lian",
+        "pcid": "a4acf53336a482f50335d33b4f650a70c9243b7b",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/schema/PrimitiveType.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        9,
+                        11
+                    ],
+                    "('org.apache.parquet.schema#PrimitiveType', 'union(Type,boolean)')": [
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        527
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        9,
+                        11
+                    ],
+                    "('org.apache.parquet.schema#PrimitiveType', 'reportSchemaMergeError(Type)')": [
+                        517,
+                        518
+                    ],
+                    "('org.apache.parquet.schema#PrimitiveType', None)": [
+                        519,
+                        520
+                    ],
+                    "('org.apache.parquet.schema#PrimitiveType', 'union(Type,boolean)')": [
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        546,
+                        547
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/schema/TestMessageType.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        9,
+                        11,
+                        148
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        9,
+                        11,
+                        21
+                    ],
+                    "('org.apache.parquet.schema#TestMessageType', 'testMergeSchema')": [
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160
+                    ],
+                    "('org.apache.parquet.schema#TestMessageType', None)": [
+                        161
+                    ]
+                }
+            }
+        }
+    },
+    "a4acf53336a482f50335d33b4f650a70c9243b7b": {
+        "authored_data": "2016 Feb 06 19:41",
+        "commit.message": "PARQUET-509: Fix args passed to string format calls\n\nThis PR fixes the args passed to the `String.format()` call.\n\nAuthor: Nezih Yigitbasi <nyigitbasi@netflix.com>\n\nCloses #320 from nezihyigitbasi/debug_args and squashes the following commits:\n\n43a6088 [Nezih Yigitbasi] Fix args passed to string format calls\n",
+        "commit.author.name": "Nezih Yigitbasi",
+        "pcid": "0a711ebcec7d32b66ab3c90b2a1f48681201e557",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/DirectCodecFactory.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#DirectCodecFactory', None)": [
+                        392,
+                        412
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#DirectCodecFactory', None)": [
+                        392,
+                        412
+                    ]
+                }
+            }
+        }
+    },
+    "0a711ebcec7d32b66ab3c90b2a1f48681201e557": {
+        "authored_data": "2016 Feb 03 20:45",
+        "commit.message": "PARQUET-415: Fix ByteBuffer Binary serialization.\n\nThis also adds a test to validate that serialization works for all\nBinary objects that are already test cases.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #305 from rdblue/PARQUET-415-fix-bytebuffer-binary-serialization and squashes the following commits:\n\n4e75d54 [Ryan Blue] PARQUET-415: Fix ByteBuffer Binary serialization.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "06a4689959e361729c405e78b8a5964228cb521f",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/io/api/Binary.java": {
+                "old": {
+                    "('org.apache.parquet.io.api#Binary', None)": [
+                        358,
+                        359,
+                        360
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.io.api#Binary', None)": [
+                        358,
+                        359,
+                        360,
+                        505,
+                        506
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/io/api/TestBinary.java": {
+                "new": {
+                    "(None, None)": [
+                        21,
+                        24,
+                        25,
+                        35
+                    ],
+                    "('org.apache.parquet.io.api#TestBinary', 'testSerializable(BinaryFactory,boolean)')": [
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247
+                    ],
+                    "('org.apache.parquet.io.api#TestBinary', None)": [
+                        248,
+                        249
+                    ],
+                    "('org.apache.parquet.io.api#TestBinary', 'testBinary(BinaryFactory,boolean)')": [
+                        259
+                    ]
+                }
+            }
+        }
+    },
+    "63d5ae78ac00d710c9bf631f8cb9ed6d07e6a2c9": {
+        "authored_data": "2016 Feb 01 18:09",
+        "commit.message": "PARQUET-495: Fix mismatches in Types class comments\n\nTo produce\n> required group User {\n    required int64 id;\n    **optional** binary email (UTF8);\n }\n\nwe should do:\n>\nTypes.requiredGroup()\n      .required(INT64).named(\"id\")\n      .~~**required** (BINARY).as(UTF8).named(\"email\")~~\n      .**optional** (BINARY).as(UTF8).named(\"email\")\n      .named(\"User\")\n\n@rdblue @liancheng would you mind taking a look at it when you have time? Thanks!\n\nAuthor: Liwei Lin <proflin.me@gmail.com>\nAuthor: proflin <proflin.me@gmail.com>\n\nCloses #317 from proflin/PARQUET-495--Fix-mismatches-in-Types-class-comments and squashes the following commits:\n\nf26d57d [Liwei Lin] PARQUET-495: Fix mismatches in Types class comments\n839b458 [proflin] Merge remote-tracking branch 'refs/remotes/apache/master'\n",
+        "commit.author.name": "Liwei Lin",
+        "pcid": "57694790f8ca0e1a4f3ac76fbd25a6dd13041e03",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/schema/Types.java": {
+                "old": {
+                    "(None, None)": [
+                        62,
+                        85,
+                        164
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        62,
+                        85,
+                        164
+                    ]
+                }
+            }
+        }
+    },
+    "57694790f8ca0e1a4f3ac76fbd25a6dd13041e03": {
+        "authored_data": "2016 Feb 01 03:21",
+        "commit.message": "PARQUET-480: Update for Cascading 3.0\n\nThe code in parquet-cascading is adapted to the API as of Cascading 2.5.3\n\nSome incompatible changes were introduced in Cascading 3.0. This patch forks the parquet-cascading module to also provide a parquet-cascading3 module, which is about identical save for overloads which changed from requiring a Foo<JobConf> to requiring a Foo<? extends JobConf>\n\nAuthor: Cyrille Ch\u00e9p\u00e9lov (TP12) <cch@transparencyrights.com>\n\nCloses #284 from cchepelov/try_cascading3 and squashes the following commits:\n\ne7d1304 [Cyrille Ch\u00e9p\u00e9lov (TP12)] Adding a @Deprecated notice on parquet-cascading's remaining classes\n05a417d [Cyrille Ch\u00e9p\u00e9lov (TP12)] cascading2/3: share back TupleWriteSupport.java (accidentally unmerged)\n7fff2d4 [Cyrille Ch\u00e9p\u00e9lov (TP12)] cascading/cascading3: remove duplicates, push common files into parquet-cascading-common23\n338a416 [Cyrille Ch\u00e9p\u00e9lov (TP12)] Removing unwanted file (what?!) + .gitignoring this kind of files\nd9f0455 [Cyrille Ch\u00e9p\u00e9lov (TP12)] TupleEntry#get is now TupleEntry#getObject\na7f490a [Cyrille Ch\u00e9p\u00e9lov (TP12)] Revert \"Missing test conversion to Cascading 3.0\"\ncc8b870 [Cyrille Ch\u00e9p\u00e9lov (TP12)] Missing test conversion to Cascading 3.0\n2d73512 [Cyrille Ch\u00e9p\u00e9lov (TP12)] conflicting values can come in one order or the other. Accept both.\n33355d5 [Cyrille Ch\u00e9p\u00e9lov (TP12)] Fix version mismatch (duh!)\n7128639 [Cyrille Ch\u00e9p\u00e9lov (TP12)] non-C locale can break tests implementation (decimal formats)\n53aa2f9 [Cyrille Ch\u00e9p\u00e9lov (TP12)] Adding a parquet-cascading3 module (forking the parquet-cascading module and accounting for API changes)\n",
+        "commit.author.name": "Cyrille Ch\u00e9p\u00e9lov (TP12)",
+        "pcid": "af9fd052d1c208f191fbdf85873f965552465598",
+        "changes": {
+            "parquet-cascading/src/main/java/org/apache/parquet/cascading/ParquetTBaseScheme.java": {
+                "new": {
+                    "(None, None)": [
+                        36
+                    ]
+                }
+            },
+            "parquet-cascading/src/main/java/org/apache/parquet/cascading/ParquetTupleScheme.java": {
+                "new": {
+                    "(None, None)": [
+                        62
+                    ]
+                }
+            },
+            "parquet-cascading/src/main/java/org/apache/parquet/cascading/ParquetValueScheme.java": {
+                "new": {
+                    "(None, None)": [
+                        50
+                    ]
+                }
+            },
+            "parquet-cascading/src/test/java/org/apache/parquet/cascading/TestParquetTBaseScheme.java": {
+                "old": {
+                    "('org.apache.parquet.cascading#TestParquetTBaseScheme', None)": [
+                        62
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        61
+                    ],
+                    "('org.apache.parquet.cascading#TestParquetTBaseScheme', None)": [
+                        63
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/hadoop/TestMergeMetadataFiles.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#TestMergeMetadataFiles', 'testThrowsWhenIncompatible')": [
+                        205,
+                        212
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#TestMergeMetadataFiles', 'testThrowsWhenIncompatible')": [
+                        205,
+                        206,
+                        207,
+                        208,
+                        215,
+                        216,
+                        217,
+                        218
+                    ]
+                }
+            }
+        }
+    }
+}

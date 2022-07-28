@@ -1,0 +1,1027 @@
+{
+    "76a2ac814caa194c46be1cf7a3f5dc129546b1c1": {
+        "authored_data": "2016 Aug 03 21:22",
+        "commit.message": "PARQUET-669: allow reading footers from provided file listing and streams\n\nThe use case is that I want to reuse existing listing of files and avoid doing it again when opening streams. This is in case where filesystem.open is expensive but you have other means of obtaining input stream for a file.\n\nAuthor: Robert Kruszewski <robertk@palantir.com>\n\nCloses #357 from robert3005/robertk/allow-reading-footers-from-streams and squashes the following commits:\n\n4d8a54c [Robert Kruszewski] allow reading footers from provided file listing and streams\n",
+        "commit.author.name": "Robert Kruszewski",
+        "pcid": "ea402becca436dc1a8e47ac9385a3db475b49355",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileReader.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readFooter(Configuration,FileStatus,MetadataFilter)')": [
+                        437
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readFooter(FileStatus,FSDataInputStream,MetadataFilter)')": [
+                        443,
+                        444,
+                        446,
+                        449,
+                        450,
+                        451,
+                        452,
+                        462
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', None)": [
+                        558
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'getFooter')": [
+                        597
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readFooter(Configuration,FileStatus,MetadataFilter)')": [
+                        437
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', None)": [
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        566
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readFooter(long,String,FSDataInputStream,MetadataFilter)')": [
+                        452,
+                        454,
+                        457,
+                        458,
+                        459,
+                        460,
+                        470
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'getFooter')": [
+                        605
+                    ]
+                }
+            }
+        }
+    },
+    "ea402becca436dc1a8e47ac9385a3db475b49355": {
+        "authored_data": "2016 Aug 03 21:14",
+        "commit.message": "PARQUET-668 - Provide option to disable auto crop feature in dump\n\nhttps://issues.apache.org/jira/browse/PARQUET-668\n\n1. Added option `--disable-crop`\n2. Updated `README.md` to reflect changes\n\nAuthor: djhworld <djharperuk@gmail.com>\n\nCloses #358 from djhworld/master and squashes the following commits:\n\n493c3d0 [djhworld] PARQUET-668: Removed usage instructions from README, replaced with --help flag\n696a5e6 [djhworld] PARQUET-668 -> Updated README.md to fix issue in usage string\n6cbf59b [djhworld] PARQUET-668 - Provide option to disable auto crop feature in DumpCommand output\n",
+        "commit.author.name": "djhworld",
+        "pcid": "5c85b8dda5f3047732a17b818256b9289274d071",
+        "changes": {
+            "parquet-tools/src/main/java/org/apache/parquet/tools/command/DumpCommand.java": {
+                "old": {
+                    "('org.apache.parquet.tools.command#DumpCommand', 'execute(CommandLine)')": [
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.tools.command#DumpCommand', None)": [
+                        88,
+                        89,
+                        90,
+                        91,
+                        99,
+                        360,
+                        361
+                    ],
+                    "('org.apache.parquet.tools.command#DumpCommand', 'execute(CommandLine)')": [
+                        132,
+                        140
+                    ],
+                    "('org.apache.parquet.tools.command#DumpCommand', 'prettyPrintWriter(boolean)')": [
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359
+                    ]
+                }
+            }
+        }
+    },
+    "5c85b8dda5f3047732a17b818256b9289274d071": {
+        "authored_data": "2016 Aug 01 21:38",
+        "commit.message": "PARQUET-511: Integer overflow when counting values in column.\n\nThis commit fixes an issue when the number of entries in a column page is larger than the size of an integer. No exception is thrown directly, but the def level is set incorrectly, leading to a null value being returned during read.\n\nAuthor: Michal Gorecki <goreckim@amazon.com>\n\nCloses #321 from goreckm/int-overflow and squashes the following commits:\n\nd224815 [Michal Gorecki] enhancing exception message\n7334be2 [Michal Gorecki] PARQUET-511: Integer overflow when counting values in column.\n",
+        "commit.author.name": "Michal Gorecki",
+        "pcid": "60b6d5aa3feeb31c03baa9f06e2de32172724d78",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/column/impl/ColumnReaderImpl.java": {
+                "old": {
+                    "('org.apache.parquet.column.impl#ColumnReaderImpl', None)": [
+                        153,
+                        355,
+                        356
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.column.impl#ColumnReaderImpl', None)": [
+                        153,
+                        355,
+                        356
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ColumnChunkPageReadStore.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ColumnChunkPageReadStore', None)": [
+                        67
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ColumnChunkPageReadStore', None)": [
+                        67
+                    ]
+                }
+            }
+        }
+    },
+    "6a62646bfcecec9c0806a216b17e1a4ccb4609aa": {
+        "authored_data": "2016 Jul 17 23:27",
+        "commit.message": "PARQUET-543: Remove unused boundedint package.\n\nThis relocates the DevNullValuesWriter and ZeroIntegerValuesReader,\nwhich are used but are not related to the boundedint code.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #329 from rdblue/PARQUET-543-remove-boundedint and squashes the following commits:\n\n0158c51 [Ryan Blue] PARQUET-543: Update new import in ParquetProperties.\n550a1a3 [Ryan Blue] PARQUET-543: Remove unused boundedint package.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "626014eaf093fc2e3b53f5ad00c425bc209e1428",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/column/Encoding.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/ParquetProperties.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34
+                    ]
+                }
+            }
+        }
+    },
+    "626014eaf093fc2e3b53f5ad00c425bc209e1428": {
+        "authored_data": "2016 Jul 17 21:59",
+        "commit.message": "PARQUET-651: Improve Avro's isElementType check.\n\nThe Avro implementation needs to check whether the read schema that is\npassed by the user (or automatically converted from the file schema)\nexpects an extra 1-field layer to be returned, which matches the\nprevious behavior of Avro when reading a 3-level list. Before this\ncommit, the check was done by testing the structure of the expected list\nelement type against the repeated group's schema. If they matched, then\nAvro assumed that the user expected an extra layer. However, for records\nthat happened to match (1-field records with a field named \"element\")\nthe check could be wrong and would cause exceptions later.\n\nThis commit updates the check to convert the file's element schema to\nAvro and compare the compatibility of that schema with what was passed\nby the user. This checks the entire tree from the element down and gets\nthe answer right based on the element and its children, not just the\nfield names on the element.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #352 from rdblue/PARQUET-651-improve-is-element-type-check and squashes the following commits:\n\nad9c1ee [Ryan Blue] PARQUET-651: Undo accidental default setting change.\n1efa248 [Ryan Blue] PARQUET-651: Improve Avro's isElementType check.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "a421d952efd85ec581131069a5b132934ee286d3",
+        "changes": {
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroRecordConverter.java": {
+                "old": {
+                    "('org.apache.parquet.avro#AvroRecordConverter', 'isElementType(Type,Schema)')": [
+                        852,
+                        853,
+                        854,
+                        855,
+                        856,
+                        857,
+                        858
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        45,
+                        49,
+                        57,
+                        65,
+                        66
+                    ],
+                    "('org.apache.parquet.avro#AvroRecordConverter', None)": [
+                        834,
+                        835,
+                        836,
+                        837,
+                        838,
+                        839,
+                        840,
+                        841
+                    ],
+                    "('org.apache.parquet.avro#AvroRecordConverter', 'isElementType(Type,Schema)')": [
+                        865,
+                        866,
+                        867,
+                        868,
+                        869
+                    ]
+                }
+            },
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroSchemaConverter.java": {
+                "new": {
+                    "('org.apache.parquet.avro#AvroSchemaConverter', None)": [
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        236,
+                        237
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'convert(GroupType)')": [
+                        234,
+                        235
+                    ]
+                }
+            },
+            "parquet-avro/src/test/java/org/apache/parquet/avro/TestArrayCompatibility.java": {
+                "old": {
+                    "('org.apache.parquet.avro#TestArrayCompatibility', 'oldBehaviorReader(Path)')": [
+                        1040
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30,
+                        31
+                    ],
+                    "('org.apache.parquet.avro#TestArrayCompatibility', None)": [
+                        49,
+                        1043,
+                        1168,
+                        1169,
+                        1173,
+                        1174,
+                        1185,
+                        1186
+                    ],
+                    "('org.apache.parquet.avro#TestArrayCompatibility', 'setupNewBehaviorConfiguration')": [
+                        54,
+                        55
+                    ],
+                    "('org.apache.parquet.avro#TestArrayCompatibility', 'testListOfSingleElementStructsWithElementField')": [
+                        1044,
+                        1045,
+                        1046,
+                        1047,
+                        1048,
+                        1049,
+                        1050,
+                        1051,
+                        1052,
+                        1053,
+                        1054,
+                        1055,
+                        1056,
+                        1057,
+                        1058,
+                        1059,
+                        1060,
+                        1061,
+                        1062,
+                        1063,
+                        1064,
+                        1065,
+                        1066,
+                        1067,
+                        1068,
+                        1069,
+                        1070,
+                        1071,
+                        1072,
+                        1073,
+                        1074,
+                        1075,
+                        1076,
+                        1077,
+                        1078,
+                        1079,
+                        1080,
+                        1081,
+                        1082,
+                        1083,
+                        1084,
+                        1085,
+                        1086,
+                        1087,
+                        1088,
+                        1089,
+                        1090,
+                        1091,
+                        1092,
+                        1093,
+                        1094,
+                        1095,
+                        1096,
+                        1097,
+                        1098,
+                        1099,
+                        1100,
+                        1101,
+                        1102,
+                        1103,
+                        1104,
+                        1105,
+                        1106,
+                        1107,
+                        1108,
+                        1109,
+                        1110,
+                        1111,
+                        1112,
+                        1113,
+                        1114,
+                        1115,
+                        1116,
+                        1117,
+                        1118,
+                        1119,
+                        1120,
+                        1121,
+                        1122,
+                        1123,
+                        1124,
+                        1125,
+                        1126,
+                        1127,
+                        1128,
+                        1129,
+                        1130,
+                        1131,
+                        1132,
+                        1133,
+                        1134,
+                        1135,
+                        1136,
+                        1137,
+                        1138,
+                        1139,
+                        1140,
+                        1141,
+                        1142,
+                        1143,
+                        1144,
+                        1145,
+                        1146,
+                        1147,
+                        1148,
+                        1149,
+                        1150,
+                        1151,
+                        1152,
+                        1153,
+                        1154,
+                        1155,
+                        1156,
+                        1157,
+                        1158,
+                        1159,
+                        1160,
+                        1161,
+                        1162,
+                        1163,
+                        1164,
+                        1165,
+                        1166,
+                        1167
+                    ],
+                    "('org.apache.parquet.avro#TestArrayCompatibility', 'oldBehaviorReader(Path)')": [
+                        1172
+                    ],
+                    "('org.apache.parquet.avro#TestArrayCompatibility', 'oldBehaviorReader(Path,Schema)')": [
+                        1175,
+                        1176,
+                        1177,
+                        1178,
+                        1179
+                    ],
+                    "('org.apache.parquet.avro#TestArrayCompatibility', 'newBehaviorReader(Path,Schema)')": [
+                        1187,
+                        1188,
+                        1189,
+                        1190,
+                        1191
+                    ]
+                }
+            }
+        }
+    },
+    "42662f8750a2c33ee169f17f4b4e4586db98d869": {
+        "authored_data": "2016 Jul 15 16:53",
+        "commit.message": "PARQUET-389: Support predicate push down on missing columns.\n\nPredicate push-down will complain when predicates reference columns that aren't in a file's schema. This makes it difficult to implement predicate push-down in engines where schemas evolve because each task needs to process the predicates and prune references to columns not in that task's file. This PR implements predicate evaluation for missing columns, where the values are all null. This allows engines to pass predicates as they are written.\n\nA future commit should rewrite the predicates to avoid the extra work currently done in record-level filtering, but that isn't included here because it is an optimization.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #354 from rdblue/PARQUET-389-predicate-push-down-on-missing-columns and squashes the following commits:\n\nb4d809a [Ryan Blue] PARQUET-389: Support record-level filtering with missing columns.\n91b841c [Ryan Blue] PARQUET-389: Add missing column support to StatisticsFilter.\n275f950 [Ryan Blue] PARQUET-389: Add missing column support to DictionaryFilter.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "02ce9b094c0229cdd5430d9931d7407e72e6f453",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/filter2/predicate/SchemaCompatibilityValidator.java": {
+                "old": {
+                    "('org.apache.parquet.filter2.predicate#SchemaCompatibilityValidator', 'getColumnDescriptor(ColumnPath)')": [
+                        180,
+                        181,
+                        182
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.filter2.predicate#SchemaCompatibilityValidator', 'validateColumn(Column)')": [
+                        170,
+                        171,
+                        172,
+                        173,
+                        174
+                    ],
+                    "('org.apache.parquet.filter2.predicate#SchemaCompatibilityValidator', 'getColumnDescriptor(ColumnPath)')": [
+                        185
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/filter2/dictionarylevel/DictionaryFilter.java": {
+                "old": {
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'getColumnChunk(ColumnPath)')": [
+                        72,
+                        73,
+                        74
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'visit(Eq)')": [
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        123,
+                        124
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'visit(NotEq)')": [
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        157
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'visit(Lt)')": [
+                        189,
+                        190
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'visit(Gt)')": [
+                        259,
+                        260
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'getColumnChunk(ColumnPath)')": [
+                        72
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'visit(Eq)')": [
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'visit(NotEq)')": [
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'visit(Lt)')": [
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'visit(LtEq)')": [
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'visit(Gt)')": [
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilter', 'visit(GtEq)')": [
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/filter2/statisticslevel/StatisticsFilter.java": {
+                "old": {
+                    "('org.apache.parquet.filter2.statisticslevel#StatisticsFilter', 'getColumnChunk(ColumnPath)')": [
+                        82,
+                        83,
+                        84
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#StatisticsFilter', 'visit(Eq)')": [
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        114,
+                        115,
+                        116,
+                        117,
+                        120
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#StatisticsFilter', 'visit(NotEq)')": [
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        142,
+                        143,
+                        144,
+                        145,
+                        148
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#StatisticsFilter', 'visit(Lt)')": [
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        170,
+                        171
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#StatisticsFilter', 'visit(LtEq)')": [
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        192,
+                        193
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#StatisticsFilter', 'visit(Gt)')": [
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        214,
+                        215
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#StatisticsFilter', 'visit(GtEq)')": [
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        236,
+                        237
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.filter2.statisticslevel#StatisticsFilter', None)": [
+                        67,
+                        68,
+                        69,
+                        101,
+                        141,
+                        180,
+                        211,
+                        242,
+                        273
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#StatisticsFilter', 'getColumnChunk(ColumnPath)')": [
+                        85
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#StatisticsFilter', 'visit(Eq)')": [
+                        104,
+                        105,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        127,
+                        128,
+                        129,
+                        130,
+                        133
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#StatisticsFilter', 'visit(NotEq)')": [
+                        144,
+                        145,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        166,
+                        167,
+                        168,
+                        169,
+                        172
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#StatisticsFilter', 'visit(Lt)')": [
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        201,
+                        202,
+                        203,
+                        204
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#StatisticsFilter', 'visit(LtEq)')": [
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        232,
+                        233,
+                        234,
+                        235
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#StatisticsFilter', 'visit(Gt)')": [
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        263,
+                        264,
+                        265,
+                        266
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#StatisticsFilter', 'visit(GtEq)')": [
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        294,
+                        295,
+                        296,
+                        297
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/filter2/dictionarylevel/DictionaryFilterTest.java": {
+                "new": {
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilterTest', None)": [
+                        386,
+                        395,
+                        396,
+                        397,
+                        406,
+                        407,
+                        408,
+                        414,
+                        415,
+                        416,
+                        422,
+                        423,
+                        424,
+                        430,
+                        431,
+                        432,
+                        438,
+                        439
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilterTest', 'testEqMissingColumn')": [
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilterTest', 'testNotEqMissingColumn')": [
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilterTest', 'testLtMissingColumn')": [
+                        409,
+                        410,
+                        411,
+                        412,
+                        413
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilterTest', 'testLtEqMissingColumn')": [
+                        417,
+                        418,
+                        419,
+                        420,
+                        421
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilterTest', 'testGtMissingColumn')": [
+                        425,
+                        426,
+                        427,
+                        428,
+                        429
+                    ],
+                    "('org.apache.parquet.filter2.dictionarylevel#DictionaryFilterTest', 'testGtEqMissingColumn')": [
+                        433,
+                        434,
+                        435,
+                        436,
+                        437
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/filter2/statisticslevel/TestStatisticsFilter.java": {
+                "old": {
+                    "('org.apache.parquet.filter2.statisticslevel#TestStatisticsFilter', None)": [
+                        314
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#TestStatisticsFilter', 'testMissingColumn')": [
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321
+                    ],
+                    "(None, None)": [
+                        322,
+                        323,
+                        324
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        34,
+                        43,
+                        44
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#TestStatisticsFilter', None)": [
+                        85
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#TestStatisticsFilter', 'testEqNonNull')": [
+                        117
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#TestStatisticsFilter', 'testEqNull')": [
+                        138
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#TestStatisticsFilter', 'testNotEqNonNull')": [
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#TestStatisticsFilter', 'testNotEqNull')": [
+                        192,
+                        193
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#TestStatisticsFilter', 'testLt')": [
+                        205,
+                        206
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#TestStatisticsFilter', 'testLtEq')": [
+                        218,
+                        219
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#TestStatisticsFilter', 'testGt')": [
+                        231,
+                        232
+                    ],
+                    "('org.apache.parquet.filter2.statisticslevel#TestStatisticsFilter', 'testGtEq')": [
+                        244,
+                        245
+                    ]
+                }
+            }
+        }
+    },
+    "e036d60d8a210d5ac28b2e5c51a45ceb82b58f09": {
+        "authored_data": "2016 Jul 13 21:50",
+        "commit.message": "PARQUET-654: Add option to disable record-level filtering.\n\nThis can be used by frameworks that use codegen for filtering to avoid\nrunning filters within Parquet.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #353 from rdblue/PARQUET-654-add-record-level-filter-option and squashes the following commits:\n\nb497e7f [Ryan Blue] PARQUET-654: Add option to disable record-level filtering.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "bd0b5af025fab9cad8f94260138741c252f45fc8",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordReader.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'checkRead')": [
+                        133
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        49,
+                        50
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', None)": [
+                        58
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'checkRead')": [
+                        136,
+                        137
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'initialize(ParquetFileReader,Configuration)')": [
+                        180,
+                        181
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileReader.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'filterRowGroups(FilterCompat)')": [
+                        624,
+                        628
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31,
+                        32,
+                        33,
+                        34
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'filterRowGroups(FilterCompat)')": [
+                        628,
+                        629,
+                        633,
+                        634
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetInputFormat.java": {
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetInputFormat', None)": [
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136
+                    ]
+                }
+            }
+        }
+    }
+}

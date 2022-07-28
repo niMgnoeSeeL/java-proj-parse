@@ -36,6 +36,10 @@ REPODICT = {
     "opennlp": {
         "repo_path": "data/repos/opennlp",
         "data_dir": "data/parsed/opennlp",
+    },
+    "parquet": {
+        "repo_path": "data/repos/parquet-mr",
+        "data_dir": "data/parsed/parquet-mr",
     }
 }
 

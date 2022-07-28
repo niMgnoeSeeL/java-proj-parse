@@ -1,0 +1,1701 @@
+{
+    "3a082e8e390898646c094d20f4ec1eeba45b79ac": {
+        "authored_data": "2014 Sep 25 18:25",
+        "commit.message": "PARQUET-90: integrate field ids in schema\n\nThis integrates support for field is that was introduced in Parquet format.\nThrift and Protobufs ids will now be saved in the Parquet schema.\n\nAuthor: julien <julien@twitter.com>\n\nCloses #56 from julienledem/field_ids and squashes the following commits:\n\n62c2809 [julien] remove withOriginalType; use Typles builder more\n8ff0034 [julien] review feedback\n084c8be [julien] binary compat\n85d785c [julien] add proto id in schema; fix schema parsing for ids\nd4be488 [julien] integrate field ids in schema\n",
+        "commit.author.name": "julien",
+        "pcid": "0c4f13a846b458e31cfcaafd8e83f0f4c1d04237",
+        "changes": {
+            "parquet-column/src/main/java/parquet/schema/GroupType.java": {
+                "old": {
+                    "('parquet.schema#GroupType', None)": [
+                        43,
+                        52,
+                        72,
+                        211,
+                        315
+                    ],
+                    "('parquet.schema#GroupType', 'typeHashCode')": [
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195
+                    ],
+                    "('parquet.schema#GroupType', 'typeEquals(Type)')": [
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19
+                    ],
+                    "('parquet.schema#GroupType', None)": [
+                        45,
+                        54,
+                        63,
+                        74,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        227,
+                        230,
+                        231,
+                        232,
+                        235,
+                        236,
+                        357
+                    ],
+                    "('parquet.schema#GroupType', 'withId(int)')": [
+                        100,
+                        101
+                    ],
+                    "('parquet.schema#GroupType', 'withNewFields(List)')": [
+                        108,
+                        109
+                    ],
+                    "('parquet.schema#GroupType', 'withNewFields(Type)')": [
+                        116,
+                        117
+                    ],
+                    "('parquet.schema#GroupType', 'writeToStringBuilder(StringBuilder,String)')": [
+                        212
+                    ],
+                    "('parquet.schema#GroupType', 'typeHashCode')": [
+                        228,
+                        229
+                    ],
+                    "('parquet.schema#GroupType', 'typeEquals(Type)')": [
+                        233,
+                        234
+                    ],
+                    "('parquet.schema#GroupType', 'hashCode')": [
+                        241,
+                        242
+                    ],
+                    "('parquet.schema#GroupType', 'equals(Type)')": [
+                        249,
+                        250,
+                        251,
+                        252,
+                        253
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/schema/MessageType.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        24
+                    ],
+                    "('parquet.schema#MessageType', 'getColumns')": [
+                        112,
+                        113,
+                        115
+                    ],
+                    "('parquet.schema#MessageType', None)": [
+                        142
+                    ]
+                },
+                "new": {
+                    "('parquet.schema#MessageType', 'getColumns')": [
+                        110,
+                        111,
+                        113
+                    ],
+                    "('parquet.schema#MessageType', None)": [
+                        140
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/schema/MessageTypeParser.java": {
+                "old": {
+                    "('parquet.schema#MessageTypeParser', None)": [
+                        41
+                    ],
+                    "('parquet.schema#MessageTypeParser', 'addGroupType(String,Tokenizer,Repetition,Types)')": [
+                        110,
+                        111,
+                        123
+                    ],
+                    "('parquet.schema#MessageTypeParser', 'addPrimitiveType(String,Tokenizer,PrimitiveTypeName,Repetition,Types)')": [
+                        133,
+                        134
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25
+                    ],
+                    "('parquet.schema#MessageTypeParser', None)": [
+                        43
+                    ],
+                    "('parquet.schema#MessageTypeParser', 'addGroupType(String,Tokenizer,Repetition,GroupBuilder)')": [
+                        112,
+                        113,
+                        125,
+                        126,
+                        127,
+                        128
+                    ],
+                    "('parquet.schema#MessageTypeParser', 'addPrimitiveType(String,Tokenizer,PrimitiveTypeName,Repetition,Types)')": [
+                        138,
+                        139,
+                        178,
+                        179,
+                        180,
+                        181
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/schema/PrimitiveType.java": {
+                "old": {
+                    "('parquet.schema#PrimitiveType', None)": [
+                        279,
+                        285,
+                        287,
+                        297,
+                        306,
+                        308,
+                        320,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334
+                    ],
+                    "('parquet.schema#PrimitiveType', 'typeEquals(Type)')": [
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418
+                    ],
+                    "('parquet.schema#PrimitiveType', 'typeHashCode')": [
+                        427,
+                        428,
+                        429,
+                        430,
+                        431
+                    ]
+                },
+                "new": {
+                    "('parquet.schema#PrimitiveType', None)": [
+                        279,
+                        285,
+                        287,
+                        297,
+                        306,
+                        308,
+                        318,
+                        321,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        416,
+                        417,
+                        418,
+                        419,
+                        422,
+                        423,
+                        424
+                    ],
+                    "('parquet.schema#PrimitiveType', 'withId(int)')": [
+                        348,
+                        349
+                    ],
+                    "('parquet.schema#PrimitiveType', 'writeToStringBuilder(StringBuilder,String)')": [
+                        414,
+                        415
+                    ],
+                    "('parquet.schema#PrimitiveType', 'typeHashCode')": [
+                        420,
+                        421
+                    ],
+                    "('parquet.schema#PrimitiveType', 'typeEquals(Type)')": [
+                        425,
+                        426
+                    ],
+                    "('parquet.schema#PrimitiveType', 'equals(Type)')": [
+                        433,
+                        434,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441
+                    ],
+                    "('parquet.schema#PrimitiveType', 'hashCode')": [
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/schema/Type.java": {
+                "old": {
+                    "('parquet.schema#Type', None)": [
+                        82,
+                        92,
+                        93,
+                        95,
+                        169,
+                        170,
+                        172,
+                        198
+                    ],
+                    "('parquet.schema#Type', 'hashCode')": [
+                        168
+                    ],
+                    "('parquet.schema#Type', 'typeHashCode')": [
+                        171
+                    ],
+                    "('parquet.schema#Type', 'typeEquals(Type)')": [
+                        173
+                    ],
+                    "('parquet.schema#Type', 'equals(Object)')": [
+                        180
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19
+                    ],
+                    "('parquet.schema#Type', None)": [
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        111,
+                        117,
+                        119,
+                        127,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        140,
+                        141,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        228,
+                        230,
+                        231,
+                        233,
+                        245,
+                        246,
+                        253,
+                        261,
+                        262,
+                        282
+                    ],
+                    "('parquet.schema#Type', 'withId(int)')": [
+                        150
+                    ],
+                    "('parquet.schema#Type', 'getId')": [
+                        177,
+                        178
+                    ],
+                    "('parquet.schema#Type', 'typeHashCode')": [
+                        229
+                    ],
+                    "('parquet.schema#Type', 'typeEquals(Type)')": [
+                        232
+                    ],
+                    "('parquet.schema#Type', 'hashCode')": [
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244
+                    ],
+                    "('parquet.schema#Type', 'equals(Type)')": [
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252
+                    ],
+                    "('parquet.schema#Type', 'equals(Object)')": [
+                        260
+                    ],
+                    "('parquet.schema#Type', 'eqOrBothNull(Object,Object)')": [
+                        263,
+                        264
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/schema/Types.java": {
+                "old": {
+                    "('parquet.schema#Types', None)": [
+                        299,
+                        327,
+                        328,
+                        490
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        5,
+                        8
+                    ],
+                    "('parquet.schema#Types', None)": [
+                        122,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        223,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        351,
+                        513
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/parquet/parser/TestParquetParser.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        21,
+                        22,
+                        27,
+                        31
+                    ],
+                    "('parquet.parser#TestParquetParser', None)": [
+                        34,
+                        77
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testPaperExample')": [
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testEachPrimitiveType')": [
+                        81,
+                        91,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testUTF8Annotation')": [
+                        107,
+                        111,
+                        112,
+                        116,
+                        117,
+                        118
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testMAPAnnotations')": [
+                        124,
+                        133,
+                        134,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        143,
+                        144,
+                        145
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testLISTAnnotation')": [
+                        151,
+                        157,
+                        158,
+                        160,
+                        161,
+                        164,
+                        165,
+                        166
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testDecimalFixedAnnotation')": [
+                        171,
+                        175,
+                        176,
+                        178,
+                        179,
+                        182,
+                        183,
+                        184
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testDecimalBinaryAnnotation')": [
+                        189,
+                        193,
+                        194,
+                        196,
+                        199,
+                        200,
+                        201
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        36
+                    ],
+                    "('parquet.parser#TestParquetParser', None)": [
+                        39,
+                        83,
+                        126,
+                        127,
+                        128
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testPaperExample')": [
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testEachPrimitiveType')": [
+                        87,
+                        97,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testUTF8Annotation')": [
+                        113,
+                        114,
+                        118,
+                        119,
+                        123,
+                        124,
+                        125
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testIDs')": [
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testMAPAnnotations')": [
+                        154,
+                        155,
+                        164,
+                        165,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        174,
+                        175,
+                        176
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testLISTAnnotation')": [
+                        182,
+                        183,
+                        189,
+                        190,
+                        192,
+                        193,
+                        196,
+                        197,
+                        198
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testDecimalFixedAnnotation')": [
+                        203,
+                        204,
+                        208,
+                        209,
+                        211,
+                        212,
+                        215,
+                        216,
+                        217
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testDecimalBinaryAnnotation')": [
+                        222,
+                        223,
+                        227,
+                        228,
+                        230,
+                        233,
+                        234,
+                        235
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/parquet/schema/TestMessageType.java": {
+                "old": {
+                    "('parquet.schema#TestMessageType', 'test')": [
+                        35
+                    ]
+                },
+                "new": {
+                    "('parquet.schema#TestMessageType', None)": [
+                        132,
+                        133
+                    ],
+                    "('parquet.schema#TestMessageType', 'testIDs')": [
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143
+                    ],
+                    "(None, None)": [
+                        144
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/parquet/schema/TestTypeBuilders.java": {
+                "old": {
+                    "('parquet.schema#TestTypeBuilders', 'testDecimalAnnotation')": [
+                        197,
+                        207,
+                        217,
+                        226
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testDecimalAnnotationMissingScale')": [
+                        239,
+                        249,
+                        259,
+                        268
+                    ]
+                },
+                "new": {
+                    "('parquet.schema#TestTypeBuilders', 'testDecimalAnnotation')": [
+                        197,
+                        207,
+                        217,
+                        226
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testDecimalAnnotationMissingScale')": [
+                        239,
+                        249,
+                        259,
+                        268
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/format/converter/ParquetMetadataConverter.java": {
+                "new": {
+                    "('parquet.format.converter#ParquetMetadataConverter', 'buildChildren(Types,Iterator,int)')": [
+                        562,
+                        563,
+                        564
+                    ]
+                }
+            },
+            "parquet-pig/src/main/java/parquet/pig/PigSchemaConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        33,
+                        34,
+                        35,
+                        517
+                    ],
+                    "('parquet.pig#PigSchemaConverter', None)": [
+                        65,
+                        66,
+                        67,
+                        89,
+                        95,
+                        117,
+                        119,
+                        120,
+                        121,
+                        137,
+                        158,
+                        166,
+                        440,
+                        457,
+                        499,
+                        500
+                    ],
+                    "('parquet.pig#PigSchemaConverter', 'deserializeRequiredFieldList(String)')": [
+                        151
+                    ],
+                    "('parquet.pig#PigSchemaConverter', 'getSimpleFieldSchema(String,Type)')": [
+                        205,
+                        211,
+                        217,
+                        223,
+                        229,
+                        235,
+                        247,
+                        253
+                    ],
+                    "('parquet.pig#PigSchemaConverter', 'filterTuple(GroupType,FieldSchema)')": [
+                        481
+                    ],
+                    "('parquet.pig#PigSchemaConverter', 'filterMap(GroupType,FieldSchema)')": [
+                        494,
+                        495,
+                        496,
+                        497,
+                        498
+                    ],
+                    "('parquet.pig#PigSchemaConverter', 'filterBag(GroupType,FieldSchema)')": [
+                        514,
+                        515,
+                        516
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        24,
+                        35
+                    ],
+                    "('parquet.pig#PigSchemaConverter', None)": [
+                        66,
+                        67,
+                        68,
+                        90,
+                        96,
+                        118,
+                        120,
+                        121,
+                        122,
+                        138,
+                        159,
+                        167,
+                        441,
+                        458
+                    ],
+                    "('parquet.pig#PigSchemaConverter', 'deserializeRequiredFieldList(String)')": [
+                        152
+                    ],
+                    "('parquet.pig#PigSchemaConverter', 'getSimpleFieldSchema(String,Type)')": [
+                        206,
+                        212,
+                        218,
+                        224,
+                        230,
+                        236,
+                        248,
+                        254
+                    ],
+                    "('parquet.pig#PigSchemaConverter', 'filterTuple(GroupType,FieldSchema)')": [
+                        482
+                    ],
+                    "('parquet.pig#PigSchemaConverter', 'filterMap(GroupType,FieldSchema)')": [
+                        495
+                    ],
+                    "('parquet.pig#PigSchemaConverter', 'filterBag(GroupType,FieldSchema)')": [
+                        509
+                    ]
+                }
+            },
+            "parquet-protobuf/src/main/java/parquet/proto/ProtoSchemaConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33
+                    ],
+                    "('parquet.proto#ProtoSchemaConverter', 'convert(Class)')": [
+                        48,
+                        49,
+                        50
+                    ],
+                    "('parquet.proto#ProtoSchemaConverter', 'convertFields(List)')": [
+                        56,
+                        57,
+                        58,
+                        60,
+                        61,
+                        62,
+                        63,
+                        65
+                    ],
+                    "('parquet.proto#ProtoSchemaConverter', 'getRepetition(Descriptors)')": [
+                        69,
+                        71,
+                        73,
+                        75,
+                        77
+                    ],
+                    "('parquet.proto#ProtoSchemaConverter', 'convertScalarField(String,Descriptors,Type)')": [
+                        80,
+                        81,
+                        83,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        99,
+                        100
+                    ],
+                    "('parquet.proto#ProtoSchemaConverter', None)": [
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        109,
+                        110
+                    ],
+                    "('parquet.proto#ProtoSchemaConverter', 'primitive(String,PrimitiveTypeName,Type,OriginalType)')": [
+                        106,
+                        107,
+                        108
+                    ],
+                    "('parquet.proto#ProtoSchemaConverter', 'primitive(String,PrimitiveTypeName,Type)')": [
+                        111,
+                        112,
+                        113
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        37,
+                        101
+                    ],
+                    "('parquet.proto#ProtoSchemaConverter', 'convert(Class)')": [
+                        54,
+                        55,
+                        56
+                    ],
+                    "('parquet.proto#ProtoSchemaConverter', 'convertFields(GroupBuilder,List)')": [
+                        62,
+                        64,
+                        65,
+                        66,
+                        67,
+                        69
+                    ],
+                    "('parquet.proto#ProtoSchemaConverter', 'getRepetition(Descriptors)')": [
+                        74,
+                        76,
+                        78
+                    ],
+                    "('parquet.proto#ProtoSchemaConverter', 'addField(Descriptors,GroupBuilder)')": [
+                        82,
+                        83,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        98,
+                        99,
+                        100
+                    ]
+                }
+            },
+            "parquet-protobuf/src/test/java/parquet/proto/ProtoSchemaConverterTest.java": {
+                "old": {
+                    "('parquet.proto#ProtoSchemaConverterTest', 'testConvertAllDatatypes')": [
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        66,
+                        67,
+                        69
+                    ],
+                    "('parquet.proto#ProtoSchemaConverterTest', 'testConvertRepetition')": [
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        85,
+                        86,
+                        88,
+                        89
+                    ]
+                },
+                "new": {
+                    "('parquet.proto#ProtoSchemaConverterTest', 'testConvertAllDatatypes')": [
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        66,
+                        67,
+                        69
+                    ],
+                    "('parquet.proto#ProtoSchemaConverterTest', 'testConvertRepetition')": [
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        85,
+                        86,
+                        88,
+                        89
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/parquet/thrift/ThriftSchemaConvertVisitor.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32
+                    ],
+                    "('parquet.thrift#ThriftSchemaConvertVisitor', 'visit(ThriftType)')": [
+                        88,
+                        101,
+                        105,
+                        117,
+                        121,
+                        180,
+                        181,
+                        187,
+                        188,
+                        194,
+                        195,
+                        201,
+                        202,
+                        208,
+                        209,
+                        215,
+                        216,
+                        222,
+                        223,
+                        229,
+                        230
+                    ],
+                    "('parquet.thrift#ThriftSchemaConvertVisitor', 'getConvertedMessageType')": [
+                        131
+                    ],
+                    "('parquet.thrift#ThriftSchemaConvertVisitor', 'getFieldsTypes(List)')": [
+                        163
+                    ],
+                    "('parquet.thrift#ThriftSchemaConvertVisitor', 'isCurrentlyMatchedFilter')": [
+                        172
+                    ],
+                    "('parquet.thrift#ThriftSchemaConvertVisitor', None)": [
+                        182,
+                        189,
+                        196,
+                        203,
+                        210,
+                        217,
+                        224,
+                        231
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42
+                    ],
+                    "('parquet.thrift#ThriftSchemaConvertVisitor', 'visit(ThriftType)')": [
+                        103,
+                        116,
+                        120,
+                        132,
+                        136,
+                        210,
+                        215,
+                        220,
+                        225,
+                        230,
+                        235,
+                        240,
+                        245
+                    ],
+                    "('parquet.thrift#ThriftSchemaConvertVisitor', 'getConvertedMessageType')": [
+                        146
+                    ],
+                    "('parquet.thrift#ThriftSchemaConvertVisitor', 'getFieldsTypes(List)')": [
+                        178,
+                        179
+                    ],
+                    "('parquet.thrift#ThriftSchemaConvertVisitor', 'isCurrentlyMatchedFilter')": [
+                        188
+                    ],
+                    "('parquet.thrift#ThriftSchemaConvertVisitor', 'primitiveType(PrimitiveTypeName)')": [
+                        194,
+                        195
+                    ],
+                    "('parquet.thrift#ThriftSchemaConvertVisitor', None)": [
+                        196,
+                        197,
+                        205,
+                        206,
+                        207
+                    ],
+                    "('parquet.thrift#ThriftSchemaConvertVisitor', 'primitiveType(PrimitiveTypeName,OriginalType)')": [
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/parquet/thrift/projection/FieldsPath.java": {
+                "old": {
+                    "(None, None)": [
+                        18,
+                        21,
+                        22
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19
+                    ]
+                }
+            },
+            "parquet-thrift/src/test/java/parquet/thrift/TestThriftSchemaConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        20,
+                        28,
+                        29,
+                        30
+                    ],
+                    "('parquet.thrift#TestThriftSchemaConverter', 'testToMessageType')": [
+                        38,
+                        40,
+                        41,
+                        42,
+                        44,
+                        45,
+                        46,
+                        48,
+                        49
+                    ],
+                    "('parquet.thrift#TestThriftSchemaConverter', 'testToProjectedThriftType')": [
+                        64,
+                        65,
+                        69,
+                        70,
+                        71,
+                        75,
+                        76,
+                        77,
+                        81,
+                        82,
+                        83,
+                        88,
+                        89,
+                        90,
+                        95,
+                        96,
+                        97,
+                        102,
+                        103,
+                        108,
+                        109,
+                        110,
+                        112,
+                        114,
+                        115
+                    ],
+                    "('parquet.thrift#TestThriftSchemaConverter', 'testProjectMapThriftType')": [
+                        150,
+                        151,
+                        155,
+                        156,
+                        157,
+                        159,
+                        172,
+                        173,
+                        177,
+                        178,
+                        179
+                    ],
+                    "('parquet.thrift#TestThriftSchemaConverter', 'testProjectOnlyKeyInMap')": [
+                        190,
+                        191
+                    ],
+                    "('parquet.thrift#TestThriftSchemaConverter', 'shouldGetProjectedSchema(String,String,Class)')": [
+                        204,
+                        206
+                    ],
+                    "('parquet.thrift#TestThriftSchemaConverter', 'getFilteredSchema(String,Class)')": [
+                        210
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        20,
+                        21,
+                        23,
+                        30,
+                        31,
+                        32,
+                        33
+                    ],
+                    "('parquet.thrift#TestThriftSchemaConverter', 'testToMessageType')": [
+                        41,
+                        43,
+                        44,
+                        45,
+                        47,
+                        48,
+                        49,
+                        51,
+                        52
+                    ],
+                    "('parquet.thrift#TestThriftSchemaConverter', 'testToProjectedThriftType')": [
+                        67,
+                        68,
+                        72,
+                        73,
+                        74,
+                        78,
+                        79,
+                        80,
+                        84,
+                        85,
+                        86,
+                        91,
+                        92,
+                        93,
+                        98,
+                        99,
+                        100,
+                        105,
+                        106,
+                        111,
+                        112,
+                        113,
+                        115,
+                        117,
+                        118
+                    ],
+                    "('parquet.thrift#TestThriftSchemaConverter', 'testProjectMapThriftType')": [
+                        153,
+                        154,
+                        158,
+                        159,
+                        160,
+                        162,
+                        175,
+                        176,
+                        180,
+                        181,
+                        182
+                    ],
+                    "('parquet.thrift#TestThriftSchemaConverter', 'testProjectOnlyKeyInMap')": [
+                        193,
+                        194
+                    ],
+                    "('parquet.thrift#TestThriftSchemaConverter', 'shouldGetProjectedSchema(String,String,Class)')": [
+                        207,
+                        209
+                    ],
+                    "('parquet.thrift#TestThriftSchemaConverter', 'getFilteredSchema(String,Class)')": [
+                        213
+                    ]
+                }
+            }
+        }
+    },
+    "0c4f13a846b458e31cfcaafd8e83f0f4c1d04237": {
+        "authored_data": "2014 Sep 25 17:12",
+        "commit.message": "PARQUET-101: fix meta data lookup when not using task.side.metadata\n\nAuthor: julien <julien@twitter.com>\n\nCloses #64 from julienledem/PARQUET-101 and squashes the following commits:\n\n54ffbc9 [julien] fix meta data lookup when not using task.side.metadata\n",
+        "commit.author.name": "julien",
+        "pcid": "59c58d0b829aa156f038cc900b803508f8849765",
+        "changes": {
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetRecordReader.java": {
+                "old": {
+                    "(None, None)": [
+                        40
+                    ],
+                    "('parquet.hadoop#ParquetRecordReader', 'initializeInternalReader(ParquetInputSplit,Configuration)')": [
+                        145,
+                        146,
+                        150,
+                        153,
+                        154,
+                        187
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        21,
+                        22,
+                        43
+                    ],
+                    "('parquet.hadoop#ParquetRecordReader', 'initializeInternalReader(ParquetInputSplit,Configuration)')": [
+                        151,
+                        155,
+                        156,
+                        157,
+                        158,
+                        161,
+                        188,
+                        193
+                    ]
+                }
+            }
+        }
+    },
+    "59c58d0b829aa156f038cc900b803508f8849765": {
+        "authored_data": "2014 Sep 23 19:14",
+        "commit.message": "PARQUET-82: Check page size is valid when writing.\n\nAuthor: Ryan Blue <rblue@cloudera.com>\n\nCloses #48 from rdblue/PARQUET-82-check-page-size and squashes the following commits:\n\n9f31402 [Ryan Blue] PARQUET-82: Check page size is valid when writing.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "0eb96379518db4f84f7a95b651c6dc9a639cc9ac",
+        "changes": {
+            "parquet-hadoop/src/main/java/parquet/hadoop/ColumnChunkPageWriteStore.java": {
+                "new": {
+                    "('parquet.hadoop#ColumnChunkPageWriteStore', None)": [
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131
+                    ]
+                }
+            }
+        }
+    },
+    "0eb96379518db4f84f7a95b651c6dc9a639cc9ac": {
+        "authored_data": "2014 Sep 22 22:07",
+        "commit.message": "PARQUET-89: Add hadoop-2 test profile for Travis CI.\n\nThis also fixes problems that prevented hadoop-2 from passing:\n* Dynamically resolve counter methods in parquet-hadoop\n* Parameterize pig version with hadoop-2 support\n* Update pig test for hadoop-2 change (no nulls allowed)\n* Update parquet-hive to depend on hadoop-client\n\nThe travis config will now run each test profile in a different run.\n\nAuthor: Ryan Blue <rblue@cloudera.com>\n\nCloses #55 from rdblue/PARQUET-89-add-test-profiles and squashes the following commits:\n\n006c6d8 [Ryan Blue] PARQUET-89: Add hadoop-2 test profile for travis CI.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "3dc223cc85022e11dc6cd954784e715e3a49fe5c",
+        "changes": {
+            "parquet-hadoop/src/test/java/parquet/hadoop/example/TestInputOutputFormat.java": {
+                "old": {
+                    "('parquet.hadoop.example#TestInputOutputFormat', 'testReadWriteWithCounter')": [
+                        245,
+                        246,
+                        247,
+                        248
+                    ],
+                    "('parquet.hadoop.example#TestInputOutputFormat', 'testReadWriteWithoutCounter')": [
+                        258,
+                        259,
+                        260
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        38,
+                        39
+                    ],
+                    "('parquet.hadoop.example#TestInputOutputFormat', 'value(Job,String,String)')": [
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254
+                    ],
+                    "('parquet.hadoop.example#TestInputOutputFormat', None)": [
+                        255,
+                        256
+                    ],
+                    "('parquet.hadoop.example#TestInputOutputFormat', 'testReadWriteWithCounter')": [
+                        260,
+                        261,
+                        262,
+                        263
+                    ],
+                    "('parquet.hadoop.example#TestInputOutputFormat', 'testReadWriteWithoutCounter')": [
+                        273,
+                        274,
+                        275
+                    ]
+                }
+            },
+            "parquet-pig/src/test/java/parquet/pig/summary/TestSummary.java": {
+                "old": {
+                    "(None, None)": [
+                        39,
+                        40,
+                        41,
+                        42,
+                        43
+                    ],
+                    "('parquet.pig.summary#TestSummary', None)": [
+                        53,
+                        54,
+                        55
+                    ],
+                    "('parquet.pig.summary#TestSummary', 'validate(String,int)')": [
+                        118
+                    ]
+                },
+                "new": {
+                    "('parquet.pig.summary#TestSummary', None)": [
+                        48,
+                        49,
+                        50
+                    ],
+                    "('parquet.pig.summary#TestSummary', 'validate(String,int)')": [
+                        113
+                    ]
+                }
+            }
+        }
+    },
+    "3dc223cc85022e11dc6cd954784e715e3a49fe5c": {
+        "authored_data": "2014 Sep 22 18:21",
+        "commit.message": "PARQUET-92: Pig parallel control\n\nThe parallelism for reading footers was fixed at '5', which isn't optimal for using pig with S3.  Just adding a property to adjust the parallelism.\n\nJIRA: https://issues.apache.org/jira/browse/PARQUET-92\n\nAuthor: Daniel Weeks <dweeks@netflix.com>\n\nCloses #57 from dcw-netflix/pig-parallel-control and squashes the following commits:\n\ne49087c [Daniel Weeks] Update ParquetFileReader.java\nec4f8ca [Daniel Weeks] Added configurable control of parallelism\nd37a6de [Daniel Weeks] Resetting pom to main\n0c1572e [Daniel Weeks] Merge remote-tracking branch 'upstream/master'\n98c6607 [Daniel Weeks] Merge remote-tracking branch 'upstream/master'\n96ba602 [Daniel Weeks] Disabled projects that don't compile\n",
+        "commit.author.name": "Daniel Weeks",
+        "pcid": "9cdcf3bbdf8f772d3fadf388b2db048598c155e9",
+        "changes": {
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetFileReader.java": {
+                "old": {
+                    "('parquet.hadoop#ParquetFileReader', 'readAllFootersInParallelUsingSummaryFiles(Configuration,Collection,boolean)')": [
+                        154
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readAllFootersInParallel(Configuration,List,boolean)')": [
+                        233
+                    ]
+                },
+                "new": {
+                    "('parquet.hadoop#ParquetFileReader', None)": [
+                        81,
+                        82
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readAllFootersInParallelUsingSummaryFiles(Configuration,Collection,boolean)')": [
+                        156
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'runAllInParallel(int,List)')": [
+                        186
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readAllFootersInParallel(Configuration,List,boolean)')": [
+                        236
+                    ]
+                }
+            }
+        }
+    },
+    "9cdcf3bbdf8f772d3fadf388b2db048598c155e9": {
+        "authored_data": "2014 Sep 22 18:11",
+        "commit.message": "PARQUET-94: Fix bug in ParquetScroogeScheme constructor, minor cleanup\n\nI noticed that ParquetScroogeScheme's constructor ignores the provided klass argument.\nI also added in missing type parameters for the Config object where they were missing.\n\nAuthor: Alex Levenson <alexlevenson@twitter.com>\n\nCloses #61 from isnotinvain/alexlevenson/parquet-scrooge-cleanup and squashes the following commits:\n\n2b16007 [Alex Levenson] Fix bug in ParquetScroogeScheme constructor, minor cleanup\n",
+        "commit.author.name": "Alex Levenson",
+        "pcid": "501e8feac3fb60e794979e8445cf2ceebce94b04",
+        "changes": {
+            "parquet-cascading/src/main/java/parquet/cascading/ParquetTBaseScheme.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('parquet.cascading#ParquetTBaseScheme', None)": [
+                        38,
+                        42,
+                        46,
+                        50,
+                        53,
+                        57,
+                        67
+                    ]
+                },
+                "new": {
+                    "('parquet.cascading#ParquetTBaseScheme', None)": [
+                        37,
+                        41,
+                        45,
+                        49,
+                        52
+                    ]
+                }
+            },
+            "parquet-cascading/src/main/java/parquet/cascading/ParquetValueScheme.java": {
+                "old": {
+                    "(None, None)": [
+                        35,
+                        38
+                    ],
+                    "('parquet.cascading#ParquetValueScheme', None)": [
+                        79,
+                        80,
+                        83,
+                        84,
+                        87,
+                        88,
+                        93,
+                        96,
+                        100,
+                        103
+                    ]
+                },
+                "new": {
+                    "('parquet.cascading#ParquetValueScheme', None)": [
+                        77,
+                        78,
+                        81,
+                        82,
+                        85,
+                        86,
+                        91,
+                        94,
+                        98,
+                        101,
+                        144
+                    ]
+                }
+            },
+            "parquet-scrooge/src/main/java/parquet/scrooge/ParquetScroogeScheme.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('parquet.scrooge#ParquetScroogeScheme', None)": [
+                        42,
+                        46,
+                        49,
+                        53,
+                        66,
+                        67
+                    ]
+                },
+                "new": {
+                    "('parquet.scrooge#ParquetScroogeScheme', None)": [
+                        41,
+                        45,
+                        48
+                    ]
+                }
+            }
+        }
+    }
+}
