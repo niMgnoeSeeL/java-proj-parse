@@ -1,0 +1,3768 @@
+{
+    "22961f8dc45109662e5d10bb35df60ee79683eda": {
+        "authored_data": "2011 May 26 20:53",
+        "commit.message": "[MRM-1473] remove use of plexus-spring\nok for archiva-artifact-converter\nintroduce a new bridge tru sisu-guice to be able to use maven apis components\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1128078 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "2fdf7359b309daee887a89f26bd3f31970d9c504",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-artifact-converter/src/main/java/org/apache/maven/archiva/converter/artifact/LegacyToDefaultConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        62,
+                        65,
+                        66,
+                        67
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', None)": [
+                        73,
+                        74,
+                        75,
+                        80,
+                        95,
+                        100,
+                        104,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        441
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'convert(Artifact,ArtifactRepository)')": [
+                        165
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'copyPom(Artifact,ArtifactRepository,FileTransaction)')": [
+                        174,
+                        175,
+                        200,
+                        221,
+                        222,
+                        232,
+                        237,
+                        238,
+                        244,
+                        245,
+                        267
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'testChecksums(Artifact,File)')": [
+                        293,
+                        294
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'readMetadata(File)')": [
+                        398,
+                        402,
+                        406
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'validateMetadata(Artifact)')": [
+                        423
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'updateMetadata(RepositoryMetadata,ArtifactRepository,Metadata,FileTransaction)')": [
+                        547,
+                        548,
+                        579
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'doRelocation(Artifact,org,ArtifactRepository,FileTransaction)')": [
+                        593,
+                        599
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        45,
+                        48,
+                        49,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        70,
+                        73,
+                        74,
+                        76,
+                        780
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', None)": [
+                        81,
+                        82,
+                        86,
+                        87,
+                        88,
+                        90,
+                        105,
+                        110,
+                        114,
+                        115,
+                        116,
+                        124,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        471,
+                        720,
+                        721,
+                        725,
+                        726,
+                        730,
+                        731,
+                        735,
+                        736,
+                        740,
+                        741,
+                        745,
+                        746,
+                        750,
+                        751,
+                        755,
+                        756,
+                        760,
+                        761,
+                        765,
+                        766,
+                        770,
+                        771,
+                        775,
+                        776
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'initialize')": [
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'convert(Artifact,ArtifactRepository)')": [
+                        185,
+                        186
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'copyPom(Artifact,ArtifactRepository,FileTransaction)')": [
+                        195,
+                        196,
+                        221,
+                        242,
+                        243,
+                        253,
+                        254,
+                        259,
+                        260,
+                        261,
+                        267,
+                        268,
+                        290,
+                        291
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'testChecksums(Artifact,File)')": [
+                        317,
+                        318,
+                        319,
+                        320
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'readMetadata(File)')": [
+                        424,
+                        425,
+                        429,
+                        430,
+                        434,
+                        435
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'validateMetadata(Artifact)')": [
+                        452,
+                        453
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'updateMetadata(RepositoryMetadata,ArtifactRepository,Metadata,FileTransaction)')": [
+                        577,
+                        578,
+                        609,
+                        610
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'doRelocation(Artifact,org,ArtifactRepository,FileTransaction)')": [
+                        624,
+                        625,
+                        631,
+                        632
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'getDigesters')": [
+                        722,
+                        723,
+                        724
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'setDigesters(List)')": [
+                        727,
+                        728,
+                        729
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'getTranslator')": [
+                        732,
+                        733,
+                        734
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'setTranslator(ModelConverter)')": [
+                        737,
+                        738,
+                        739
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'getArtifactFactory')": [
+                        742,
+                        743,
+                        744
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'setArtifactFactory(ArtifactFactory)')": [
+                        747,
+                        748,
+                        749
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'getArtifactHandlerManager')": [
+                        752,
+                        753,
+                        754
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'setArtifactHandlerManager(ArtifactHandlerManager)')": [
+                        757,
+                        758,
+                        759
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'isForce')": [
+                        762,
+                        763,
+                        764
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'setForce(boolean)')": [
+                        767,
+                        768,
+                        769
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'isDryrun')": [
+                        772,
+                        773,
+                        774
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverter', 'setDryrun(boolean)')": [
+                        777,
+                        778,
+                        779
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-artifact-converter/src/main/java/org/apache/maven/archiva/converter/artifact/Messages.java": {
+                "new": {
+                    "('org.apache.maven.archiva.converter.artifact#Messages', None)": [
+                        39
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-artifact-converter/src/test/java/org/apache/maven/archiva/converter/artifact/LegacyToDefaultConverterTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        40,
+                        43
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', None)": [
+                        48,
+                        84,
+                        85
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'setUp')": [
+                        60,
+                        65,
+                        66,
+                        67,
+                        70,
+                        71,
+                        72,
+                        73,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'tearDown')": [
+                        86,
+                        87,
+                        88,
+                        89
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'copyDirectoryStructure(File,File)')": [
+                        126,
+                        127
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testV4PomConvert')": [
+                        146,
+                        147,
+                        151,
+                        152
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testV3PomConvert')": [
+                        191,
+                        192,
+                        196,
+                        197
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testV3PomConvertWithRelocation')": [
+                        232,
+                        233,
+                        237,
+                        238,
+                        246
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testV3PomWarningsOnConvert')": [
+                        266,
+                        267,
+                        271,
+                        272
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'doTestV4SnapshotPomConvert(String,String)')": [
+                        299,
+                        300,
+                        304,
+                        305
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testV3SnapshotPomConvert')": [
+                        342,
+                        343,
+                        347,
+                        348
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testMavenOnePluginConversion')": [
+                        398,
+                        399,
+                        400
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testV3TimestampedSnapshotPomConvert')": [
+                        428,
+                        429,
+                        433,
+                        434
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testIncorrectSourceChecksumMd5')": [
+                        504,
+                        505
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testIncorrectSourceChecksumSha1')": [
+                        526,
+                        527
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testModifedArtifactFails')": [
+                        601,
+                        602
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testForcedUnmodifiedArtifact')": [
+                        611,
+                        639,
+                        640
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testDryRunSuccess')": [
+                        649,
+                        669,
+                        670
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testDryRunFailure')": [
+                        679,
+                        710,
+                        711
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testRollbackArtifactCreated')": [
+                        722,
+                        723,
+                        727,
+                        728,
+                        747
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testMultipleArtifacts')": [
+                        785,
+                        786
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testInvalidSourceArtifactMetadata')": [
+                        807,
+                        812,
+                        813
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testInvalidSourceSnapshotMetadata')": [
+                        831,
+                        836,
+                        837
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testMergeArtifactMetadata')": [
+                        862,
+                        863
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testSourceAndTargetRepositoriesMatch')": [
+                        876,
+                        877,
+                        878,
+                        879
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'createArtifact(String,String,String,String,String)')": [
+                        911
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'createPomArtifact(Artifact)')": [
+                        922,
+                        923
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'compareFiles(File,File)')": [
+                        929,
+                        931
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'normalizeString(String)')": [
+                        936
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'assertHasWarningReason(ArtifactConverter,String)')": [
+                        977,
+                        980,
+                        981
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'createModernSourceRepository')": [
+                        994,
+                        995,
+                        996,
+                        999,
+                        1000
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        51,
+                        55,
+                        56
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', None)": [
+                        58,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        76,
+                        104,
+                        105,
+                        109,
+                        110,
+                        169,
+                        215,
+                        259,
+                        293,
+                        370,
+                        414,
+                        423,
+                        433,
+                        461,
+                        505,
+                        529,
+                        552,
+                        575,
+                        611,
+                        652,
+                        692,
+                        724,
+                        767,
+                        814,
+                        847,
+                        873,
+                        899,
+                        930
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'init')": [
+                        77,
+                        82,
+                        83,
+                        84,
+                        85,
+                        88,
+                        89,
+                        90,
+                        91,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'getTestFile(String)')": [
+                        106,
+                        107,
+                        108
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'getBasedir')": [
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'copyDirectoryStructure(File,File)')": [
+                        156,
+                        157
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testV4PomConvert')": [
+                        177,
+                        178,
+                        182,
+                        183
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testV3PomConvert')": [
+                        223,
+                        224,
+                        228,
+                        229
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testV3PomConvertWithRelocation')": [
+                        265,
+                        266,
+                        270,
+                        271,
+                        279,
+                        280
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testV3PomWarningsOnConvert')": [
+                        301,
+                        302,
+                        306,
+                        307
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'doTestV4SnapshotPomConvert(String,String)')": [
+                        334,
+                        335,
+                        339,
+                        340
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testV3SnapshotPomConvert')": [
+                        378,
+                        379,
+                        383,
+                        384
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testMavenOnePluginConversion')": [
+                        437,
+                        438,
+                        439,
+                        440
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testV3TimestampedSnapshotPomConvert')": [
+                        469,
+                        470,
+                        474,
+                        475
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testIncorrectSourceChecksumMd5')": [
+                        547,
+                        548
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testIncorrectSourceChecksumSha1')": [
+                        570,
+                        571
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testModifedArtifactFails')": [
+                        647,
+                        648
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testForcedUnmodifiedArtifact')": [
+                        658,
+                        659,
+                        687,
+                        688
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testDryRunSuccess')": [
+                        698,
+                        699,
+                        719,
+                        720
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testDryRunFailure')": [
+                        730,
+                        731,
+                        762,
+                        763
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testRollbackArtifactCreated')": [
+                        775,
+                        776,
+                        780,
+                        781,
+                        800
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testMultipleArtifacts')": [
+                        839,
+                        840
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testInvalidSourceArtifactMetadata')": [
+                        862,
+                        863,
+                        868,
+                        869
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testInvalidSourceSnapshotMetadata')": [
+                        888,
+                        889,
+                        894,
+                        895
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testMergeArtifactMetadata')": [
+                        921,
+                        922
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'testSourceAndTargetRepositoriesMatch')": [
+                        936,
+                        937,
+                        938,
+                        939,
+                        940
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'createArtifact(String,String,String,String,String)')": [
+                        972,
+                        973
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'createPomArtifact(Artifact)')": [
+                        984,
+                        985
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'compareFiles(File,File)')": [
+                        991,
+                        992,
+                        994,
+                        995
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'normalizeString(String)')": [
+                        1000,
+                        1001
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'assertHasWarningReason(ArtifactConverter,String)')": [
+                        1042,
+                        1045,
+                        1046
+                    ],
+                    "('org.apache.maven.archiva.converter.artifact#LegacyToDefaultConverterTest', 'createModernSourceRepository')": [
+                        1059,
+                        1060,
+                        1061,
+                        1064,
+                        1065
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-converter/src/main/java/org/apache/maven/archiva/converter/legacy/DefaultLegacyRepositoryConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        43
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38,
+                        44,
+                        46
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-converter/src/main/java/org/apache/maven/archiva/converter/legacy/LegacyConverterArtifactConsumer.java": {
+                "old": {
+                    "(None, None)": [
+                        48
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        41,
+                        42,
+                        50,
+                        54,
+                        55
+                    ]
+                }
+            }
+        }
+    },
+    "2fdf7359b309daee887a89f26bd3f31970d9c504": {
+        "authored_data": "2011 May 26 20:52",
+        "commit.message": "fix tests in archiva-transaction\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1128076 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "1788eb54c492ac4a0f3efd6d4d504fd8fc55d26c",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-transaction/src/test/java/org/apache/maven/archiva/transaction/AbstractFileEventTest.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        32
+                    ],
+                    "('org.apache.maven.archiva.transaction#AbstractFileEventTest', None)": [
+                        36,
+                        40
+                    ],
+                    "('org.apache.maven.archiva.transaction#AbstractFileEventTest', 'setUp')": [
+                        46
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        25,
+                        26,
+                        30
+                    ],
+                    "('org.apache.maven.archiva.transaction#AbstractFileEventTest', None)": [
+                        37,
+                        50,
+                        51,
+                        52,
+                        53
+                    ],
+                    "('org.apache.maven.archiva.transaction#AbstractFileEventTest', 'getBasedir')": [
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49
+                    ],
+                    "('org.apache.maven.archiva.transaction#AbstractFileEventTest', 'setUp')": [
+                        59
+                    ]
+                }
+            }
+        }
+    },
+    "1788eb54c492ac4a0f3efd6d4d504fd8fc55d26c": {
+        "authored_data": "2011 May 26 20:52",
+        "commit.message": "[MRM-1473] remove use of plexus-spring\nremove all dependencies to plexus-container\nuse of sisu-inject-plexus (version 2.2.2 with ASL license) for components using maven api components.\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1128075 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "16714e5e4dc72fa81589ebe23a4cbe49f57be462",
+        "changes": {
+            "archiva-modules/metadata/metadata-repository-api/src/main/java/org/apache/archiva/metadata/repository/DefaultMetadataResolver.java": {
+                "old": {
+                    "(None, None)": [
+                        33,
+                        41,
+                        46,
+                        53,
+                        54
+                    ],
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', None)": [
+                        62,
+                        72,
+                        76
+                    ],
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', 'resolveProjectVersion(RepositorySession,String,String,String,String)')": [
+                        84,
+                        85
+                    ],
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', 'resolveRootNamespaces(RepositorySession,String)')": [
+                        162,
+                        163
+                    ],
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', 'resolveNamespaces(RepositorySession,String,String)')": [
+                        196,
+                        197,
+                        198
+                    ],
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', 'resolveProjects(RepositorySession,String,String)')": [
+                        231,
+                        232
+                    ],
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', 'resolveProjectVersions(RepositorySession,String,String,String)')": [
+                        281,
+                        282,
+                        283,
+                        284,
+                        298,
+                        299
+                    ],
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', 'resolveArtifacts(RepositorySession,String,String,String,String)')": [
+                        327,
+                        328,
+                        330,
+                        331,
+                        332,
+                        333
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        46,
+                        51,
+                        58,
+                        59,
+                        61
+                    ],
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', None)": [
+                        65,
+                        66,
+                        67,
+                        71,
+                        78,
+                        79,
+                        83,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        96
+                    ],
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', 'initialize')": [
+                        92,
+                        93,
+                        94,
+                        95
+                    ],
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', 'resolveProjectVersion(RepositorySession,String,String,String,String)')": [
+                        104,
+                        105
+                    ],
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', 'resolveRootNamespaces(RepositorySession,String)')": [
+                        182,
+                        183
+                    ],
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', 'resolveNamespaces(RepositorySession,String,String)')": [
+                        216,
+                        217
+                    ],
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', 'resolveProjects(RepositorySession,String,String)')": [
+                        250,
+                        251
+                    ],
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', 'resolveProjectVersions(RepositorySession,String,String,String)')": [
+                        300,
+                        301,
+                        315,
+                        316
+                    ],
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', 'resolveArtifacts(RepositorySession,String,String,String,String)')": [
+                        344,
+                        345,
+                        347,
+                        348
+                    ]
+                }
+            },
+            "archiva-modules/metadata/metadata-repository-api/src/test/java/org/apache/archiva/metadata/repository/AbstractMetadataRepositoryTest.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('org.apache.archiva.metadata.repository#AbstractMetadataRepositoryTest', None)": [
+                        47
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.archiva.metadata.repository#AbstractMetadataRepositoryTest', None)": [
+                        47
+                    ]
+                }
+            },
+            "archiva-modules/plugins/maven2-repository/src/main/java/org/apache/archiva/metadata/repository/storage/maven2/DefaultArtifactMappingProvider.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        28,
+                        30
+                    ]
+                }
+            },
+            "archiva-modules/plugins/maven2-repository/src/main/java/org/apache/archiva/metadata/repository/storage/maven2/Maven2RepositoryPathTranslator.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        32
+                    ],
+                    "('org.apache.archiva.metadata.repository.storage.maven2#Maven2RepositoryPathTranslator', None)": [
+                        44,
+                        50
+                    ],
+                    "('org.apache.archiva.metadata.repository.storage.maven2#Maven2RepositoryPathTranslator', 'getArtifactFromId(String,String,String,String,String)')": [
+                        168,
+                        169,
+                        204,
+                        205,
+                        206,
+                        213,
+                        214,
+                        252,
+                        253,
+                        254
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        31,
+                        37,
+                        39
+                    ],
+                    "('org.apache.archiva.metadata.repository.storage.maven2#Maven2RepositoryPathTranslator', None)": [
+                        49,
+                        50,
+                        51,
+                        53,
+                        54,
+                        60,
+                        61,
+                        62,
+                        63,
+                        68,
+                        69,
+                        70
+                    ],
+                    "('org.apache.archiva.metadata.repository.storage.maven2#Maven2RepositoryPathTranslator', 'initialize')": [
+                        64,
+                        65,
+                        66,
+                        67
+                    ],
+                    "('org.apache.archiva.metadata.repository.storage.maven2#Maven2RepositoryPathTranslator', 'getArtifactFromId(String,String,String,String,String)')": [
+                        188,
+                        189,
+                        224,
+                        225,
+                        226,
+                        233,
+                        234,
+                        272,
+                        273,
+                        274
+                    ]
+                }
+            },
+            "archiva-modules/plugins/maven2-repository/src/main/java/org/apache/archiva/metadata/repository/storage/maven2/Maven2RepositoryStorage.java": {
+                "old": {
+                    "(None, None)": [
+                        70
+                    ],
+                    "('org.apache.archiva.metadata.repository.storage.maven2#Maven2RepositoryStorage', None)": [
+                        78,
+                        81,
+                        86
+                    ]
+                },
+                "new": [
+                    "JavaSyntaxError",
+                    "archiva-modules/plugins/maven2-repository/src/main/java/org/apache/archiva/metadata/repository/storage/maven2/Maven2RepositoryStorage.java",
+                    [
+                        44,
+                        52,
+                        53,
+                        54,
+                        74,
+                        82,
+                        85,
+                        87,
+                        91,
+                        93,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105
+                    ]
+                ]
+            }
+        }
+    },
+    "16714e5e4dc72fa81589ebe23a4cbe49f57be462": {
+        "authored_data": "2011 May 25 23:58",
+        "commit.message": "clean imports\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1127737 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "4f0e6573614ff579bfcf684c302d669b706c836e",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-repository-scanner/src/main/java/org/apache/archiva/repository/scanner/DefaultRepositoryScanner.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        38
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31,
+                        32,
+                        33,
+                        34,
+                        35
+                    ]
+                }
+            }
+        }
+    },
+    "4f0e6573614ff579bfcf684c302d669b706c836e": {
+        "authored_data": "2011 May 25 17:23",
+        "commit.message": "fix compilation failure now we use standard java.util.concurrent.*\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1127588 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "a3c891b60dc7b030c94d97075d92faeb9702f169",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/startup/ArchivaStartup.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38,
+                        39
+                    ]
+                }
+            }
+        }
+    },
+    "a3c891b60dc7b030c94d97075d92faeb9702f169": {
+        "authored_data": "2011 May 25 16:58",
+        "commit.message": "correctly use basedir for configuration and tests : pass it tru sysprops via surefire\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1127584 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "1736600c3cef88aaac802bf0156c46f9a0d45c1e",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/content/RepositoryRequest.java": {
+                "old": {
+                    "(None, None)": [
+                        37
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/AbstractRepositoryLayerTestCase.java": {
+                "new": {
+                    "('org.apache.maven.archiva.repository#AbstractRepositoryLayerTestCase', None)": [
+                        43,
+                        53
+                    ],
+                    "('org.apache.maven.archiva.repository#AbstractRepositoryLayerTestCase', 'getBasedir')": [
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/content/RepositoryRequestTest.java": {
+                "old": {
+                    "(None, None)": [
+                        41
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', None)": [
+                        46
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'createManagedRepo(String)')": [
+                        370
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testNativePathPomLegacyToDefaultEjb')": [
+                        447,
+                        448
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        41,
+                        42
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', None)": [
+                        47,
+                        48
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'createManagedRepo(String)')": [
+                        372
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testNativePathPomLegacyToDefaultEjb')": [
+                        449,
+                        450
+                    ]
+                }
+            }
+        }
+    },
+    "971dcc2f3570136a52c1d938527b1714231ed2b9": {
+        "authored_data": "2011 May 25 15:31",
+        "commit.message": "[MRM-1473] remove use of plexus-spring\nmove archiva-repository-layer to full spring\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1127555 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "b0a37ac3863a846fa9652de7246fb06fa2f2f80e",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/RepositoryContentFactory.java": {
+                "old": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        37,
+                        41,
+                        44,
+                        45,
+                        46,
+                        204
+                    ],
+                    "('org.apache.maven.archiva.repository#RepositoryContentFactory', None)": [
+                        49,
+                        52,
+                        60,
+                        64,
+                        65,
+                        70,
+                        74,
+                        144
+                    ],
+                    "('org.apache.maven.archiva.repository#RepositoryContentFactory', 'getManagedRepositoryContent(String)')": [
+                        86,
+                        87,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103
+                    ],
+                    "('org.apache.maven.archiva.repository#RepositoryContentFactory', 'getRemoteRepositoryContent(String)')": [
+                        118,
+                        119,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135
+                    ],
+                    "('org.apache.maven.archiva.repository#RepositoryContentFactory', 'contextualize(Context)')": [
+                        140,
+                        141,
+                        142,
+                        143
+                    ],
+                    "('org.apache.maven.archiva.repository#RepositoryContentFactory', 'afterConfigurationChange(Registry,String,Object)')": [
+                        148,
+                        149
+                    ],
+                    "('org.apache.maven.archiva.repository#RepositoryContentFactory', 'initialize')": [
+                        161
+                    ],
+                    "('org.apache.maven.archiva.repository#RepositoryContentFactory', 'initMaps')": [
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        183,
+                        184,
+                        185,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        202,
+                        203
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29,
+                        31,
+                        32,
+                        34,
+                        37,
+                        40,
+                        41,
+                        42,
+                        44
+                    ],
+                    "('org.apache.maven.archiva.repository#RepositoryContentFactory', None)": [
+                        46,
+                        49,
+                        51,
+                        53,
+                        54,
+                        55,
+                        64,
+                        65,
+                        70,
+                        74,
+                        141,
+                        158,
+                        159,
+                        164
+                    ],
+                    "('org.apache.maven.archiva.repository#RepositoryContentFactory', 'getManagedRepositoryContent(String)')": [
+                        86,
+                        87,
+                        93,
+                        94,
+                        95,
+                        96
+                    ],
+                    "('org.apache.maven.archiva.repository#RepositoryContentFactory', 'getRemoteRepositoryContent(String)')": [
+                        111,
+                        112,
+                        118,
+                        119,
+                        120,
+                        121
+                    ],
+                    "('org.apache.maven.archiva.repository#RepositoryContentFactory', 'afterConfigurationChange(Registry,String,Object)')": [
+                        129,
+                        130
+                    ],
+                    "('org.apache.maven.archiva.repository#RepositoryContentFactory', 'initMaps')": [
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        155,
+                        156,
+                        157
+                    ],
+                    "('org.apache.maven.archiva.repository#RepositoryContentFactory', 'getArchivaConfiguration')": [
+                        161,
+                        162,
+                        163
+                    ],
+                    "('org.apache.maven.archiva.repository#RepositoryContentFactory', 'setArchivaConfiguration(ArchivaConfiguration)')": [
+                        166,
+                        167,
+                        168
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/connector/RepositoryConnector.java": {
+                "old": {
+                    "(None, None)": [
+                        34,
+                        36,
+                        38,
+                        40,
+                        42,
+                        44
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        36,
+                        38,
+                        40,
+                        42,
+                        44
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/content/AbstractDefaultRepositoryContent.java": {
+                "old": {
+                    "('org.apache.maven.archiva.repository.content#AbstractDefaultRepositoryContent', None)": [
+                        44,
+                        59
+                    ],
+                    "('org.apache.maven.archiva.repository.content#AbstractDefaultRepositoryContent', 'toPath(String,String,String,String,String,String)')": [
+                        130,
+                        131
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        36,
+                        37,
+                        38
+                    ],
+                    "('org.apache.maven.archiva.repository.content#AbstractDefaultRepositoryContent', None)": [
+                        48,
+                        63,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        75
+                    ],
+                    "('org.apache.maven.archiva.repository.content#AbstractDefaultRepositoryContent', 'initialize')": [
+                        71,
+                        72,
+                        73,
+                        74
+                    ],
+                    "('org.apache.maven.archiva.repository.content#AbstractDefaultRepositoryContent', 'toPath(String,String,String,String,String,String)')": [
+                        144,
+                        145
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/content/AbstractLegacyRepositoryContent.java": {
+                "old": {
+                    "('org.apache.maven.archiva.repository.content#AbstractLegacyRepositoryContent', None)": [
+                        52,
+                        118
+                    ],
+                    "('org.apache.maven.archiva.repository.content#AbstractLegacyRepositoryContent', 'toPath(ArchivaArtifact)')": [
+                        69,
+                        70
+                    ],
+                    "('org.apache.maven.archiva.repository.content#AbstractLegacyRepositoryContent', 'toPath(ArtifactReference)')": [
+                        80,
+                        81
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        28
+                    ],
+                    "('org.apache.maven.archiva.repository.content#AbstractLegacyRepositoryContent', None)": [
+                        54,
+                        56,
+                        57,
+                        122
+                    ],
+                    "('org.apache.maven.archiva.repository.content#AbstractLegacyRepositoryContent', 'toPath(ArchivaArtifact)')": [
+                        73,
+                        74
+                    ],
+                    "('org.apache.maven.archiva.repository.content#AbstractLegacyRepositoryContent', 'toPath(ArtifactReference)')": [
+                        84,
+                        85
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/content/DefaultPathParser.java": {
+                "new": {
+                    "(None, None)": [
+                        31,
+                        43
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/content/LegacyPathParser.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        35,
+                        36
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParser', None)": [
+                        43,
+                        44,
+                        45,
+                        46
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParser', 'toArtifactReference(String)')": [
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        90,
+                        91,
+                        104,
+                        167,
+                        168,
+                        169,
+                        201,
+                        202,
+                        203
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParser', None)": [
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParser', 'toArtifactReference(String)')": [
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        90,
+                        91,
+                        104,
+                        167,
+                        168,
+                        169,
+                        170,
+                        202,
+                        203,
+                        204,
+                        205
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/content/ManagedDefaultRepositoryContent.java": {
+                "old": {
+                    "(None, None)": [
+                        34,
+                        46
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContent', None)": [
+                        55,
+                        56,
+                        57,
+                        355
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        35,
+                        36,
+                        37,
+                        49,
+                        54,
+                        55
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContent', None)": [
+                        60
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/content/ManagedLegacyRepositoryContent.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedLegacyRepositoryContent', None)": [
+                        56
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        35,
+                        36,
+                        37,
+                        54,
+                        55
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedLegacyRepositoryContent', None)": [
+                        61,
+                        63
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/content/PathParser.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        35,
+                        40
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        35,
+                        40
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/content/RemoteDefaultRepositoryContent.java": {
+                "old": {
+                    "(None, None)": [
+                        29,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RemoteDefaultRepositoryContent', None)": [
+                        66
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        28,
+                        31,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        40,
+                        41
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RemoteDefaultRepositoryContent', None)": [
+                        70
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/content/RemoteLegacyRepositoryContent.java": {
+                "old": {
+                    "(None, None)": [
+                        29,
+                        32,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RemoteLegacyRepositoryContent', None)": [
+                        68
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        28,
+                        31,
+                        35,
+                        36,
+                        37,
+                        39,
+                        40
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RemoteLegacyRepositoryContent', None)": [
+                        69
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/content/RepositoryRequest.java": {
+                "old": {
+                    "(None, None)": [
+                        33,
+                        35,
+                        36,
+                        37
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequest', None)": [
+                        43,
+                        44,
+                        45,
+                        149,
+                        234
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequest', 'isMetadataSupportFile(String)')": [
+                        138,
+                        141,
+                        146
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequest', 'isDefault(String)')": [
+                        171,
+                        172,
+                        177,
+                        179,
+                        183,
+                        186,
+                        190,
+                        195
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequest', 'toNativePath(String,ManagedRepositoryContent)')": [
+                        238,
+                        250
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        28,
+                        29,
+                        30,
+                        38
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequest', None)": [
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        152,
+                        237
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequest', 'isMetadataSupportFile(String)')": [
+                        141,
+                        144,
+                        149
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequest', 'isDefault(String)')": [
+                        174,
+                        175,
+                        180,
+                        182,
+                        186,
+                        189,
+                        193,
+                        198
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequest', 'toNativePath(String,ManagedRepositoryContent)')": [
+                        241,
+                        242,
+                        254
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/metadata/MetadataTools.java": {
+                "old": {
+                    "(None, None)": [
+                        45,
+                        46,
+                        51,
+                        69,
+                        75,
+                        76
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', None)": [
+                        79,
+                        81,
+                        90,
+                        95,
+                        98,
+                        99,
+                        100,
+                        105,
+                        133,
+                        373,
+                        423,
+                        465,
+                        467,
+                        469,
+                        491,
+                        528,
+                        536,
+                        539,
+                        545,
+                        669,
+                        742,
+                        748
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'gatherSnapshotVersions(ManagedRepositoryContent,VersionedReference)')": [
+                        135
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'toVersionedReference(String)')": [
+                        212
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'initialize')": [
+                        340
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'readProxyMetadata(ManagedRepositoryContent,ProjectReference,String)')": [
+                        354
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'readProxyMetadata(ManagedRepositoryContent,String,String)')": [
+                        379
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'readProxyMetadata(ManagedRepositoryContent,VersionedReference,String)')": [
+                        404
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'updateMetadata(ManagedRepositoryContent,String)')": [
+                        424,
+                        425,
+                        426,
+                        428,
+                        430,
+                        431,
+                        432,
+                        433,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        446,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'findPossibleVersions(Set,File)')": [
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        482,
+                        484
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'getMetadatasForManagedRepository(ManagedRepositoryContent,String)')": [
+                        492,
+                        495,
+                        496,
+                        500,
+                        501,
+                        502,
+                        503,
+                        504,
+                        505,
+                        506,
+                        507,
+                        508,
+                        509,
+                        510,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516,
+                        517,
+                        518,
+                        519,
+                        521,
+                        524,
+                        525
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'updateMetadata(ManagedRepositoryContent,ProjectReference)')": [
+                        599
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'updateMetadataVersions(Collection,ArchivaRepositoryMetadata)')": [
+                        622,
+                        625,
+                        626,
+                        632,
+                        633,
+                        634,
+                        635,
+                        636,
+                        637,
+                        638,
+                        639,
+                        640,
+                        641,
+                        642,
+                        643,
+                        644,
+                        645,
+                        646,
+                        647,
+                        650,
+                        651,
+                        652,
+                        656,
+                        657,
+                        658,
+                        659
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'updateMetadata(ManagedRepositoryContent,VersionedReference)')": [
+                        760,
+                        772,
+                        773,
+                        800,
+                        802,
+                        804,
+                        840,
+                        841
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'initConfigVariables')": [
+                        876
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'getFirstArtifact(ManagedRepositoryContent,VersionedReference)')": [
+                        904,
+                        920,
+                        925,
+                        926
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        77,
+                        78,
+                        80,
+                        982
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', None)": [
+                        82,
+                        84,
+                        93,
+                        95,
+                        96,
+                        100,
+                        102,
+                        104,
+                        105,
+                        106,
+                        111,
+                        139,
+                        346,
+                        380,
+                        430,
+                        474,
+                        476,
+                        478,
+                        500,
+                        539,
+                        547,
+                        555,
+                        556,
+                        680,
+                        758,
+                        759,
+                        963,
+                        967,
+                        968,
+                        972,
+                        973,
+                        977,
+                        978
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'gatherSnapshotVersions(ManagedRepositoryContent,VersionedReference)')": [
+                        141,
+                        142
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'toVersionedReference(String)')": [
+                        219
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'readProxyMetadata(ManagedRepositoryContent,ProjectReference,String)')": [
+                        361
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'readProxyMetadata(ManagedRepositoryContent,String,String)')": [
+                        386
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'readProxyMetadata(ManagedRepositoryContent,VersionedReference,String)')": [
+                        411
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'updateMetadata(ManagedRepositoryContent,String)')": [
+                        431,
+                        432,
+                        433,
+                        434,
+                        436,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        455,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'findPossibleVersions(Set,File)')": [
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        491,
+                        493
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'getMetadatasForManagedRepository(ManagedRepositoryContent,String)')": [
+                        501,
+                        502,
+                        505,
+                        506,
+                        510,
+                        511,
+                        513,
+                        516,
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'updateMetadata(ManagedRepositoryContent,ProjectReference)')": [
+                        610
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'updateMetadataVersions(Collection,ArchivaRepositoryMetadata)')": [
+                        633,
+                        636,
+                        637,
+                        643,
+                        644,
+                        645,
+                        646,
+                        647,
+                        648,
+                        649,
+                        650,
+                        651,
+                        652,
+                        653,
+                        654,
+                        655,
+                        656,
+                        657,
+                        658,
+                        661,
+                        662,
+                        663,
+                        667,
+                        668,
+                        669,
+                        670
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'updateMetadata(ManagedRepositoryContent,VersionedReference)')": [
+                        771,
+                        783,
+                        784,
+                        811,
+                        813,
+                        815,
+                        851,
+                        852
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'initConfigVariables')": [
+                        887
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'getFirstArtifact(ManagedRepositoryContent,VersionedReference)')": [
+                        915,
+                        916,
+                        932,
+                        937,
+                        938
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'getConfiguration')": [
+                        964,
+                        965,
+                        966
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'setConfiguration(ArchivaConfiguration)')": [
+                        969,
+                        970,
+                        971
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'getFiletypes')": [
+                        974,
+                        975,
+                        976
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'setFiletypes(FileTypes)')": [
+                        979,
+                        980,
+                        981
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/AbstractRepositoryLayerTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.maven.archiva.repository#AbstractRepositoryLayerTestCase', None)": [
+                        34,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        44
+                    ],
+                    "('org.apache.maven.archiva.repository#AbstractRepositoryLayerTestCase', 'getSpringConfigLocation')": [
+                        41,
+                        42,
+                        43
+                    ],
+                    "('org.apache.maven.archiva.repository#AbstractRepositoryLayerTestCase', 'createManagedRepositoryContent(String,String,File,String)')": [
+                        64,
+                        73
+                    ],
+                    "('org.apache.maven.archiva.repository#AbstractRepositoryLayerTestCase', 'createRemoteRepositoryContent(String,String,String,String)')": [
+                        88
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        25,
+                        26,
+                        27,
+                        28,
+                        30,
+                        38,
+                        39
+                    ],
+                    "('org.apache.maven.archiva.repository#AbstractRepositoryLayerTestCase', None)": [
+                        41,
+                        43,
+                        44,
+                        45
+                    ],
+                    "('org.apache.maven.archiva.repository#AbstractRepositoryLayerTestCase', 'createManagedRepositoryContent(String,String,File,String)')": [
+                        65,
+                        66,
+                        75,
+                        76
+                    ],
+                    "('org.apache.maven.archiva.repository#AbstractRepositoryLayerTestCase', 'createRemoteRepositoryContent(String,String,String,String)')": [
+                        91,
+                        92
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/MockConfiguration.java": {
+                "old": {
+                    "(None, None)": [
+                        38
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        39,
+                        42
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/content/AbstractDefaultRepositoryContentTestCase.java": {
+                "new": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.maven.archiva.repository.content#AbstractDefaultRepositoryContentTestCase', None)": [
+                        36,
+                        42,
+                        48,
+                        55,
+                        61,
+                        67,
+                        73,
+                        85,
+                        104,
+                        144,
+                        165,
+                        179,
+                        196,
+                        213,
+                        230,
+                        248,
+                        266,
+                        284,
+                        302,
+                        319,
+                        333,
+                        347,
+                        361,
+                        375,
+                        389
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/content/AbstractLegacyRepositoryContentTestCase.java": {
+                "new": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.maven.archiva.repository.content#AbstractLegacyRepositoryContentTestCase', None)": [
+                        35,
+                        41,
+                        47,
+                        53,
+                        60,
+                        71,
+                        89,
+                        107,
+                        125,
+                        138,
+                        175,
+                        193,
+                        207,
+                        220,
+                        233,
+                        250,
+                        267,
+                        285,
+                        301,
+                        317,
+                        333,
+                        350
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/content/ArtifactExtensionMappingTest.java": {
+                "new": {
+                    "(None, None)": [
+                        28
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ArtifactExtensionMappingTest', None)": [
+                        43
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/content/DefaultPathParserTest.java": {
+                "new": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.maven.archiva.repository.content#DefaultPathParserTest', None)": [
+                        40,
+                        47,
+                        54,
+                        61,
+                        67,
+                        73,
+                        79,
+                        89,
+                        103,
+                        117,
+                        131,
+                        151,
+                        171,
+                        212,
+                        233,
+                        247,
+                        261,
+                        278,
+                        295,
+                        312,
+                        332,
+                        351,
+                        371,
+                        388,
+                        400,
+                        418,
+                        436,
+                        453,
+                        467,
+                        481,
+                        495,
+                        509
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/content/FilenameParserTest.java": {
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        32
+                    ],
+                    "('org.apache.maven.archiva.repository.content#FilenameParserTest', None)": [
+                        36,
+                        45,
+                        54,
+                        63,
+                        72,
+                        87,
+                        100,
+                        116,
+                        131,
+                        140,
+                        149,
+                        159,
+                        168,
+                        180,
+                        189,
+                        199,
+                        211
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/content/LegacyPathParserTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParserTest', None)": [
+                        37,
+                        42,
+                        43,
+                        56,
+                        101,
+                        102,
+                        118,
+                        119,
+                        135,
+                        136,
+                        200,
+                        201,
+                        219,
+                        220,
+                        236,
+                        237,
+                        248,
+                        249,
+                        301,
+                        302,
+                        395,
+                        396
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParserTest', 'setUp')": [
+                        44,
+                        48
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParserTest', 'testGoodFooLibJavadoc')": [
+                        214
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParserTest', 'testGoodFooLibSources')": [
+                        228
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParserTest', 'assertLayout(String,String,String,String,String,String)')": [
+                        413
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParserTest', 'assertArtifactReference(ArtifactReference,String,String,String,String,String)')": [
+                        424
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParserTest', 'assertBadPath(String,String)')": [
+                        440
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29,
+                        30,
+                        31,
+                        32
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParserTest', None)": [
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        51,
+                        52,
+                        66,
+                        72,
+                        78,
+                        84,
+                        91,
+                        100,
+                        116,
+                        117,
+                        118,
+                        119,
+                        135,
+                        136,
+                        137,
+                        138,
+                        154,
+                        155,
+                        156,
+                        157,
+                        175,
+                        188,
+                        223,
+                        224,
+                        225,
+                        226,
+                        245,
+                        246,
+                        247,
+                        248,
+                        264,
+                        265,
+                        266,
+                        267,
+                        278,
+                        279,
+                        280,
+                        281,
+                        295,
+                        308,
+                        321,
+                        336,
+                        337,
+                        338,
+                        339,
+                        356,
+                        374,
+                        390,
+                        406,
+                        422,
+                        437,
+                        438,
+                        439,
+                        440
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParserTest', 'setUp')": [
+                        53,
+                        57,
+                        58
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParserTest', 'testGoodFooLibJavadoc')": [
+                        239,
+                        240
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParserTest', 'testGoodFooLibSources')": [
+                        256
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParserTest', 'assertLayout(String,String,String,String,String,String)')": [
+                        457,
+                        458
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParserTest', 'assertArtifactReference(ArtifactReference,String,String,String,String,String)')": [
+                        469,
+                        470
+                    ],
+                    "('org.apache.maven.archiva.repository.content#LegacyPathParserTest', 'assertBadPath(String,String)')": [
+                        486,
+                        487
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/content/ManagedDefaultRepositoryContentTest.java": {
+                "old": {
+                    "(None, None)": [
+                        32,
+                        41
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContentTest', 'testGetVersionsSimple')": [
+                        65
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContentTest', None)": [
+                        66,
+                        67,
+                        92,
+                        93,
+                        188,
+                        208
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContentTest', 'testGetVersionsSnapshotA')": [
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContentTest', 'testExcludeMetadataFile')": [
+                        130
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContentTest', 'assertGetVersions(String,List)')": [
+                        142
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContentTest', 'assertVersions(String,String,String)')": [
+                        167
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContentTest', 'setUp')": [
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        45
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContentTest', None)": [
+                        52,
+                        53,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        82,
+                        83,
+                        84,
+                        91,
+                        98,
+                        103,
+                        104,
+                        105,
+                        112,
+                        119,
+                        128,
+                        129,
+                        130,
+                        140,
+                        151,
+                        166
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContentTest', 'setUp')": [
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContentTest', 'testGetVersionsSimple')": [
+                        102
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContentTest', 'testGetVersionsSnapshotA')": [
+                        123,
+                        124,
+                        125,
+                        126,
+                        127
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContentTest', 'testExcludeMetadataFile')": [
+                        170
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContentTest', 'assertGetVersions(String,List)')": [
+                        182
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContentTest', 'assertVersions(String,String,String)')": [
+                        207
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/content/ManagedLegacyRepositoryContentTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.repository.content#ManagedLegacyRepositoryContentTest', 'testGetVersionsFromProjectReference')": [
+                        49,
+                        50,
+                        53,
+                        54
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedLegacyRepositoryContentTest', 'testGetVersionsFromVersionedReference')": [
+                        60,
+                        63,
+                        64
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedLegacyRepositoryContentTest', 'testGetRelatedArtifacts')": [
+                        126,
+                        127,
+                        129,
+                        130,
+                        131,
+                        132,
+                        159
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedLegacyRepositoryContentTest', None)": [
+                        165,
+                        178
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedLegacyRepositoryContentTest', 'setUp')": [
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        30,
+                        32,
+                        33
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedLegacyRepositoryContentTest', None)": [
+                        48,
+                        49,
+                        52,
+                        65,
+                        66,
+                        67,
+                        77,
+                        138
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedLegacyRepositoryContentTest', 'setUp')": [
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedLegacyRepositoryContentTest', 'testGetVersionsFromProjectReference')": [
+                        71,
+                        74
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedLegacyRepositoryContentTest', 'testGetVersionsFromVersionedReference')": [
+                        81,
+                        84
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedLegacyRepositoryContentTest', 'testGetRelatedArtifacts')": [
+                        147,
+                        149,
+                        150,
+                        177
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/content/RemoteDefaultRepositoryContentTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.repository.content#RemoteDefaultRepositoryContentTest', None)": [
+                        37
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RemoteDefaultRepositoryContentTest', 'setUp')": [
+                        38,
+                        46
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28,
+                        29
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RemoteDefaultRepositoryContentTest', None)": [
+                        39,
+                        42
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RemoteDefaultRepositoryContentTest', 'setUp')": [
+                        43,
+                        51
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/content/RemoteLegacyRepositoryContentTest.java": {
+                "old": {
+                    "(None, None)": [
+                        28
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RemoteLegacyRepositoryContentTest', None)": [
+                        37
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RemoteLegacyRepositoryContentTest', 'setUp')": [
+                        38,
+                        43,
+                        44,
+                        45,
+                        48
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28,
+                        29,
+                        32
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RemoteLegacyRepositoryContentTest', None)": [
+                        39,
+                        40,
+                        43
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RemoteLegacyRepositoryContentTest', 'setUp')": [
+                        44,
+                        49,
+                        50,
+                        51,
+                        54
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/content/RepositoryRequestTest.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        561
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', None)": [
+                        42,
+                        47,
+                        119,
+                        120,
+                        141,
+                        142,
+                        219,
+                        220,
+                        250,
+                        265,
+                        266,
+                        339,
+                        340,
+                        349,
+                        350,
+                        409,
+                        410,
+                        491,
+                        492,
+                        506,
+                        507,
+                        552,
+                        553,
+                        554
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testValidDefaultMavenTestPlugin')": [
+                        117,
+                        118
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testValidLegacyDerbyPom')": [
+                        140
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testValidDefaultTimestampedSnapshot')": [
+                        217,
+                        218
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testIsSupportFile')": [
+                        231
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testIsMetadata')": [
+                        240,
+                        241,
+                        244
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testIsMetadataSupportFile')": [
+                        253,
+                        254,
+                        255,
+                        256,
+                        259,
+                        260,
+                        262,
+                        264
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'createManagedRepo(String)')": [
+                        308
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testToNativePathArtifactDefaultToDefaultDualExtension')": [
+                        321,
+                        322
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testToNativePathArtifactLegacyToDefaultDualExtension')": [
+                        337,
+                        338
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testToNativePathMetadataDefaultToDefault')": [
+                        347,
+                        348
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testNativePathSupportFileLegacyToDefault')": [
+                        407,
+                        408
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testToNativePathLegacyMetadataDefaultToLegacy')": [
+                        490
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testNativePathPomDefaultToLegacy')": [
+                        504,
+                        505
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testNativePathSupportFileDefaultToLegacy')": [
+                        514,
+                        515
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'setUp')": [
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        41
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', None)": [
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        59,
+                        60,
+                        61,
+                        66,
+                        67,
+                        72,
+                        73,
+                        79,
+                        85,
+                        91,
+                        97,
+                        105,
+                        113,
+                        120,
+                        127,
+                        135,
+                        143,
+                        150,
+                        156,
+                        157,
+                        158,
+                        166,
+                        174,
+                        182,
+                        183,
+                        184,
+                        192,
+                        200,
+                        208,
+                        216,
+                        224,
+                        232,
+                        240,
+                        248,
+                        256,
+                        264,
+                        271,
+                        272,
+                        273,
+                        292,
+                        306,
+                        307,
+                        325,
+                        326,
+                        327,
+                        349,
+                        377,
+                        392,
+                        404,
+                        405,
+                        406,
+                        416,
+                        417,
+                        418,
+                        429,
+                        440,
+                        451,
+                        462,
+                        473,
+                        482,
+                        483,
+                        484,
+                        502,
+                        520,
+                        538,
+                        556,
+                        569,
+                        570,
+                        576,
+                        585,
+                        586,
+                        587
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'setUp')": [
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testValidDefaultMavenTestPlugin')": [
+                        154,
+                        155
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testValidLegacyDerbyPom')": [
+                        180,
+                        181
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testValidDefaultTimestampedSnapshot')": [
+                        269,
+                        270
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testIsSupportFile')": [
+                        284,
+                        285
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testIsMetadata')": [
+                        295,
+                        296,
+                        299,
+                        300
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testIsMetadataSupportFile')": [
+                        310,
+                        311,
+                        312,
+                        313,
+                        316,
+                        317,
+                        318,
+                        319,
+                        321,
+                        322,
+                        324
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'createManagedRepo(String)')": [
+                        370
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testToNativePathArtifactDefaultToDefaultDualExtension')": [
+                        384,
+                        385,
+                        386
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testToNativePathArtifactLegacyToDefaultDualExtension')": [
+                        402,
+                        403
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testToNativePathMetadataDefaultToDefault')": [
+                        413,
+                        414,
+                        415
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testNativePathSupportFileLegacyToDefault')": [
+                        480,
+                        481
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testToNativePathLegacyMetadataDefaultToLegacy')": [
+                        568
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testNativePathPomDefaultToLegacy')": [
+                        583,
+                        584
+                    ],
+                    "('org.apache.maven.archiva.repository.content#RepositoryRequestTest', 'testNativePathSupportFileDefaultToLegacy')": [
+                        594,
+                        595,
+                        596
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/metadata/MetadataToolsTest.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        616
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'testGatherSnapshotVersionsA')": [
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', None)": [
+                        75,
+                        76,
+                        96,
+                        97,
+                        155,
+                        156,
+                        166,
+                        167,
+                        189,
+                        190,
+                        195,
+                        196,
+                        201,
+                        202
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'testGatherSnapshotVersionsAWithProxies')": [
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'testGetRepositorySpecificName')": [
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'testUpdateProjectNonExistingVersion')": [
+                        142,
+                        144,
+                        145,
+                        146,
+                        147,
+                        150,
+                        152,
+                        153,
+                        154
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'testUpdateProjectMissingMultipleVersions')": [
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'testUpdateProjectMissingMultipleVersionsWithProxies')": [
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'testUpdateProjectSimpleYetIncomplete')": [
+                        194
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'testUpdateProjectSimpleYetMissing')": [
+                        200
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'assertSnapshotVersions(String,String,String)')": [
+                        347,
+                        348,
+                        349,
+                        350
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'assertProjectMetadata(ManagedRepositoryContent,ProjectReference,String,String,String,String)')": [
+                        449,
+                        450,
+                        457
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'createTestRepoContent')": [
+                        574,
+                        575,
+                        576,
+                        577,
+                        578
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'setUp')": [
+                        609,
+                        610,
+                        611,
+                        612,
+                        613,
+                        614,
+                        615
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        40,
+                        41,
+                        44,
+                        45,
+                        59,
+                        620
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', None)": [
+                        63,
+                        66,
+                        67,
+                        70,
+                        71,
+                        80,
+                        81,
+                        82,
+                        99,
+                        100,
+                        101,
+                        136,
+                        156,
+                        157,
+                        158,
+                        165,
+                        166,
+                        167,
+                        184,
+                        185,
+                        186,
+                        191,
+                        192,
+                        193,
+                        198,
+                        199,
+                        200,
+                        207,
+                        214,
+                        221,
+                        228,
+                        239,
+                        249,
+                        256,
+                        267,
+                        288,
+                        300,
+                        312,
+                        324
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'testGatherSnapshotVersionsA')": [
+                        75,
+                        76,
+                        77,
+                        78,
+                        79
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'testGatherSnapshotVersionsAWithProxies')": [
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'testGetRepositorySpecificName')": [
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'testUpdateProjectNonExistingVersion')": [
+                        146,
+                        148,
+                        149,
+                        152,
+                        154,
+                        155
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'testUpdateProjectMissingMultipleVersions')": [
+                        162,
+                        163,
+                        164
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'testUpdateProjectMissingMultipleVersionsWithProxies')": [
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'testUpdateProjectSimpleYetIncomplete')": [
+                        190
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'testUpdateProjectSimpleYetMissing')": [
+                        197
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'assertSnapshotVersions(String,String,String)')": [
+                        357,
+                        358,
+                        359,
+                        360
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'assertProjectMetadata(ManagedRepositoryContent,ProjectReference,String,String,String,String)')": [
+                        459,
+                        460,
+                        461,
+                        468
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataToolsTest', 'createTestRepoContent')": [
+                        585,
+                        586,
+                        587,
+                        588,
+                        589
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/metadata/RepositoryMetadataReaderTest.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        28
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#RepositoryMetadataReaderTest', None)": [
+                        32,
+                        49
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#RepositoryMetadataReaderTest', 'testLoadSimple')": [
+                        34,
+                        36
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#RepositoryMetadataReaderTest', 'testLoadComplex')": [
+                        50,
+                        52,
+                        63
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        24,
+                        25,
+                        26,
+                        31,
+                        35
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#RepositoryMetadataReaderTest', None)": [
+                        36,
+                        37,
+                        39,
+                        56,
+                        57
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#RepositoryMetadataReaderTest', 'testLoadSimple')": [
+                        40,
+                        41,
+                        43
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#RepositoryMetadataReaderTest', 'testLoadComplex')": [
+                        58,
+                        59,
+                        61,
+                        72,
+                        73
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/test/java/org/apache/maven/archiva/repository/metadata/RepositoryMetadataWriterTest.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#RepositoryMetadataWriterTest', None)": [
+                        36
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#RepositoryMetadataWriterTest', 'testWriteSimple')": [
+                        41
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        26,
+                        27,
+                        28,
+                        38
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#RepositoryMetadataWriterTest', None)": [
+                        40,
+                        42,
+                        43
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#RepositoryMetadataWriterTest', 'testWriteSimple')": [
+                        47
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduler/archiva-scheduler-repository/src/main/java/org/apache/archiva/scheduler/repository/ArchivaRepositoryScanningTaskExecutor.java": {
+                "old": {
+                    "(None, None)": [
+                        42
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutor', None)": [
+                        58,
+                        59,
+                        65,
+                        66,
+                        70,
+                        71,
+                        77,
+                        78,
+                        84,
+                        85
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutor', 'executeTask(Task)')": [
+                        123,
+                        128,
+                        191
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        56,
+                        261
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutor', None)": [
+                        63,
+                        64,
+                        65,
+                        71,
+                        72,
+                        73,
+                        77,
+                        78,
+                        79,
+                        85,
+                        86,
+                        87,
+                        93,
+                        94,
+                        95,
+                        98,
+                        212,
+                        216,
+                        217,
+                        221,
+                        222,
+                        226,
+                        227,
+                        231,
+                        232,
+                        236,
+                        237,
+                        241,
+                        242,
+                        246,
+                        247,
+                        251,
+                        252,
+                        256,
+                        257
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutor', 'executeTask(Task)')": [
+                        134,
+                        139,
+                        202
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutor', 'getArchivaConfiguration')": [
+                        213,
+                        214,
+                        215
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutor', 'setArchivaConfiguration(ArchivaConfiguration)')": [
+                        218,
+                        219,
+                        220
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutor', 'getRepoScanner')": [
+                        223,
+                        224,
+                        225
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutor', 'setRepoScanner(RepositoryScanner)')": [
+                        228,
+                        229,
+                        230
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutor', 'getConsumers')": [
+                        233,
+                        234,
+                        235
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutor', 'setConsumers(RepositoryContentConsumers)')": [
+                        238,
+                        239,
+                        240
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutor', 'getRepositorySessionFactory')": [
+                        243,
+                        244,
+                        245
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutor', 'setRepositorySessionFactory(RepositorySessionFactory)')": [
+                        248,
+                        249,
+                        250
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutor', 'getRepositoryStatisticsManager')": [
+                        253,
+                        254,
+                        255
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutor', 'setRepositoryStatisticsManager(RepositoryStatisticsManager)')": [
+                        258,
+                        259,
+                        260
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduler/archiva-scheduler-repository/src/main/java/org/apache/archiva/scheduler/repository/RepositoryArchivaTaskScheduler.java": {
+                "old": {
+                    "(None, None)": [
+                        46
+                    ],
+                    "('org.apache.archiva.scheduler.repository#RepositoryArchivaTaskScheduler', None)": [
+                        64,
+                        65,
+                        69,
+                        70,
+                        74,
+                        75,
+                        79,
+                        80,
+                        86,
+                        87
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38,
+                        47,
+                        48,
+                        49,
+                        50,
+                        62
+                    ],
+                    "('org.apache.archiva.scheduler.repository#RepositoryArchivaTaskScheduler', None)": [
+                        69,
+                        70,
+                        71,
+                        75,
+                        76,
+                        77,
+                        81,
+                        82,
+                        83,
+                        87,
+                        88,
+                        89,
+                        95,
+                        96,
+                        97
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduler/archiva-scheduler-repository/src/test/java/org/apache/archiva/metadata/repository/TestRepositorySessionFactory.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        3,
+                        4,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduler/archiva-scheduler-repository/src/test/java/org/apache/archiva/scheduler/repository/ArchivaRepositoryScanningTaskExecutorTest.java": {
+                "old": {
+                    "(None, None)": [
+                        24,
+                        30,
+                        32,
+                        35
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutorTest', None)": [
+                        50,
+                        58,
+                        59,
+                        60,
+                        61
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutorTest', 'setUp')": [
+                        64,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        104,
+                        115,
+                        116,
+                        117,
+                        120
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutorTest', 'tearDown')": [
+                        124
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutorTest', 'testExecutorScanOnlyNewArtifacts')": [
+                        169,
+                        170,
+                        181,
+                        201,
+                        202
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutorTest', 'testExecutorScanOnlyNewArtifactsChangeTimes')": [
+                        224,
+                        246,
+                        247
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutorTest', 'testExecutorScanOnlyNewArtifactsMidScan')": [
+                        269,
+                        291,
+                        292
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutorTest', 'testExecutorForceScanAll')": [
+                        311,
+                        312
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutorTest', 'createAndSaveTestStats')": [
+                        336,
+                        337
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        55,
+                        56
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutorTest', None)": [
+                        58,
+                        60,
+                        61,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        84,
+                        129,
+                        140,
+                        156,
+                        220,
+                        266,
+                        312
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutorTest', 'setUp')": [
+                        85,
+                        90,
+                        91
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutorTest', 'tearDown')": [
+                        130
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutorTest', 'testExecutorScanOnlyNewArtifacts')": [
+                        177,
+                        178,
+                        189,
+                        209,
+                        210
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutorTest', 'testExecutorScanOnlyNewArtifactsChangeTimes')": [
+                        233,
+                        255,
+                        256
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutorTest', 'testExecutorScanOnlyNewArtifactsMidScan')": [
+                        279,
+                        301,
+                        302
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutorTest', 'testExecutorForceScanAll')": [
+                        322,
+                        323
+                    ],
+                    "('org.apache.archiva.scheduler.repository#ArchivaRepositoryScanningTaskExecutorTest', 'createAndSaveTestStats')": [
+                        347,
+                        348
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduler/archiva-scheduler-repository/src/test/java/org/apache/archiva/scheduler/repository/TestConsumer.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28
+                    ],
+                    "('org.apache.archiva.scheduler.repository#TestConsumer', None)": [
+                        45
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42
+                    ],
+                    "('org.apache.archiva.scheduler.repository#TestConsumer', None)": [
+                        49
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduler/archiva-scheduler-repository/src/test/java/org/apache/archiva/scheduler/repository/TestRepositoryStatisticsManager.java": {
+                "new": {
+                    "(None, None)": [
+                        25,
+                        33
+                    ]
+                }
+            }
+        }
+    }
+}

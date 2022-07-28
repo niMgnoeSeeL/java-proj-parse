@@ -1,0 +1,982 @@
+{
+    "77287dbb1c84bc7a6600917c23e4aea2fa1ca4ed": {
+        "authored_data": "2011 Sep 03 21:22",
+        "commit.message": "[MRM-1506] api to configure RemoteRepository : extract code from ManagedRepo admin for validation\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1164931 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "025c72c95c49550df4cd43f01de69a49b0357ee4",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-repository-admin/src/main/java/org/apache/archiva/admin/repository/managed/DefaultManagedRepositoryAdmin.java": {
+                "old": {
+                    "(None, None)": [
+                        40
+                    ],
+                    "('org.apache.archiva.admin.repository.managed#DefaultManagedRepositoryAdmin', None)": [
+                        71,
+                        72,
+                        73,
+                        498
+                    ],
+                    "('org.apache.archiva.admin.repository.managed#DefaultManagedRepositoryAdmin', 'addManagedRepository(String,String,String,String,boolean,boolean,boolean,boolean,String,String,int,int,boolean,AuditInformation)')": [
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218
+                    ],
+                    "('org.apache.archiva.admin.repository.managed#DefaultManagedRepositoryAdmin', 'updateManagedRepository(ManagedRepository,boolean,AuditInformation,boolean)')": [
+                        407,
+                        408
+                    ],
+                    "('org.apache.archiva.admin.repository.managed#DefaultManagedRepositoryAdmin', 'removeExpressions(String)')": [
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        33,
+                        662
+                    ],
+                    "('org.apache.archiva.admin.repository.managed#DefaultManagedRepositoryAdmin', None)": [
+                        98,
+                        99,
+                        100,
+                        653,
+                        657,
+                        658
+                    ],
+                    "('org.apache.archiva.admin.repository.managed#DefaultManagedRepositoryAdmin', 'addManagedRepository(ManagedRepository,boolean,AuditInformation)')": [
+                        147,
+                        148
+                    ],
+                    "('org.apache.archiva.admin.repository.managed#DefaultManagedRepositoryAdmin', 'addManagedRepository(String,String,String,String,boolean,boolean,boolean,boolean,String,String,int,int,boolean,AuditInformation)')": [
+                        187
+                    ],
+                    "('org.apache.archiva.admin.repository.managed#DefaultManagedRepositoryAdmin', 'updateManagedRepository(ManagedRepository,boolean,AuditInformation,boolean)')": [
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384
+                    ],
+                    "('org.apache.archiva.admin.repository.managed#DefaultManagedRepositoryAdmin', 'getRepositoryCommonValidator')": [
+                        654,
+                        655,
+                        656
+                    ],
+                    "('org.apache.archiva.admin.repository.managed#DefaultManagedRepositoryAdmin', 'setRepositoryCommonValidator(RepositoryCommonValidator)')": [
+                        659,
+                        660,
+                        661
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/src/main/java/org/apache/archiva/admin/repository/managed/ManagedRepositoryAdmin.java": {
+                "old": {
+                    "(None, None)": [
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/src/test/java/org/apache/archiva/admin/repository/managed/ManagedRepositoryAdminTest.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.archiva.admin.repository.managed#ManagedRepositoryAdminTest', None)": [
+                        187,
+                        246,
+                        330
+                    ],
+                    "('org.apache.archiva.admin.repository.managed#ManagedRepositoryAdminTest', 'updateDeleteManagedRepoWithStagedRepo')": [
+                        268,
+                        269
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/admin/repositories/AbstractRepositoriesAdminAction.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        25,
+                        148
+                    ],
+                    "('org.apache.maven.archiva.web.action.admin.repositories#AbstractRepositoriesAdminAction', None)": [
+                        63,
+                        64,
+                        65,
+                        143,
+                        144
+                    ],
+                    "('org.apache.maven.archiva.web.action.admin.repositories#AbstractRepositoriesAdminAction', 'getRepositoryCommonValidator')": [
+                        140,
+                        141,
+                        142
+                    ],
+                    "('org.apache.maven.archiva.web.action.admin.repositories#AbstractRepositoriesAdminAction', 'setRepositoryCommonValidator(RepositoryCommonValidator)')": [
+                        145,
+                        146,
+                        147
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/admin/repositories/AddManagedRepositoryAction.java": {
+                "old": {
+                    "(None, None)": [
+                        28
+                    ],
+                    "('org.apache.maven.archiva.web.action.admin.repositories#AddManagedRepositoryAction', 'commit')": [
+                        77
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.web.action.admin.repositories#AddManagedRepositoryAction', 'commit')": [
+                        76
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/admin/repositories/EditManagedRepositoryAction.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.action.admin.repositories#EditManagedRepositoryAction', 'commit')": [
+                        98
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.web.action.admin.repositories#EditManagedRepositoryAction', 'commit')": [
+                        98
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/test/java/org/apache/maven/archiva/web/action/admin/repositories/AddManagedRepositoryActionTest.java": {
+                "old": {
+                    "(None, None)": [
+                        30,
+                        31
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        28,
+                        29
+                    ],
+                    "('org.apache.maven.archiva.web.action.admin.repositories#AddManagedRepositoryActionTest', 'setUp')": [
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111
+                    ],
+                    "('org.apache.maven.archiva.web.action.admin.repositories#AddManagedRepositoryActionTest', 'testAddRepositoryInitialPage')": [
+                        132,
+                        133
+                    ],
+                    "('org.apache.maven.archiva.web.action.admin.repositories#AddManagedRepositoryActionTest', 'testAddRepository')": [
+                        201,
+                        202,
+                        203
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/test/java/org/apache/maven/archiva/web/action/admin/repositories/EditManagedRepositoryActionTest.java": {
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.maven.archiva.web.action.admin.repositories#EditManagedRepositoryActionTest', 'setUp')": [
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133
+                    ],
+                    "('org.apache.maven.archiva.web.action.admin.repositories#EditManagedRepositoryActionTest', 'testEditRepository')": [
+                        242
+                    ],
+                    "('org.apache.maven.archiva.web.action.admin.repositories#EditManagedRepositoryActionTest', 'testEditRepositoryLocationChanged')": [
+                        343,
+                        344
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/test/java/org/apache/archiva/web/xmlrpc/services/AdministrationServiceImplTest.java": {
+                "old": {
+                    "(None, None)": [
+                        57
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testAddManagedRepositoryInvalidLocation')": [
+                        1171,
+                        1172,
+                        1173,
+                        1174
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        38,
+                        66
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', None)": [
+                        161,
+                        162
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'setUp')": [
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testAddManagedRepositoryInvalidLocation')": [
+                        1161,
+                        1182,
+                        1183,
+                        1184,
+                        1185
+                    ]
+                }
+            }
+        }
+    },
+    "025c72c95c49550df4cd43f01de69a49b0357ee4": {
+        "authored_data": "2011 Sep 03 09:03",
+        "commit.message": "scanning package org.apache.archiva.web too\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1164837 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "c2dc6683b53c07131d4b3870fa4f4df1a06fad6f",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/archiva/web/tags/DependencyTree.java": {
+                "old": {
+                    "(None, None)": [
+                        45
+                    ]
+                }
+            }
+        }
+    },
+    "72a5da6643d4e352d1ab772b9d87cfe40b1dd401": {
+        "authored_data": "2011 Sep 03 08:27",
+        "commit.message": "get RID of org.apache.maven.archiva packages : transaction package\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1164829 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "ad2162ebd2b8c14a61e17da091fc34649fe14636",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-artifact-converter/src/main/java/org/apache/maven/archiva/converter/artifact/LegacyToDefaultConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        28
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        28
+                    ]
+                }
+            }
+        }
+    },
+    "021495050a1047b6d13dad8b7844d389a2ba1e0c": {
+        "authored_data": "2011 Sep 03 08:21",
+        "commit.message": "get RID of org.apache.maven.archiva packages : xml package\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1164824 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "bfa85f543bef0fe190a4f01d54f1bee7f9964251",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/metadata/RepositoryMetadataReader.java": {
+                "old": {
+                    "(None, None)": [
+                        29,
+                        30
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        30
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/metadata/RepositoryMetadataWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        28
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        28
+                    ]
+                }
+            },
+            "archiva-modules/plugins/maven2-repository/src/main/java/org/apache/archiva/metadata/repository/storage/maven2/Maven2RepositoryStorage.java": {
+                "old": {
+                    "(None, None)": [
+                        40
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        40
+                    ]
+                }
+            },
+            "archiva-modules/plugins/maven2-repository/src/main/java/org/apache/archiva/metadata/repository/storage/maven2/MavenRepositoryMetadataReader.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        24
+                    ],
+                    "('org.apache.archiva.metadata.repository.storage.maven2#MavenRepositoryMetadataReader', None)": [
+                        45
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24
+                    ],
+                    "('org.apache.archiva.metadata.repository.storage.maven2#MavenRepositoryMetadataReader', None)": [
+                        45
+                    ]
+                }
+            },
+            "archiva-modules/plugins/maven2-repository/src/main/java/org/apache/archiva/metadata/repository/storage/maven2/RepositoryModelResolver.java": {
+                "old": {
+                    "(None, None)": [
+                        35
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35
+                    ]
+                }
+            },
+            "archiva-modules/plugins/maven2-repository/src/test/java/org/apache/archiva/metadata/repository/storage/maven2/MavenRepositoryMetadataReaderTest.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ]
+                }
+            }
+        }
+    },
+    "c7e5fea75ad6eb4c122584a5e48efc3dbd9a8417": {
+        "authored_data": "2011 Sep 03 08:15",
+        "commit.message": "get RID of org.apache.maven.archiva packages : security package\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1164822 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "0f94c8a025df07d3ce2bce26ea8f2e33aa986218",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-repository-admin/src/main/java/org/apache/archiva/admin/repository/managed/DefaultManagedRepositoryAdmin.java": {
+                "old": {
+                    "(None, None)": [
+                        40
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        40
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/src/test/java/org/apache/archiva/admin/repository/managed/ManagedRepositoryAdminTest.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/ManagedRepositoriesService.java": {
+                "old": {
+                    "(None, None)": [
+                        24,
+                        25
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/RepositoriesService.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        25,
+                        28,
+                        30
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/archiva/web/rss/RssFeedServlet.java": {
+                "old": {
+                    "(None, None)": [
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/archiva/web/startup/SecuritySynchronization.java": {
+                "old": {
+                    "(None, None)": [
+                        28
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/archiva/web/tags/DependencyTree.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        28
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        28
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/AbstractActionSupport.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/AbstractRepositoryBasedAction.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        25
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        25
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/DeleteArtifactAction.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        51,
+                        52,
+                        53,
+                        54
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        50,
+                        51,
+                        52,
+                        53
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/UploadAction.java": {
+                "old": {
+                    "(None, None)": [
+                        49,
+                        50,
+                        51,
+                        52
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        49,
+                        50,
+                        51,
+                        52
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/admin/SchedulerAction.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/admin/SystemStatusAction.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/admin/appearance/EditOrganisationInfoAction.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/admin/connectors/proxy/AbstractProxyConnectorAction.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/admin/legacy/LegacyArtifactPathAction.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/admin/networkproxies/ConfigureNetworkProxyAction.java": {
+                "old": {
+                    "(None, None)": [
+                        32
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/admin/networkproxies/NetworkProxiesAction.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/admin/repositories/AbstractRepositoriesAdminAction.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        30,
+                        33,
+                        38,
+                        39,
+                        44
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/admin/repositories/RepositoriesAction.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/admin/scanning/RepositoryScanningAction.java": {
+                "old": {
+                    "(None, None)": [
+                        36
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/reports/GenerateReportAction.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/reports/ViewAuditLogReportAction.java": {
+                "old": {
+                    "(None, None)": [
+                        28,
+                        29,
+                        30,
+                        31
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29,
+                        30,
+                        31
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/test/java/org/apache/maven/archiva/web/action/AbstractActionTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        39,
+                        42
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        39
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/test/java/org/apache/maven/archiva/web/action/SearchActionTest.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/test/java/org/apache/maven/archiva/web/action/admin/repositories/AddManagedRepositoryActionTest.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/test/java/org/apache/maven/archiva/web/action/admin/repositories/DeleteManagedRepositoryActionTest.java": {
+                "old": {
+                    "(None, None)": [
+                        38,
+                        43,
+                        44,
+                        48
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/test/java/org/apache/maven/archiva/web/action/admin/repositories/EditManagedRepositoryActionTest.java": {
+                "old": {
+                    "(None, None)": [
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/test/java/org/apache/maven/archiva/web/action/reports/GenerateReportActionTest.java": {
+                "old": {
+                    "(None, None)": [
+                        32
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webdav/src/main/java/org/apache/maven/archiva/webdav/ArchivaDavResourceFactory.java": {
+                "old": {
+                    "(None, None)": [
+                        59
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        59
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webdav/src/main/java/org/apache/maven/archiva/webdav/ArchivaDavSessionProvider.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webdav/src/main/java/org/apache/maven/archiva/webdav/RepositoryServlet.java": {
+                "old": {
+                    "(None, None)": [
+                        38
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webdav/src/main/java/org/apache/maven/archiva/webdav/util/WebdavMethodUtil.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webdav/src/test/java/org/apache/maven/archiva/webdav/ArchivaDavSessionProviderTest.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webdav/src/test/java/org/apache/maven/archiva/webdav/MockServletAuthenticator.java": {
+                "old": {
+                    "(None, None)": [
+                        22
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webdav/src/test/java/org/apache/maven/archiva/webdav/RepositoryServletSecurityTest.java": {
+                "old": {
+                    "(None, None)": [
+                        38,
+                        39
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38,
+                        39
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-security/src/main/java/org/apache/archiva/web/xmlrpc/security/XmlRpcAuthenticator.java": {
+                "old": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        26
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-security/src/main/java/org/apache/archiva/web/xmlrpc/security/XmlRpcUserRepositories.java": {
+                "old": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        26
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-security/src/test/java/org/apache/archiva/xmlrpc/security/XmlRpcAuthenticatorTest.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/test/java/org/apache/archiva/web/xmlrpc/services/AdministrationServiceImplTest.java": {
+                "old": {
+                    "(None, None)": [
+                        57
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        57
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,1978 @@
+{
+    "4719834dfa78ce3b48645968885647b425f30a8e": {
+        "authored_data": "2009 Feb 10 23:22",
+        "commit.message": "MRM-799 - Better handling of artifacts with missing poms\n\n* Updated to work with revised model in 1.2\n* Changed patch so that Artifacts created for Browsing do not persist to the database (models may not have been proxied)\n* Big thankyou to Jevica Arianne B. Zurbano for submitting the fixes!\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@743164 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "James William Dumay",
+        "pcid": "f3e319b018a0d48de6f1baafc9f0fb93ca4ca9b0",
+        "changes": {
+            "archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/DefaultRepositoryBrowsing.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getRoot(String,List)')": [
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectArtifactId(String,List,String,String)')": [
+                        80,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectGroupId(String,List,String)')": [
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectVersion(String,List,String,String,String)')": [
+                        113,
+                        117
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getRepositoryId(String,List,String,String,String)')": [
+                        132,
+                        136,
+                        137,
+                        138,
+                        139
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getArtifact(String,List,String,String,String)')": [
+                        160,
+                        163,
+                        164
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getUsedBy(String,List,String,String,String)')": [
+                        180
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'handleGenericSnapshots(String,String,String,String)')": [
+                        261
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getProjectModel(String,String,String)')": [
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        303
+                    ],
+                    "(None, None)": [
+                        304
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        37
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getRoot(String,List)')": [
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectArtifactId(String,List,String,String)')": [
+                        83,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectGroupId(String,List,String)')": [
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectVersion(String,List,String,String,String)')": [
+                        121,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getRepositoryId(String,List,String,String,String)')": [
+                        145,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', None)": [
+                        164,
+                        337,
+                        338,
+                        363,
+                        364
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getArtifact(String,List,String,String,String)')": [
+                        178,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getUsedBy(String,List,String,String,String)')": [
+                        208
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'handleGenericSnapshots(String,String,String,String)')": [
+                        289
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getProjectModel(String,String,String)')": [
+                        317,
+                        318,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getNoPomArtifactRepoId(String,List,String,String,String,String)')": [
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getArtifactType(String,String,String)')": [
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        381,
+                        382,
+                        383,
+                        384
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/browsing/RepositoryBrowsingTest.java": {
+                "new": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#RepositoryBrowsingTest', 'testViewArtifact')": [
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#RepositoryBrowsingTest', None)": [
+                        144,
+                        145
+                    ]
+                }
+            }
+        }
+    },
+    "f3e319b018a0d48de6f1baafc9f0fb93ca4ca9b0": {
+        "authored_data": "2009 Feb 10 06:12",
+        "commit.message": "Reverting earlier change to SearchUtil\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@742863 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "James William Dumay",
+        "pcid": "6267a21d29f46ab7a7d17bdfcbc78aa9c87ff502",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-indexer/src/main/java/org/apache/archiva/indexer/search/NexusRepositorySearch.java": {
+                "old": {
+                    "('org.apache.archiva.indexer.search#NexusRepositorySearch', 'convertToSearchResults(FlatSearchResponse,SearchResultLimits)')": [
+                        250
+                    ],
+                    "('org.apache.archiva.indexer.search#NexusRepositorySearch', 'paginate(SearchResults)')": [
+                        316
+                    ],
+                    "('org.apache.archiva.indexer.search#NexusRepositorySearch', None)": [
+                        330
+                    ],
+                    "('org.apache.archiva.indexer.search#NexusRepositorySearch', 'getHitId(String,String)')": [
+                        331,
+                        332,
+                        333
+                    ],
+                    "(None, None)": [
+                        334
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28
+                    ],
+                    "('org.apache.archiva.indexer.search#NexusRepositorySearch', 'convertToSearchResults(FlatSearchResponse,SearchResultLimits)')": [
+                        251
+                    ],
+                    "('org.apache.archiva.indexer.search#NexusRepositorySearch', 'paginate(SearchResults)')": [
+                        317
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-indexer/src/main/java/org/apache/archiva/indexer/util/SearchUtil.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23
+                    ],
+                    "('org.apache.archiva.indexer.util#SearchUtil', None)": [
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        61,
+                        62
+                    ],
+                    "('org.apache.archiva.indexer.util#SearchUtil', 'isBytecodeSearch(String)')": [
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46
+                    ],
+                    "('org.apache.archiva.indexer.util#SearchUtil', 'removeBytecodeKeyword(String)')": [
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60
+                    ]
+                }
+            }
+        }
+    },
+    "6267a21d29f46ab7a7d17bdfcbc78aa9c87ff502": {
+        "authored_data": "2009 Feb 10 05:35",
+        "commit.message": "MRM-1081 - Archiva model should be updated so that the ARTIFACT table includes repositoryId as a primary key\n\n* Updated so that repositoryId is part of the primary key for an artifact\n* removed old search API classes as they needed to be brought over to the new API and doing so would be a waste of time\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@742859 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "James William Dumay",
+        "pcid": "dc5aee4038796d2f79279806576e68acc08b9fb8",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-consumers/archiva-core-consumers/src/main/java/org/apache/maven/archiva/consumers/core/repository/AbstractRepositoryPurge.java": {
+                "old": {
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurge', 'purge(Set)')": [
+                        92
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurge', 'purge(Set)')": [
+                        92
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-core-consumers/src/main/java/org/apache/maven/archiva/consumers/core/repository/CleanupReleasedSnapshotsRepositoryPurge.java": {
+                "old": {
+                    "('org.apache.maven.archiva.consumers.core.repository#CleanupReleasedSnapshotsRepositoryPurge', 'process(String)')": [
+                        168
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.consumers.core.repository#CleanupReleasedSnapshotsRepositoryPurge', 'process(String)')": [
+                        168
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-core-consumers/src/test/java/org/apache/maven/archiva/consumers/core/repository/AbstractRepositoryPurgeTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurgeTest', 'createArtifact(String,String,String,String)')": [
+                        148
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurgeTest', 'createArtifact(String,String,String,String)')": [
+                        148
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-core-consumers/src/test/java/org/apache/maven/archiva/consumers/core/repository/CleanupReleasedSnapshotsRepositoryPurgeTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.consumers.core.repository#CleanupReleasedSnapshotsRepositoryPurgeTest', None)": [
+                        42,
+                        43,
+                        50,
+                        51
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.consumers.core.repository#CleanupReleasedSnapshotsRepositoryPurgeTest', None)": [
+                        49
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-database-consumers/src/main/java/org/apache/maven/archiva/consumers/database/ArtifactUpdateDatabaseConsumer.java": {
+                "old": {
+                    "('org.apache.maven.archiva.consumers.database#ArtifactUpdateDatabaseConsumer', 'getLiveArtifact(String)')": [
+                        230
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.consumers.database#ArtifactUpdateDatabaseConsumer', 'getLiveArtifact(String)')": [
+                        230,
+                        231
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-lucene-consumers/src/main/java/org/apache/archiva/consumers/lucene/NexusIndexerConsumer.java": {
+                "old": {
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumer', 'beginScan(ManagedRepositoryConfiguration,Date)')": [
+                        108
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-lucene-consumers/src/main/java/org/apache/maven/archiva/consumers/lucene/LuceneCleanupRemoveIndexedConsumer.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30
+                    ],
+                    "('org.apache.maven.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumer', None)": [
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        125,
+                        146,
+                        147
+                    ],
+                    "('org.apache.maven.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumer', 'processArchivaArtifact(ArchivaArtifact)')": [
+                        100,
+                        101,
+                        102,
+                        103,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        122,
+                        123,
+                        124
+                    ],
+                    "('org.apache.maven.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumer', 'setRepositoryIndexFactory(RepositoryContentIndexFactory)')": [
+                        143,
+                        144,
+                        145
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumer', None)": [
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        116,
+                        117,
+                        118,
+                        119
+                    ],
+                    "('org.apache.maven.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumer', 'processArchivaArtifact(ArchivaArtifact)')": [
+                        94,
+                        95,
+                        96,
+                        97,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-lucene-consumers/src/test/java/org/apache/maven/archiva/consumers/lucene/LuceneCleanupRemoveIndexedConsumerTest.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        74,
+                        75,
+                        76
+                    ],
+                    "('org.apache.maven.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumerTest', None)": [
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        44,
+                        45,
+                        53,
+                        54,
+                        62,
+                        63
+                    ],
+                    "('org.apache.maven.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumerTest', 'setUp')": [
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43
+                    ],
+                    "('org.apache.maven.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumerTest', 'testIfArtifactExists')": [
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52
+                    ],
+                    "('org.apache.maven.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumerTest', 'testIfArtifactDoesNotExist')": [
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61
+                    ],
+                    "('org.apache.maven.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumerTest', 'createArtifact(String,String,String,String)')": [
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-indexer/src/main/java/org/apache/maven/archiva/indexer/search/SearchResults.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27
+                    ],
+                    "('org.apache.maven.archiva.indexer.search#SearchResults', None)": [
+                        58,
+                        59,
+                        76,
+                        77,
+                        78,
+                        95,
+                        96,
+                        107,
+                        108,
+                        124,
+                        125,
+                        146
+                    ],
+                    "('org.apache.maven.archiva.indexer.search#SearchResults', 'addHit(LuceneRepositoryContentRecord)')": [
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75
+                    ],
+                    "('org.apache.maven.archiva.indexer.search#SearchResults', 'addBytecodeHit(BytecodeRecord)')": [
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94
+                    ],
+                    "('org.apache.maven.archiva.indexer.search#SearchResults', 'toKey(ArchivaArtifact)')": [
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106
+                    ],
+                    "('org.apache.maven.archiva.indexer.search#SearchResults', 'addHashcodeHit(HashcodesRecord)')": [
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123
+                    ],
+                    "('org.apache.maven.archiva.indexer.search#SearchResults', 'addFileContentHit(FileContentRecord)')": [
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-model/src/main/java/org/apache/maven/archiva/model/AbstractArtifactKey.java": {
+                "old": {
+                    "('org.apache.maven.archiva.model#AbstractArtifactKey', 'toString')": [
+                        136
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.model#AbstractArtifactKey', None)": [
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        134,
+                        140,
+                        149,
+                        166
+                    ],
+                    "('org.apache.maven.archiva.model#AbstractArtifactKey', 'toString')": [
+                        143
+                    ],
+                    "('org.apache.maven.archiva.model#AbstractArtifactKey', 'hashCode')": [
+                        159
+                    ],
+                    "('org.apache.maven.archiva.model#AbstractArtifactKey', 'equals(Object)')": [
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257
+                    ],
+                    "('org.apache.maven.archiva.model#AbstractArtifactKey', 'setRepositoryId(String)')": [
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317
+                    ],
+                    "(None, None)": [
+                        318,
+                        319
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-model/src/main/java/org/apache/maven/archiva/model/ArchivaArtifact.java": {
+                "old": {
+                    "('org.apache.maven.archiva.model#ArchivaArtifact', None)": [
+                        39,
+                        84,
+                        85,
+                        86
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.model#ArchivaArtifact', None)": [
+                        39,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        79,
+                        91,
+                        92,
+                        93,
+                        139,
+                        140
+                    ],
+                    "('org.apache.maven.archiva.model#ArchivaArtifact', 'getRepositoryId')": [
+                        141,
+                        142,
+                        143
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/project/resolvers/ManagedRepositoryProjectResolver.java": {
+                "old": {
+                    "('org.apache.maven.archiva.repository.project.resolvers#ManagedRepositoryProjectResolver', 'resolveProjectModel(VersionedReference)')": [
+                        54
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.repository.project.resolvers#ManagedRepositoryProjectResolver', 'resolveProjectModel(VersionedReference)')": [
+                        54
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/ArtifactDAO.java": {
+                "old": {
+                    "(None, None)": [
+                        55,
+                        58
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        55,
+                        58
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/RepositoryDatabaseEventListener.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database#RepositoryDatabaseEventListener', 'deleteArtifact(ManagedRepositoryContent,ArchivaArtifact)')": [
+                        45
+                    ],
+                    "(None, None)": [
+                        52,
+                        53
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database#RepositoryDatabaseEventListener', 'deleteArtifact(ManagedRepositoryContent,ArchivaArtifact)')": [
+                        45
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/DefaultRepositoryBrowsing.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getRoot(String,List)')": [
+                        68
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectArtifactId(String,List,String,String)')": [
+                        80,
+                        81
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectGroupId(String,List,String)')": [
+                        96
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectVersion(String,List,String,String,String)')": [
+                        113,
+                        114,
+                        120,
+                        128
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getRepositoryId(String,List,String,String,String)')": [
+                        133,
+                        134
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getArtifact(String,List,String,String,String)')": [
+                        143,
+                        144,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        173
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', None)": [
+                        174,
+                        175,
+                        176
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getUsedBy(String,List,String,String,String)')": [
+                        177,
+                        178
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'processSnapshots(List)')": [
+                        211
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'handleGenericSnapshots(String,String,String,ArchivaArtifact)')": [
+                        251,
+                        252,
+                        266,
+                        267,
+                        268,
+                        272,
+                        273
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getRoot(String,List)')": [
+                        68
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectArtifactId(String,List,String,String)')": [
+                        80,
+                        81
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectGroupId(String,List,String)')": [
+                        96
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectVersion(String,List,String,String,String)')": [
+                        113,
+                        114,
+                        127
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getRepositoryId(String,List,String,String,String)')": [
+                        132,
+                        133
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getArtifact(String,List,String,String,String)')": [
+                        142,
+                        143,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        176
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', None)": [
+                        177,
+                        178,
+                        179
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getUsedBy(String,List,String,String,String)')": [
+                        180,
+                        181
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'processSnapshots(List)')": [
+                        214
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'handleGenericSnapshots(String,String,String,String)')": [
+                        254,
+                        257,
+                        258,
+                        270,
+                        274
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/jdo/JdoArtifactDAO.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.jdo#JdoArtifactDAO', 'createArtifact(String,String,String,String,String)')": [
+                        52,
+                        58,
+                        62
+                    ],
+                    "('org.apache.maven.archiva.database.jdo#JdoArtifactDAO', 'getArtifact(String,String,String,String,String)')": [
+                        69
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.jdo#JdoArtifactDAO', 'createArtifact(String,String,String,String,String,String)')": [
+                        52,
+                        58,
+                        62
+                    ],
+                    "('org.apache.maven.archiva.database.jdo#JdoArtifactDAO', 'getArtifact(String,String,String,String,String,String)')": [
+                        69,
+                        78
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/AbstractArchivaDatabaseTestCase.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database#AbstractArchivaDatabaseTestCase', 'toArtifactReference(String)')": [
+                        189,
+                        197
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database#AbstractArchivaDatabaseTestCase', None)": [
+                        57
+                    ],
+                    "('org.apache.maven.archiva.database#AbstractArchivaDatabaseTestCase', 'toArtifactReference(String)')": [
+                        190,
+                        198
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/RepositoryDatabaseEventListenerTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database#RepositoryDatabaseEventListenerTest', 'createArtifact(String,String,ArtifactDAO)')": [
+                        57
+                    ],
+                    "('org.apache.maven.archiva.database#RepositoryDatabaseEventListenerTest', 'testDeleteArtifact')": [
+                        73,
+                        75,
+                        82
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.maven.archiva.database#RepositoryDatabaseEventListenerTest', 'createArtifact(String,String,ArtifactDAO)')": [
+                        58
+                    ],
+                    "('org.apache.maven.archiva.database#RepositoryDatabaseEventListenerTest', 'testDeleteArtifact')": [
+                        74,
+                        76,
+                        79,
+                        80,
+                        81,
+                        82,
+                        87
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/browsing/RepositoryBrowsingTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.browsing#RepositoryBrowsingTest', 'createArtifact(String,String,String)')": [
+                        54
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.browsing#RepositoryBrowsingTest', 'createArtifact(String,String,String)')": [
+                        54
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#RepositoryBrowsingTest', None)": [
+                        144
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/constraints/ArtifactVersionsConstraintTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.constraints#ArtifactVersionsConstraintTest', 'createArtifact(String,String,String)')": [
+                        54
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.constraints#ArtifactVersionsConstraintTest', None)": [
+                        43
+                    ],
+                    "('org.apache.maven.archiva.database.constraints#ArtifactVersionsConstraintTest', 'createArtifact(String,String,String)')": [
+                        55
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/constraints/ArtifactsByChecksumConstraintTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.constraints#ArtifactsByChecksumConstraintTest', None)": [
+                        52
+                    ],
+                    "('org.apache.maven.archiva.database.constraints#ArtifactsByChecksumConstraintTest', 'createArtifact(String,String)')": [
+                        65
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.constraints#ArtifactsByChecksumConstraintTest', None)": [
+                        52
+                    ],
+                    "('org.apache.maven.archiva.database.constraints#ArtifactsByChecksumConstraintTest', 'createArtifact(String,String)')": [
+                        65
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/constraints/ArtifactsByRepositoryConstraintTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.constraints#ArtifactsByRepositoryConstraintTest', 'createArtifact(String,String,String,String)')": [
+                        52
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.constraints#ArtifactsByRepositoryConstraintTest', 'createArtifact(String,String,String,String)')": [
+                        52
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/constraints/ArtifactsProcessedConstraintTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.constraints#ArtifactsProcessedConstraintTest', 'createArtifact(String,String,String,String)')": [
+                        41
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.constraints#ArtifactsProcessedConstraintTest', 'createArtifact(String,String,String,String)')": [
+                        41
+                    ],
+                    "('org.apache.maven.archiva.database.constraints#ArtifactsProcessedConstraintTest', None)": [
+                        91
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/constraints/ArtifactsRelatedConstraintTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.constraints#ArtifactsRelatedConstraintTest', 'createArtifact(String,String,String,String)')": [
+                        54
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.constraints#ArtifactsRelatedConstraintTest', 'createArtifact(String,String,String,String)')": [
+                        54
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/constraints/MostRecentRepositoryScanStatisticsTest.java": {
+                "new": {
+                    "('org.apache.maven.archiva.database.constraints#MostRecentRepositoryScanStatisticsTest', None)": [
+                        49
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/constraints/OlderArtifactsByAgeConstraintTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.constraints#OlderArtifactsByAgeConstraintTest', 'createArtifact(String,String,int)')": [
+                        53
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.constraints#OlderArtifactsByAgeConstraintTest', 'createArtifact(String,String,int)')": [
+                        53
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/constraints/OlderSnapshotArtifactsByAgeConstraintTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.constraints#OlderSnapshotArtifactsByAgeConstraintTest', 'createArtifact(String,String,int)')": [
+                        53
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.constraints#OlderSnapshotArtifactsByAgeConstraintTest', 'createArtifact(String,String,int)')": [
+                        53
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/constraints/ProjectsByArtifactUsageConstraintTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.constraints#ProjectsByArtifactUsageConstraintTest', 'toArtifact(String)')": [
+                        83
+                    ],
+                    "('org.apache.maven.archiva.database.constraints#ProjectsByArtifactUsageConstraintTest', 'testContraint')": [
+                        93,
+                        96,
+                        97,
+                        101,
+                        103
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.constraints#ProjectsByArtifactUsageConstraintTest', None)": [
+                        41
+                    ],
+                    "('org.apache.maven.archiva.database.constraints#ProjectsByArtifactUsageConstraintTest', 'toArtifact(String)')": [
+                        84
+                    ],
+                    "('org.apache.maven.archiva.database.constraints#ProjectsByArtifactUsageConstraintTest', 'testContraint')": [
+                        94,
+                        97,
+                        98,
+                        102,
+                        104
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/constraints/RecentArtifactsByAgeConstraintTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.constraints#RecentArtifactsByAgeConstraintTest', 'createArtifact(String,String,int)')": [
+                        53
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.constraints#RecentArtifactsByAgeConstraintTest', None)": [
+                        41
+                    ],
+                    "('org.apache.maven.archiva.database.constraints#RecentArtifactsByAgeConstraintTest', 'createArtifact(String,String,int)')": [
+                        54
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/constraints/RepositoryContentStatisticsByRepositoryConstraintTest.java": {
+                "new": {
+                    "('org.apache.maven.archiva.database.constraints#RepositoryContentStatisticsByRepositoryConstraintTest', None)": [
+                        50
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/constraints/UniqueArtifactIdConstraintTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.constraints#UniqueArtifactIdConstraintTest', 'createArtifact(String,String,String)')": [
+                        56
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.constraints#UniqueArtifactIdConstraintTest', 'createArtifact(String,String,String)')": [
+                        56
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/constraints/UniqueFieldConstraintTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.constraints#UniqueFieldConstraintTest', 'createArtifact(String)')": [
+                        64
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.constraints#UniqueFieldConstraintTest', 'createArtifact(String)')": [
+                        64
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/constraints/UniqueGroupIdConstraintTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.constraints#UniqueGroupIdConstraintTest', 'createArtifact(String,String,String,String)')": [
+                        257
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.constraints#UniqueGroupIdConstraintTest', 'createArtifact(String,String,String,String)')": [
+                        257
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/constraints/UniqueVersionConstraintTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.constraints#UniqueVersionConstraintTest', 'createArtifact(String,String,String,String)')": [
+                        131
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.constraints#UniqueVersionConstraintTest', 'createArtifact(String,String,String,String)')": [
+                        131
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/jdo/JdoArtifactDAOTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.jdo#JdoArtifactDAOTest', 'testArtifactKey')": [
+                        44
+                    ],
+                    "('org.apache.maven.archiva.database.jdo#JdoArtifactDAOTest', 'testArtifactCRUD')": [
+                        64,
+                        75,
+                        100
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.jdo#JdoArtifactDAOTest', 'testArtifactKey')": [
+                        44,
+                        55
+                    ],
+                    "('org.apache.maven.archiva.database.jdo#JdoArtifactDAOTest', 'testArtifactCRUD')": [
+                        65,
+                        76,
+                        101
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/updater/DatabaseUpdaterTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.updater#DatabaseUpdaterTest', 'createArtifact(String,String,String,String)')": [
+                        41
+                    ],
+                    "('org.apache.maven.archiva.database.updater#DatabaseUpdaterTest', 'testUpdateUnprocessed')": [
+                        89,
+                        96
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.updater#DatabaseUpdaterTest', 'createArtifact(String,String,String,String)')": [
+                        41
+                    ],
+                    "('org.apache.maven.archiva.database.updater#DatabaseUpdaterTest', None)": [
+                        58
+                    ],
+                    "('org.apache.maven.archiva.database.updater#DatabaseUpdaterTest', 'testUpdateUnprocessed')": [
+                        90,
+                        97
+                    ]
+                }
+            },
+            "archiva-modules/archiva-reporting/archiva-artifact-reports/src/test/java/org/apache/maven/archiva/reporting/artifact/DuplicateArtifactReportTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting.artifact#DuplicateArtifactReportTest', 'createArtifact(String,String)')": [
+                        75,
+                        77
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.reporting.artifact#DuplicateArtifactReportTest', None)": [
+                        54
+                    ],
+                    "('org.apache.maven.archiva.reporting.artifact#DuplicateArtifactReportTest', 'createArtifact(String,String)')": [
+                        76
+                    ]
+                }
+            },
+            "archiva-modules/archiva-reporting/archiva-report-manager/src/test/java/org/apache/maven/archiva/reporting/SimpleRepositoryStatisticsReportGeneratorTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting#SimpleRepositoryStatisticsReportGeneratorTest', None)": [
+                        57
+                    ],
+                    "('org.apache.maven.archiva.reporting#SimpleRepositoryStatisticsReportGeneratorTest', 'createArtifact(String,String,String,String,String)')": [
+                        97,
+                        99,
+                        100
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.reporting#SimpleRepositoryStatisticsReportGeneratorTest', None)": [
+                        57,
+                        58
+                    ],
+                    "('org.apache.maven.archiva.reporting#SimpleRepositoryStatisticsReportGeneratorTest', 'createArtifact(String,String,String,String,String)')": [
+                        98
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduled/src/test/java/org/apache/maven/archiva/scheduled/executors/ArchivaDatabaseUpdateTaskExecutorTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.scheduled.executors#ArchivaDatabaseUpdateTaskExecutorTest', 'testExecutor')": [
+                        150,
+                        158
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.scheduled.executors#ArchivaDatabaseUpdateTaskExecutorTest', 'testExecutor')": [
+                        150,
+                        158
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rss/src/test/java/org/apache/archiva/rss/processor/NewArtifactsRssFeedProcessorTest.java": {
+                "old": {
+                    "('org.apache.archiva.rss.processor#NewArtifactsRssFeedProcessorTest', 'testProcess')": [
+                        69,
+                        70,
+                        74,
+                        75,
+                        79,
+                        80,
+                        84,
+                        85,
+                        89,
+                        90,
+                        94,
+                        95,
+                        99,
+                        100,
+                        104,
+                        105
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.rss.processor#NewArtifactsRssFeedProcessorTest', None)": [
+                        43,
+                        44,
+                        51
+                    ],
+                    "('org.apache.archiva.rss.processor#NewArtifactsRssFeedProcessorTest', 'testProcess')": [
+                        72,
+                        76,
+                        80,
+                        84,
+                        88,
+                        92,
+                        96,
+                        100
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rss/src/test/java/org/apache/archiva/rss/processor/NewVersionsOfArtifactRssFeedProcessorTest.java": {
+                "old": {
+                    "('org.apache.archiva.rss.processor#NewVersionsOfArtifactRssFeedProcessorTest', 'testProcess')": [
+                        68,
+                        69,
+                        73,
+                        74,
+                        81,
+                        82
+                    ],
+                    "(None, None)": [
+                        114
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.rss.processor#NewVersionsOfArtifactRssFeedProcessorTest', None)": [
+                        40,
+                        41,
+                        48
+                    ],
+                    "('org.apache.archiva.rss.processor#NewVersionsOfArtifactRssFeedProcessorTest', 'testProcess')": [
+                        71,
+                        75,
+                        82
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rss/src/test/java/org/apache/archiva/rss/stubs/ArtifactDAOStub.java": {
+                "old": {
+                    "('org.apache.archiva.rss.stubs#ArtifactDAOStub', 'createArtifact(String,String,String,String,String)')": [
+                        41
+                    ],
+                    "('org.apache.archiva.rss.stubs#ArtifactDAOStub', 'getArtifact(String,String,String,String,String)')": [
+                        55
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.rss.stubs#ArtifactDAOStub', 'createArtifact(String,String,String,String,String,String)')": [
+                        41
+                    ],
+                    "('org.apache.archiva.rss.stubs#ArtifactDAOStub', 'getArtifact(String,String,String,String,String,String)')": [
+                        55
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/test/java/org/apache/maven/archiva/web/action/SearchActionTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.action#SearchActionTest', 'testFindArtifactWithOneHit')": [
+                        470
+                    ],
+                    "('org.apache.maven.archiva.web.action#SearchActionTest', 'testFindArtifactWithMultipleHits')": [
+                        495,
+                        497
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.web.action#SearchActionTest', 'testFindArtifactWithOneHit')": [
+                        470
+                    ],
+                    "('org.apache.maven.archiva.web.action#SearchActionTest', 'testFindArtifactWithMultipleHits')": [
+                        495,
+                        497
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/test/java/org/apache/maven/archiva/web/action/admin/repositories/ArtifactDAOStub.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.action.admin.repositories#ArtifactDAOStub', 'createArtifact(String,String,String,String,String)')": [
+                        42
+                    ],
+                    "('org.apache.maven.archiva.web.action.admin.repositories#ArtifactDAOStub', 'getArtifact(String,String,String,String,String)')": [
+                        56
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.web.action.admin.repositories#ArtifactDAOStub', 'createArtifact(String,String,String,String,String,String)')": [
+                        42
+                    ],
+                    "('org.apache.maven.archiva.web.action.admin.repositories#ArtifactDAOStub', 'getArtifact(String,String,String,String,String,String)')": [
+                        56
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/test/java/org/apache/maven/archiva/web/rss/ArtifactDAOStub.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.rss#ArtifactDAOStub', 'createArtifact(String,String,String,String,String)')": [
+                        43
+                    ],
+                    "('org.apache.maven.archiva.web.rss#ArtifactDAOStub', 'getArtifact(String,String,String,String,String)')": [
+                        57
+                    ],
+                    "('org.apache.maven.archiva.web.rss#ArtifactDAOStub', 'queryArtifacts(Constraint)')": [
+                        72,
+                        73,
+                        77,
+                        78,
+                        82,
+                        83,
+                        87,
+                        88,
+                        92,
+                        93,
+                        97,
+                        98,
+                        102,
+                        103,
+                        107,
+                        108
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.web.rss#ArtifactDAOStub', 'createArtifact(String,String,String,String,String,String)')": [
+                        43
+                    ],
+                    "('org.apache.maven.archiva.web.rss#ArtifactDAOStub', 'getArtifact(String,String,String,String,String,String)')": [
+                        57
+                    ],
+                    "('org.apache.maven.archiva.web.rss#ArtifactDAOStub', 'queryArtifacts(Constraint)')": [
+                        72,
+                        76,
+                        80,
+                        84,
+                        88,
+                        92,
+                        96,
+                        100
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/main/java/org/apache/archiva/web/xmlrpc/services/SearchServiceImpl.java": {
+                "old": {
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', 'quickSearch(String)')": [
+                        100
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', 'getArtifactVersions(String,String)')": [
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', 'quickSearch(String)')": [
+                        100
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', 'getArtifactVersions(String,String)')": [
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/test/java/org/apache/archiva/web/xmlrpc/services/SearchServiceImplTest.java": {
+                "old": {
+                    "(None, None)": [
+                        38
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testQuickSearchArtifactBytecodeSearch')": [
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', None)": [
+                        156,
+                        157,
+                        200
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testQuickSearchArtifactRegularSearch')": [
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testGetArtifactByChecksum')": [
+                        211
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testGetArtifactVersionsArtifactExists')": [
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        39
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', None)": [
+                        78,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testGetArtifactByChecksum')": [
+                        211
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testGetArtifactVersionsArtifactExists')": [
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289
+                    ]
+                }
+            }
+        }
+    },
+    "dc5aee4038796d2f79279806576e68acc08b9fb8": {
+        "authored_data": "2009 Feb 10 04:51",
+        "commit.message": "moved hit key utility method\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@742848 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "James William Dumay",
+        "pcid": "837bb4a0b6ffd717b5d14cf38f46527a3a733245",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-indexer/src/main/java/org/apache/archiva/indexer/search/NexusRepositorySearch.java": {
+                "old": {
+                    "(None, None)": [
+                        28,
+                        331
+                    ],
+                    "('org.apache.archiva.indexer.search#NexusRepositorySearch', 'convertToSearchResults(FlatSearchResponse,SearchResultLimits)')": [
+                        251
+                    ],
+                    "('org.apache.archiva.indexer.search#NexusRepositorySearch', 'paginate(SearchResults)')": [
+                        317
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.indexer.search#NexusRepositorySearch', 'convertToSearchResults(FlatSearchResponse,SearchResultLimits)')": [
+                        250
+                    ],
+                    "('org.apache.archiva.indexer.search#NexusRepositorySearch', 'paginate(SearchResults)')": [
+                        316
+                    ],
+                    "('org.apache.archiva.indexer.search#NexusRepositorySearch', None)": [
+                        330
+                    ],
+                    "('org.apache.archiva.indexer.search#NexusRepositorySearch', 'getHitId(String,String)')": [
+                        331,
+                        332,
+                        333
+                    ],
+                    "(None, None)": [
+                        334
+                    ]
+                }
+            }
+        }
+    },
+    "837bb4a0b6ffd717b5d14cf38f46527a3a733245": {
+        "authored_data": "2009 Feb 10 04:46",
+        "commit.message": "Ignore .indexer directories\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@742846 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "James William Dumay",
+        "pcid": "200a649b363c01a5f4c214d52ea1f859c0e31254",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-consumers/archiva-core-consumers/src/main/java/org/apache/maven/archiva/consumers/core/MetadataUpdaterConsumer.java": {
+                "new": {
+                    "('org.apache.maven.archiva.consumers.core#MetadataUpdaterConsumer', 'processFile(String)')": [
+                        163,
+                        164,
+                        165,
+                        166
+                    ]
+                }
+            }
+        }
+    },
+    "200a649b363c01a5f4c214d52ea1f859c0e31254": {
+        "authored_data": "2009 Feb 09 23:58",
+        "commit.message": "Add @Override annotations\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@742790 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "James William Dumay",
+        "pcid": "b521fd00d21d6b78f45f647fb644d7eeaa8ee00d",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-model/src/main/java/org/apache/maven/archiva/model/AbstractProjectKey.java": {
+                "new": {
+                    "('org.apache.maven.archiva.model#AbstractProjectKey', None)": [
+                        116,
+                        125,
+                        138
+                    ]
+                }
+            }
+        }
+    }
+}

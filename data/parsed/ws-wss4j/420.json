@@ -1,0 +1,668 @@
+{
+    "9ed0b144219a61e1c27437f57b06d573317b3ef5": {
+        "authored_data": "2017 Aug 15 11:02",
+        "commit.message": "WSS-611 Fixes logic for extracting NameConstraint information from a cert. This closes #6.\n\nAdds a new property so users can affirm that their cert provider can handle TrustAnchors with NameConstraints added and updates the Merlin and MerlinAKI crypto implementations to respect that and either add the NameConstraints or set them to null.\n\nIncludes changes made for WSS-612 (available in a separate commit) to fix the CertificateStore's handling of certificate chains.\n\nSigned-off-by: Colm O hEigeartaigh <coheigea@apache.org>\n",
+        "commit.author.name": "Colm O hEigeartaigh",
+        "pcid": "c5c909fc24f323c8375780808c8914793abdfe16",
+        "changes": {
+            "ws-security-common/src/main/java/org/apache/wss4j/common/crypto/CryptoBase.java": {
+                "new": {
+                    "('org.apache.wss4j.common.crypto#CryptoBase', None)": [
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393
+                    ],
+                    "('org.apache.wss4j.common.crypto#CryptoBase', 'getNameConstraints(X509Certificate)')": [
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413
+                    ],
+                    "(None, None)": [
+                        414,
+                        415
+                    ]
+                }
+            },
+            "ws-security-common/src/main/java/org/apache/wss4j/common/crypto/Merlin.java": {
+                "old": {
+                    "('org.apache.wss4j.common.crypto#Merlin', 'verifyTrust(X509Certificate,boolean,Collection)')": [
+                        837,
+                        838,
+                        839,
+                        840,
+                        841,
+                        842,
+                        843,
+                        844,
+                        845,
+                        846,
+                        847,
+                        856,
+                        857,
+                        858,
+                        859,
+                        860,
+                        861,
+                        862,
+                        863,
+                        864,
+                        865,
+                        866,
+                        889
+                    ]
+                },
+                "new": {
+                    "('org.apache.wss4j.common.crypto#Merlin', None)": [
+                        94,
+                        95,
+                        131,
+                        132,
+                        1400,
+                        1401,
+                        1402,
+                        1403,
+                        1404,
+                        1405,
+                        1406,
+                        1407,
+                        1408,
+                        1409,
+                        1410,
+                        1411,
+                        1412,
+                        1413,
+                        1414,
+                        1415,
+                        1430,
+                        1431,
+                        1432,
+                        1433,
+                        1434,
+                        1435
+                    ],
+                    "('org.apache.wss4j.common.crypto#Merlin', 'loadProperties(Properties,ClassLoader,PasswordEncryptor)')": [
+                        198,
+                        199,
+                        200,
+                        201,
+                        202
+                    ],
+                    "('org.apache.wss4j.common.crypto#Merlin', 'verifyTrust(X509Certificate,boolean,Collection)')": [
+                        846,
+                        855,
+                        878
+                    ],
+                    "('org.apache.wss4j.common.crypto#Merlin', 'addTrustAnchors(Set,KeyStore)')": [
+                        1416,
+                        1417,
+                        1418,
+                        1419,
+                        1420,
+                        1421,
+                        1422,
+                        1423,
+                        1424,
+                        1425,
+                        1426,
+                        1427,
+                        1428,
+                        1429
+                    ]
+                }
+            },
+            "ws-security-common/src/main/java/org/apache/wss4j/common/crypto/MerlinAKI.java": {
+                "old": {
+                    "('org.apache.wss4j.common.crypto#MerlinAKI', 'verifyTrust(X509Certificate,boolean,Collection)')": [
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200
+                    ]
+                },
+                "new": {
+                    "('org.apache.wss4j.common.crypto#MerlinAKI', 'verifyTrust(X509Certificate,boolean,Collection)')": [
+                        171,
+                        180
+                    ]
+                }
+            }
+        }
+    },
+    "c5c909fc24f323c8375780808c8914793abdfe16": {
+        "authored_data": "2017 Aug 14 09:48",
+        "commit.message": "WSS-612 Updates CertificateStore to handle certificate chains. This closes #7.\n\nSigned-off-by: Colm O hEigeartaigh <coheigea@apache.org>\n",
+        "commit.author.name": "Colm O hEigeartaigh",
+        "pcid": "e49b0fb635f9a0b58364051cce05774eca97e019",
+        "changes": {
+            "ws-security-common/src/main/java/org/apache/wss4j/common/crypto/CertificateStore.java": {
+                "old": {
+                    "('org.apache.wss4j.common.crypto#CertificateStore', 'verifyTrust(X509Certificate,boolean,Collection)')": [
+                        168,
+                        193,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        228,
+                        229,
+                        230,
+                        231,
+                        236,
+                        240,
+                        241,
+                        242,
+                        252
+                    ]
+                },
+                "new": {
+                    "('org.apache.wss4j.common.crypto#CertificateStore', 'verifyTrust(X509Certificate,boolean,Collection)')": [
+                        168,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        227,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263
+                    ]
+                }
+            }
+        }
+    },
+    "e49b0fb635f9a0b58364051cce05774eca97e019": {
+        "authored_data": "2017 Aug 11 11:39",
+        "commit.message": "WSS-613 - Update OpenSAMLUtil to be able to sign generic SignableSAMLObjects\n",
+        "commit.author.name": "Colm O hEigeartaigh",
+        "pcid": "6a8ece401f05360d269504956ae21bec41239ebc",
+        "changes": {
+            "ws-security-common/src/main/java/org/apache/wss4j/common/saml/OpenSAMLUtil.java": {
+                "old": {
+                    "('org.apache.wss4j.common.saml#OpenSAMLUtil', None)": [
+                        125,
+                        130,
+                        131
+                    ],
+                    "('org.apache.wss4j.common.saml#OpenSAMLUtil', 'signXMLObject(XMLObject)')": [
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        44
+                    ],
+                    "('org.apache.wss4j.common.saml#OpenSAMLUtil', None)": [
+                        126,
+                        131,
+                        132
+                    ],
+                    "('org.apache.wss4j.common.saml#OpenSAMLUtil', 'signXMLObject(XMLObject)')": [
+                        248,
+                        249
+                    ]
+                }
+            }
+        }
+    },
+    "6a8ece401f05360d269504956ae21bec41239ebc": {
+        "authored_data": "2017 Aug 10 16:05",
+        "commit.message": "Support ECDSA keys by default for signing in SamlAssertionWrapper\n",
+        "commit.author.name": "Colm O hEigeartaigh",
+        "pcid": "7ff95f4be7bda9600770064abe93acf5c0bf42d1",
+        "changes": {
+            "ws-security-common/src/main/java/org/apache/wss4j/common/saml/SamlAssertionWrapper.java": {
+                "old": {
+                    "('org.apache.wss4j.common.saml#SamlAssertionWrapper', None)": [
+                        272
+                    ]
+                },
+                "new": {
+                    "('org.apache.wss4j.common.saml#SamlAssertionWrapper', None)": [
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        277
+                    ],
+                    "('org.apache.wss4j.common.saml#SamlAssertionWrapper', 'signAssertion(String,String,Crypto,boolean,String,String,String)')": [
+                        559,
+                        560
+                    ]
+                }
+            }
+        }
+    },
+    "7ff95f4be7bda9600770064abe93acf5c0bf42d1": {
+        "authored_data": "2017 Aug 03 10:22",
+        "commit.message": "Removing commons Base64 usage\n",
+        "commit.author.name": "Colm O hEigeartaigh",
+        "pcid": "bc74dcffb62d0df758fa162f077db744fe2c7603",
+        "changes": {
+            "ws-security-common/src/main/java/org/apache/wss4j/common/util/AttachmentUtils.java": {
+                "old": {
+                    "('org.apache.wss4j.common.util#AttachmentUtils', 'setupAttachmentEncryptionStream(Cipher,boolean,Attachment,Map)')": [
+                        561
+                    ]
+                },
+                "new": {
+                    "('org.apache.wss4j.common.util#AttachmentUtils', 'setupAttachmentEncryptionStream(Cipher,boolean,Attachment,Map)')": [
+                        561
+                    ]
+                }
+            },
+            "ws-security-common/src/main/java/org/apache/wss4j/common/util/XMLUtils.java": {
+                "old": {
+                    "('org.apache.wss4j.common.util#XMLUtils', 'prettyDocumentToString(Document)')": [
+                        131
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.wss4j.common.util#XMLUtils', 'prettyDocumentToString(Document)')": [
+                        132
+                    ]
+                }
+            },
+            "ws-security-dom/src/main/java/org/apache/wss4j/dom/processor/UsernameTokenProcessor.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.wss4j.dom.processor#UsernameTokenProcessor', 'handleToken(Element,RequestData)')": [
+                        99
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.wss4j.dom.processor#UsernameTokenProcessor', 'handleToken(Element,RequestData)')": [
+                        99,
+                        100,
+                        101
+                    ]
+                }
+            },
+            "ws-security-stax/src/main/java/org/apache/wss4j/stax/impl/processor/input/SAMLTokenInputHandler.java": {
+                "old": {
+                    "(None, None)": [
+                        44
+                    ],
+                    "('org.apache.wss4j.stax.impl.processor.input#SAMLTokenInputHandler', 'parseKeyInfo(InputProcessorChain,XMLSecurityProperties,Deque,int)')": [
+                        349
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.wss4j.stax.impl.processor.input#SAMLTokenInputHandler', 'parseKeyInfo(InputProcessorChain,XMLSecurityProperties,Deque,int)')": [
+                        349
+                    ]
+                }
+            },
+            "ws-security-stax/src/main/java/org/apache/wss4j/stax/impl/processor/output/BinarySecurityTokenOutputProcessor.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.wss4j.stax.impl.processor.output#BinarySecurityTokenOutputProcessor', None)": [
+                        173
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.wss4j.stax.impl.processor.output#BinarySecurityTokenOutputProcessor', None)": [
+                        173
+                    ]
+                }
+            },
+            "ws-security-stax/src/main/java/org/apache/wss4j/stax/impl/processor/output/DerivedKeyTokenOutputProcessor.java": {
+                "old": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.wss4j.stax.impl.processor.output#DerivedKeyTokenOutputProcessor', 'processEvent(XMLSecEvent,OutputProcessorChain)')": [
+                        174
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.wss4j.stax.impl.processor.output#DerivedKeyTokenOutputProcessor', 'processEvent(XMLSecEvent,OutputProcessorChain)')": [
+                        174
+                    ]
+                }
+            },
+            "ws-security-stax/src/main/java/org/apache/wss4j/stax/impl/processor/output/EncryptedKeyOutputProcessor.java": {
+                "old": {
+                    "(None, None)": [
+                        43
+                    ],
+                    "('org.apache.wss4j.stax.impl.processor.output#EncryptedKeyOutputProcessor', None)": [
+                        244,
+                        334
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.wss4j.stax.impl.processor.output#EncryptedKeyOutputProcessor', None)": [
+                        244,
+                        334
+                    ]
+                }
+            },
+            "ws-security-stax/src/main/java/org/apache/wss4j/stax/impl/processor/output/SignatureConfirmationOutputProcessor.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.wss4j.stax.impl.processor.output#SignatureConfirmationOutputProcessor', 'processEvent(XMLSecEvent,OutputProcessorChain)')": [
+                        75
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.wss4j.stax.impl.processor.output#SignatureConfirmationOutputProcessor', 'processEvent(XMLSecEvent,OutputProcessorChain)')": [
+                        75
+                    ]
+                }
+            },
+            "ws-security-stax/src/main/java/org/apache/wss4j/stax/impl/processor/output/UsernameTokenOutputProcessor.java": {
+                "old": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.wss4j.stax.impl.processor.output#UsernameTokenOutputProcessor', None)": [
+                        214,
+                        229
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        44
+                    ],
+                    "('org.apache.wss4j.stax.impl.processor.output#UsernameTokenOutputProcessor', None)": [
+                        214,
+                        229
+                    ]
+                }
+            },
+            "ws-security-stax/src/main/java/org/apache/wss4j/stax/impl/securityToken/SecurityTokenFactoryImpl.java": {
+                "old": {
+                    "(None, None)": [
+                        37
+                    ],
+                    "('org.apache.wss4j.stax.impl.securityToken#SecurityTokenFactoryImpl', 'getSecurityToken(KeyIdentifierType,String,String,Crypto,CallbackHandler,InboundSecurityContext,WSSSecurityProperties)')": [
+                        256
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32
+                    ],
+                    "('org.apache.wss4j.stax.impl.securityToken#SecurityTokenFactoryImpl', 'getSecurityToken(KeyIdentifierType,String,String,Crypto,CallbackHandler,InboundSecurityContext,WSSSecurityProperties)')": [
+                        256
+                    ]
+                }
+            },
+            "ws-security-stax/src/main/java/org/apache/wss4j/stax/utils/WSSUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        42
+                    ],
+                    "('org.apache.wss4j.stax.utils#WSSUtils', 'doPasswordDigest(byte,String,String)')": [
+                        134
+                    ],
+                    "('org.apache.wss4j.stax.utils#WSSUtils', 'createBinarySecurityTokenStructure(AbstractOutputProcessor,OutputProcessorChain,String,X509Certificate,boolean)')": [
+                        256,
+                        263
+                    ],
+                    "('org.apache.wss4j.stax.utils#WSSUtils', 'createX509SubjectKeyIdentifierStructure(AbstractOutputProcessor,OutputProcessorChain,X509Certificate)')": [
+                        295
+                    ],
+                    "('org.apache.wss4j.stax.utils#WSSUtils', 'createX509KeyIdentifierStructure(AbstractOutputProcessor,OutputProcessorChain,X509Certificate)')": [
+                        313
+                    ],
+                    "('org.apache.wss4j.stax.utils#WSSUtils', 'createThumbprintKeyIdentifierStructure(AbstractOutputProcessor,OutputProcessorChain,X509Certificate)')": [
+                        338
+                    ],
+                    "('org.apache.wss4j.stax.utils#WSSUtils', 'createEncryptedKeySha1IdentifierStructure(AbstractOutputProcessor,OutputProcessorChain,Key)')": [
+                        353
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32
+                    ],
+                    "('org.apache.wss4j.stax.utils#WSSUtils', 'doPasswordDigest(byte,String,String)')": [
+                        134
+                    ],
+                    "('org.apache.wss4j.stax.utils#WSSUtils', 'createBinarySecurityTokenStructure(AbstractOutputProcessor,OutputProcessorChain,String,X509Certificate,boolean)')": [
+                        256,
+                        263
+                    ],
+                    "('org.apache.wss4j.stax.utils#WSSUtils', 'createX509SubjectKeyIdentifierStructure(AbstractOutputProcessor,OutputProcessorChain,X509Certificate)')": [
+                        295
+                    ],
+                    "('org.apache.wss4j.stax.utils#WSSUtils', 'createX509KeyIdentifierStructure(AbstractOutputProcessor,OutputProcessorChain,X509Certificate)')": [
+                        313
+                    ],
+                    "('org.apache.wss4j.stax.utils#WSSUtils', 'createThumbprintKeyIdentifierStructure(AbstractOutputProcessor,OutputProcessorChain,X509Certificate)')": [
+                        338
+                    ],
+                    "('org.apache.wss4j.stax.utils#WSSUtils', 'createEncryptedKeySha1IdentifierStructure(AbstractOutputProcessor,OutputProcessorChain,Key)')": [
+                        353
+                    ]
+                }
+            },
+            "ws-security-stax/src/main/java/org/apache/wss4j/stax/validate/BinarySecurityTokenValidatorImpl.java": {
+                "old": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.wss4j.stax.validate#BinarySecurityTokenValidatorImpl', 'validate(BinarySecurityTokenType,TokenContext)')": [
+                        52
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22
+                    ],
+                    "('org.apache.wss4j.stax.validate#BinarySecurityTokenValidatorImpl', 'validate(BinarySecurityTokenType,TokenContext)')": [
+                        53
+                    ]
+                }
+            },
+            "ws-security-stax/src/main/java/org/apache/wss4j/stax/validate/JAASUsernameTokenValidatorImpl.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.wss4j.stax.validate#JAASUsernameTokenValidatorImpl', 'validate(UsernameTokenType,TokenContext)')": [
+                        109
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22
+                    ],
+                    "('org.apache.wss4j.stax.validate#JAASUsernameTokenValidatorImpl', 'validate(UsernameTokenType,TokenContext)')": [
+                        110
+                    ]
+                }
+            },
+            "ws-security-stax/src/main/java/org/apache/wss4j/stax/validate/UsernameTokenValidatorImpl.java": {
+                "old": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.wss4j.stax.validate#UsernameTokenValidatorImpl', 'validate(UsernameTokenType,TokenContext)')": [
+                        92
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22
+                    ],
+                    "('org.apache.wss4j.stax.validate#UsernameTokenValidatorImpl', 'validate(UsernameTokenType,TokenContext)')": [
+                        93
+                    ]
+                }
+            }
+        }
+    },
+    "fea0520549c4114ac2389500f82ef9e52808cbb4": {
+        "authored_data": "2017 Jul 10 08:48",
+        "commit.message": "WSS-610 - WSSecurityUtil.decodeAction misbehaving when sending NoSecurity\n",
+        "commit.author.name": "Colm O hEigeartaigh",
+        "pcid": "f87f90eef7df3f4f470b362015d7c6f0fe1cb276",
+        "changes": {
+            "ws-security-dom/src/main/java/org/apache/wss4j/dom/util/WSSecurityUtil.java": {
+                "old": {
+                    "('org.apache.wss4j.dom.util#WSSecurityUtil', 'decodeAction(String)')": [
+                        478
+                    ]
+                },
+                "new": {
+                    "('org.apache.wss4j.dom.util#WSSecurityUtil', 'decodeAction(String)')": [
+                        478
+                    ]
+                }
+            }
+        }
+    }
+}

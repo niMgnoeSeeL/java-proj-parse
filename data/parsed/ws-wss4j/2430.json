@@ -1,0 +1,3013 @@
+{
+    "eb28dc09c0e22b84d28106728380dddce2926021": {
+        "authored_data": "2005 Sep 13 22:43",
+        "commit.message": "Lot's of Refactoring fir pluggability\n\n- Moved some SAML stuff to the saml package\n- Added a Processor and Action interface.\n- Load the required processor (say SAMLTokenProcess) or Action (TimestampAction) at runtime.\n- Basically the code works even if opensaml.jar is absent :)\n\nTODO:\n- Need to convert more code into processor(s) like TimestampProcessor.\n\n\n",
+        "commit.author.name": "Davanum Srinivas",
+        "pcid": "a7e6e0560af586551784b4ab5c29fadc7ac4710b",
+        "changes": {
+            "src/org/apache/ws/security/WSSConfig.java": {
+                "old": {
+                    "('org.apache.ws.security#WSSConfig', None)": [
+                        55
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        27,
+                        28,
+                        217
+                    ],
+                    "('org.apache.ws.security#WSSConfig', None)": [
+                        59,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        201,
+                        202,
+                        203
+                    ],
+                    "('org.apache.ws.security#WSSConfig', 'getAction(int)')": [
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200
+                    ],
+                    "('org.apache.ws.security#WSSConfig', 'getProcessor(QName)')": [
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/WSSecurityEngine.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        31,
+                        38,
+                        39,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        72
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', 'processSecurityHeader(Element,CallbackHandler,Crypto,Crypto)')": [
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', 'verifyXMLSignature(Element,Crypto,X509Certificate,Vector,byte)')": [
+                        511
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', None)": [
+                        650,
+                        651,
+                        652,
+                        653,
+                        654,
+                        655,
+                        656,
+                        724,
+                        725,
+                        726,
+                        844,
+                        845
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', 'getCertificatesFromSAML(Element,Crypto)')": [
+                        657,
+                        658,
+                        659,
+                        660,
+                        661,
+                        662,
+                        663,
+                        664,
+                        665,
+                        666,
+                        667,
+                        668,
+                        669,
+                        670,
+                        671,
+                        672,
+                        673,
+                        674,
+                        675,
+                        676,
+                        677,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682,
+                        683,
+                        684,
+                        685,
+                        686,
+                        687,
+                        688,
+                        689,
+                        690,
+                        691,
+                        692,
+                        693,
+                        694,
+                        695,
+                        696,
+                        697,
+                        698,
+                        699,
+                        700,
+                        701,
+                        702,
+                        703,
+                        704,
+                        705,
+                        706,
+                        707,
+                        708,
+                        709,
+                        710,
+                        711,
+                        712,
+                        713,
+                        714,
+                        715,
+                        716,
+                        717,
+                        718,
+                        719,
+                        720,
+                        721,
+                        722,
+                        723
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', 'handleSAMLToken(Element)')": [
+                        846,
+                        847,
+                        848,
+                        849,
+                        850,
+                        851,
+                        852,
+                        853,
+                        854,
+                        855,
+                        856,
+                        857,
+                        858,
+                        859,
+                        860,
+                        861,
+                        862
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        31,
+                        32,
+                        33
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', 'processSecurityHeader(Element,CallbackHandler,Crypto,Crypto)')": [
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', 'verifyXMLSignature(Element,Crypto,X509Certificate,Vector,byte)')": [
+                        501
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/WSSecurityEngineResult.java": {
+                "old": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngineResult', None)": [
+                        42,
+                        49,
+                        58,
+                        63
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngineResult', None)": [
+                        42,
+                        49,
+                        58,
+                        63
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/handler/WSHandler.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        37,
+                        38,
+                        42,
+                        43,
+                        44,
+                        55
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', None)": [
+                        66,
+                        73,
+                        279,
+                        310,
+                        311,
+                        312,
+                        354,
+                        355,
+                        356,
+                        387,
+                        388,
+                        389,
+                        390,
+                        423,
+                        424,
+                        436,
+                        437,
+                        495,
+                        496,
+                        497,
+                        508,
+                        509,
+                        559,
+                        560,
+                        682,
+                        683
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'doSenderAction(int,Document,RequestData,Vector,boolean)')": [
+                        168,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'performSIGNAction(int,boolean,Document,RequestData)')": [
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'performENCRAction(int,boolean,Document,RequestData)')": [
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'performUTAction(int,boolean,Document,RequestData)')": [
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'performUT_SIGNAction(int,boolean,Document,RequestData)')": [
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'performSTAction(int,boolean,Document,RequestData)')": [
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'performST_SIGNAction(int,boolean,Document,RequestData)')": [
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'performTSAction(int,boolean,Document,RequestData)')": [
+                        498,
+                        499,
+                        500,
+                        501,
+                        502,
+                        503,
+                        504,
+                        505,
+                        506,
+                        507
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'performSIGNConfirmation(boolean,Document,RequestData,Vector)')": [
+                        510,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516,
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        558
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'loadSignatureCrypto(RequestData)')": [
+                        622
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'loadSamlIssuer(RequestData)')": [
+                        672,
+                        673,
+                        674,
+                        675,
+                        676,
+                        677,
+                        678,
+                        679,
+                        680,
+                        681
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'decodeTimeToLive(RequestData)')": [
+                        821
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'getPassword(String,int,String,String,RequestData)')": [
+                        870
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        39,
+                        50
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', None)": [
+                        64,
+                        71
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'doSenderAction(int,Document,RequestData,Vector,boolean)')": [
+                        166,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'loadSignatureCrypto(RequestData)')": [
+                        319
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'decodeTimeToLive(RequestData)')": [
+                        506
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'getPassword(String,int,String,String,RequestData)')": [
+                        555
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/WSBaseMessage.java": {
+                "old": {
+                    "(None, None)": [
+                        24,
+                        259
+                    ],
+                    "('org.apache.ws.security.message#WSBaseMessage', None)": [
+                        47,
+                        49
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        25
+                    ],
+                    "('org.apache.ws.security.message#WSBaseMessage', None)": [
+                        48,
+                        50
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/WSSignEnvelope.java": {
+                "old": {
+                    "(None, None)": [
+                        40,
+                        42,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        60,
+                        63,
+                        65,
+                        66
+                    ],
+                    "('org.apache.ws.security.message#WSSignEnvelope', None)": [
+                        136,
+                        139,
+                        151,
+                        162,
+                        166,
+                        180,
+                        183,
+                        205,
+                        206,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569,
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        575,
+                        576,
+                        577,
+                        578,
+                        916,
+                        917,
+                        918
+                    ],
+                    "('org.apache.ws.security.message#WSSignEnvelope', 'build(Document,Crypto)')": [
+                        335,
+                        337,
+                        340,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        431,
+                        432,
+                        496
+                    ],
+                    "('org.apache.ws.security.message#WSSignEnvelope', 'build(Document,Crypto,SAMLAssertion,Crypto,String,String)')": [
+                        579,
+                        580,
+                        581,
+                        582,
+                        583,
+                        584,
+                        585,
+                        586,
+                        587,
+                        588,
+                        589,
+                        590,
+                        591,
+                        592,
+                        593,
+                        594,
+                        595,
+                        596,
+                        597,
+                        598,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612,
+                        613,
+                        614,
+                        615,
+                        616,
+                        617,
+                        618,
+                        619,
+                        620,
+                        621,
+                        622,
+                        623,
+                        624,
+                        625,
+                        626,
+                        627,
+                        628,
+                        629,
+                        630,
+                        631,
+                        632,
+                        633,
+                        634,
+                        635,
+                        636,
+                        637,
+                        638,
+                        639,
+                        640,
+                        641,
+                        642,
+                        643,
+                        644,
+                        645,
+                        646,
+                        647,
+                        648,
+                        649,
+                        650,
+                        651,
+                        652,
+                        653,
+                        654,
+                        655,
+                        656,
+                        657,
+                        658,
+                        659,
+                        660,
+                        661,
+                        662,
+                        663,
+                        664,
+                        665,
+                        666,
+                        667,
+                        668,
+                        669,
+                        670,
+                        671,
+                        672,
+                        673,
+                        674,
+                        675,
+                        676,
+                        677,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682,
+                        683,
+                        684,
+                        685,
+                        686,
+                        687,
+                        688,
+                        689,
+                        690,
+                        691,
+                        692,
+                        693,
+                        694,
+                        695,
+                        696,
+                        697,
+                        698,
+                        699,
+                        700,
+                        701,
+                        702,
+                        703,
+                        704,
+                        705,
+                        706,
+                        707,
+                        708,
+                        709,
+                        710,
+                        711,
+                        712,
+                        713,
+                        714,
+                        715,
+                        716,
+                        717,
+                        718,
+                        719,
+                        720,
+                        721,
+                        722,
+                        723,
+                        724,
+                        725,
+                        726,
+                        727,
+                        728,
+                        729,
+                        730,
+                        731,
+                        732,
+                        733,
+                        734,
+                        735,
+                        736,
+                        737,
+                        738,
+                        739,
+                        740,
+                        741,
+                        742,
+                        743,
+                        744,
+                        745,
+                        746,
+                        747,
+                        748,
+                        749,
+                        750,
+                        751,
+                        752,
+                        753,
+                        754,
+                        755,
+                        756,
+                        757,
+                        758,
+                        759,
+                        760,
+                        761,
+                        762,
+                        763,
+                        764,
+                        765,
+                        766,
+                        767,
+                        768,
+                        769,
+                        770,
+                        771,
+                        772,
+                        773,
+                        774,
+                        775,
+                        776,
+                        777,
+                        778,
+                        779,
+                        780,
+                        781,
+                        782,
+                        783,
+                        784,
+                        785,
+                        786,
+                        787,
+                        788,
+                        789,
+                        790,
+                        791,
+                        792,
+                        793,
+                        794,
+                        795,
+                        796,
+                        797,
+                        798,
+                        799,
+                        800,
+                        801,
+                        802,
+                        803,
+                        804,
+                        805,
+                        806,
+                        807,
+                        808,
+                        809,
+                        810,
+                        811,
+                        812,
+                        813,
+                        814,
+                        815,
+                        816,
+                        817,
+                        818,
+                        819,
+                        820,
+                        821,
+                        822,
+                        823,
+                        824,
+                        825,
+                        826,
+                        827,
+                        828,
+                        829,
+                        830,
+                        831,
+                        832,
+                        833,
+                        834,
+                        835,
+                        836,
+                        837,
+                        838,
+                        839,
+                        840,
+                        841,
+                        842,
+                        843,
+                        844,
+                        845,
+                        846,
+                        847,
+                        848,
+                        849,
+                        850,
+                        851,
+                        852,
+                        853,
+                        854,
+                        855,
+                        856,
+                        857,
+                        858,
+                        859,
+                        860,
+                        861,
+                        862,
+                        863,
+                        864,
+                        865,
+                        866,
+                        867,
+                        868,
+                        869,
+                        870,
+                        871,
+                        872,
+                        873,
+                        874,
+                        875,
+                        876,
+                        877,
+                        878,
+                        879,
+                        880,
+                        881,
+                        882,
+                        883,
+                        884,
+                        885,
+                        886,
+                        887,
+                        888,
+                        889,
+                        890,
+                        891,
+                        892,
+                        893,
+                        894,
+                        895,
+                        896,
+                        897,
+                        898,
+                        899,
+                        900,
+                        901,
+                        902,
+                        903,
+                        904,
+                        905,
+                        906,
+                        907,
+                        908,
+                        909,
+                        910,
+                        911,
+                        912,
+                        913,
+                        914,
+                        915
+                    ],
+                    "('org.apache.ws.security.message#WSSignEnvelope', 'createSTRParameter(Document)')": [
+                        919
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        37,
+                        48,
+                        52,
+                        56,
+                        57
+                    ],
+                    "('org.apache.ws.security.message#WSSignEnvelope', None)": [
+                        128,
+                        131,
+                        143,
+                        154,
+                        158,
+                        172,
+                        175,
+                        197,
+                        198
+                    ],
+                    "('org.apache.ws.security.message#WSSignEnvelope', 'build(Document,Crypto)')": [
+                        327,
+                        329,
+                        332,
+                        389,
+                        390,
+                        391,
+                        412,
+                        413,
+                        477
+                    ],
+                    "('org.apache.ws.security.message#WSSignEnvelope', 'createSTRParameter(Document)')": [
+                        545
+                    ]
+                }
+            },
+            "test/wssec/TestWSSecurityST2.java": {
+                "old": {
+                    "('wssec#TestWSSecurityST2', 'testSAMLSignedSenderVouches')": [
+                        148
+                    ],
+                    "('wssec#TestWSSecurityST2', None)": [
+                        182
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        39
+                    ],
+                    "('wssec#TestWSSecurityST2', 'testSAMLSignedSenderVouches')": [
+                        149
+                    ],
+                    "('wssec#TestWSSecurityST2', None)": [
+                        183
+                    ]
+                }
+            },
+            "test/wssec/TestWSSecurityST3.java": {
+                "old": {
+                    "('wssec#TestWSSecurityST3', 'testSAMLSignedKeyHolder')": [
+                        153
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('wssec#TestWSSecurityST3', 'testSAMLSignedKeyHolder')": [
+                        154
+                    ]
+                }
+            }
+        }
+    },
+    "a7e6e0560af586551784b4ab5c29fadc7ac4710b": {
+        "authored_data": "2005 Sep 13 14:40",
+        "commit.message": "Fix \"ant test\" breakage\n\n\n",
+        "commit.author.name": "Davanum Srinivas",
+        "pcid": "19449f95288200e20311e07456d8b27b54fd9dfd",
+        "changes": {
+            "test/wssec/PackageTests.java": {
+                "old": {
+                    "('wssec#PackageTests', 'suite')": [
+                        64
+                    ]
+                }
+            }
+        }
+    },
+    "19449f95288200e20311e07456d8b27b54fd9dfd": {
+        "authored_data": "2005 Sep 13 06:05",
+        "commit.message": "Implement the WSS 1.1 feature for UsernameToken derived key. Done\nfor the message tokens and the WSSecurityEngine.\n",
+        "commit.author.name": "Werner Dittmann",
+        "pcid": "9f281287e70f86678304cf459f9ce51c497588ce",
+        "changes": {
+            "src/org/apache/ws/sandbox/security/trust2/SecurityTokenOrReference.java": {
+                "old": {
+                    "('org.apache.ws.sandbox.security.trust2#SecurityTokenOrReference', None)": [
+                        67
+                    ],
+                    "('org.apache.ws.sandbox.security.trust2#SecurityTokenOrReference', 'resolveToken')": [
+                        132
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.sandbox.security.trust2#SecurityTokenOrReference', None)": [
+                        67
+                    ],
+                    "('org.apache.ws.sandbox.security.trust2#SecurityTokenOrReference', 'resolveToken')": [
+                        132
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/WSConstants.java": {
+                "new": {
+                    "('org.apache.ws.security#WSConstants', None)": [
+                        98,
+                        99
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/WSSecurityEngine.java": {
+                "old": {
+                    "(None, None)": [
+                        36,
+                        66,
+                        67
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', None)": [
+                        91,
+                        652,
+                        775,
+                        776
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', 'verifyXMLSignature(Element,Crypto,X509Certificate,Vector,byte)')": [
+                        503,
+                        511
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', 'getCertificatesTokenReference(Element,Crypto)')": [
+                        649,
+                        650,
+                        651
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', 'createSecurityToken(Element)')": [
+                        745,
+                        746,
+                        747,
+                        748,
+                        749,
+                        750,
+                        751,
+                        752,
+                        753,
+                        754,
+                        755,
+                        756,
+                        757,
+                        758,
+                        759,
+                        760,
+                        761,
+                        762,
+                        763,
+                        764,
+                        765,
+                        766,
+                        767,
+                        768,
+                        769,
+                        770,
+                        771,
+                        772,
+                        773,
+                        774
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', 'handleEncryptedKey(Element,CallbackHandler,Crypto,PrivateKey)')": [
+                        959,
+                        960,
+                        961,
+                        1001
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security#WSSecurityEngine', 'verifyXMLSignature(Element,Crypto,X509Certificate,Vector,byte)')": [
+                        499,
+                        507
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', 'getCertificatesTokenReference(Element,Crypto)')": [
+                        645,
+                        646
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', 'createSecurityToken(Element)')": [
+                        739,
+                        740,
+                        741,
+                        742,
+                        743,
+                        744,
+                        745,
+                        746,
+                        747,
+                        748,
+                        749,
+                        750
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', None)": [
+                        751,
+                        752
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', 'handleEncryptedKey(Element,CallbackHandler,Crypto,PrivateKey)')": [
+                        935,
+                        975
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/token/BinarySecurity.java": {
+                "old": {
+                    "('org.apache.ws.security.message.token#BinarySecurity', None)": [
+                        39,
+                        53,
+                        54,
+                        55,
+                        58,
+                        59,
+                        65
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37
+                    ],
+                    "('org.apache.ws.security.message.token#BinarySecurity', None)": [
+                        40,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/token/SecurityTokenReference.java": {
+                "old": {
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', 'setKeyIdentifier(X509Certificate)')": [
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219
+                    ],
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', None)": [
+                        220
+                    ],
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', 'getKeyIdentifier(Crypto)')": [
+                        320,
+                        321,
+                        330
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', 'setKeyIdentifier(X509Certificate)')": [
+                        209,
+                        210
+                    ],
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', 'getKeyIdentifier(Crypto)')": [
+                        310,
+                        319
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/token/UsernameToken.java": {
+                "old": {
+                    "(None, None)": [
+                        45,
+                        46,
+                        47
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', None)": [
+                        64,
+                        65,
+                        78,
+                        79,
+                        80,
+                        85,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        94,
+                        100,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        114,
+                        115,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        193,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        214,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        254,
+                        255,
+                        256,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        335,
+                        336,
+                        337,
+                        338,
+                        346,
+                        347,
+                        348,
+                        349,
+                        360,
+                        361,
+                        364,
+                        373,
+                        382,
+                        383,
+                        384,
+                        392,
+                        393,
+                        394,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        499,
+                        500,
+                        501,
+                        502,
+                        503
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'addNonce(Document)')": [
+                        163,
+                        164,
+                        165
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'addCreated(boolean,Document)')": [
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        185,
+                        186,
+                        187
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'getName')": [
+                        197
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'getNonce')": [
+                        218
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'getCreated')": [
+                        227
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'getPassword')": [
+                        239
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'getPasswordType')": [
+                        257,
+                        258
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'setPassword(String)')": [
+                        277,
+                        298
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'doPasswordDigest(String,String,String)')": [
+                        305
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'nodeString(Element)')": [
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'getSecretKey')": [
+                        410,
+                        411,
+                        412
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'getSecretKey(int,String)')": [
+                        444,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'P_hash(byte,byte,Mac,int)')": [
+                        471,
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        45,
+                        46
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', None)": [
+                        56,
+                        58,
+                        60,
+                        62,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        70,
+                        72,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        91,
+                        92,
+                        93,
+                        94,
+                        99,
+                        100,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        135,
+                        136,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        150,
+                        151,
+                        152,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        285,
+                        286,
+                        287,
+                        289,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        310,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        380,
+                        381,
+                        382,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        492,
+                        493,
+                        494,
+                        497,
+                        506,
+                        515,
+                        516,
+                        517,
+                        525,
+                        526,
+                        527,
+                        528,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        547,
+                        548,
+                        549,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        596,
+                        597,
+                        598,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        641,
+                        642,
+                        643,
+                        644,
+                        645,
+                        646,
+                        647,
+                        648,
+                        649,
+                        650,
+                        660,
+                        661,
+                        662,
+                        664,
+                        665,
+                        666,
+                        667,
+                        668,
+                        669,
+                        670,
+                        671,
+                        672,
+                        699,
+                        700,
+                        701,
+                        702,
+                        703,
+                        704,
+                        705,
+                        706,
+                        707,
+                        708,
+                        709
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'addNonce(Document)')": [
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'addCreated(boolean,Document)')": [
+                        228,
+                        229,
+                        230,
+                        231,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'addSalt(Document,byte,boolean)')": [
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'addIteration(Document,int)')": [
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'getName')": [
+                        293
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'getNonce')": [
+                        314
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'getCreated')": [
+                        323
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'getPassword')": [
+                        335
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'getSalt')": [
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'getIteration')": [
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'getPasswordType')": [
+                        383,
+                        384
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'setPassword(String)')": [
+                        404,
+                        405,
+                        426,
+                        427
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'doPasswordDigest(String,String,String)')": [
+                        434,
+                        435
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'nodeString(Element)')": [
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'getSecretKey')": [
+                        544,
+                        545,
+                        546
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'getSecretKey(int,String)')": [
+                        580,
+                        582,
+                        583,
+                        584,
+                        585,
+                        586,
+                        587,
+                        588
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'generateDerivedKey(String,byte,int)')": [
+                        609,
+                        610,
+                        611,
+                        612,
+                        613,
+                        614,
+                        615,
+                        616,
+                        617,
+                        618,
+                        619,
+                        620,
+                        621,
+                        622,
+                        623,
+                        624,
+                        625,
+                        626,
+                        627,
+                        628,
+                        629,
+                        630,
+                        631,
+                        632,
+                        633,
+                        634,
+                        635,
+                        636,
+                        637,
+                        638,
+                        639,
+                        640
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'generateSalt(boolean)')": [
+                        651,
+                        652,
+                        653,
+                        654,
+                        655,
+                        656,
+                        657,
+                        658,
+                        659
+                    ],
+                    "('org.apache.ws.security.message.token#UsernameToken', 'P_hash(byte,byte,Mac,int)')": [
+                        677,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682,
+                        683,
+                        684,
+                        685,
+                        686,
+                        687,
+                        688,
+                        689,
+                        690,
+                        691,
+                        692,
+                        693,
+                        694,
+                        695,
+                        696,
+                        697,
+                        698
+                    ]
+                }
+            }
+        }
+    },
+    "9f281287e70f86678304cf459f9ce51c497588ce": {
+        "authored_data": "2005 Sep 12 22:42",
+        "commit.message": "removed javadocs mistakes\n",
+        "commit.author.name": "Hans Granqvist",
+        "pcid": "e841878a84a8c37eef15e41165e6e4fb8fbc38eb",
+        "changes": {
+            "src/org/apache/ws/security/WSPasswordCallback.java": {
+                "old": {
+                    "(None, None)": [
+                        51
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        51
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/WSSConfig.java": {
+                "old": {
+                    "('org.apache.ws.security#WSSConfig', None)": [
+                        102,
+                        121,
+                        130
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security#WSSConfig', None)": [
+                        102,
+                        121,
+                        130
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/WSSecurityEngine.java": {
+                "old": {
+                    "('org.apache.ws.security#WSSecurityEngine', None)": [
+                        248
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security#WSSecurityEngine', None)": [
+                        248,
+                        249,
+                        250
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/EnvelopeIdResolver.java": {
+                "old": {
+                    "('org.apache.ws.security.message#EnvelopeIdResolver', None)": [
+                        59,
+                        77,
+                        171
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message#EnvelopeIdResolver', None)": [
+                        59,
+                        77,
+                        171
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/WSAddTimestamp.java": {
+                "old": {
+                    "('org.apache.ws.security.message#WSAddTimestamp', None)": [
+                        113
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message#WSAddTimestamp', None)": [
+                        113
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/WSBaseMessage.java": {
+                "old": {
+                    "('org.apache.ws.security.message#WSBaseMessage', None)": [
+                        107
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message#WSBaseMessage', None)": [
+                        107
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/WSEncryptBody.java": {
+                "old": {
+                    "('org.apache.ws.security.message#WSEncryptBody', None)": [
+                        137,
+                        138,
+                        178,
+                        179,
+                        180,
+                        186,
+                        198,
+                        214,
+                        215,
+                        216,
+                        691,
+                        716
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message#WSEncryptBody', None)": [
+                        137,
+                        138,
+                        178,
+                        179,
+                        180,
+                        186,
+                        198,
+                        214,
+                        215,
+                        216,
+                        691,
+                        716
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/WSSAddSAMLToken.java": {
+                "old": {
+                    "('org.apache.ws.security.message#WSSAddSAMLToken', None)": [
+                        73
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message#WSSAddSAMLToken', None)": [
+                        73
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/WSSAddUsernameToken.java": {
+                "old": {
+                    "('org.apache.ws.security.message#WSSAddUsernameToken', None)": [
+                        114
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message#WSSAddUsernameToken', None)": [
+                        114
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/WSSignEnvelope.java": {
+                "old": {
+                    "('org.apache.ws.security.message#WSSignEnvelope', None)": [
+                        128,
+                        184
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message#WSSignEnvelope', None)": [
+                        128,
+                        184
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/token/BinarySecurity.java": {
+                "old": {
+                    "('org.apache.ws.security.message.token#BinarySecurity', None)": [
+                        80,
+                        100,
+                        120,
+                        152,
+                        163,
+                        173,
+                        194
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message.token#BinarySecurity', None)": [
+                        80,
+                        100,
+                        120,
+                        152,
+                        163,
+                        173,
+                        194
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/token/Reference.java": {
+                "old": {
+                    "('org.apache.ws.security.message.token#Reference', None)": [
+                        83,
+                        93,
+                        103,
+                        133
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message.token#Reference', None)": [
+                        83,
+                        93,
+                        103,
+                        133
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/token/SecurityTokenReference.java": {
+                "old": {
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', None)": [
+                        65,
+                        66,
+                        89,
+                        90,
+                        253,
+                        254,
+                        255,
+                        601,
+                        625
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', None)": [
+                        65,
+                        88,
+                        596,
+                        620
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/token/SignatureConfirmation.java": {
+                "old": {
+                    "('org.apache.ws.security.message.token#SignatureConfirmation', None)": [
+                        63,
+                        64,
+                        113
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message.token#SignatureConfirmation', None)": [
+                        63,
+                        64,
+                        113
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/token/Timestamp.java": {
+                "old": {
+                    "('org.apache.ws.security.message.token#Timestamp', None)": [
+                        59,
+                        224
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message.token#Timestamp', None)": [
+                        59,
+                        224
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/token/UsernameToken.java": {
+                "old": {
+                    "('org.apache.ws.security.message.token#UsernameToken', None)": [
+                        79,
+                        116,
+                        128,
+                        130
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message.token#UsernameToken', None)": [
+                        127
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/token/X509Security.java": {
+                "old": {
+                    "('org.apache.ws.security.message.token#X509Security', None)": [
+                        48
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/util/Loader.java": {
+                "old": {
+                    "('org.apache.ws.security.util#Loader', None)": [
+                        51,
+                        98
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.util#Loader', None)": [
+                        51,
+                        98
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/util/WSSecurityUtil.java": {
+                "old": {
+                    "('org.apache.ws.security.util#WSSecurityUtil', None)": [
+                        116,
+                        298,
+                        413,
+                        414,
+                        458,
+                        459
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.util#WSSecurityUtil', None)": [
+                        116,
+                        298
+                    ]
+                }
+            }
+        }
+    },
+    "98dfdfb2b08b4b0577ab88f97fd01057d0dfc427": {
+        "authored_data": "2005 Sep 10 19:42",
+        "commit.message": "Implment the WSS 1.1 Thumprint key identifier. The unit test.\n",
+        "commit.author.name": "Werner Dittmann",
+        "pcid": "21024420ab83e04a9c5286714a276d9fdd5dd49a",
+        "changes": {
+            "test/wssec/PackageTests.java": {
+                "old": {
+                    "('wssec#PackageTests', 'suite')": [
+                        52
+                    ]
+                },
+                "new": {
+                    "('wssec#PackageTests', 'suite')": [
+                        64
+                    ]
+                }
+            },
+            "test/wssec/TestWSSecurity.java": {
+                "old": {
+                    "('wssec#TestWSSecurity', None)": [
+                        117,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        181
+                    ]
+                },
+                "new": {
+                    "('wssec#TestWSSecurity', None)": [
+                        117,
+                        152
+                    ]
+                }
+            }
+        }
+    },
+    "21024420ab83e04a9c5286714a276d9fdd5dd49a": {
+        "authored_data": "2005 Sep 10 19:41",
+        "commit.message": "Implment the WSS 1.1 Thumprint key identifier.\n",
+        "commit.author.name": "Werner Dittmann",
+        "pcid": "48e116b3d24d3a35bf3d0e2712ecc897be3e6139",
+        "changes": {
+            "src/org/apache/ws/security/WSConstants.java": {
+                "old": {
+                    "('org.apache.ws.security#WSConstants', None)": [
+                        39,
+                        42,
+                        44
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security#WSConstants', None)": [
+                        41,
+                        42,
+                        44,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/components/crypto/Crypto.java": {
+                "old": {
+                    "(None, None)": [
+                        175
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/components/crypto/Merlin.java": {
+                "old": {
+                    "('org.apache.ws.security.components.crypto#Merlin', 'getAliasForX509Cert(byte)')": [
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        59
+                    ],
+                    "('org.apache.ws.security.components.crypto#Merlin', 'getAliasForX509Cert(byte)')": [
+                        395
+                    ],
+                    "('org.apache.ws.security.components.crypto#Merlin', None)": [
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        499,
+                        500
+                    ],
+                    "('org.apache.ws.security.components.crypto#Merlin', 'getAliasForX509CertThumb(byte)')": [
+                        501,
+                        502,
+                        503,
+                        504,
+                        505,
+                        506,
+                        507,
+                        508,
+                        509,
+                        510,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516,
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/handler/WSHandler.java": {
+                "old": {
+                    "('org.apache.ws.security.handler#WSHandler', 'decodeSignatureParameter(RequestData)')": [
+                        719
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'decodeEncryptionParameter(RequestData)')": [
+                        773
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.handler#WSHandler', 'decodeSignatureParameter(RequestData)')": [
+                        719,
+                        720
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'decodeEncryptionParameter(RequestData)')": [
+                        774,
+                        775
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/handler/WSHandlerConstants.java": {
+                "new": {
+                    "('org.apache.ws.security.handler#WSHandlerConstants', None)": [
+                        317,
+                        671,
+                        672,
+                        690,
+                        691
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/WSEncryptBody.java": {
+                "new": {
+                    "('org.apache.ws.security.message#WSEncryptBody', 'build(Document,Crypto)')": [
+                        396,
+                        397,
+                        398,
+                        399
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/WSSignEnvelope.java": {
+                "new": {
+                    "('org.apache.ws.security.message#WSSignEnvelope', 'build(Document,Crypto)')": [
+                        522,
+                        523,
+                        524,
+                        525
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/token/SecurityTokenReference.java": {
+                "old": {
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', 'setKeyIdentifierSKI(X509Certificate,Crypto)')": [
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242
+                    ],
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', None)": [
+                        250,
+                        265,
+                        266,
+                        267,
+                        271,
+                        272
+                    ],
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', 'setSAMLKeyIdentifier(String)')": [
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264
+                    ],
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', 'getKeyIdentifier(Crypto)')": [
+                        290,
+                        291,
+                        292,
+                        293
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35,
+                        36
+                    ],
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', None)": [
+                        53,
+                        54,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        278,
+                        279,
+                        284,
+                        285,
+                        305
+                    ],
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', 'setKeyIdentifierSKI(X509Certificate,Crypto)')": [
+                        238,
+                        239,
+                        240
+                    ],
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', 'setKeyIdentifierThumb(X509Certificate)')": [
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277
+                    ],
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', 'setSAMLKeyIdentifier(String)')": [
+                        280,
+                        281,
+                        282,
+                        283
+                    ],
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', 'createKeyIdentifier(Document,String,Node)')": [
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294
+                    ],
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', 'getKeyIdentifier(Crypto)')": [
+                        313,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338
+                    ]
+                }
+            }
+        }
+    },
+    "b721d3bae6b832c91c6591e0926f0de51b5d0fa7": {
+        "authored_data": "2005 Sep 09 19:33",
+        "commit.message": "can't depend on xml-security Base64 stuff...\nmaking a copy (added a param for wrapping line during encoding), \nfixed another problem in encode\n\n",
+        "commit.author.name": "Werner Dittmann",
+        "pcid": "02de734f3f29a019c555a19faeda4b0fc21e5ef3",
+        "changes": {
+            "src/org/apache/ws/security/WSSecurityEngine.java": {
+                "old": {
+                    "(None, None)": [
+                        45
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', 'getDecodedBase64EncodedData(Element)')": [
+                        1388,
+                        1389,
+                        1390,
+                        1391,
+                        1392,
+                        1393,
+                        1394
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', None)": [
+                        1395
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        45
+                    ],
+                    "('org.apache.ws.security#WSSecurityEngine', 'getDecodedBase64EncodedData(Element)')": [
+                        1388
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/token/BinarySecurity.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/token/SecurityTokenReference.java": {
+                "old": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', 'getSKIBytes')": [
+                        323
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.ws.security.message.token#SecurityTokenReference', 'getSKIBytes')": [
+                        323
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/token/SignatureConfirmation.java": {
+                "old": {
+                    "(None, None)": [
+                        24,
+                        25
+                    ],
+                    "('org.apache.ws.security.message.token#SignatureConfirmation', None)": [
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        85
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.ws.security.message.token#SignatureConfirmation', None)": [
+                        53,
+                        77
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/token/UsernameToken.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/util/WSSecurityUtil.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33
+                    ]
+                }
+            }
+        }
+    },
+    "02de734f3f29a019c555a19faeda4b0fc21e5ef3": {
+        "authored_data": "2005 Sep 09 19:33",
+        "commit.message": "can't depend on xml-security Base64 stuff...\nmaking a copy (added a param for wrapping line during encoding), \nfixed another problem in encode\nDetect X509Data in STR.\n\n",
+        "commit.author.name": "Werner Dittmann",
+        "pcid": "68eb28f7becd97c3cd79cc07d99ce152a15a3934",
+        "changes": {
+            "src/org/apache/ws/security/transform/STRTransform.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('org.apache.ws.security.transform#STRTransform', 'dereferenceSTR(Document,SecurityTokenReference)')": [
+                        331
+                    ],
+                    "('org.apache.ws.security.transform#STRTransform', 'createBST(Document,X509Certificate,Element)')": [
+                        392
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        36
+                    ],
+                    "('org.apache.ws.security.transform#STRTransform', 'dereferenceSTR(Document,SecurityTokenReference)')": [
+                        332
+                    ],
+                    "('org.apache.ws.security.transform#STRTransform', 'createBST(Document,X509Certificate,Element)')": [
+                        393
+                    ]
+                }
+            }
+        }
+    }
+}

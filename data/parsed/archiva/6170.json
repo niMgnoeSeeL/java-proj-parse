@@ -1,0 +1,1887 @@
+{
+    "02a22f45a5177bf69dca03002cce2e9b6a923e21": {
+        "authored_data": "2009 May 23 07:28",
+        "commit.message": "[MRM-1161], [MRM-1179], [MRM-1143] and [MRM-1160]\no upgraded nexus indexer to 2.0.0\no queue all indexing tasks to avoid interrupting a current indexing task being executed\no cleaned up nexus indexer and index cleanup consumers\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@777816 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Maria Odea B. Ching",
+        "pcid": "8b08426a7453d6e5418e8ec130db45b37638f4ea",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-consumers/archiva-lucene-consumers/src/main/java/org/apache/archiva/consumers/lucene/LuceneCleanupRemoveIndexedConsumer.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        25,
+                        38,
+                        43
+                    ],
+                    "('org.apache.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumer', None)": [
+                        62,
+                        63,
+                        67,
+                        68,
+                        71,
+                        74,
+                        77,
+                        92,
+                        161,
+                        162,
+                        163,
+                        184
+                    ],
+                    "('org.apache.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumer', 'completeScan')": [
+                        82,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91
+                    ],
+                    "('org.apache.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumer', 'processArchivaArtifact(ArchivaArtifact)')": [
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        158,
+                        159,
+                        160
+                    ],
+                    "('org.apache.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumer', 'removeDocuments(ArtifactContext)')": [
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36,
+                        39
+                    ],
+                    "('org.apache.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumer', None)": [
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        69,
+                        72,
+                        79,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        205
+                    ],
+                    "('org.apache.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumer', 'processArchivaArtifact(ArchivaArtifact)')": [
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        160,
+                        161,
+                        162,
+                        163,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        174,
+                        175,
+                        176,
+                        177
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-lucene-consumers/src/main/java/org/apache/archiva/consumers/lucene/NexusIndexerConsumer.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        29,
+                        32,
+                        33,
+                        43,
+                        48,
+                        49
+                    ],
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumer', None)": [
+                        61,
+                        62,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        83,
+                        84,
+                        158,
+                        219
+                    ],
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumer', 'beginScan(ManagedRepositoryConfiguration,Date)')": [
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        123,
+                        125,
+                        126,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148
+                    ],
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumer', 'processFile(String)')": [
+                        164,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        184,
+                        186,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198
+                    ],
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumer', 'completeScan')": [
+                        205,
+                        206,
+                        210,
+                        211,
+                        212,
+                        213
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        41,
+                        44,
+                        46
+                    ],
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumer', None)": [
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        82,
+                        84,
+                        85,
+                        145,
+                        176,
+                        203
+                    ],
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumer', 'beginScan(ManagedRepositoryConfiguration,Date)')": [
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        125,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        135
+                    ],
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumer', 'processFile(String)')": [
+                        151,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        170,
+                        171,
+                        173,
+                        175
+                    ],
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumer', 'completeScan')": [
+                        183,
+                        184,
+                        185,
+                        186,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-lucene-consumers/src/test/java/org/apache/archiva/consumers/lucene/LuceneCleanupRemoveIndexedConsumerTest.java": {
+                "old": {
+                    "(None, None)": [
+                        35,
+                        36,
+                        37
+                    ],
+                    "('org.apache.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumerTest', None)": [
+                        45,
+                        46,
+                        47,
+                        48
+                    ],
+                    "('org.apache.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumerTest', 'setUp')": [
+                        68,
+                        69,
+                        70,
+                        71,
+                        75
+                    ],
+                    "('org.apache.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumerTest', 'testProcessArtifactArtifactDoesNotExist')": [
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        121,
+                        122,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        135,
+                        136,
+                        139,
+                        140,
+                        142
+                    ],
+                    "('org.apache.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumerTest', 'testProcessArtifactArtifactExists')": [
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        161,
+                        162,
+                        163,
+                        164,
+                        167,
+                        172
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35
+                    ],
+                    "('org.apache.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumerTest', None)": [
+                        48,
+                        49,
+                        50,
+                        51
+                    ],
+                    "('org.apache.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumerTest', 'setUp')": [
+                        66,
+                        67,
+                        68,
+                        69,
+                        73,
+                        86
+                    ],
+                    "('org.apache.archiva.consumers.lucene#LuceneCleanupRemoveIndexedConsumerTest', 'testProcessArtifactArtifactDoesNotExist')": [
+                        111,
+                        112,
+                        116,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        125,
+                        126,
+                        129,
+                        131
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-lucene-consumers/src/test/java/org/apache/archiva/consumers/lucene/NexusIndexerConsumerTest.java": {
+                "old": {
+                    "(None, None)": [
+                        40,
+                        187
+                    ],
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumerTest', 'setUp')": [
+                        68
+                    ],
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumerTest', 'testIndexerArtifactAlreadyIndexed')": [
+                        155,
+                        156
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        40,
+                        189
+                    ],
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumerTest', 'setUp')": [
+                        68,
+                        69,
+                        70
+                    ],
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumerTest', 'testIndexerArtifactAlreadyIndexed')": [
+                        157,
+                        158
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-indexer/src/main/java/org/apache/archiva/indexer/search/NexusRepositorySearch.java": {
+                "old": {
+                    "(None, None)": [
+                        40
+                    ],
+                    "('org.apache.archiva.indexer.search#NexusRepositorySearch', 'search(SearchResultLimits,BooleanQuery)')": [
+                        157,
+                        158,
+                        159,
+                        160
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-indexer/src/test/java/org/apache/archiva/indexer/search/NexusRepositorySearchTest.java": {
+                "old": {
+                    "(None, None)": [
+                        38
+                    ],
+                    "('org.apache.archiva.indexer.search#NexusRepositorySearchTest', 'createIndex(String,List)')": [
+                        122,
+                        123,
+                        124,
+                        125,
+                        128,
+                        136,
+                        137
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36,
+                        39
+                    ],
+                    "('org.apache.archiva.indexer.search#NexusRepositorySearchTest', 'createIndex(String,List)')": [
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        131,
+                        139,
+                        140,
+                        141
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-proxy/src/main/java/org/apache/maven/archiva/proxy/DefaultRepositoryProxyConnectors.java": {
+                "old": {
+                    "(None, None)": [
+                        58
+                    ],
+                    "('org.apache.maven.archiva.proxy#DefaultRepositoryProxyConnectors', None)": [
+                        130,
+                        131,
+                        135
+                    ],
+                    "('org.apache.maven.archiva.proxy#DefaultRepositoryProxyConnectors', 'transferFile(ProxyConnector,RemoteRepositoryContent,String,ManagedRepositoryContent,File,Properties,boolean)')": [
+                        473,
+                        576
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        58,
+                        59,
+                        60,
+                        73
+                    ],
+                    "('org.apache.maven.archiva.proxy#DefaultRepositoryProxyConnectors', None)": [
+                        133,
+                        134,
+                        138,
+                        584,
+                        585,
+                        598
+                    ],
+                    "('org.apache.maven.archiva.proxy#DefaultRepositoryProxyConnectors', 'transferFile(ProxyConnector,RemoteRepositoryContent,String,ManagedRepositoryContent,File,Properties,boolean)')": [
+                        476,
+                        579,
+                        580
+                    ],
+                    "('org.apache.maven.archiva.proxy#DefaultRepositoryProxyConnectors', 'queueRepositoryTask(String,File)')": [
+                        586,
+                        587,
+                        588,
+                        589,
+                        590,
+                        591,
+                        592,
+                        593,
+                        594,
+                        595,
+                        596,
+                        597
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-proxy/src/test/java/org/apache/maven/archiva/proxy/HttpProxyTransferTest.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.maven.archiva.proxy#HttpProxyTransferTest', 'setUp')": [
+                        78
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        48,
+                        49,
+                        51
+                    ],
+                    "('org.apache.maven.archiva.proxy#HttpProxyTransferTest', 'setUp')": [
+                        86
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduled/src/main/java/org/apache/maven/archiva/scheduled/DefaultArchivaTaskScheduler.java": {
+                "old": {
+                    "('org.apache.maven.archiva.scheduled#DefaultArchivaTaskScheduler', 'queueInitialRepoScan(ManagedRepositoryConfiguration)')": [
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36
+                    ],
+                    "('org.apache.maven.archiva.scheduled#DefaultArchivaTaskScheduler', 'queueInitialRepoScan(ManagedRepositoryConfiguration)')": [
+                        173,
+                        174
+                    ],
+                    "('org.apache.maven.archiva.scheduled#DefaultArchivaTaskScheduler', 'queueRepositoryTask(RepositoryTask)')": [
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduled/src/main/java/org/apache/maven/archiva/scheduled/RepositoryTaskJob.java": {
+                "old": {
+                    "('org.apache.maven.archiva.scheduled#RepositoryTaskJob', 'execute(JobExecutionContext)')": [
+                        61,
+                        63
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.maven.archiva.scheduled#RepositoryTaskJob', 'execute(JobExecutionContext)')": [
+                        62
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduled/src/main/java/org/apache/maven/archiva/scheduled/executors/ArchivaRepositoryScanningTaskExecutor.java": {
+                "old": {
+                    "('org.apache.maven.archiva.scheduled.executors#ArchivaRepositoryScanningTaskExecutor', 'executeTask(Task)')": [
+                        110,
+                        111
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.scheduled.executors#ArchivaRepositoryScanningTaskExecutor', 'executeTask(Task)')": [
+                        115,
+                        120,
+                        121
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/UploadAction.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.action#UploadAction', 'doUpload')": [
+                        348,
+                        368,
+                        387
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        59,
+                        60,
+                        61,
+                        71,
+                        613,
+                        614
+                    ],
+                    "('org.apache.maven.archiva.web.action#UploadAction', None)": [
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        600
+                    ],
+                    "('org.apache.maven.archiva.web.action#UploadAction', 'doUpload')": [
+                        357,
+                        358,
+                        378,
+                        379,
+                        398,
+                        399
+                    ],
+                    "('org.apache.maven.archiva.web.action#UploadAction', 'queueRepositoryTask(String,File)')": [
+                        601,
+                        602,
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/admin/SchedulerAction.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.action.admin#SchedulerAction', 'scanRepository')": [
+                        61,
+                        62,
+                        63,
+                        64,
+                        65
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('org.apache.maven.archiva.web.action.admin#SchedulerAction', 'scanRepository')": [
+                        62,
+                        63
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webdav/src/main/java/org/apache/maven/archiva/webdav/ArchivaDavResource.java": {
+                "old": {
+                    "(None, None)": [
+                        56,
+                        60,
+                        62,
+                        63,
+                        64,
+                        69
+                    ],
+                    "('org.apache.maven.archiva.webdav#ArchivaDavResource', None)": [
+                        101,
+                        102,
+                        113,
+                        114,
+                        120,
+                        132,
+                        133,
+                        136,
+                        142,
+                        145
+                    ],
+                    "('org.apache.maven.archiva.webdav#ArchivaDavResource', 'addMember(DavResource,InputContext)')": [
+                        325
+                    ],
+                    "('org.apache.maven.archiva.webdav#ArchivaDavResource', 'executeConsumers(File)')": [
+                        645,
+                        646,
+                        649,
+                        650,
+                        651,
+                        652,
+                        653,
+                        654,
+                        655,
+                        656,
+                        657,
+                        658,
+                        659,
+                        660,
+                        661,
+                        662,
+                        663,
+                        664,
+                        665,
+                        666,
+                        667,
+                        668,
+                        669,
+                        670,
+                        671,
+                        672,
+                        673,
+                        674,
+                        675,
+                        676,
+                        677,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682,
+                        683,
+                        684,
+                        685,
+                        688
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        61
+                    ],
+                    "('org.apache.maven.archiva.webdav#ArchivaDavResource', None)": [
+                        111,
+                        123,
+                        131,
+                        134
+                    ],
+                    "('org.apache.maven.archiva.webdav#ArchivaDavResource', 'addMember(DavResource,InputContext)')": [
+                        314
+                    ],
+                    "('org.apache.maven.archiva.webdav#ArchivaDavResource', 'queueRepositoryTask(File)')": [
+                        634,
+                        635,
+                        636,
+                        637,
+                        640,
+                        641,
+                        642,
+                        645
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webdav/src/main/java/org/apache/maven/archiva/webdav/ArchivaDavResourceFactory.java": {
+                "old": {
+                    "('org.apache.maven.archiva.webdav#ArchivaDavResourceFactory', 'createResource(DavResourceLocator,DavServletRequest,DavServletResponse)')": [
+                        274,
+                        309
+                    ],
+                    "('org.apache.maven.archiva.webdav#ArchivaDavResourceFactory', 'processRepository(DavServletRequest,ArchivaDavResourceLocator,String,ManagedRepositoryContent)')": [
+                        414,
+                        445
+                    ],
+                    "('org.apache.maven.archiva.webdav#ArchivaDavResourceFactory', 'createResource(DavResourceLocator,DavSession)')": [
+                        520
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        86
+                    ],
+                    "('org.apache.maven.archiva.webdav#ArchivaDavResourceFactory', None)": [
+                        183,
+                        184,
+                        185,
+                        186,
+                        187
+                    ],
+                    "('org.apache.maven.archiva.webdav#ArchivaDavResourceFactory', 'createResource(DavResourceLocator,DavServletRequest,DavServletResponse)')": [
+                        280,
+                        315
+                    ],
+                    "('org.apache.maven.archiva.webdav#ArchivaDavResourceFactory', 'processRepository(DavServletRequest,ArchivaDavResourceLocator,String,ManagedRepositoryContent)')": [
+                        420,
+                        451
+                    ],
+                    "('org.apache.maven.archiva.webdav#ArchivaDavResourceFactory', 'createResource(DavResourceLocator,DavSession)')": [
+                        526
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webdav/src/test/java/org/apache/maven/archiva/webdav/DavResourceTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.webdav#DavResourceTest', 'getDavResource(String,File)')": [
+                        103,
+                        104
+                    ],
+                    "('org.apache.maven.archiva.webdav#DavResourceTest', None)": [
+                        311
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        45
+                    ],
+                    "('org.apache.maven.archiva.webdav#DavResourceTest', None)": [
+                        71,
+                        72,
+                        313
+                    ],
+                    "('org.apache.maven.archiva.webdav#DavResourceTest', 'getDavResource(String,File)')": [
+                        106
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/main/java/org/apache/archiva/web/xmlrpc/services/AdministrationServiceImpl.java": {
+                "old": {
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'executeRepositoryScanner(String)')": [
+                        315,
+                        316,
+                        317,
+                        318
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        58
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'executeRepositoryScanner(String)')": [
+                        316
+                    ]
+                }
+            }
+        }
+    },
+    "8b08426a7453d6e5418e8ec130db45b37638f4ea": {
+        "authored_data": "2009 May 21 08:23",
+        "commit.message": "o changed log level of default proxy connectors to debug and warn\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@777008 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Maria Odea B. Ching",
+        "pcid": "9c97bf35bca57b121de1650d5e73c2c0cba68496",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-proxy/src/main/java/org/apache/maven/archiva/proxy/DefaultRepositoryProxyConnectors.java": {
+                "old": {
+                    "('org.apache.maven.archiva.proxy#DefaultRepositoryProxyConnectors', 'transferFile(ProxyConnector,RemoteRepositoryContent,String,ManagedRepositoryContent,File,Properties,boolean)')": [
+                        469,
+                        473,
+                        549
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.proxy#DefaultRepositoryProxyConnectors', 'transferFile(ProxyConnector,RemoteRepositoryContent,String,ManagedRepositoryContent,File,Properties,boolean)')": [
+                        469,
+                        473,
+                        549
+                    ]
+                }
+            }
+        }
+    },
+    "9c97bf35bca57b121de1650d5e73c2c0cba68496": {
+        "authored_data": "2009 May 20 17:26",
+        "commit.message": "[MRM-1164] Improve the Selenium tests so testng.properties no longer needs to be modified (patch #4\nSubmitted by: Marecor Baclay\nAlso changed the webapp-test profile id to 'it' (integration test). Run with -Pit to include this module.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@776772 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Wendy Smoak",
+        "pcid": "1cc84d7fdc03fda552ac9c16299df2c59bc78b0c",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-webapp-test/src/test/testng/org/apache/archiva/web/test/ArtifactManagementTest.java": {
+                "new": {
+                    "('org.apache.archiva.web.test#ArtifactManagementTest', None)": [
+                        10,
+                        44,
+                        45,
+                        46,
+                        72,
+                        82,
+                        83,
+                        84,
+                        89,
+                        90,
+                        95,
+                        96,
+                        101,
+                        102,
+                        108,
+                        109
+                    ],
+                    "('org.apache.archiva.web.test#ArtifactManagementTest', 'testAddArtifactNoArtifactId')": [
+                        34
+                    ],
+                    "('org.apache.archiva.web.test#ArtifactManagementTest', 'testAddArtifactInvalidVersion')": [
+                        47,
+                        48,
+                        49,
+                        50
+                    ],
+                    "('org.apache.archiva.web.test#ArtifactManagementTest', 'testAddArtifactValidValues1')": [
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81
+                    ],
+                    "('org.apache.archiva.web.test#ArtifactManagementTest', 'testDeleteArtifact')": [
+                        85,
+                        86,
+                        87,
+                        88
+                    ],
+                    "('org.apache.archiva.web.test#ArtifactManagementTest', 'testDeleteArtifactNoGroupId')": [
+                        91,
+                        92,
+                        93,
+                        94
+                    ],
+                    "('org.apache.archiva.web.test#ArtifactManagementTest', 'testDeleteArtifactNoArtifactId')": [
+                        97,
+                        98,
+                        99,
+                        100
+                    ],
+                    "('org.apache.archiva.web.test#ArtifactManagementTest', 'testDeleteArtifactNoVersion')": [
+                        103,
+                        104,
+                        105,
+                        106,
+                        107
+                    ],
+                    "('org.apache.archiva.web.test#ArtifactManagementTest', 'testDeleteArtifactInvalidVersion')": [
+                        110,
+                        111,
+                        112,
+                        113
+                    ],
+                    "(None, None)": [
+                        114
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp-test/src/test/testng/org/apache/archiva/web/test/BrowseTest.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp-test/src/test/testng/org/apache/archiva/web/test/ReportsTest.java": {
+                "old": {
+                    "('org.apache.archiva.web.test#ReportsTest', None)": [
+                        39,
+                        45,
+                        46,
+                        60,
+                        68,
+                        69,
+                        70,
+                        72,
+                        75,
+                        80
+                    ],
+                    "(None, None)": [
+                        92,
+                        95
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.web.test#ReportsTest', None)": [
+                        39,
+                        45,
+                        46,
+                        60
+                    ],
+                    "(None, None)": [
+                        68,
+                        69,
+                        70,
+                        72,
+                        75,
+                        80,
+                        92,
+                        95
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp-test/src/test/testng/org/apache/archiva/web/test/parent/AbstractArtifactManagementTest.java": {
+                "old": {
+                    "('org.apache.archiva.web.test.parent#AbstractArtifactManagementTest', 'getArtifactFilePath')": [
+                        33,
+                        34
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArtifactManagementTest', None)": [
+                        54
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArtifactManagementTest', 'deleteArtifact(String,String,String,String)')": [
+                        81
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArtifactManagementTest', 'getArtifactFilePath')": [
+                        35,
+                        36,
+                        37
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArtifactManagementTest', None)": [
+                        57
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArtifactManagementTest', 'deleteArtifact(String,String,String,String)')": [
+                        84
+                    ]
+                }
+            }
+        }
+    },
+    "50193ed8c59a99fe64fe814fc4678a3c0e84b503": {
+        "authored_data": "2009 May 16 04:00",
+        "commit.message": "[MRM-1164] Improve the Selenium tests\n *  added tests for archiva user roles\n * added tests for upload artifact\n * modified scripts from Search and Browse\nSubmitted by: Marecor Baclay\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@775412 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Wendy Smoak",
+        "pcid": "dcc58f2859650fb9215ceeef1472d3be1b2766a9",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-webapp-test/src/test/testng/org/apache/archiva/web/test/ArchivaAdminTest.java": {
+                "old": {
+                    "('org.apache.archiva.web.test#ArchivaAdminTest', None)": [
+                        59,
+                        60,
+                        61
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        31,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46
+                    ],
+                    "('org.apache.archiva.web.test#ArchivaAdminTest', None)": [
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231
+                    ],
+                    "('org.apache.archiva.web.test#ArchivaAdminTest', 'open')": [
+                        85,
+                        86,
+                        87
+                    ],
+                    "('org.apache.archiva.web.test#ArchivaAdminTest', 'updateXml(File,String)')": [
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111
+                    ],
+                    "('org.apache.archiva.web.test#ArchivaAdminTest', 'executeMaven(String,File)')": [
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp-test/src/test/testng/org/apache/archiva/web/test/ReportsTest.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        101
+                    ],
+                    "('org.apache.archiva.web.test#ReportsTest', None)": [
+                        31,
+                        39,
+                        46,
+                        48,
+                        60,
+                        70,
+                        72,
+                        80,
+                        81,
+                        92
+                    ],
+                    "('org.apache.archiva.web.test#ReportsTest', 'testRepositoryHealthWithoutGroupId')": [
+                        95
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        92,
+                        95,
+                        101,
+                        102,
+                        103
+                    ],
+                    "('org.apache.archiva.web.test#ReportsTest', None)": [
+                        31,
+                        39,
+                        46,
+                        48,
+                        60,
+                        70,
+                        72,
+                        80,
+                        81
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp-test/src/test/testng/org/apache/archiva/web/test/SearchTest.java": {
+                "new": {
+                    "('org.apache.archiva.web.test#SearchTest', None)": [
+                        37,
+                        46
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp-test/src/test/testng/org/apache/archiva/web/test/parent/AbstractArchivaTest.java": {
+                "old": {
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', None)": [
+                        25
+                    ],
+                    "(None, None)": [
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        137,
+                        165,
+                        170,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        181
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        5,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', None)": [
+                        29,
+                        30,
+                        31,
+                        36,
+                        37,
+                        42,
+                        43,
+                        48,
+                        49,
+                        60,
+                        61,
+                        66,
+                        67,
+                        72,
+                        73,
+                        192,
+                        197,
+                        209,
+                        210,
+                        218,
+                        219,
+                        223,
+                        224,
+                        249,
+                        250,
+                        251,
+                        255,
+                        256,
+                        265,
+                        266,
+                        270,
+                        271,
+                        279,
+                        280,
+                        281,
+                        285,
+                        286,
+                        290,
+                        291,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        328,
+                        329,
+                        332,
+                        333,
+                        338,
+                        339,
+                        344,
+                        345,
+                        346,
+                        353,
+                        354,
+                        370,
+                        371
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'getUserEmail')": [
+                        32,
+                        33,
+                        34,
+                        35
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'getUserRolePassword')": [
+                        38,
+                        39,
+                        40,
+                        41
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'getUserRoleNewPassword')": [
+                        44,
+                        45,
+                        46,
+                        47
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'getBasedir')": [
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'getAdminUsername')": [
+                        62,
+                        63,
+                        64,
+                        65
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'getAdminPassword')": [
+                        68,
+                        69,
+                        70,
+                        71
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'assertUserManagementPage')": [
+                        164
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'assertUserRolesPage')": [
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        208
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'assertDeleteUserPage(String)')": [
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'createUser(String,String,String,String,boolean)')": [
+                        220,
+                        221,
+                        222
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'createUser(String,String,String,String,String,boolean)')": [
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'deleteUser(String,String,String)')": [
+                        252,
+                        253,
+                        254
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'deleteUser(String,String,String,boolean,boolean)')": [
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'login(String,String)')": [
+                        267,
+                        268,
+                        269
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'login(String,String,boolean,String)')": [
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'submitLoginPage(String,String)')": [
+                        282,
+                        283,
+                        284
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'submitLoginPage(String,String,boolean)')": [
+                        287,
+                        288,
+                        289
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'submitLoginPage(String,String,boolean,boolean,String)')": [
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'assertUserRoleCheckBoxPresent(String)')": [
+                        325,
+                        326,
+                        327
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'assertResourceRolesCheckBoxPresent(String)')": [
+                        330,
+                        331
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'checkUserRoleWithValue(String)')": [
+                        334,
+                        335,
+                        336,
+                        337
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'checkResourceRoleWithValue(String)')": [
+                        340,
+                        341,
+                        342,
+                        343
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'changePassword(String,String)')": [
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'assertCreateUserPage')": [
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'assertLeftNavMenuWithRole(String)')": [
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp-test/src/test/testng/org/apache/archiva/web/test/parent/AbstractSeleniumTest.java": {
+                "old": {
+                    "('org.apache.archiva.web.test.parent#AbstractSeleniumTest', 'assertLinkNotPresenu(String)')": [
+                        140
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.web.test.parent#AbstractSeleniumTest', 'assertLinkNotPresent(String)')": [
+                        140
+                    ]
+                }
+            }
+        }
+    },
+    "dbd4e769c90a4ccd975e4281c2b06cd99d1fcb6f": {
+        "authored_data": "2009 May 12 00:35",
+        "commit.message": "[MRM-1164] Improve the Selenium tests\nSubmitted by: Marecor Baclay\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@773741 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Wendy Smoak",
+        "pcid": "ee164981d97a999139094c5c092b0126a1a683f8",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-webapp-test/src/test/testng/org/apache/archiva/web/test/ArchivaAdminTest.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.archiva.web.test#ArchivaAdminTest', None)": [
+                        33
+                    ],
+                    "('org.apache.archiva.web.test#ArchivaAdminTest', 'initializeContinuum')": [
+                        38,
+                        40,
+                        42,
+                        50,
+                        51
+                    ],
+                    "('org.apache.archiva.web.test#ArchivaAdminTest', 'displayLandingPage')": [
+                        67,
+                        69
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.web.test#ArchivaAdminTest', None)": [
+                        32,
+                        60,
+                        61
+                    ],
+                    "('org.apache.archiva.web.test#ArchivaAdminTest', 'initializeContinuum')": [
+                        39
+                    ],
+                    "('org.apache.archiva.web.test#ArchivaAdminTest', 'displayLandingPage')": [
+                        64,
+                        66
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp-test/src/test/testng/org/apache/archiva/web/test/parent/AbstractArchivaTest.java": {
+                "old": {
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'assertCreateAdmin')": [
+                        28
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'submitAdminData(String,String,String)')": [
+                        45
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'assertCreateAdmin')": [
+                        28
+                    ],
+                    "('org.apache.archiva.web.test.parent#AbstractArchivaTest', 'submitAdminData(String,String,String)')": [
+                        45
+                    ]
+                }
+            }
+        }
+    }
+}

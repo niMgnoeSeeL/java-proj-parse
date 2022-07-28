@@ -1,0 +1,1987 @@
+{
+    "78084521ecbd5dbf488e15f3288ff6400aa62e06": {
+        "authored_data": "2007 Oct 12 17:56",
+        "commit.message": "Removing BidirectionalRepositoryLayoutFactory usage.\nReplacing with more reliable ManagedRepositoryContent operations.\nCleaning up logging output.\nUsing new ManagedRepositoryContent.toFile( ArchivaArtifact ) method.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@584216 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Joakim Erdfelt",
+        "pcid": "baacf6e15f98f2638f198bbe072dfc782a296474",
+        "changes": {
+            "archiva-base/archiva-consumers/archiva-database-consumers/src/main/java/org/apache/maven/archiva/consumers/database/ProjectModelToDatabaseConsumer.java": {
+                "old": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        26,
+                        37,
+                        38,
+                        39
+                    ],
+                    "('org.apache.maven.archiva.consumers.database#ProjectModelToDatabaseConsumer', None)": [
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        226,
+                        227,
+                        274,
+                        275,
+                        276
+                    ],
+                    "('org.apache.maven.archiva.consumers.database#ProjectModelToDatabaseConsumer', 'processArchivaArtifact(ArchivaArtifact)')": [
+                        146,
+                        147,
+                        150,
+                        173,
+                        175,
+                        182
+                    ],
+                    "('org.apache.maven.archiva.consumers.database#ProjectModelToDatabaseConsumer', 'getRepository(ArchivaArtifact)')": [
+                        222,
+                        225
+                    ],
+                    "('org.apache.maven.archiva.consumers.database#ProjectModelToDatabaseConsumer', 'toFile(ArchivaArtifact)')": [
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244
+                    ],
+                    "('org.apache.maven.archiva.consumers.database#ProjectModelToDatabaseConsumer', 'toPath(ArchivaArtifact)')": [
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273
+                    ],
+                    "('org.apache.maven.archiva.consumers.database#ProjectModelToDatabaseConsumer', 'isValidModel(ArchivaProjectModel,ArchivaArtifact)')": [
+                        277,
+                        280
+                    ],
+                    "('org.apache.maven.archiva.consumers.database#ProjectModelToDatabaseConsumer', 'addProblem(ArchivaArtifact,String)')": [
+                        329
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        35,
+                        36,
+                        37,
+                        38
+                    ],
+                    "('org.apache.maven.archiva.consumers.database#ProjectModelToDatabaseConsumer', None)": [
+                        79,
+                        227
+                    ],
+                    "('org.apache.maven.archiva.consumers.database#ProjectModelToDatabaseConsumer', 'processArchivaArtifact(ArchivaArtifact)')": [
+                        140,
+                        141,
+                        144,
+                        167,
+                        169,
+                        176
+                    ],
+                    "('org.apache.maven.archiva.consumers.database#ProjectModelToDatabaseConsumer', 'getRepository(ArchivaArtifact)')": [
+                        216,
+                        217,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226
+                    ],
+                    "('org.apache.maven.archiva.consumers.database#ProjectModelToDatabaseConsumer', 'isValidModel(ArchivaProjectModel,ManagedRepositoryContent,ArchivaArtifact)')": [
+                        246,
+                        249
+                    ],
+                    "('org.apache.maven.archiva.consumers.database#ProjectModelToDatabaseConsumer', 'addProblem(ArchivaArtifact,String)')": [
+                        296,
+                        297,
+                        300
+                    ]
+                }
+            }
+        }
+    },
+    "baacf6e15f98f2638f198bbe072dfc782a296474": {
+        "authored_data": "2007 Oct 12 17:53",
+        "commit.message": "Adding ManagedRepositoryContent.toFile( ArchivaArtifact ) and ManagedRepositoryContent.toPath( ArchivaArtifact )\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@584215 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Joakim Erdfelt",
+        "pcid": "8d21f6e627b25d5828843bb4fc9e360625c54280",
+        "changes": {
+            "archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/ManagedRepositoryContent.java": {
+                "old": {
+                    "(None, None)": [
+                        104,
+                        117,
+                        177,
+                        183,
+                        184,
+                        185,
+                        194,
+                        203
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        105,
+                        118,
+                        178,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        203,
+                        212,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225
+                    ]
+                }
+            },
+            "archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/content/AbstractDefaultRepositoryContent.java": {
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.maven.archiva.repository.content#AbstractDefaultRepositoryContent', None)": [
+                        78,
+                        89
+                    ],
+                    "('org.apache.maven.archiva.repository.content#AbstractDefaultRepositoryContent', 'toPath(ArchivaArtifact)')": [
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88
+                    ]
+                }
+            },
+            "archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/content/AbstractLegacyRepositoryContent.java": {
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.maven.archiva.repository.content#AbstractLegacyRepositoryContent', None)": [
+                        58,
+                        59
+                    ],
+                    "('org.apache.maven.archiva.repository.content#AbstractLegacyRepositoryContent', 'toPath(ArchivaArtifact)')": [
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68
+                    ]
+                }
+            },
+            "archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/content/ManagedDefaultRepositoryContent.java": {
+                "new": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContent', None)": [
+                        337,
+                        341
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedDefaultRepositoryContent', 'toFile(ArchivaArtifact)')": [
+                        338,
+                        339,
+                        340
+                    ]
+                }
+            },
+            "archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/content/ManagedLegacyRepositoryContent.java": {
+                "new": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedLegacyRepositoryContent', None)": [
+                        353,
+                        357
+                    ],
+                    "('org.apache.maven.archiva.repository.content#ManagedLegacyRepositoryContent', 'toFile(ArchivaArtifact)')": [
+                        354,
+                        355,
+                        356
+                    ]
+                }
+            }
+        }
+    },
+    "8d21f6e627b25d5828843bb4fc9e360625c54280": {
+        "authored_data": "2007 Oct 12 17:52",
+        "commit.message": "Moved Keys out of archiva-dependency-graph into archiva-model to aide in logging cleanup elsewhere.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@584214 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Joakim Erdfelt",
+        "pcid": "46f7d825da62d65b74e444afcc6ce5bf3a15e4a4",
+        "changes": {
+            "archiva-base/archiva-dependency-graph/src/test/java/org/apache/maven/archiva/dependency/graph/AbstractMemoryRepository.java": {
+                "new": {
+                    "(None, None)": [
+                        26
+                    ]
+                }
+            },
+            "archiva-base/archiva-dependency-graph/src/test/java/org/apache/maven/archiva/dependency/graph/functors/ToKeyTransformer.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28
+                    ]
+                }
+            }
+        }
+    },
+    "46f7d825da62d65b74e444afcc6ce5bf3a15e4a4": {
+        "authored_data": "2007 Oct 12 17:49",
+        "commit.message": "Fixed unit tests for RepositoryPurge as they were non-repeatable in an IDE environment.\nCorrected the assumption that a Managed Repository is the same as a Local Repository. (re: maven-metadata-local.xml)\nStreamlined asserts to be more clear .assertExists() .assertDeleted() when reading code and when error message is created.\nRemoved jdom direct usage in unit tests in favor of XMLUnit.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@584213 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Joakim Erdfelt",
+        "pcid": "69cdf2b90262fb5e2e22a75ab53ed7b7b6cfed74",
+        "changes": {
+            "archiva-base/archiva-consumers/archiva-core-consumers/src/main/java/org/apache/maven/archiva/consumers/core/repository/AbstractRepositoryPurge.java": {
+                "old": {
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurge', 'purge(Set)')": [
+                        91
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurge', 'purgeSupportFiles(File)')": [
+                        142
+                    ]
+                }
+            },
+            "archiva-base/archiva-consumers/archiva-core-consumers/src/main/java/org/apache/maven/archiva/consumers/core/repository/RetentionCountRepositoryPurge.java": {
+                "old": {
+                    "('org.apache.maven.archiva.consumers.core.repository#RetentionCountRepositoryPurge', 'doPurgeAllRelated(ArtifactReference,String)')": [
+                        119,
+                        120
+                    ]
+                }
+            },
+            "archiva-base/archiva-consumers/archiva-core-consumers/src/test/java/org/apache/maven/archiva/consumers/core/repository/AbstractRepositoryPurgeTest.java": {
+                "old": {
+                    "(None, None)": [
+                        35,
+                        37
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurgeTest', None)": [
+                        53,
+                        54
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurgeTest', 'setUp')": [
+                        116,
+                        117,
+                        118,
+                        119
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurgeTest', 'getRepoConfiguration')": [
+                        157
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurgeTest', 'populateDb(String,String,List)')": [
+                        178,
+                        181,
+                        182,
+                        183,
+                        184
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        34,
+                        39,
+                        229
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurgeTest', 'setUp')": [
+                        115,
+                        116
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurgeTest', None)": [
+                        142,
+                        143,
+                        144,
+                        205,
+                        209,
+                        210,
+                        214,
+                        215,
+                        219,
+                        220
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurgeTest', 'tearDown')": [
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurgeTest', 'getRepoConfiguration')": [
+                        163
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurgeTest', 'populateDb(String,String,List)')": [
+                        184,
+                        187,
+                        188
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurgeTest', 'assertDeleted(String)')": [
+                        206,
+                        207,
+                        208
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurgeTest', 'assertExists(String)')": [
+                        211,
+                        212,
+                        213
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurgeTest', 'getTestRepoRoot')": [
+                        216,
+                        217,
+                        218
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#AbstractRepositoryPurgeTest', 'prepareTestRepo')": [
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228
+                    ]
+                }
+            },
+            "archiva-base/archiva-consumers/archiva-core-consumers/src/test/java/org/apache/maven/archiva/consumers/core/repository/CleanupReleasedSnapshotsRepositoryPurgeTest.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        32,
+                        34
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#CleanupReleasedSnapshotsRepositoryPurgeTest', 'setUp')": [
+                        49
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#CleanupReleasedSnapshotsRepositoryPurgeTest', 'testReleasedSnapshots')": [
+                        58,
+                        59,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        116,
+                        117,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#CleanupReleasedSnapshotsRepositoryPurgeTest', 'testHigherSnapshotExists')": [
+                        164,
+                        165,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        214,
+                        215,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#CleanupReleasedSnapshotsRepositoryPurgeTest', 'populateReleasedSnapshotsTest')": [
+                        260
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#CleanupReleasedSnapshotsRepositoryPurgeTest', 'populateHigherSnapshotExistsTest')": [
+                        269
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#CleanupReleasedSnapshotsRepositoryPurgeTest', 'setUp')": [
+                        43
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#CleanupReleasedSnapshotsRepositoryPurgeTest', 'testReleasedSnapshots')": [
+                        52,
+                        56,
+                        57,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        80,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#CleanupReleasedSnapshotsRepositoryPurgeTest', None)": [
+                        91,
+                        134
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#CleanupReleasedSnapshotsRepositoryPurgeTest', 'testHigherSnapshotExists')": [
+                        99,
+                        102,
+                        103,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        124,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#CleanupReleasedSnapshotsRepositoryPurgeTest', 'populateReleasedSnapshotsTest')": [
+                        140
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#CleanupReleasedSnapshotsRepositoryPurgeTest', 'populateHigherSnapshotExistsTest')": [
+                        149
+                    ]
+                }
+            },
+            "archiva-base/archiva-consumers/archiva-core-consumers/src/test/java/org/apache/maven/archiva/consumers/core/repository/DaysOldRepositoryPurgeTest.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#DaysOldRepositoryPurgeTest', 'testByLastModified')": [
+                        59,
+                        60,
+                        62,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#DaysOldRepositoryPurgeTest', 'testMetadataDrivenSnapshots')": [
+                        87,
+                        88,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#DaysOldRepositoryPurgeTest', 'populateDbForTestByLastModified')": [
+                        150
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#DaysOldRepositoryPurgeTest', 'populateDbForTestMetadataDrivenSnapshots')": [
+                        159
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.consumers.core.repository#DaysOldRepositoryPurgeTest', 'testByLastModified')": [
+                        57,
+                        59,
+                        60,
+                        61,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#DaysOldRepositoryPurgeTest', 'testMetadataDrivenSnapshots')": [
+                        78,
+                        82,
+                        83,
+                        86,
+                        87,
+                        88,
+                        89,
+                        92,
+                        93,
+                        94,
+                        95,
+                        97,
+                        98,
+                        99,
+                        100,
+                        102,
+                        103,
+                        104,
+                        105,
+                        108,
+                        109
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#DaysOldRepositoryPurgeTest', 'populateDbForTestByLastModified')": [
+                        122
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#DaysOldRepositoryPurgeTest', 'populateDbForTestMetadataDrivenSnapshots')": [
+                        131
+                    ]
+                }
+            },
+            "archiva-base/archiva-consumers/archiva-core-consumers/src/test/java/org/apache/maven/archiva/consumers/core/repository/RepositoryPurgeConsumerTest.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        34,
+                        36,
+                        364
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', 'setLastModified')": [
+                        45,
+                        46,
+                        47
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', 'testConsumerByRetentionCount')": [
+                        70,
+                        71,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', 'testConsumerByDaysOld')": [
+                        154,
+                        155,
+                        156,
+                        157,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', None)": [
+                        175,
+                        176,
+                        333
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', 'testReleasedSnapshotsWereNotCleaned')": [
+                        186,
+                        191,
+                        192,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', 'testReleasedSnapshotsWereCleaned')": [
+                        270,
+                        271,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', 'populateDbForRetentionCountTest')": [
+                        338
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', 'populateDbForDaysOldTest')": [
+                        350
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', 'populateDbForReleasedSnapshotsTest')": [
+                        359
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', 'setLastModified(String)')": [
+                        39,
+                        40,
+                        41
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', 'testConsumerByRetentionCount')": [
+                        64,
+                        68,
+                        69,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', 'testConsumerByDaysOld')": [
+                        123,
+                        124,
+                        125,
+                        126,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', None)": [
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        226,
+                        227
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', 'testReleasedSnapshotsWereNotCleaned')": [
+                        153,
+                        158,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', 'testReleasedSnapshotsWereCleaned')": [
+                        200,
+                        204,
+                        205,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', 'populateDbForRetentionCountTest')": [
+                        232
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', 'populateDbForDaysOldTest')": [
+                        244
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumerTest', 'populateDbForReleasedSnapshotsTest')": [
+                        253
+                    ]
+                }
+            },
+            "archiva-base/archiva-consumers/archiva-core-consumers/src/test/java/org/apache/maven/archiva/consumers/core/repository/RetentionCountRepositoryPurgeTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RetentionCountRepositoryPurgeTest', 'testIfAJarWasFound')": [
+                        56,
+                        57,
+                        58,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RetentionCountRepositoryPurgeTest', 'testIfAPomWasFound')": [
+                        129,
+                        130,
+                        131,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RetentionCountRepositoryPurgeTest', 'populateIfJarWasFoundDb')": [
+                        194
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RetentionCountRepositoryPurgeTest', 'populateIfPomWasFoundDb')": [
+                        206
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.consumers.core.repository#RetentionCountRepositoryPurgeTest', 'testIfAJarWasFound')": [
+                        53,
+                        56,
+                        57,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RetentionCountRepositoryPurgeTest', 'testIfAPomWasFound')": [
+                        100,
+                        104,
+                        105,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RetentionCountRepositoryPurgeTest', 'populateIfJarWasFoundDb')": [
+                        139
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RetentionCountRepositoryPurgeTest', 'populateIfPomWasFoundDb')": [
+                        151
+                    ]
+                }
+            }
+        }
+    },
+    "69cdf2b90262fb5e2e22a75ab53ed7b7b6cfed74": {
+        "authored_data": "2007 Oct 12 01:26",
+        "commit.message": "[MRM-501] Saving configuration fails through the webapp.\nProvided an alternative configuration location.\nAdded unit tests for this condition.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@584021 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Joakim Erdfelt",
+        "pcid": "ae567b9b6bbfb4e78375bec0bfec8b4f8333dd6d",
+        "changes": {
+            "archiva-base/archiva-configuration/src/main/java/org/apache/maven/archiva/configuration/DefaultArchivaConfiguration.java": {
+                "old": {
+                    "('org.apache.maven.archiva.configuration#DefaultArchivaConfiguration', None)": [
+                        96,
+                        100
+                    ],
+                    "('org.apache.maven.archiva.configuration#DefaultArchivaConfiguration', 'getFilteredUserConfigFilename')": [
+                        97,
+                        98,
+                        99
+                    ],
+                    "('org.apache.maven.archiva.configuration#DefaultArchivaConfiguration', 'createDefaultConfigurationFile')": [
+                        271,
+                        274,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28,
+                        29,
+                        466
+                    ],
+                    "('org.apache.maven.archiva.configuration#DefaultArchivaConfiguration', None)": [
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        328,
+                        457,
+                        461,
+                        462
+                    ],
+                    "('org.apache.maven.archiva.configuration#DefaultArchivaConfiguration', 'createDefaultConfigurationFile')": [
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304
+                    ],
+                    "('org.apache.maven.archiva.configuration#DefaultArchivaConfiguration', 'writeFile(String,String,String)')": [
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        326,
+                        327
+                    ],
+                    "('org.apache.maven.archiva.configuration#DefaultArchivaConfiguration', 'initialize')": [
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405
+                    ],
+                    "('org.apache.maven.archiva.configuration#DefaultArchivaConfiguration', 'getUserConfigFilename')": [
+                        458,
+                        459,
+                        460
+                    ],
+                    "('org.apache.maven.archiva.configuration#DefaultArchivaConfiguration', 'getAltConfigFilename')": [
+                        463,
+                        464,
+                        465
+                    ]
+                }
+            },
+            "archiva-base/archiva-configuration/src/test/java/org/apache/maven/archiva/configuration/ArchivaConfigurationTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        26
+                    ],
+                    "('org.apache.maven.archiva.configuration#ArchivaConfigurationTest', None)": [
+                        43
+                    ],
+                    "('org.apache.maven.archiva.configuration#ArchivaConfigurationTest', 'setUp')": [
+                        48
+                    ],
+                    "('org.apache.maven.archiva.configuration#ArchivaConfigurationTest', 'testDefaultUserConfigFilename')": [
+                        307,
+                        309
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.maven.archiva.configuration#ArchivaConfigurationTest', None)": [
+                        42,
+                        460,
+                        471,
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        487,
+                        488,
+                        489
+                    ],
+                    "('org.apache.maven.archiva.configuration#ArchivaConfigurationTest', 'setUp')": [
+                        47
+                    ],
+                    "('org.apache.maven.archiva.configuration#ArchivaConfigurationTest', 'testDefaultUserConfigFilename')": [
+                        306,
+                        308,
+                        309,
+                        310
+                    ],
+                    "('org.apache.maven.archiva.configuration#ArchivaConfigurationTest', 'testLoadConfigurationFromInvalidBothLocationsOnDisk')": [
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470
+                    ],
+                    "('org.apache.maven.archiva.configuration#ArchivaConfigurationTest', 'testLoadConfigurationFromInvalidUserLocationOnDisk')": [
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486
+                    ]
+                }
+            }
+        }
+    },
+    "ae567b9b6bbfb4e78375bec0bfec8b4f8333dd6d": {
+        "authored_data": "2007 Oct 11 18:35",
+        "commit.message": "Fixing missing requirement in test components.xml.\nUpdating unit tests for proper metadata update detection.\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@583906 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Joakim Erdfelt",
+        "pcid": "41ad038b82ef93c48d05b00b3d23330a74c65c64",
+        "changes": {
+            "archiva-base/archiva-proxy/src/test/java/org/apache/maven/archiva/proxy/MetadataTransferTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.proxy#MetadataTransferTest', 'testGetProjectMetadataNotProxiedOnLocal')": [
+                        132
+                    ],
+                    "('org.apache.maven.archiva.proxy#MetadataTransferTest', 'testGetProjectMetadataProxiedOnLocalNotRemote')": [
+                        260
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.proxy#MetadataTransferTest', 'testGetProjectMetadataNotProxiedOnLocal')": [
+                        132,
+                        133,
+                        134
+                    ],
+                    "('org.apache.maven.archiva.proxy#MetadataTransferTest', 'testGetProjectMetadataProxiedOnLocalNotRemote')": [
+                        262,
+                        263,
+                        264
+                    ]
+                }
+            }
+        }
+    },
+    "41ad038b82ef93c48d05b00b3d23330a74c65c64": {
+        "authored_data": "2007 Oct 11 18:26",
+        "commit.message": "Attempting to remove <repositories> section is failing.\nSaving partial unit test for brett to look at.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@583903 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Joakim Erdfelt",
+        "pcid": "7ff4618a09d8f1e173e4378d17ed9fa94d941b56",
+        "changes": {
+            "archiva-base/archiva-configuration/src/test/java/org/apache/maven/archiva/configuration/ArchivaConfigurationTest.java": {
+                "new": {
+                    "(None, None)": [
+                        22,
+                        26
+                    ],
+                    "('org.apache.maven.archiva.configuration#ArchivaConfigurationTest', 'testAutoDetectV1')": [
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        510,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516,
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531
+                    ],
+                    "('org.apache.maven.archiva.configuration#ArchivaConfigurationTest', None)": [
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537
+                    ]
+                }
+            }
+        }
+    },
+    "a4f284152219e030f0b8c3de5742339d18fafc4d": {
+        "authored_data": "2007 Oct 11 16:43",
+        "commit.message": "[MRM-533] Checksum files (sha1/md5) are not kept up to date on maven-metadata.xml files.\nGrabbed checksum check/update logic out of ChecksumPolicy into standalone Checksums component.\nUsing new component in ChecksumPolicy and MetadatTools.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@583875 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Joakim Erdfelt",
+        "pcid": "e4d19448478ad6cb185986b5996f99295706abdb",
+        "changes": {
+            "archiva-base/archiva-policies/src/main/java/org/apache/maven/archiva/policies/ChecksumPolicy.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        28,
+                        29,
+                        292
+                    ],
+                    "('org.apache.maven.archiva.policies#ChecksumPolicy', None)": [
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        74,
+                        76,
+                        179,
+                        180,
+                        197,
+                        198,
+                        199,
+                        243,
+                        244,
+                        245,
+                        275
+                    ],
+                    "('org.apache.maven.archiva.policies#ChecksumPolicy', 'applyPolicy(String,Properties,File)')": [
+                        107,
+                        108,
+                        109,
+                        112,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174
+                    ],
+                    "('org.apache.maven.archiva.policies#ChecksumPolicy', 'createChecksum(File,Digester)')": [
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196
+                    ],
+                    "('org.apache.maven.archiva.policies#ChecksumPolicy', 'fixChecksum(File,File,Digester)')": [
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242
+                    ],
+                    "('org.apache.maven.archiva.policies#ChecksumPolicy', 'validateChecksum(File,String)')": [
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274
+                    ],
+                    "('org.apache.maven.archiva.policies#ChecksumPolicy', 'getOptions')": [
+                        288
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.maven.archiva.policies#ChecksumPolicy', None)": [
+                        60,
+                        62
+                    ],
+                    "('org.apache.maven.archiva.policies#ChecksumPolicy', 'applyPolicy(String,Properties,File)')": [
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        120
+                    ],
+                    "('org.apache.maven.archiva.policies#ChecksumPolicy', 'getOptions')": [
+                        137
+                    ]
+                }
+            },
+            "archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/metadata/MetadataTools.java": {
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', None)": [
+                        92,
+                        93,
+                        94,
+                        95,
+                        96
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'updateMetadata(ManagedRepositoryContent,ProjectReference)')": [
+                        494
+                    ],
+                    "('org.apache.maven.archiva.repository.metadata#MetadataTools', 'updateMetadata(ManagedRepositoryContent,VersionedReference)')": [
+                        666
+                    ]
+                }
+            }
+        }
+    },
+    "e4d19448478ad6cb185986b5996f99295706abdb": {
+        "authored_data": "2007 Oct 11 16:40",
+        "commit.message": "Fixing Error 500 condition.\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@583874 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Joakim Erdfelt",
+        "pcid": "bb9a82825b3c2eb30d6736895759eda550b6eed6",
+        "changes": {
+            "archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/tags/DownloadArtifact.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.tags#DownloadArtifact', None)": [
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        100,
+                        101,
+                        164,
+                        165,
+                        173,
+                        174,
+                        175,
+                        176,
+                        252,
+                        253
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DownloadArtifact', 'end(Writer,String)')": [
+                        116,
+                        121,
+                        122,
+                        128,
+                        132,
+                        144,
+                        145,
+                        146
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DownloadArtifact', 'findRepository(String)')": [
+                        161,
+                        162,
+                        163
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DownloadArtifact', 'appendMini(StringBuffer,String,ManagedRepositoryConfiguration,BidirectionalRepositoryLayout,List)')": [
+                        171,
+                        172
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DownloadArtifact', 'appendNormal(StringBuffer,String,ManagedRepositoryConfiguration,BidirectionalRepositoryLayout,List)')": [
+                        177,
+                        178,
+                        223,
+                        227
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DownloadArtifact', 'appendImageLink(StringBuffer,String,BidirectionalRepositoryLayout,ArchivaArtifact)')": [
+                        246,
+                        251
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DownloadArtifact', 'appendLink(StringBuffer,String,BidirectionalRepositoryLayout,ArchivaArtifact,String)')": [
+                        254,
+                        258
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DownloadArtifact', 'appendLink(StringBuffer,String,BidirectionalRepositoryLayout,ArchivaArtifact)')": [
+                        274,
+                        280
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36,
+                        37,
+                        38,
+                        39,
+                        40
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DownloadArtifact', None)": [
+                        75,
+                        100,
+                        101,
+                        173,
+                        174,
+                        175,
+                        176,
+                        252,
+                        253
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DownloadArtifact', 'end(Writer,String)')": [
+                        116,
+                        121,
+                        127,
+                        131,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DownloadArtifact', 'appendMini(StringBuffer,String,ManagedRepositoryContent,List)')": [
+                        171,
+                        172
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DownloadArtifact', 'appendNormal(StringBuffer,String,ManagedRepositoryContent,List)')": [
+                        177,
+                        178,
+                        223,
+                        227
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DownloadArtifact', 'appendImageLink(StringBuffer,String,ManagedRepositoryContent,ArchivaArtifact)')": [
+                        246,
+                        251
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DownloadArtifact', 'appendLink(StringBuffer,String,ManagedRepositoryContent,ArchivaArtifact,String)')": [
+                        254,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DownloadArtifact', 'appendLink(StringBuffer,String,ManagedRepositoryContent,ArchivaArtifact)')": [
+                        281,
+                        287
+                    ]
+                }
+            }
+        }
+    }
+}
