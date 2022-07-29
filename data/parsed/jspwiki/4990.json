@@ -1,0 +1,1919 @@
+{
+    "369ea6fb17a3feb2a95ac1eb118f0b207d3cf47e": {
+        "authored_data": "2006 Jul 29 19:41",
+        "commit.message": "WikiSession.getUserPrincipal now defaults to the wiki principal, rather than the full name. This means that favorites auto-linking won't break. It also gains a method getRoles() that returns the roles and groups the user possesses. The method doPrivileged(WikiSession,PrivilegedAction) allows actions to be executed using the user's privileges. WikiSession's getSubject() method has been removed; it was a security risk. Group principal injection responsibilities moves to WikiSession from AuthenticationManager.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625473 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "",
+        "pcid": "2c96ae8633e852e0cb0dc9cc0587da34538ecf08",
+        "changes": {
+            "src/com/ecyrd/jspwiki/WikiSession.java": {
+                "old": {
+                    "(None, None)": [
+                        3,
+                        7,
+                        14,
+                        26,
+                        33,
+                        64,
+                        73
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', None)": [
+                        114,
+                        239,
+                        240,
+                        379,
+                        380,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        597,
+                        603,
+                        638
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'isInGroup(Group)')": [
+                        123
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getUserPrincipal')": [
+                        254,
+                        264,
+                        268
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getPrincipals')": [
+                        390,
+                        391,
+                        392,
+                        394
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getSubject')": [
+                        427,
+                        428,
+                        429,
+                        430
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'actionPerformed(WikiEvent)')": [
+                        443,
+                        453,
+                        462,
+                        476,
+                        486,
+                        493
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        3,
+                        5,
+                        16,
+                        17,
+                        18,
+                        24,
+                        25,
+                        27,
+                        32,
+                        36,
+                        37,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        83
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', None)": [
+                        124,
+                        125,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        212,
+                        213,
+                        214,
+                        262,
+                        263,
+                        402,
+                        404,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        450,
+                        451,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474,
+                        475,
+                        479,
+                        636,
+                        637,
+                        638,
+                        639,
+                        640,
+                        641,
+                        642,
+                        643,
+                        644,
+                        645,
+                        646,
+                        647,
+                        648,
+                        649,
+                        650,
+                        651,
+                        652,
+                        687,
+                        688,
+                        689,
+                        736,
+                        737,
+                        738,
+                        739,
+                        767,
+                        773,
+                        774,
+                        775,
+                        813,
+                        814,
+                        861,
+                        862,
+                        863,
+                        864,
+                        865,
+                        866,
+                        867,
+                        868,
+                        869,
+                        870,
+                        871,
+                        872,
+                        876,
+                        877,
+                        878
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'isInGroup(Group)')": [
+                        134
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getLoginContext(String,CallbackHandler)')": [
+                        209,
+                        210,
+                        211
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getUserPrincipal')": [
+                        277,
+                        287,
+                        291
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getPrincipals')": [
+                        413,
+                        414,
+                        416
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getRoles')": [
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'hasPrincipal(Principal)')": [
+                        476,
+                        477,
+                        478
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'actionPerformed(WikiEvent)')": [
+                        501,
+                        510,
+                        524,
+                        534,
+                        541,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'refreshRolePrincipals')": [
+                        653,
+                        654,
+                        655,
+                        656,
+                        657,
+                        658,
+                        659,
+                        660,
+                        661,
+                        662,
+                        663,
+                        664,
+                        665,
+                        666,
+                        667,
+                        668,
+                        669,
+                        670,
+                        671,
+                        672,
+                        673,
+                        674,
+                        675,
+                        676,
+                        677,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682,
+                        683,
+                        684,
+                        685,
+                        686
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'refreshUserPrincipals')": [
+                        690,
+                        691,
+                        692,
+                        693,
+                        694,
+                        695,
+                        696,
+                        697,
+                        698,
+                        699,
+                        700,
+                        701,
+                        702,
+                        703,
+                        704,
+                        705,
+                        706,
+                        707,
+                        708,
+                        709,
+                        710,
+                        711,
+                        712,
+                        713,
+                        714,
+                        715,
+                        716,
+                        717,
+                        718,
+                        719,
+                        720,
+                        721,
+                        722,
+                        723,
+                        724,
+                        725,
+                        726,
+                        727,
+                        728,
+                        729,
+                        730,
+                        731,
+                        732,
+                        733,
+                        734,
+                        735
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getWikiSession(WikiEngine,HttpServletRequest)')": [
+                        798,
+                        799,
+                        800
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'guestSession(WikiEngine)')": [
+                        823,
+                        824,
+                        825,
+                        826,
+                        827,
+                        828,
+                        829
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'doPrivileged(WikiSession,PrivilegedAction)')": [
+                        873,
+                        874,
+                        875
+                    ]
+                }
+            }
+        }
+    },
+    "2c96ae8633e852e0cb0dc9cc0587da34538ecf08": {
+        "authored_data": "2006 Jul 29 19:40",
+        "commit.message": "WikiContext.getName() provides a \"safer\" shortcut than calling WikiContext.getPage().getName() because not all wiki contexts apply to pages. This change was made to: TableOfContents plugin; most of the top-level JSPs; TranslatorReader; PageNameTag. The new Command class is now fully integrated into WikiEngine.createContext() and the WikiContext constructors. Practically speaking, this means that the page names and redirect errors shown on pages will actually show something useful when non-pages are accessed (e.g., access denied for UserPreferences.jsp won't print the non-sensical \"you don't have access to 'Main'). WikiEngine delegates page-resolution responsibilities to CommandResolver. Minor changes to new Command/CommandResolver classes to make JSP page names \"friendlier\"\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625472 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "",
+        "pcid": "be4e6b7c3e28141fb46fa123484e31069ca3691c",
+        "changes": {
+            "src/com/ecyrd/jspwiki/WikiContext.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        38,
+                        39,
+                        40,
+                        41
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', None)": [
+                        69,
+                        74,
+                        75,
+                        76,
+                        86,
+                        89,
+                        92,
+                        95,
+                        98,
+                        101,
+                        104,
+                        108,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        141,
+                        153,
+                        158,
+                        159,
+                        160,
+                        161,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        429,
+                        473,
+                        474,
+                        541,
+                        542,
+                        543,
+                        544
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'setRealPage(WikiPage)')": [
+                        225
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'setPage(WikiPage)')": [
+                        258
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'getRequestContext')": [
+                        266
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'setRequestContext(String)')": [
+                        277,
+                        278
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'setVariable(String,Object)')": [
+                        303
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'clone')": [
+                        415,
+                        416,
+                        417
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'requiredPermission')": [
+                        472
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'hasAccess(HttpServletResponse,boolean)')": [
+                        528,
+                        535
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'updatePermission')": [
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569,
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        575,
+                        576,
+                        577,
+                        578,
+                        579,
+                        580,
+                        581,
+                        582,
+                        583,
+                        584,
+                        585,
+                        586,
+                        587,
+                        588,
+                        589,
+                        590,
+                        591,
+                        592,
+                        593,
+                        594,
+                        595,
+                        596,
+                        597,
+                        598,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612,
+                        613,
+                        614,
+                        615,
+                        616,
+                        617,
+                        618,
+                        619,
+                        620
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36,
+                        37,
+                        39,
+                        40,
+                        41,
+                        43,
+                        45,
+                        46,
+                        47,
+                        48
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', None)": [
+                        74,
+                        76,
+                        77,
+                        81,
+                        89,
+                        90,
+                        91,
+                        94,
+                        97,
+                        100,
+                        103,
+                        106,
+                        109,
+                        112,
+                        116,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        153,
+                        154,
+                        166,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        185,
+                        186,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        498,
+                        499,
+                        500,
+                        557,
+                        558,
+                        559,
+                        563,
+                        564,
+                        565,
+                        587,
+                        660,
+                        661,
+                        662,
+                        663,
+                        664,
+                        665,
+                        666,
+                        667,
+                        675,
+                        676,
+                        743,
+                        744,
+                        745,
+                        746,
+                        747,
+                        776,
+                        777,
+                        778,
+                        779,
+                        780,
+                        781,
+                        782,
+                        783,
+                        784,
+                        785,
+                        786,
+                        787,
+                        788,
+                        789,
+                        799,
+                        800,
+                        801,
+                        802,
+                        803,
+                        805
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'getContentTemplate')": [
+                        277,
+                        278,
+                        279
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'getJSP')": [
+                        285,
+                        286,
+                        287
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'setRealPage(WikiPage)')": [
+                        303
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'getRedirectURL')": [
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'setPage(WikiPage)')": [
+                        369
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'getRequestContext')": [
+                        377
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'setRequestContext(String)')": [
+                        388
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'getTarget')": [
+                        394,
+                        395,
+                        396
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'getURLPattern')": [
+                        402,
+                        403,
+                        404
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'setVariable(String,Object)')": [
+                        429
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'getName')": [
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'getCommand')": [
+                        560,
+                        561,
+                        562
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'clone')": [
+                        572,
+                        573,
+                        578,
+                        579
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'requiredPermission')": [
+                        630,
+                        631,
+                        632,
+                        633,
+                        634,
+                        635,
+                        636,
+                        637,
+                        638,
+                        639,
+                        640,
+                        641,
+                        642,
+                        643,
+                        644,
+                        645,
+                        646,
+                        647,
+                        648,
+                        649,
+                        650,
+                        651,
+                        652,
+                        653,
+                        654,
+                        655,
+                        656,
+                        657,
+                        658,
+                        659
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'targetedCommand(Object)')": [
+                        668,
+                        669,
+                        670,
+                        671,
+                        672,
+                        673,
+                        674
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'hasAccess(HttpServletResponse,boolean)')": [
+                        730,
+                        737
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'setDefaultTemplate(HttpServletRequest)')": [
+                        748,
+                        749,
+                        750,
+                        751,
+                        752,
+                        753,
+                        754,
+                        755,
+                        756,
+                        757,
+                        758,
+                        759,
+                        760,
+                        761,
+                        762,
+                        763,
+                        764,
+                        765,
+                        766,
+                        767,
+                        768,
+                        769,
+                        770,
+                        771,
+                        772,
+                        773,
+                        774,
+                        775
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'findCommand(WikiEngine,HttpServletRequest,WikiPage)')": [
+                        790,
+                        791,
+                        792,
+                        793,
+                        794,
+                        795,
+                        796,
+                        797,
+                        798
+                    ],
+                    "('com.ecyrd.jspwiki#WikiContext', 'updateCommand(String)')": [
+                        808,
+                        809,
+                        810,
+                        811,
+                        812,
+                        813,
+                        814,
+                        815,
+                        816,
+                        817,
+                        818,
+                        819,
+                        820,
+                        821,
+                        822
+                    ]
+                }
+            }
+        }
+    },
+    "be4e6b7c3e28141fb46fa123484e31069ca3691c": {
+        "authored_data": "2006 Jul 29 19:39",
+        "commit.message": "TextUtil.password generator now uses SecureRandom instead of Random.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625471 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "",
+        "pcid": "b1abb5ce00736bc774dbbe8d8507bf1c1b7c624c",
+        "changes": {
+            "src/com/ecyrd/jspwiki/TextUtil.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki#TextUtil', 'generateRandomPassword')": [
+                        766
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        25
+                    ],
+                    "('com.ecyrd.jspwiki#TextUtil', None)": [
+                        461
+                    ],
+                    "('com.ecyrd.jspwiki#TextUtil', 'generateRandomPassword')": [
+                        769
+                    ]
+                }
+            }
+        }
+    },
+    "b1abb5ce00736bc774dbbe8d8507bf1c1b7c624c": {
+        "authored_data": "2006 Jul 29 19:38",
+        "commit.message": "WikiContext.getName() provides a \"safer\" shortcut than calling WikiContext.getPage().getName() because not all wiki contexts apply to pages. This change was made to: TableOfContents plugin; most of the top-level JSPs; TranslatorReader; PageNameTag.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625470 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "",
+        "pcid": "65b54d9e3911fe83ca06e1ddad25107744244f7c",
+        "changes": {
+            "src/com/ecyrd/jspwiki/TranslatorReader.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki#TranslatorReader', 'initialize(WikiContext,Reader,TextRenderer)')": [
+                        324
+                    ]
+                },
+                "new": {
+                    "('com.ecyrd.jspwiki#TranslatorReader', 'initialize(WikiContext,Reader,TextRenderer)')": [
+                        324
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/parser/JSPWikiMarkupParser.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki.parser#JSPWikiMarkupParser', 'initialize')": [
+                        279
+                    ],
+                    "('com.ecyrd.jspwiki.parser#JSPWikiMarkupParser', 'makeLink(int,String,String,String)')": [
+                        421,
+                        427
+                    ],
+                    "('com.ecyrd.jspwiki.parser#JSPWikiMarkupParser', 'makeHeading(int,String,Heading)')": [
+                        975
+                    ],
+                    "('com.ecyrd.jspwiki.parser#JSPWikiMarkupParser', 'handleDiv(boolean)')": [
+                        2133
+                    ],
+                    "('com.ecyrd.jspwiki.parser#JSPWikiMarkupParser', 'parse')": [
+                        2510
+                    ]
+                },
+                "new": {
+                    "('com.ecyrd.jspwiki.parser#JSPWikiMarkupParser', 'initialize')": [
+                        279
+                    ],
+                    "('com.ecyrd.jspwiki.parser#JSPWikiMarkupParser', 'makeLink(int,String,String,String)')": [
+                        421,
+                        427
+                    ],
+                    "('com.ecyrd.jspwiki.parser#JSPWikiMarkupParser', 'makeHeading(int,String,Heading)')": [
+                        975
+                    ],
+                    "('com.ecyrd.jspwiki.parser#JSPWikiMarkupParser', 'handleDiv(boolean)')": [
+                        2133
+                    ],
+                    "('com.ecyrd.jspwiki.parser#JSPWikiMarkupParser', 'parse')": [
+                        2510
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/plugin/TableOfContents.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki.plugin#TableOfContents', 'headingAdded(WikiContext,Heading)')": [
+                        99,
+                        100
+                    ]
+                },
+                "new": {
+                    "('com.ecyrd.jspwiki.plugin#TableOfContents', 'headingAdded(WikiContext,Heading)')": [
+                        99,
+                        100
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/tags/PageNameTag.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki.tags#PageNameTag', 'doWikiStartTag')": [
+                        53
+                    ]
+                },
+                "new": {
+                    "('com.ecyrd.jspwiki.tags#PageNameTag', 'doWikiStartTag')": [
+                        53
+                    ]
+                }
+            }
+        }
+    },
+    "65b54d9e3911fe83ca06e1ddad25107744244f7c": {
+        "authored_data": "2006 Jul 29 19:37",
+        "commit.message": "PermissionTag gains three new permission checks: \"viewGroup\", \"editGroup\", \"deleteGroup\".\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625469 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "",
+        "pcid": "b3650df454ca82b50c241e2664bdc8ea1e09be1a",
+        "changes": {
+            "src/com/ecyrd/jspwiki/tags/PermissionTag.java": {
+                "old": {
+                    "(None, None)": [
+                        39
+                    ],
+                    "('com.ecyrd.jspwiki.tags#PermissionTag', 'doWikiStartTag')": [
+                        75,
+                        76,
+                        77,
+                        81,
+                        91
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30,
+                        32,
+                        35,
+                        36,
+                        43,
+                        44
+                    ],
+                    "('com.ecyrd.jspwiki.tags#PermissionTag', None)": [
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        65
+                    ],
+                    "('com.ecyrd.jspwiki.tags#PermissionTag', 'doWikiStartTag')": [
+                        92,
+                        93,
+                        94,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        130
+                    ]
+                }
+            }
+        }
+    },
+    "b3650df454ca82b50c241e2664bdc8ea1e09be1a": {
+        "authored_data": "2006 Jul 29 19:36",
+        "commit.message": "Bug fix: closed <span> tag in InsertPagePlugin.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625468 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "",
+        "pcid": "a9fe56e1c1df58bb2a3f3ad3d435c2636b5ab8e3",
+        "changes": {
+            "src/com/ecyrd/jspwiki/plugin/InsertPage.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki.plugin#InsertPage', 'execute(WikiContext,Map)')": [
+                        93
+                    ]
+                },
+                "new": {
+                    "('com.ecyrd.jspwiki.plugin#InsertPage', 'execute(WikiContext,Map)')": [
+                        93
+                    ]
+                }
+            }
+        }
+    },
+    "c790742ac99b47086d3c822ee14c824c49d18a70": {
+        "authored_data": "2006 Jul 29 19:34",
+        "commit.message": "Tweak.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625465 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "",
+        "pcid": "349e0e77e94b1270b6770beb92b5feae4d0fa8fd",
+        "changes": {
+            "src/com/ecyrd/jspwiki/tags/UserCheckTag.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki.tags#UserCheckTag', 'doWikiStartTag')": [
+                        209
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('com.ecyrd.jspwiki.tags#UserCheckTag', 'doWikiStartTag')": [
+                        209,
+                        211
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/InputValidator.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('com.ecyrd.jspwiki.ui#InputValidator', 'validateNotNull(String,String,int)')": [
+                        91
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('com.ecyrd.jspwiki.ui#InputValidator', 'validateNotNull(String,String,int)')": [
+                        91
+                    ]
+                }
+            }
+        }
+    },
+    "349e0e77e94b1270b6770beb92b5feae4d0fa8fd": {
+        "authored_data": "2006 Jul 29 19:32",
+        "commit.message": "The new Command class is now fully integrated into WikiEngine.createContext() and the WikiContext constructors. Practically speaking, this means that the page names and redirect errors shown on pages will actually show something useful when non-pages are accessed (e.g., access denied for UserPreferences.jsp won't print the non-sensical \"you don't have access to 'Main'). WikiEngine delegates page-resolution responsibilities to CommandResolver. Minor changes to new Command/CommandResolver classes to make JSP page names \"friendlier\"\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625464 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "",
+        "pcid": "3bf6f7324415792d516d0b7f253174682daa6d87",
+        "changes": {
+            "src/com/ecyrd/jspwiki/WikiEngine.java": {
+                "old": {
+                    "(None, None)": [
+                        45,
+                        2303
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', None)": [
+                        83,
+                        140,
+                        141,
+                        176,
+                        177,
+                        178,
+                        211,
+                        224,
+                        263,
+                        264,
+                        751,
+                        752,
+                        753,
+                        754,
+                        755,
+                        756,
+                        757,
+                        951,
+                        952,
+                        953,
+                        954,
+                        955,
+                        956,
+                        957,
+                        1117,
+                        1118,
+                        1119,
+                        1120,
+                        1121,
+                        1122,
+                        1123,
+                        1124,
+                        1125,
+                        1126,
+                        1127,
+                        1128,
+                        1133,
+                        1154,
+                        1155,
+                        1156,
+                        1157,
+                        1158,
+                        1159,
+                        1904,
+                        1905,
+                        1906,
+                        1907,
+                        1908,
+                        1909,
+                        1910,
+                        1939,
+                        1940,
+                        1941,
+                        1944,
+                        1972,
+                        1973,
+                        1974,
+                        1975,
+                        1976,
+                        2239,
+                        2243,
+                        2244,
+                        2247,
+                        2276,
+                        2277,
+                        2278,
+                        2282,
+                        2283,
+                        2284,
+                        2285,
+                        2286,
+                        2287,
+                        2291,
+                        2292,
+                        2293,
+                        2294,
+                        2295
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'initialize(Properties)')": [
+                        473,
+                        519,
+                        520,
+                        521,
+                        522
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'getViewURL(String)')": [
+                        761,
+                        762,
+                        763
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'getSpecialPageReference(String)')": [
+                        961,
+                        962,
+                        963,
+                        964,
+                        965,
+                        966,
+                        967
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'pageExists(String)')": [
+                        1040
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'pageExists(String,int)')": [
+                        1066
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'getFinalPageName(String)')": [
+                        1137,
+                        1138,
+                        1139,
+                        1140,
+                        1141,
+                        1142,
+                        1143,
+                        1144,
+                        1145,
+                        1146,
+                        1147,
+                        1148,
+                        1149,
+                        1150,
+                        1151,
+                        1152,
+                        1153
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'simplePageExists(String)')": [
+                        1160,
+                        1161,
+                        1162,
+                        1163,
+                        1164,
+                        1165
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'getPageResolver')": [
+                        1853,
+                        1854,
+                        1855
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'matchSpecialPagePath(String)')": [
+                        1911,
+                        1912,
+                        1913,
+                        1914,
+                        1915,
+                        1916,
+                        1917,
+                        1918,
+                        1919,
+                        1920,
+                        1921,
+                        1922,
+                        1923,
+                        1924,
+                        1925,
+                        1926,
+                        1927,
+                        1928,
+                        1929,
+                        1930,
+                        1931,
+                        1932,
+                        1933,
+                        1934,
+                        1935,
+                        1936,
+                        1937,
+                        1938
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'getRedirectURL(WikiContext)')": [
+                        1952,
+                        1953,
+                        1954,
+                        1955,
+                        1956,
+                        1957,
+                        1958,
+                        1959,
+                        1960,
+                        1961,
+                        1962,
+                        1963,
+                        1964,
+                        1965,
+                        1966,
+                        1967,
+                        1968,
+                        1969,
+                        1970,
+                        1971
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'createContext(HttpServletRequest,String)')": [
+                        1984,
+                        1985,
+                        1991,
+                        1993,
+                        2004,
+                        2005,
+                        2006,
+                        2007,
+                        2008,
+                        2009,
+                        2010,
+                        2011,
+                        2012,
+                        2013,
+                        2014,
+                        2015,
+                        2016,
+                        2017,
+                        2018,
+                        2019,
+                        2020,
+                        2021,
+                        2022,
+                        2023,
+                        2024,
+                        2025,
+                        2026,
+                        2027,
+                        2028,
+                        2029,
+                        2030,
+                        2031,
+                        2032,
+                        2033,
+                        2034,
+                        2035,
+                        2036,
+                        2037,
+                        2038,
+                        2039,
+                        2040,
+                        2041,
+                        2042,
+                        2043,
+                        2044,
+                        2045,
+                        2046,
+                        2047,
+                        2048,
+                        2049,
+                        2050,
+                        2051,
+                        2052,
+                        2053,
+                        2054,
+                        2055,
+                        2056,
+                        2057,
+                        2058,
+                        2059,
+                        2060,
+                        2061,
+                        2062,
+                        2063,
+                        2064,
+                        2065,
+                        2066,
+                        2067,
+                        2068,
+                        2069,
+                        2070,
+                        2071,
+                        2072,
+                        2073,
+                        2074,
+                        2075,
+                        2076,
+                        2077,
+                        2078,
+                        2079,
+                        2080,
+                        2081,
+                        2082,
+                        2083,
+                        2084,
+                        2085,
+                        2086,
+                        2087,
+                        2088,
+                        2089,
+                        2090,
+                        2091,
+                        2092,
+                        2093,
+                        2094,
+                        2095,
+                        2096,
+                        2097,
+                        2098,
+                        2099,
+                        2100,
+                        2101,
+                        2102,
+                        2103
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'getUserDatabase')": [
+                        2240,
+                        2241,
+                        2242
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'getGroupManager')": [
+                        2252
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'addWikiEventListener(WikiEventListener)')": [
+                        2279,
+                        2280,
+                        2281
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'removeWikiEventListener(WikiEventListener)')": [
+                        2288,
+                        2289,
+                        2290
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'fireEvent(WikiEvent)')": [
+                        2299,
+                        2300,
+                        2301,
+                        2302
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        46,
+                        50,
+                        65
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', None)": [
+                        85,
+                        133,
+                        209,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        265,
+                        266,
+                        751,
+                        752,
+                        753,
+                        754,
+                        755,
+                        756,
+                        757,
+                        758,
+                        759,
+                        802,
+                        956,
+                        957,
+                        958,
+                        959,
+                        960,
+                        1114,
+                        1115,
+                        1116,
+                        1865,
+                        1866,
+                        1875,
+                        1876,
+                        1877,
+                        1878,
+                        1879,
+                        1880,
+                        1881,
+                        2073,
+                        2074,
+                        2078,
+                        2079,
+                        2080,
+                        2081,
+                        2082,
+                        2086,
+                        2087,
+                        2088,
+                        2089
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'initialize(Properties)')": [
+                        475,
+                        552,
+                        562
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'getViewURL(String)')": [
+                        763,
+                        764,
+                        765,
+                        766,
+                        767
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'getSpecialPageReference(String)')": [
+                        964
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'pageExists(String)')": [
+                        1037
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'pageExists(String,int)')": [
+                        1063
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'getFinalPageName(String)')": [
+                        1124
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'getCommandResolver')": [
+                        1812,
+                        1813,
+                        1814
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'getRedirectURL(WikiContext)')": [
+                        1874
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'createContext(HttpServletRequest,String)')": [
+                        1905,
+                        1906,
+                        1907
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'getGroupManager')": [
+                        2049
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'addWikiEventListener(WikiEventListener)')": [
+                        2075,
+                        2076,
+                        2077
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'removeWikiEventListener(WikiEventListener)')": [
+                        2083,
+                        2084,
+                        2085
+                    ],
+                    "('com.ecyrd.jspwiki#WikiEngine', 'fireEvent(WikiEvent)')": [
+                        2093
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/tags/ContentTag.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki.tags#ContentTag', None)": [
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setView(String)')": [
+                        80
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setDiff(String)')": [
+                        85
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setInfo(String)')": [
+                        90
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setPreview(String)')": [
+                        95
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setConflict(String)')": [
+                        100
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setFind(String)')": [
+                        105
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setPrefs(String)')": [
+                        110
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setError(String)')": [
+                        115
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setEdit(String)')": [
+                        120
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setComment(String)')": [
+                        125
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'doEndTag')": [
+                        140,
+                        142,
+                        144,
+                        149
+                    ]
+                },
+                "new": {
+                    "('com.ecyrd.jspwiki.tags#ContentTag', None)": [
+                        43
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setView(String)')": [
+                        47
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setDiff(String)')": [
+                        52
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setInfo(String)')": [
+                        57
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setPreview(String)')": [
+                        62
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setConflict(String)')": [
+                        67
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setFind(String)')": [
+                        72
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setPrefs(String)')": [
+                        77
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setError(String)')": [
+                        82
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setEdit(String)')": [
+                        87
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'setComment(String)')": [
+                        92
+                    ],
+                    "('com.ecyrd.jspwiki.tags#ContentTag', 'doEndTag')": [
+                        107,
+                        108,
+                        109,
+                        111,
+                        112,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        125
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/AbstractCommand.java": {
+                "old": {
+                    "(None, None)": [
+                        8
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        10
+                    ],
+                    "('com.ecyrd.jspwiki.ui#AbstractCommand', None)": [
+                        49,
+                        50,
+                        90,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186
+                    ],
+                    "('com.ecyrd.jspwiki.ui#AbstractCommand', 'getJSPFriendlyName')": [
+                        187,
+                        188,
+                        189
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/CommandResolver.java": {
+                "old": {
+                    "(None, None)": [
+                        52
+                    ],
+                    "('com.ecyrd.jspwiki.ui#CommandResolver', 'findCommand(HttpServletRequest,String)')": [
+                        235
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        52
+                    ],
+                    "('com.ecyrd.jspwiki.ui#CommandResolver', 'findCommand(HttpServletRequest,String)')": [
+                        218,
+                        219,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        244
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/GroupCommand.java": {
+                "old": {
+                    "(None, None)": [
+                        15
+                    ],
+                    "('com.ecyrd.jspwiki.ui#GroupCommand', 'getName')": [
+                        85
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        15
+                    ],
+                    "('com.ecyrd.jspwiki.ui#GroupCommand', 'getName')": [
+                        85
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/PageCommand.java": {
+                "old": {
+                    "(None, None)": [
+                        15
+                    ],
+                    "('com.ecyrd.jspwiki.ui#PageCommand', 'getName')": [
+                        117
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        15
+                    ],
+                    "('com.ecyrd.jspwiki.ui#PageCommand', 'getName')": [
+                        117
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/RedirectCommand.java": {
+                "old": {
+                    "(None, None)": [
+                        16
+                    ],
+                    "('com.ecyrd.jspwiki.ui#RedirectCommand', 'getName')": [
+                        70
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        16
+                    ],
+                    "('com.ecyrd.jspwiki.ui#RedirectCommand', 'getName')": [
+                        70
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/WikiCommand.java": {
+                "old": {
+                    "(None, None)": [
+                        16
+                    ],
+                    "('com.ecyrd.jspwiki.ui#WikiCommand', 'getName')": [
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        16
+                    ],
+                    "('com.ecyrd.jspwiki.ui#WikiCommand', None)": [
+                        90
+                    ],
+                    "('com.ecyrd.jspwiki.ui#WikiCommand', 'getName')": [
+                        95
+                    ]
+                }
+            }
+        }
+    }
+}

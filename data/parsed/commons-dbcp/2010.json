@@ -1,0 +1,1349 @@
+{
+    "cbc35d5b475fb4f549b849f2145f7fd79c87af1a": {
+        "authored_data": "2009 Oct 05 20:33",
+        "commit.message": "Fix DBCP-160\nBased on a patch by Mark Riley\nThis patch:\n- Changes to ConnectionImpl so it extends DelegatingConnection\n- Adds statement pooling support (with test cases) to all prepareStatement() methods\n\nIt differs from Mark's original patch in that:\n- It doesn't change DelegatingConnection\n- It adds test cases and fixes for statement pooling\n- Most of the implementation in ConnectionImpl is left to the super class\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@821997 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mark Thomas",
+        "pcid": "302b21d0762f4a4aa467f4c25ca73258d8a258b7",
+        "changes": {
+            "src/java/org/apache/commons/dbcp/cpdsadapter/ConnectionImpl.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        22,
+                        24,
+                        25,
+                        26,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        45,
+                        560,
+                        561
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', None)": [
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        68,
+                        69,
+                        70,
+                        78,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        389,
+                        390,
+                        391,
+                        392,
+                        395,
+                        399,
+                        400,
+                        404,
+                        405,
+                        409,
+                        410,
+                        414,
+                        415,
+                        419,
+                        420,
+                        425,
+                        426,
+                        434,
+                        435,
+                        444,
+                        445,
+                        474,
+                        475,
+                        479,
+                        480,
+                        488,
+                        489,
+                        490,
+                        494,
+                        495,
+                        499,
+                        500,
+                        504,
+                        505,
+                        509,
+                        510,
+                        514,
+                        515,
+                        519,
+                        520,
+                        524,
+                        525,
+                        536,
+                        537,
+                        538,
+                        549,
+                        550,
+                        551,
+                        555,
+                        556
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'finalize')": [
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'assertOpen')": [
+                        102,
+                        103,
+                        104
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'clearWarnings')": [
+                        118,
+                        119,
+                        120
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'close')": [
+                        133,
+                        134
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'commit')": [
+                        145,
+                        146,
+                        147
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'createStatement')": [
+                        156,
+                        157,
+                        158
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'createStatement(int,int)')": [
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'getAutoCommit')": [
+                        181,
+                        182,
+                        183
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'getCatalog')": [
+                        192,
+                        193,
+                        194
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'getMetaData')": [
+                        203,
+                        204,
+                        205
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'getTransactionIsolation')": [
+                        214,
+                        215,
+                        216
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'getTypeMap')": [
+                        225,
+                        226,
+                        227
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'getWarnings')": [
+                        236,
+                        237,
+                        238
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'isClosed')": [
+                        246,
+                        247
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'isReadOnly')": [
+                        256,
+                        257,
+                        258
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'nativeSQL(String)')": [
+                        267,
+                        268,
+                        269
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'prepareCall(String)')": [
+                        278,
+                        279,
+                        280
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'prepareCall(String,int,int)')": [
+                        289,
+                        290,
+                        291,
+                        292,
+                        293
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'prepareStatement(String)')": [
+                        305,
+                        306
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'prepareStatement(String,int,int)')": [
+                        320,
+                        321,
+                        322
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'rollback')": [
+                        331,
+                        332,
+                        333
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'setAutoCommit(boolean)')": [
+                        342,
+                        343,
+                        344
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'setCatalog(String)')": [
+                        353,
+                        354,
+                        355
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'setReadOnly(boolean)')": [
+                        364,
+                        365,
+                        366
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'setTransactionIsolation(int)')": [
+                        375,
+                        376,
+                        377
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'setTypeMap(Map)')": [
+                        386,
+                        387,
+                        388
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'getHoldability')": [
+                        396,
+                        397,
+                        398
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'setHoldability(int)')": [
+                        401,
+                        402,
+                        403
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'setSavepoint')": [
+                        406,
+                        407,
+                        408
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'setSavepoint(String)')": [
+                        411,
+                        412,
+                        413
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'rollback(java)')": [
+                        416,
+                        417,
+                        418
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'releaseSavepoint(java)')": [
+                        421,
+                        422,
+                        423,
+                        424
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'createStatement(int,int,int)')": [
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'prepareStatement(String,int,int,int)')": [
+                        440,
+                        441,
+                        442,
+                        443
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'prepareCall(String,int,int,int)')": [
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'prepareStatement(String,int)')": [
+                        458,
+                        459,
+                        464,
+                        465
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'prepareStatement(String,String)')": [
+                        470,
+                        471
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'isWrapperFor(Class)')": [
+                        476,
+                        477,
+                        478
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'unwrap(Class)')": [
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        487
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'createArrayOf(String,Object)')": [
+                        491,
+                        492,
+                        493
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'createBlob')": [
+                        496,
+                        497,
+                        498
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'createClob')": [
+                        501,
+                        502,
+                        503
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'createNClob')": [
+                        506,
+                        507,
+                        508
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'createSQLXML')": [
+                        511,
+                        512,
+                        513
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'createStruct(String,Object)')": [
+                        516,
+                        517,
+                        518
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'isValid(int)')": [
+                        521,
+                        522,
+                        523
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'setClientInfo(String,String)')": [
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'setClientInfo(Properties)')": [
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'getClientInfo')": [
+                        552,
+                        553,
+                        554
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'getClientInfo(String)')": [
+                        557,
+                        558,
+                        559
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        31,
+                        35,
+                        36,
+                        37,
+                        206,
+                        207,
+                        208
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', None)": [
+                        42,
+                        43,
+                        44,
+                        56,
+                        57,
+                        58,
+                        60,
+                        61,
+                        98,
+                        121,
+                        122,
+                        138,
+                        151,
+                        164,
+                        177,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        191,
+                        192,
+                        198,
+                        199,
+                        200
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'close')": [
+                        74,
+                        75,
+                        76
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'prepareStatement(String)')": [
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'prepareStatement(String,int,int)')": [
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'prepareStatement(String,int,int,int)')": [
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'prepareStatement(String,int)')": [
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'prepareStatement(String,String)')": [
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'isAccessToUnderlyingConnectionAllowed')": [
+                        189,
+                        190
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'getDelegate')": [
+                        193,
+                        194,
+                        195,
+                        197
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#ConnectionImpl', 'getInnermostDelegate')": [
+                        201,
+                        202,
+                        203,
+                        204,
+                        205
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/dbcp/cpdsadapter/DriverAdapterCPDS.java": {
+                "old": {
+                    "('org.apache.commons.dbcp.cpdsadapter#DriverAdapterCPDS', 'getPooledConnection(String,String)')": [
+                        190,
+                        192,
+                        194,
+                        196,
+                        202,
+                        204,
+                        206,
+                        208
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp.cpdsadapter#DriverAdapterCPDS', None)": [
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        659,
+                        660,
+                        661,
+                        662,
+                        665,
+                        666,
+                        667,
+                        668,
+                        669,
+                        670,
+                        671,
+                        672,
+                        673,
+                        676,
+                        677,
+                        678
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#DriverAdapterCPDS', 'getPooledConnection(String,String)')": [
+                        192,
+                        196,
+                        198,
+                        200,
+                        202,
+                        204,
+                        205,
+                        209,
+                        211,
+                        213,
+                        215,
+                        217,
+                        219,
+                        220
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#DriverAdapterCPDS', 'isAccessToUnderlyingConnectionAllowed')": [
+                        663,
+                        664
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#DriverAdapterCPDS', 'setAccessToUnderlyingConnectionAllowed(boolean)')": [
+                        674,
+                        675
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/dbcp/cpdsadapter/PooledConnectionImpl.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#PooledConnectionImpl', None)": [
+                        93,
+                        275,
+                        371,
+                        387
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#PooledConnectionImpl', 'getConnection')": [
+                        176
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#PooledConnectionImpl', None)": [
+                        84,
+                        85,
+                        86,
+                        87,
+                        97,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        289,
+                        290,
+                        291,
+                        292,
+                        308,
+                        309,
+                        310,
+                        311,
+                        324,
+                        325,
+                        326,
+                        327,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        372,
+                        373,
+                        374,
+                        375,
+                        384,
+                        474,
+                        475,
+                        476,
+                        477,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        491,
+                        492,
+                        493,
+                        500,
+                        501,
+                        502,
+                        503,
+                        504,
+                        515,
+                        516,
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        569,
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        575,
+                        576
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#PooledConnectionImpl', 'getConnection')": [
+                        180,
+                        181
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#PooledConnectionImpl', 'prepareStatement(String,int)')": [
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#PooledConnectionImpl', 'prepareStatement(String,int,int,int)')": [
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#PooledConnectionImpl', 'prepareStatement(String,String)')": [
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#PooledConnectionImpl', 'createKey(String,int)')": [
+                        347,
+                        348,
+                        363,
+                        364
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#PooledConnectionImpl', 'createKey(String,int,int,int)')": [
+                        354,
+                        355,
+                        356,
+                        357
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#PooledConnectionImpl', 'createKey(String,String)')": [
+                        370,
+                        371
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#PooledConnectionImpl', 'isAccessToUnderlyingConnectionAllowed')": [
+                        478,
+                        479
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#PooledConnectionImpl', 'setAccessToUnderlyingConnectionAllowed(boolean)')": [
+                        489,
+                        490
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/dbcp/datasources/TestPerUserPoolDataSource.java": {
+                "new": {
+                    "('org.apache.commons.dbcp.datasources#TestPerUserPoolDataSource', 'setUp')": [
+                        64
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/dbcp/datasources/TestSharedPoolDataSource.java": {
+                "old": {
+                    "('org.apache.commons.dbcp.datasources#TestSharedPoolDataSource', 'testPoolPreparedStatements')": [
+                        523,
+                        548,
+                        557,
+                        572,
+                        573,
+                        582
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp.datasources#TestSharedPoolDataSource', 'setUp')": [
+                        62
+                    ],
+                    "('org.apache.commons.dbcp.datasources#TestSharedPoolDataSource', None)": [
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562
+                    ],
+                    "('org.apache.commons.dbcp.datasources#TestSharedPoolDataSource', 'doTestPoolPreparedStatements(PrepareStatementCallback)')": [
+                        563,
+                        564,
+                        584,
+                        590,
+                        599,
+                        614,
+                        615,
+                        616,
+                        625
+                    ],
+                    "('org.apache.commons.dbcp.datasources#TestSharedPoolDataSource', 'testPoolPreparedStatements')": [
+                        639,
+                        640,
+                        641,
+                        642,
+                        643,
+                        644,
+                        645
+                    ],
+                    "(None, None)": [
+                        646
+                    ]
+                }
+            }
+        }
+    },
+    "302b21d0762f4a4aa467f4c25ca73258d8a258b7": {
+        "authored_data": "2009 Oct 05 10:30",
+        "commit.message": "Added connectionProperties property to DriverAdapterCPDS.  JIRA: DBCP-276.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@821742 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Phil Steitz",
+        "pcid": "49eae4f16e94f4f3617e777542c13e6f3cd50b63",
+        "changes": {
+            "src/java/org/apache/commons/dbcp/cpdsadapter/DriverAdapterCPDS.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#DriverAdapterCPDS', 'getPooledConnection(String,String)')": [
+                        183,
+                        184,
+                        185,
+                        189,
+                        190,
+                        191
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#DriverAdapterCPDS', None)": [
+                        122,
+                        123,
+                        124,
+                        209,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        379,
+                        380,
+                        381,
+                        382,
+                        421,
+                        458
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#DriverAdapterCPDS', 'getPooledConnection(String,String)')": [
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#DriverAdapterCPDS', 'getConnectionProperties')": [
+                        352,
+                        353
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#DriverAdapterCPDS', 'setConnectionProperties(Properties)')": [
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#DriverAdapterCPDS', 'setPassword(String)')": [
+                        419,
+                        420
+                    ],
+                    "('org.apache.commons.dbcp.cpdsadapter#DriverAdapterCPDS', 'setUser(String)')": [
+                        456,
+                        457
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/dbcp/TestAll.java": {
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.commons.dbcp#TestAll', 'suite')": [
+                        64,
+                        65
+                    ]
+                }
+            }
+        }
+    },
+    "49eae4f16e94f4f3617e777542c13e6f3cd50b63": {
+        "authored_data": "2009 Oct 05 10:10",
+        "commit.message": "Updated pool version.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@821733 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Phil Steitz",
+        "pcid": "03edf6ea56a55d44878bf35a62d6f59d12138054",
+        "changes": {
+            "doc/BasicDataSourceExample.java": {
+                "old": {
+                    "(None, None)": [
+                        44,
+                        50,
+                        65
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        44,
+                        50,
+                        65
+                    ]
+                }
+            },
+            "doc/JOCLPoolingDriverExample.java": {
+                "old": {
+                    "(None, None)": [
+                        41,
+                        76
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        41,
+                        76
+                    ]
+                }
+            },
+            "doc/ManualPoolingDataSourceExample.java": {
+                "old": {
+                    "(None, None)": [
+                        53,
+                        59,
+                        74
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        53,
+                        59,
+                        74
+                    ]
+                }
+            },
+            "doc/ManualPoolingDriverExample.java": {
+                "old": {
+                    "(None, None)": [
+                        47,
+                        53,
+                        67
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        47,
+                        53,
+                        67
+                    ]
+                }
+            }
+        }
+    },
+    "7e06dc4867eac930c79e5ba8caaa4c484a106b1f": {
+        "authored_data": "2009 Sep 13 14:31",
+        "commit.message": "Made unprotected flag volatile.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@814320 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Phil Steitz",
+        "pcid": "35fdfe2a478978e9a2e6b4d02e714975ca0da943",
+        "changes": {
+            "src/java/org/apache/commons/dbcp/cpdsadapter/DriverAdapterCPDS.java": {
+                "old": {
+                    "('org.apache.commons.dbcp.cpdsadapter#DriverAdapterCPDS', None)": [
+                        119
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp.cpdsadapter#DriverAdapterCPDS', None)": [
+                        119,
+                        120
+                    ]
+                }
+            }
+        }
+    },
+    "4b1fdfe66b9392f13c3594dbe01017c47d59301a": {
+        "authored_data": "2009 Sep 12 22:51",
+        "commit.message": "Make private immutable field final\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@814248 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "f3c5fcf6f81bffe757616531e746f52b9e3b4678",
+        "changes": {
+            "src/test/org/apache/commons/dbcp/TestBasicDataSource.java": {
+                "old": {
+                    "('org.apache.commons.dbcp#TestBasicDataSource', None)": [
+                        48
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp#TestBasicDataSource', None)": [
+                        48
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/dbcp/TesterDriver.java": {
+                "old": {
+                    "('org.apache.commons.dbcp#TesterDriver', None)": [
+                        45
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp#TesterDriver', None)": [
+                        45
+                    ]
+                }
+            }
+        }
+    },
+    "f3c5fcf6f81bffe757616531e746f52b9e3b4678": {
+        "authored_data": "2009 Sep 12 22:48",
+        "commit.message": "Make private immutable field final\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@814247 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "e9ddc77f4d063e930ac81cb01a2be348e9f8899f",
+        "changes": {
+            "src/java/org/apache/commons/dbcp/AbandonedTrace.java": {
+                "old": {
+                    "('org.apache.commons.dbcp#AbandonedTrace', None)": [
+                        39
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp#AbandonedTrace', None)": [
+                        39
+                    ]
+                }
+            }
+        }
+    },
+    "e9ddc77f4d063e930ac81cb01a2be348e9f8899f": {
+        "authored_data": "2009 Sep 12 22:44",
+        "commit.message": "Make private immutable field final\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@814246 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "ea8497a523840df5f586a072e0f1655be2fab9fa",
+        "changes": {
+            "src/java/org/apache/commons/dbcp/datasources/InstanceKeyObjectFactory.java": {
+                "old": {
+                    "('org.apache.commons.dbcp.datasources#InstanceKeyObjectFactory', None)": [
+                        45
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp.datasources#InstanceKeyObjectFactory', None)": [
+                        45
+                    ]
+                }
+            }
+        }
+    }
+}

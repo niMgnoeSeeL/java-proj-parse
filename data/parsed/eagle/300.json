@@ -1,0 +1,2241 @@
+{
+    "1c81c0865c70b9a0a91b86d7813be923e86e1dba": {
+        "authored_data": "2016 Dec 05 06:12",
+        "commit.message": "[EAGLE-815] Add eagle alert template, severity and category support\n\nSupport alert template to generate human readable message\n\n# New Features\n* Support to define alert template in PolicyDefinition\n* Support to generate alert event (subject&body, instead of using AlertPublishEvent for less changes) based on policy'template and alert event as context\n* Dynamically load policy metadata in alert publisher\n* Integration VelocityAlertTemplateEngine in alertPublisherBolt with metadata lifecycle\n* Support persist alert message in AlertEntity as immutable field.\n* Refactor alert mail template using https://github.com/mailgun/transactional-email-templates\n* Refactor Alert Template to become simple and human-readable.\n* Add Alert Category\n* Add Alert Severity (notification template color will change according to different severiy): UNKNOWN (blue), OK(green), WARNING (orange), CRITICAL/FATAL (dark black)\n* Add Alert Subject &Body Template Engine, for example:\n    * Sample Event:\n\n          {\n              \"host\": \"localhost\",\n              \"timestamp\": 1480319108000,\n              \"metric\": \"hadoop.cpu.usage\",\n              \"component\": \"namenode\",\n              \"site\": \"test2\",\n              \"value\": 0.96\n          }\n\n    * Sample Subject \u201cRESOURCEMANAGER JMX Metric Alert\u201d is defined by:\n\n           $component.toUpperCase() JMX Metric Alert\n\n    * Sample Body is defined as:\n\n            An alert happened on <strong>$component</strong> (<strong>$host</strong>) of cluster <strong>$site</strong> at <strong>$ALERT_TIME</strong> because <span style=\"color: red\">$metric = $value</span>\n\n* Add VelocityTemplateParser\n\n# TODO\n* Integrate velocity parser into policy validator, make sure the template only contains `global variable` and `alert stream schema fields`.\n* Add alert definition preview\n\nAuthor: Hao Chen <hao@apache.org>\n\nCloses #711 from haoch/EAGLE-815.\n",
+        "commit.author.name": "Hao Chen",
+        "pcid": "e5e215e0bc0d4829e120069cab92922e0fef5f5a",
+        "changes": {
+            "eagle-core/eagle-alert-parent/eagle-alert-app/src/main/java/org/apache/eagle/alert/app/AlertEagleStorePlugin.java": {
+                "old": {
+                    "('org.apache.eagle.alert.app#AlertEagleStorePlugin', 'convertAlertEvent(AlertStreamEvent)')": [
+                        83,
+                        84,
+                        85,
+                        86
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.app#AlertEagleStorePlugin', 'convertAlertEvent(AlertStreamEvent)')": [
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        92,
+                        93
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-common/src/main/java/org/apache/eagle/alert/engine/coordinator/PolicyDefinition.java": {
+                "new": {
+                    "('org.apache.eagle.alert.engine.coordinator#PolicyDefinition', None)": [
+                        42,
+                        172,
+                        173,
+                        176,
+                        177,
+                        180,
+                        181,
+                        184,
+                        185,
+                        293
+                    ],
+                    "('org.apache.eagle.alert.engine.coordinator#PolicyDefinition', 'getAlertDefinition')": [
+                        174,
+                        175
+                    ],
+                    "('org.apache.eagle.alert.engine.coordinator#PolicyDefinition', 'setAlertDefinition(AlertDefinition)')": [
+                        178,
+                        179
+                    ],
+                    "('org.apache.eagle.alert.engine.coordinator#PolicyDefinition', 'getAlertSeverity')": [
+                        182,
+                        183
+                    ],
+                    "('org.apache.eagle.alert.engine.coordinator#PolicyDefinition', 'getAlertCategory')": [
+                        186,
+                        187
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-common/src/main/java/org/apache/eagle/alert/engine/model/AlertPublishEvent.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEvent', 'createAlertPublishEvent(AlertStreamEvent)')": [
+                        105,
+                        106,
+                        107,
+                        108
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEvent', 'toString')": [
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        28,
+                        29
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEvent', None)": [
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        49,
+                        50,
+                        143,
+                        144,
+                        147,
+                        148,
+                        151,
+                        152,
+                        155,
+                        156,
+                        159,
+                        160,
+                        163,
+                        164,
+                        167,
+                        168,
+                        171,
+                        172,
+                        175,
+                        176,
+                        179,
+                        180
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEvent', 'createAlertPublishEvent(AlertStreamEvent)')": [
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEvent', 'toString')": [
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEvent', 'getAlertSubject')": [
+                        145,
+                        146
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEvent', 'setAlertSubject(String)')": [
+                        149,
+                        150
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEvent', 'getAlertBody')": [
+                        153,
+                        154
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEvent', 'setAlertBody(String)')": [
+                        157,
+                        158
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEvent', 'getStreamId')": [
+                        161,
+                        162
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEvent', 'setStreamId(String)')": [
+                        165,
+                        166
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEvent', 'getCreatedBy')": [
+                        169,
+                        170
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEvent', 'setCreatedBy(String)')": [
+                        173,
+                        174
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEvent', 'getCreatedTime')": [
+                        177,
+                        178
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEvent', 'setCreatedTime(long)')": [
+                        181,
+                        182
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-common/src/main/java/org/apache/eagle/alert/engine/model/AlertStreamEvent.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', None)": [
+                        38,
+                        39
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', 'toString')": [
+                        75,
+                        77
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', 'getExtraData')": [
+                        117,
+                        118
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', 'setExtraData(Map)')": [
+                        121,
+                        122
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        178
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', None)": [
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        147,
+                        150,
+                        151,
+                        154,
+                        155,
+                        158,
+                        159,
+                        162,
+                        163,
+                        166,
+                        167,
+                        170,
+                        171,
+                        174,
+                        175
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', 'toString')": [
+                        86,
+                        87,
+                        89
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', 'getContext')": [
+                        129,
+                        130
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', 'setContext(Map)')": [
+                        133,
+                        134
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', 'getSubject')": [
+                        148,
+                        149
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', 'setSubject(String)')": [
+                        152,
+                        153
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', 'getBody')": [
+                        156,
+                        157
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', 'setBody(String)')": [
+                        160,
+                        161
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', 'getCategory')": [
+                        164,
+                        165
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', 'setCategory(String)')": [
+                        168,
+                        169
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', 'getSeverity')": [
+                        172,
+                        173
+                    ],
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', 'setSeverity(AlertSeverity)')": [
+                        176,
+                        177
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-common/src/test/java/org/apache/eagle/alert/engine/model/AlertPublishEventTest.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEventTest', 'testAlertPublishEvent2')": [
+                        98
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.engine.model#AlertPublishEventTest', 'testAlertPublishEvent2')": [
+                        98
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-common/src/test/java/org/apache/eagle/alert/engine/model/AlertStreamEventTest.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEventTest', 'testAlertStreamEvent')": [
+                        50,
+                        51,
+                        55,
+                        56,
+                        57
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEventTest', 'testAlertStreamEvent')": [
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/interpreter/PolicyExecutionPlanner.java": {
+                "new": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        21
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/publisher/PublishConstants.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.publisher#PublishConstants', None)": [
+                        54,
+                        56
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.engine.publisher#PublishConstants', None)": [
+                        54,
+                        55,
+                        57,
+                        60,
+                        61
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/publisher/email/AlertEmailGenerator.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        28
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGenerator', 'sendAlertEmail(AlertStreamEvent,String,String)')": [
+                        68
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGenerator', None)": [
+                        97,
+                        98,
+                        99
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGenerator', 'renderAlertMessage(AlertStreamEvent)')": [
+                        100,
+                        101
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGenerator', 'generateAlertDataDesc(AlertStreamEvent)')": [
+                        109
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGenerator', 'buildAlertContext(AlertStreamEvent)')": [
+                        117,
+                        122,
+                        127,
+                        128,
+                        131,
+                        133,
+                        135,
+                        139,
+                        140,
+                        141
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGenerator', 'sendAlertEmail(AlertStreamEvent,String,String)')": [
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGenerator', 'getAlertBody(AlertStreamEvent)')": [
+                        102,
+                        103,
+                        104,
+                        105,
+                        106
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGenerator', None)": [
+                        107
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGenerator', 'generateAlertDataDesc(AlertStreamEvent)')": [
+                        115
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGenerator', 'buildAlertContext(AlertStreamEvent)')": [
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        140,
+                        141,
+                        142,
+                        147,
+                        148,
+                        151,
+                        153,
+                        155,
+                        159,
+                        160,
+                        161
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/publisher/impl/AlertEmailPublisher.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.publisher.impl#AlertEmailPublisher', 'createEmailGenerator(Map)')": [
+                        161
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.engine.publisher.impl#AlertEmailPublisher', 'createEmailGenerator(Map)')": [
+                        161,
+                        162,
+                        163
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/runner/AlertPublisherBolt.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        44,
+                        45
+                    ],
+                    "('org.apache.eagle.alert.engine.runner#AlertPublisherBolt', None)": [
+                        55,
+                        59,
+                        136,
+                        137,
+                        138
+                    ],
+                    "('org.apache.eagle.alert.engine.runner#AlertPublisherBolt', 'execute(Tuple)')": [
+                        77,
+                        83,
+                        84,
+                        86,
+                        87,
+                        88
+                    ],
+                    "('org.apache.eagle.alert.engine.runner#AlertPublisherBolt', 'wrapAlertPublishEvent(AlertStreamEvent)')": [
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        33,
+                        34,
+                        36,
+                        37,
+                        46,
+                        47,
+                        216
+                    ],
+                    "('org.apache.eagle.alert.engine.runner#AlertPublisherBolt', None)": [
+                        54,
+                        58,
+                        59,
+                        63,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215
+                    ],
+                    "('org.apache.eagle.alert.engine.runner#AlertPublisherBolt', 'internalPrepare(OutputCollector,IMetadataChangeNotifyService,Config,TopologyContext)')": [
+                        76,
+                        77,
+                        78
+                    ],
+                    "('org.apache.eagle.alert.engine.runner#AlertPublisherBolt', 'execute(Tuple)')": [
+                        84,
+                        90,
+                        91,
+                        92,
+                        93,
+                        95,
+                        96,
+                        97
+                    ],
+                    "('org.apache.eagle.alert.engine.runner#AlertPublisherBolt', 'onAlertPolicyChange(Map,Map)')": [
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/test/java/org/apache/eagle/alert/engine/publisher/AlertPublisherTestHelper.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        21,
+                        22
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher#AlertPublisherTestHelper', 'mockEvent(String)')": [
+                        33
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher#AlertPublisherTestHelper', 'createPolicy(String,String)')": [
+                        87
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        26,
+                        112
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher#AlertPublisherTestHelper', 'mockEvent(String)')": [
+                        32
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher#AlertPublisherTestHelper', 'createEvent(StreamDefinition,PolicyDefinition,Object)')": [
+                        44,
+                        45,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher#AlertPublisherTestHelper', 'createPolicyGroupByStreamId(String,String)')": [
+                        93
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/test/java/org/apache/eagle/alert/engine/publisher/dedup/DefaultDedupWithoutStateTest.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.publisher.dedup#DefaultDedupWithoutStateTest', 'testNormal')": [
+                        49
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.engine.publisher.dedup#DefaultDedupWithoutStateTest', 'testNormal')": [
+                        49
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/test/java/org/apache/eagle/alert/engine/publisher/dedup/DefaultDeduplicatorTest.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.publisher.dedup#DefaultDeduplicatorTest', 'testNormal')": [
+                        48
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.engine.publisher.dedup#DefaultDeduplicatorTest', 'testNormal')": [
+                        48
+                    ]
+                }
+            },
+            "eagle-core/eagle-app/eagle-app-base/src/main/java/org/apache/eagle/app/messaging/KafkaStreamProvider.java": {
+                "old": {
+                    "('org.apache.eagle.app.messaging#KafkaStreamProvider', 'getSinkConfig(String,Config)')": [
+                        62,
+                        64,
+                        68,
+                        70,
+                        72,
+                        74
+                    ],
+                    "('org.apache.eagle.app.messaging#KafkaStreamProvider', 'getSourceConfig(String,Config)')": [
+                        92,
+                        95,
+                        98,
+                        101,
+                        104,
+                        107,
+                        110,
+                        113,
+                        116
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.eagle.app.messaging#KafkaStreamProvider', 'getSinkConfig(String,Config)')": [
+                        63,
+                        65,
+                        69,
+                        71,
+                        73,
+                        75
+                    ],
+                    "('org.apache.eagle.app.messaging#KafkaStreamProvider', 'hasNonBlankConfigPath(Config,String)')": [
+                        86,
+                        87
+                    ],
+                    "('org.apache.eagle.app.messaging#KafkaStreamProvider', None)": [
+                        88,
+                        89
+                    ],
+                    "('org.apache.eagle.app.messaging#KafkaStreamProvider', 'getSourceConfig(String,Config)')": [
+                        97,
+                        100,
+                        103,
+                        106,
+                        109,
+                        112,
+                        115,
+                        118,
+                        121
+                    ]
+                }
+            },
+            "eagle-core/eagle-app/eagle-app-base/src/main/java/org/apache/eagle/app/messaging/KafkaStreamSource.java": {
+                "old": {
+                    "('org.apache.eagle.app.messaging#KafkaStreamSource', 'createKafkaSpout(KafkaStreamSourceConfig)')": [
+                        118,
+                        130,
+                        132
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.eagle.app.messaging#KafkaStreamSource', 'createKafkaSpout(KafkaStreamSourceConfig)')": [
+                        119,
+                        131,
+                        133
+                    ]
+                }
+            },
+            "eagle-core/eagle-app/eagle-app-base/src/main/java/org/apache/eagle/app/messaging/KafkaStreamSourceConfig.java": {
+                "old": {
+                    "('org.apache.eagle.app.messaging#KafkaStreamSourceConfig', None)": [
+                        22,
+                        23,
+                        37
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.app.messaging#KafkaStreamSourceConfig', None)": [
+                        35
+                    ]
+                }
+            },
+            "eagle-core/eagle-metadata/eagle-metadata-base/src/main/java/org/apache/eagle/metadata/model/AlertEntity.java": {
+                "new": {
+                    "('org.apache.eagle.metadata.model#AlertEntity', None)": [
+                        45,
+                        46,
+                        47,
+                        48,
+                        79,
+                        80,
+                        84,
+                        85,
+                        88,
+                        89
+                    ],
+                    "('org.apache.eagle.metadata.model#AlertEntity', 'getAlertBody')": [
+                        77,
+                        78
+                    ],
+                    "('org.apache.eagle.metadata.model#AlertEntity', 'setAlertBody(String)')": [
+                        81,
+                        82,
+                        83
+                    ],
+                    "('org.apache.eagle.metadata.model#AlertEntity', 'getAlertSubject')": [
+                        86,
+                        87
+                    ],
+                    "('org.apache.eagle.metadata.model#AlertEntity', 'setAlertSubject(String)')": [
+                        90,
+                        91,
+                        92
+                    ],
+                    "(None, None)": [
+                        93
+                    ]
+                }
+            },
+            "eagle-hadoop-metric/src/test/java/org/apache/eagle/metric/SendSampleDataToKafka.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        23,
+                        28
+                    ],
+                    "('org.apache.eagle.metric#SendSampleDataToKafka', 'main(String)')": [
+                        47,
+                        48,
+                        49,
+                        50
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.metric#SendSampleDataToKafka', 'main(String)')": [
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        51
+                    ]
+                }
+            },
+            "eagle-jpm/eagle-jpm-spark-history/src/main/java/org/apache/eagle/jpm/spark/history/storm/SparkHistoryJobParseBolt.java": {
+                "old": {
+                    "('org.apache.eagle.jpm.spark.history.storm#SparkHistoryJobParseBolt', 'getAttemptLogNameList(String,FileSystem,Set)')": [
+                        137
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.jpm.spark.history.storm#SparkHistoryJobParseBolt', 'getAttemptLogNameList(String,FileSystem,Set)')": [
+                        137
+                    ]
+                }
+            }
+        }
+    },
+    "e5e215e0bc0d4829e120069cab92922e0fef5f5a": {
+        "authored_data": "2016 Dec 05 04:24",
+        "commit.message": "[MINOR] support group by in siddhi pattern match\n\nAuthor: wujinhu <wujinhu920@126.com>\n\nCloses #708 from wujinhu/EAGLE-792.\n",
+        "commit.author.name": "wujinhu",
+        "pcid": "3a84a2c6285146d7765a120ca64567183af6bdf8",
+        "changes": {
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/interpreter/PolicyExecutionPlannerImpl.java": {
+                "old": {
+                    "(None, None)": [
+                        35,
+                        36,
+                        37,
+                        38
+                    ],
+                    "('org.apache.eagle.alert.engine.interpreter#PolicyExecutionPlannerImpl', 'doParse')": [
+                        183
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35,
+                        36
+                    ],
+                    "('org.apache.eagle.alert.engine.interpreter#PolicyExecutionPlannerImpl', None)": [
+                        62,
+                        70,
+                        253,
+                        254,
+                        255
+                    ],
+                    "('org.apache.eagle.alert.engine.interpreter#PolicyExecutionPlannerImpl', 'doParse')": [
+                        176,
+                        177,
+                        178,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191
+                    ],
+                    "('org.apache.eagle.alert.engine.interpreter#PolicyExecutionPlannerImpl', 'collectStreamReferenceIdMapping(StateElement)')": [
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/test/java/org/apache/eagle/alert/engine/interpreter/PolicyInterpreterTest.java": {
+                "new": {
+                    "('org.apache.eagle.alert.engine.interpreter#PolicyInterpreterTest', None)": [
+                        414,
+                        415
+                    ],
+                    "('org.apache.eagle.alert.engine.interpreter#PolicyInterpreterTest', 'testValidPolicyWithPattern')": [
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446
+                    ],
+                    "(None, None)": [
+                        447
+                    ]
+                }
+            }
+        }
+    },
+    "30e35de60c532502731ef5b51360df15c0026397": {
+        "authored_data": "2016 Dec 02 10:36",
+        "commit.message": "[EAGLE-811] Refactor jdbcMetadataDaoImpl of alert engine metadata\n\n* Tickets\nhttps://issues.apache.org/jira/browse/EAGLE-811\nhttps://issues.apache.org/jira/browse/EAGLE-808\n\n* fix a bug 'alertId is null' in email publisher\n* improve UnitAlertApplication config\n\nAuthor: Zhao, Qingwen <qingwzhao@apache.org>\n\nCloses #705 from qingwen220/EAGLE-811.\n",
+        "commit.author.name": "Zhao, Qingwen",
+        "pcid": "aef7ea36c1473b29f76420dd67d646e738f7d10b",
+        "changes": {
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-common/src/main/java/org/apache/eagle/alert/engine/model/AlertStreamEvent.java": {
+                "new": {
+                    "('org.apache.eagle.alert.engine.model#AlertStreamEvent', 'getAlertId')": [
+                        126
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-common/src/main/java/org/apache/eagle/alert/utils/AlertConstants.java": {
+                "new": {
+                    "('org.apache.eagle.alert.utils#AlertConstants', None)": [
+                        29,
+                        30
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/StreamContext.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/publisher/email/AlertEmailGenerator.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGenerator', None)": [
+                        46
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGenerator', 'getProperties')": [
+                        176
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGenerator', 'setProperties(Map)')": [
+                        180
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGenerator', None)": [
+                        47
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGenerator', 'getProperties')": [
+                        177
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGenerator', 'setProperties(Properties)')": [
+                        181
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/publisher/email/AlertEmailGeneratorBuilder.java": {
+                "old": {
+                    "(None, None)": [
+                        20
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGeneratorBuilder', 'withMailProps(Map)')": [
+                        54
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailGeneratorBuilder', 'withMailProps(Properties)')": [
+                        54
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/publisher/email/AlertEmailSender.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailSender', None)": [
+                        46,
+                        47,
+                        48,
+                        49,
+                        76,
+                        79,
+                        80
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailSender', 'parseMailClientConfig(Map)')": [
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailSender', 'run')": [
+                        124,
+                        125
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailSender', None)": [
+                        46,
+                        73
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.email#AlertEmailSender', 'run')": [
+                        87
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/publisher/impl/AlertEmailPublisher.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.publisher.impl#AlertEmailPublisher', None)": [
+                        68
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.impl#AlertEmailPublisher', 'createEmailGenerator(Map)')": [
+                        130
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        36,
+                        40,
+                        41
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.impl#AlertEmailPublisher', None)": [
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        64,
+                        82,
+                        83
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.impl#AlertEmailPublisher', 'init(Config,Publishment,Map)')": [
+                        74
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.impl#AlertEmailPublisher', 'parseMailClientConfig(Config)')": [
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.impl#AlertEmailPublisher', 'createEmailGenerator(Map)')": [
+                        173,
+                        175
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/test/java/org/apache/eagle/alert/engine/publisher/AlertEmailPublisherTest.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.publisher#AlertEmailPublisherTest', 'setUp')": [
+                        42
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher#AlertEmailPublisherTest', 'testAlertEmailPublisher')": [
+                        60,
+                        61
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.engine.publisher#AlertEmailPublisherTest', 'setUp')": [
+                        42
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata-service/src/main/java/org/apache/eagle/service/metadata/resource/MetadataResource.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        40
+                    ],
+                    "('org.apache.eagle.service.metadata.resource#MetadataResource', 'getAlertPublishEventByPolicyId(String,int)')": [
+                        256
+                    ],
+                    "('org.apache.eagle.service.metadata.resource#MetadataResource', 'getPolicyPublishments(String)')": [
+                        262,
+                        263,
+                        264
+                    ],
+                    "('org.apache.eagle.service.metadata.resource#MetadataResource', 'addPublishmentsToPolicy(String,List)')": [
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328
+                    ],
+                    "('org.apache.eagle.service.metadata.resource#MetadataResource', 'getPolicyByID(String)')": [
+                        333,
+                        335
+                    ],
+                    "('org.apache.eagle.service.metadata.resource#MetadataResource', 'updatePolicyStatusByID(String,PolicyDefinition)')": [
+                        343
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.eagle.service.metadata.resource#MetadataResource', 'getAlertPublishEventByPolicyId(String,int)')": [
+                        254
+                    ],
+                    "('org.apache.eagle.service.metadata.resource#MetadataResource', 'getPolicyPublishments(String)')": [
+                        260
+                    ],
+                    "('org.apache.eagle.service.metadata.resource#MetadataResource', 'addPublishmentsToPolicy(String,List)')": [
+                        266
+                    ],
+                    "('org.apache.eagle.service.metadata.resource#MetadataResource', 'getPolicyById(String)')": [
+                        271,
+                        273
+                    ],
+                    "('org.apache.eagle.service.metadata.resource#MetadataResource', 'updatePolicyStatusByID(String,PolicyDefinition)')": [
+                        281
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/main/java/org/apache/eagle/alert/metadata/IMetadataDao.java": {
+                "old": {
+                    "(None, None)": [
+                        71,
+                        84,
+                        115
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        34,
+                        35,
+                        37,
+                        38,
+                        88,
+                        119,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/main/java/org/apache/eagle/alert/metadata/impl/InMemMetadataDaoImpl.java": {
+                "old": {
+                    "('org.apache.eagle.alert.metadata.impl#InMemMetadataDaoImpl', 'getAlertPublishEventByPolicyId(String,int)')": [
+                        222
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.metadata.impl#InMemMetadataDaoImpl', 'getAlertPublishEventsByPolicyId(String,int)')": [
+                        222
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/main/java/org/apache/eagle/alert/metadata/impl/JdbcMetadataDaoImpl.java": {
+                "old": {
+                    "(None, None)": [
+                        38
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', None)": [
+                        45,
+                        49,
+                        94,
+                        95,
+                        96
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'listPublishment')": [
+                        79
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'listAlertPublishEvent(int)')": [
+                        84,
+                        85,
+                        86,
+                        87,
+                        88
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'getAlertPublishEvent(String)')": [
+                        93
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'getAlertPublishEventByPolicyId(String,int)')": [
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'getScheduleState(String)')": [
+                        108
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'getScheduleState')": [
+                        114
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'addAlertPublishEvent(AlertPublishEvent)')": [
+                        149
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'removeTopology(String)')": [
+                        199
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'removeCluster(String)')": [
+                        204
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'removeStream(String)')": [
+                        209
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'removeDataSource(String)')": [
+                        214
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'removePolicy(String)')": [
+                        219
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'removePublishment(String)')": [
+                        224
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'removePublishmentType(String)')": [
+                        229
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', None)": [
+                        44,
+                        48,
+                        88,
+                        89,
+                        92,
+                        93,
+                        101,
+                        102,
+                        103,
+                        176,
+                        177,
+                        178
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'listPublishment')": [
+                        78
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'listAlertPublishEvent(int)')": [
+                        83,
+                        84,
+                        85,
+                        86,
+                        87
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'getPolicyById(String)')": [
+                        90,
+                        91
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'getPublishmentsByPolicyId(String)')": [
+                        94,
+                        95
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'getAlertPublishEvent(String)')": [
+                        100
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'getAlertPublishEventsByPolicyId(String,int)')": [
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'getScheduleState(String)')": [
+                        114
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'getScheduleState')": [
+                        120
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'addAlertPublishEvent(AlertPublishEvent)')": [
+                        155
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'addPublishmentsToPolicy(String,List)')": [
+                        179,
+                        180
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'removeTopology(String)')": [
+                        210
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'removeCluster(String)')": [
+                        215
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'removeStream(String)')": [
+                        220
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'removeDataSource(String)')": [
+                        225
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'removePolicy(String)')": [
+                        230
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'removePublishment(String)')": [
+                        235
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'removePublishmentType(String)')": [
+                        240
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/main/java/org/apache/eagle/alert/metadata/impl/MongoMetadataDaoImpl.java": {
+                "old": {
+                    "('org.apache.eagle.alert.metadata.impl#MongoMetadataDaoImpl', 'getAlertPublishEventByPolicyId(String,int)')": [
+                        378
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.metadata.impl#MongoMetadataDaoImpl', 'getAlertPublishEventsByPolicyId(String,int)')": [
+                        378
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/test/java/org/apache/eagle/alert/metadata/impl/InMemoryTest.java": {
+                "old": {
+                    "('org.apache.eagle.alert.metadata.impl#InMemoryTest', 'testGetAlertPublishEventByPolicyId')": [
+                        105
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.metadata.impl#InMemoryTest', 'testGetAlertPublishEventByPolicyId')": [
+                        105
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/test/java/org/apache/eagle/alert/metadata/impl/JdbcImplTest.java": {
+                "old": {
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', 'test_apis')": [
+                        87,
+                        148,
+                        149
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', None)": [
+                        150,
+                        151,
+                        152
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', 'test_addstate')": [
+                        153
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', 'test_clearScheduleState')": [
+                        191,
+                        192,
+                        193,
+                        194,
+                        195
+                    ],
+                    "(None, None)": [
+                        196
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        41,
+                        280,
+                        281
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', 'test_apis')": [
+                        89,
+                        138,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', None)": [
+                        156,
+                        157,
+                        158,
+                        159,
+                        203,
+                        204,
+                        205,
+                        245,
+                        246,
+                        247
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', 'test_addstate')": [
+                        160
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', 'test_clearScheduleState')": [
+                        198,
+                        199,
+                        200,
+                        201,
+                        202
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', 'testUpdate')": [
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', 'testUpdatePublishmentsByPolicyId')": [
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279
+                    ]
+                }
+            },
+            "eagle-core/eagle-app/eagle-app-base/src/main/java/org/apache/eagle/app/service/ApplicationAction.java": {
+                "old": {
+                    "('org.apache.eagle.app.service#ApplicationAction', None)": [
+                        87
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('org.apache.eagle.app.service#ApplicationAction', None)": [
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98
+                    ]
+                }
+            },
+            "eagle-core/eagle-app/eagle-app-base/src/test/java/org/apache/eagle/app/service/ApplicationActionTest.java": {
+                "old": {
+                    "('org.apache.eagle.app.service#ApplicationActionTest', 'testDoAction')": [
+                        90,
+                        94,
+                        95,
+                        96
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.app.service#ApplicationActionTest', 'testDoAction')": [
+                        90,
+                        91,
+                        92,
+                        96,
+                        97
+                    ]
+                }
+            },
+            "eagle-core/eagle-common/src/test/java/org/apache/eagle/common/TestSerializableUtils.java": {
+                "old": {
+                    "('org.apache.eagle.common#TestSerializableUtils', None)": [
+                        26,
+                        34,
+                        47
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.common#TestSerializableUtils', None)": [
+                        26,
+                        34,
+                        47
+                    ]
+                }
+            },
+            "eagle-core/eagle-metadata/eagle-metadata-base/src/main/java/org/apache/eagle/metadata/model/AlertEntity.java": {
+                "old": {
+                    "(None, None)": [
+                        35
+                    ]
+                }
+            }
+        }
+    },
+    "aef7ea36c1473b29f76420dd67d646e738f7d10b": {
+        "authored_data": "2016 Dec 02 08:00",
+        "commit.message": "[EAGLE-805] sync some operation in RunningJobManager\n\nEAGLE-805 sync some operation in RunningJobManager\n- Acquire lock when recoverYarnApp and recover methods were invoked.\n- Add unit test for the two methods under high concurrency.\n- Modify lockPath to avoid exception when curator.getChildren().\n\nhttps://issues.apache.org/jira/browse/EAGLE-805\n\nAuthor: chitin <chitin1027@gmail.com>\n\nCloses #700 from chitin/EAGLE-805.\n",
+        "commit.author.name": "chitin",
+        "pcid": "e6c4b0a731942c9c4bf746ecc6b067429d755ff6",
+        "changes": {
+            "eagle-jpm/eagle-jpm-mr-running/src/test/java/org/apache/eagle/jpm/mr/running/MRRunningJobManagerTest.java": {
+                "old": {
+                    "(None, None)": [
+                        29,
+                        30,
+                        31,
+                        32
+                    ],
+                    "('org.apache.eagle.jpm.mr.running#MRRunningJobManagerTest', 'setupZookeeper')": [
+                        69,
+                        70,
+                        71,
+                        72
+                    ],
+                    "('org.apache.eagle.jpm.mr.running#MRRunningJobManagerTest', 'teardownZookeeper')": [
+                        86,
+                        87
+                    ],
+                    "('org.apache.eagle.jpm.mr.running#MRRunningJobManagerTest', None)": [
+                        88
+                    ],
+                    "('org.apache.eagle.jpm.mr.running#MRRunningJobManagerTest', 'testMRRunningJobManagerDelWithLock')": [
+                        103
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        30,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        208,
+                        209
+                    ],
+                    "('org.apache.eagle.jpm.mr.running#MRRunningJobManagerTest', None)": [
+                        66,
+                        67,
+                        86,
+                        87,
+                        88,
+                        95,
+                        96,
+                        97,
+                        98,
+                        105,
+                        106,
+                        107,
+                        110,
+                        139,
+                        140,
+                        167,
+                        168,
+                        169,
+                        196,
+                        197
+                    ],
+                    "('org.apache.eagle.jpm.mr.running#MRRunningJobManagerTest', 'teardownZookeeper')": [
+                        84,
+                        85
+                    ],
+                    "('org.apache.eagle.jpm.mr.running#MRRunningJobManagerTest', 'createPath')": [
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94
+                    ],
+                    "('org.apache.eagle.jpm.mr.running#MRRunningJobManagerTest', 'cleanPath')": [
+                        99,
+                        103,
+                        104
+                    ],
+                    "('org.apache.eagle.jpm.mr.running#MRRunningJobManagerTest', 'testMRRunningJobManagerRecoverYarnAppWithLock')": [
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166
+                    ],
+                    "('org.apache.eagle.jpm.mr.running#MRRunningJobManagerTest', 'testMRRunningJobManagerRecoverWithLock')": [
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195
+                    ],
+                    "('org.apache.eagle.jpm.mr.running#MRRunningJobManagerTest', 'generateZkSetData')": [
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207
+                    ]
+                }
+            },
+            "eagle-jpm/eagle-jpm-util/src/main/java/org/apache/eagle/jpm/util/Utils.java": {
+                "old": {
+                    "('org.apache.eagle.jpm.util#Utils', 'makeLockPath(String)')": [
+                        119
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.jpm.util#Utils', 'makeLockPath(String)')": [
+                        119
+                    ]
+                }
+            },
+            "eagle-jpm/eagle-jpm-util/src/main/java/org/apache/eagle/jpm/util/jobrecover/RunningJobManager.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        33
+                    ],
+                    "('org.apache.eagle.jpm.util.jobrecover#RunningJobManager', 'recoverYarnApp(String)')": [
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.jpm.util.jobrecover#RunningJobManager', 'recoverYarnApp(String)')": [
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137
+                    ],
+                    "('org.apache.eagle.jpm.util.jobrecover#RunningJobManager', 'recover')": [
+                        150,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167
+                    ]
+                }
+            },
+            "eagle-jpm/eagle-jpm-util/src/test/java/org/apache/eagle/jpm/util/UtilsTest.java": {
+                "old": {
+                    "('org.apache.eagle.jpm.util#UtilsTest', 'testMakeLockPath')": [
+                        71
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.jpm.util#UtilsTest', 'testMakeLockPath')": [
+                        71
+                    ]
+                }
+            }
+        }
+    },
+    "e6c4b0a731942c9c4bf746ecc6b067429d755ff6": {
+        "authored_data": "2016 Dec 02 07:58",
+        "commit.message": "[MINOR] Sleep 1 ms after versionId was generated\n\n[MINOR] Sleep 1 ms after versionId was generated\n- VersionId is the same with one generated in last loop randomly, the test failed in this case.\n\nAuthor: chitin <chitin1027@gmail.com>\n\nCloses #706 from chitin/MINOR_JDBCTEST.\n",
+        "commit.author.name": "chitin",
+        "pcid": "a292c1556058126e5fcb897cab58a31ab6dbb49d",
+        "changes": {
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/test/java/org/apache/eagle/alert/metadata/impl/JdbcImplTest.java": {
+                "old": {
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', 'test_clearScheduleState')": [
+                        180
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', 'test_clearScheduleState')": [
+                        180,
+                        193,
+                        194
+                    ]
+                }
+            }
+        }
+    },
+    "a292c1556058126e5fcb897cab58a31ab6dbb49d": {
+        "authored_data": "2016 Dec 02 03:02",
+        "commit.message": "[MINOR] add missing licences\n\nAuthor: Xiancheng Li <xiancheng.li@ebay.com>\n\nCloses #704 from garrettlish/master.\n",
+        "commit.author.name": "Xiancheng Li",
+        "pcid": "a0f134422dbab0c4a98bd181b75f78cf7a8c3343",
+        "changes": {
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/StormMultiCountMetric.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/StreamCounter.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16
+                    ]
+                }
+            },
+            "eagle-core/eagle-query/eagle-service-base/src/test/java/org/apache/eagle/service/metric/TestEagleMetricResource.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16
+                    ]
+                }
+            }
+        }
+    },
+    "a0f134422dbab0c4a98bd181b75f78cf7a8c3343": {
+        "authored_data": "2016 Dec 02 02:20",
+        "commit.message": "[MINOR] avoid adding duplicated publishment in spec\n\nAlthough duplicated publisher won't impact anything since we convert it to map and publisher name is the key, avoid duplicated publisher in schedule state is meaningful.\n\nAuthor: Xiancheng Li <xiancheng.li@ebay.com>\n\nCloses #707 from garrettlish/pub.\n",
+        "commit.author.name": "Xiancheng Li",
+        "pcid": "c52e23c748ba5f0f497622f8a2d50bcd7de340a9",
+        "changes": {
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-common/src/main/java/org/apache/eagle/alert/coordination/model/PublishSpec.java": {
+                "old": {
+                    "('org.apache.eagle.alert.coordination.model#PublishSpec', 'addPublishment(Publishment)')": [
+                        41
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22
+                    ],
+                    "('org.apache.eagle.alert.coordination.model#PublishSpec', None)": [
+                        43,
+                        47
+                    ],
+                    "('org.apache.eagle.alert.coordination.model#PublishSpec', 'addPublishment(Publishment)')": [
+                        45,
+                        46
+                    ]
+                }
+            }
+        }
+    },
+    "c52e23c748ba5f0f497622f8a2d50bcd7de340a9": {
+        "authored_data": "2016 Dec 01 07:48",
+        "commit.message": "[EAGLE-817] add KillOptions when stop a topology\n\nAuthor: wujinhu <wujinhu920@126.com>\n\nCloses #702 from wujinhu/EAGLE-817.\n",
+        "commit.author.name": "wujinhu",
+        "pcid": "df9d9b085714c55c1bdc5a4d4e71a96c5d0c9c30",
+        "changes": {
+            "eagle-core/eagle-app/eagle-app-base/src/main/java/org/apache/eagle/app/environment/impl/StormExecutionRuntime.java": {
+                "old": {
+                    "('org.apache.eagle.app.environment.impl#StormExecutionRuntime', 'stop(Application,com)')": [
+                        151,
+                        157,
+                        158,
+                        159
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.app.environment.impl#StormExecutionRuntime', None)": [
+                        46,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57
+                    ],
+                    "('org.apache.eagle.app.environment.impl#StormExecutionRuntime', 'stop(Application,com)')": [
+                        157,
+                        163
+                    ]
+                }
+            }
+        }
+    },
+    "df9d9b085714c55c1bdc5a4d4e71a96c5d0c9c30": {
+        "authored_data": "2016 Dec 01 07:40",
+        "commit.message": "[MINOR] remove system property for metadata.metadataDAO in JDBCMetadataStore\n\nAuthor: wujinhu <wujinhu920@126.com>\n\nCloses #703 from wujinhu/EAGLE-791.\n",
+        "commit.author.name": "wujinhu",
+        "pcid": "68a3e8bde3418add34c0b585a206236ee227c6e0",
+        "changes": {
+            "eagle-core/eagle-metadata/eagle-metadata-jdbc/src/main/java/org/apache/eagle/metadata/store/jdbc/JDBCMetadataStore.java": {
+                "old": {
+                    "('org.apache.eagle.metadata.store.jdbc#JDBCMetadataStore', 'configure')": [
+                        37
+                    ]
+                }
+            }
+        }
+    }
+}

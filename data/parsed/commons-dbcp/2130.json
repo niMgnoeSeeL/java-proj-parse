@@ -1,0 +1,208 @@
+{
+    "b80a6ef7dd0277d1654ec502883bfe59c1f4c264": {
+        "authored_data": "2008 Feb 04 03:58",
+        "commit.message": "Added exception handler to ensure that PooledConnections are not orphaned\nwhen an exception occurs in setUpDefaults or clearWarnings in \nIntanceKeyDataSource getConnection.\n\nJIRA: DBCP-237\nReported and patched by Oliver Matz\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@618163 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Phil Steitz",
+        "pcid": "8353df8d8a56e9862d0d3602ff73aa2a04b08fb4",
+        "changes": {
+            "src/java/org/apache/commons/dbcp/datasources/InstanceKeyDataSource.java": {
+                "old": {
+                    "('org.apache.commons.dbcp.datasources#InstanceKeyDataSource', 'getConnection(String,String)')": [
+                        691,
+                        692,
+                        693,
+                        694
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp.datasources#InstanceKeyDataSource', 'getConnection(String,String)')": [
+                        691,
+                        692,
+                        693,
+                        694,
+                        695,
+                        696,
+                        697,
+                        698,
+                        699,
+                        700,
+                        701,
+                        702,
+                        703
+                    ],
+                    "('org.apache.commons.dbcp.datasources#InstanceKeyDataSource', None)": [
+                        704
+                    ]
+                }
+            }
+        }
+    },
+    "8353df8d8a56e9862d0d3602ff73aa2a04b08fb4": {
+        "authored_data": "2008 Jan 29 02:29",
+        "commit.message": "Fixed error in SharedPoolDataSource causing incorrect passwords to be \nstored under certain conditions.\nJIRA: DBCP-245\nReported and patched by Michael Drechsel\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@616142 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Phil Steitz",
+        "pcid": "335f464004173813a4f2c8eada085d6c9775ed4e",
+        "changes": {
+            "src/java/org/apache/commons/dbcp/datasources/SharedPoolDataSource.java": {
+                "new": {
+                    "('org.apache.commons.dbcp.datasources#SharedPoolDataSource', 'getPooledConnectionAndInfo(String,String)')": [
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/dbcp/datasources/TestSharedPoolDataSource.java": {
+                "old": {
+                    "(None, None)": [
+                        523
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp.datasources#TestSharedPoolDataSource', None)": [
+                        81,
+                        82,
+                        83,
+                        84
+                    ],
+                    "('org.apache.commons.dbcp.datasources#TestSharedPoolDataSource', 'testIncorrectPassword')": [
+                        88
+                    ]
+                }
+            }
+        }
+    },
+    "1be63eb9e4e1f4ebe832cc1f7efa35f6d215b562": {
+        "authored_data": "2007 Nov 25 20:02",
+        "commit.message": "Improved error recovery and listener cleanup in KeyedCPDSConnectionFactory. \n* Substituted calls to destroyObject with _pool.invalidateObject on error to\n  ensure pool active count is decremented on error events.\n* Ensured that events from closed or invalid connections are ignored and\n  listeners are cleaned up. Generalized validatingMap to \"muteMap\" (map of\n  PoolableConnections from which events are ignored) and postponed cleanup\n  of this and pcMap to take place in makeObject.\n* Removed calls to removeConnectionEventListener from connection event handlers\n  to eliminate potential for ConcurrentModificationExceptions. Added a cleanupMap\n  to keep track of PoolablConnections that need to have listeners cleaned up. \n\nJIRA: DBCP-216\nReported (and patched) by Marcos Sanz\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@598045 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Phil Steitz",
+        "pcid": "f03d77926bff10e1d15dafe4f6f3ceb3c5f4cd98",
+        "changes": {
+            "src/java/org/apache/commons/dbcp/datasources/KeyedCPDSConnectionFactory.java": {
+                "old": {
+                    "('org.apache.commons.dbcp.datasources#KeyedCPDSConnectionFactory', None)": [
+                        55
+                    ],
+                    "('org.apache.commons.dbcp.datasources#KeyedCPDSConnectionFactory', 'destroyObject(Object,Object)')": [
+                        179,
+                        180
+                    ],
+                    "('org.apache.commons.dbcp.datasources#KeyedCPDSConnectionFactory', 'validateObject(Object,Object)')": [
+                        198,
+                        235
+                    ],
+                    "('org.apache.commons.dbcp.datasources#KeyedCPDSConnectionFactory', 'connectionClosed(ConnectionEvent)')": [
+                        264,
+                        266,
+                        276,
+                        278,
+                        279,
+                        281,
+                        282
+                    ],
+                    "('org.apache.commons.dbcp.datasources#KeyedCPDSConnectionFactory', 'connectionErrorOccurred(ConnectionEvent)')": [
+                        300,
+                        301,
+                        302,
+                        312
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        373,
+                        374
+                    ],
+                    "('org.apache.commons.dbcp.datasources#KeyedCPDSConnectionFactory', None)": [
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353
+                    ],
+                    "('org.apache.commons.dbcp.datasources#KeyedCPDSConnectionFactory', 'makeObject(Object)')": [
+                        190
+                    ],
+                    "('org.apache.commons.dbcp.datasources#KeyedCPDSConnectionFactory', 'destroyObject(Object,Object)')": [
+                        203,
+                        204,
+                        205
+                    ],
+                    "('org.apache.commons.dbcp.datasources#KeyedCPDSConnectionFactory', 'validateObject(Object,Object)')": [
+                        223,
+                        260
+                    ],
+                    "('org.apache.commons.dbcp.datasources#KeyedCPDSConnectionFactory', 'connectionClosed(ConnectionEvent)')": [
+                        289,
+                        290,
+                        292,
+                        302,
+                        303,
+                        304,
+                        306,
+                        307,
+                        309,
+                        310
+                    ],
+                    "('org.apache.commons.dbcp.datasources#KeyedCPDSConnectionFactory', 'connectionErrorOccurred(ConnectionEvent)')": [
+                        322,
+                        323,
+                        324,
+                        331,
+                        332,
+                        342
+                    ],
+                    "('org.apache.commons.dbcp.datasources#KeyedCPDSConnectionFactory', 'cleanupListeners')": [
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372
+                    ]
+                }
+            }
+        }
+    }
+}

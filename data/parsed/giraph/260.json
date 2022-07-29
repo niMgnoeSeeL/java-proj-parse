@@ -1,0 +1,1303 @@
+{
+    "31026d4d2a4ecc6f0af13a545d0ee633900ff2e5": {
+        "authored_data": "2015 Jan 16 17:45",
+        "commit.message": "GIRAPH-985: Add more metrics\n\nSummary: When limit number of open requests is on, significant part of computation can be spent in just waiting. So adding metrics for total amount of time compute threads spent in waiting on open requests, and histogram with compute times per partition. These should help detecting why some job is slower than expected (is it from messaging or compute). Also changed the way we wait on open requests, so we continue on different limit than we stop, so we wouldn't have huge number of very tiny pauses.\n\nTest Plan: Run some jobs on the cluster and looked through these metrics.\n\nReviewers: sergey.edunov, pavanka\n\nSubscribers: ikabiljo\n\nDifferential Revision: https://reviews.facebook.net/D31683\n",
+        "commit.author.name": "Maja Kabiljo",
+        "pcid": "bc2babcc63ba482f7f15ff4820abf51339081e5f",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/comm/WorkerClient.java": {
+                "old": {
+                    "(None, None)": [
+                        76
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        76
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/comm/netty/NettyClient.java": {
+                "old": {
+                    "('org.apache.giraph.comm.netty#NettyClient', None)": [
+                        87,
+                        89,
+                        90,
+                        91,
+                        92,
+                        94,
+                        95,
+                        96,
+                        97,
+                        204,
+                        205,
+                        206,
+                        208,
+                        209,
+                        210,
+                        213,
+                        220,
+                        222,
+                        224,
+                        226
+                    ],
+                    "('org.apache.giraph.comm.netty#NettyClient', 'sendWritableRequest(Integer,WritableRequest)')": [
+                        676,
+                        712
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33,
+                        34,
+                        37,
+                        39,
+                        40,
+                        41,
+                        42,
+                        53
+                    ],
+                    "('org.apache.giraph.comm.netty#NettyClient', None)": [
+                        95,
+                        97,
+                        98,
+                        99,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        203,
+                        204,
+                        225,
+                        227,
+                        228,
+                        229,
+                        232,
+                        233,
+                        237,
+                        248,
+                        249,
+                        376,
+                        380,
+                        381
+                    ],
+                    "('org.apache.giraph.comm.netty#NettyClient', 'newSuperstep(SuperstepMetricsRegistry)')": [
+                        377,
+                        378,
+                        379
+                    ],
+                    "('org.apache.giraph.comm.netty#NettyClient', 'sendWritableRequest(int,WritableRequest)')": [
+                        701,
+                        737,
+                        738,
+                        739
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/comm/netty/NettyWorkerClient.java": {
+                "old": {
+                    "('org.apache.giraph.comm.netty#NettyWorkerClient', 'sendWritableRequest(Integer,WritableRequest)')": [
+                        141
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.comm.netty#NettyWorkerClient', 'sendWritableRequest(int,WritableRequest)')": [
+                        141
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/graph/ComputeCallable.java": {
+                "new": {
+                    "(None, None)": [
+                        48
+                    ],
+                    "('org.apache.giraph.graph#ComputeCallable', None)": [
+                        103,
+                        104,
+                        133,
+                        134
+                    ],
+                    "('org.apache.giraph.graph#ComputeCallable', 'call')": [
+                        158,
+                        192,
+                        193,
+                        194
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/metrics/MetricNames.java": {
+                "new": {
+                    "(None, None)": [
+                        64,
+                        65,
+                        66,
+                        67,
+                        98,
+                        99,
+                        100
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/metrics/SuperstepMetricsRegistry.java": {
+                "old": {
+                    "('org.apache.giraph.metrics#SuperstepMetricsRegistry', 'printSummary(PrintStream)')": [
+                        114
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.giraph.metrics#SuperstepMetricsRegistry', 'printSummary(PrintStream)')": [
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123
+                    ]
+                }
+            }
+        }
+    },
+    "bc2babcc63ba482f7f15ff4820abf51339081e5f": {
+        "authored_data": "2015 Jan 17 00:30",
+        "commit.message": "[GIRAPH-986] Add more stuff to TypeOps\n\nSummary:\nAdd:\ncreateZero/createOne to NumericTypeOps\nunwrap, fill to BasicArrayList\nAndReduce and OrReduce\n\nTest Plan: mvn clean install\n\nReviewers: majakabiljo, sergey.edunov, maja.kabiljo\n\nReviewed By: maja.kabiljo\n\nSubscribers: laxman.dhulipala\n\nDifferential Revision: https://reviews.facebook.net/D31731\n",
+        "commit.author.name": "Igor Kabiljo",
+        "pcid": "43de1d8cddacf02e48cf6a7ac5a5888369e978cd",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/reducers/impl/MaxReduce.java": {
+                "new": {
+                    "(None, None)": [
+                        26,
+                        31
+                    ],
+                    "('org.apache.giraph.reducers.impl#MaxReduce', None)": [
+                        47,
+                        48,
+                        49
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/reducers/impl/MinReduce.java": {
+                "new": {
+                    "(None, None)": [
+                        26,
+                        31
+                    ],
+                    "('org.apache.giraph.reducers.impl#MinReduce', None)": [
+                        47,
+                        48,
+                        49
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/reducers/impl/SumReduce.java": {
+                "new": {
+                    "(None, None)": [
+                        26,
+                        31
+                    ],
+                    "('org.apache.giraph.reducers.impl#SumReduce', None)": [
+                        47,
+                        48,
+                        49
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/types/ops/BooleanTypeOps.java": {
+                "new": {
+                    "(None, None)": [
+                        50,
+                        51,
+                        52,
+                        53,
+                        54
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/types/ops/ByteTypeOps.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        26,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/types/ops/DoubleTypeOps.java": {
+                "old": {
+                    "(None, None)": [
+                        63,
+                        64,
+                        65,
+                        66,
+                        67
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/types/ops/FloatTypeOps.java": {
+                "old": {
+                    "(None, None)": [
+                        62,
+                        63,
+                        64,
+                        65,
+                        66
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/types/ops/IntTypeOps.java": {
+                "old": {
+                    "(None, None)": [
+                        55,
+                        56,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        55,
+                        56,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/types/ops/LongTypeOps.java": {
+                "old": {
+                    "(None, None)": [
+                        55,
+                        56,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        55,
+                        56,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/types/ops/NumericTypeOps.java": {
+                "old": {
+                    "(None, None)": [
+                        41,
+                        42,
+                        43,
+                        44,
+                        45
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        52
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/types/ops/PrimitiveTypeOps.java": {
+                "new": {
+                    "(None, None)": [
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/types/ops/collections/BasicArrayList.java": {
+                "old": {
+                    "('org.apache.giraph.types.ops.collections#BasicArrayList', None)": [
+                        232,
+                        319,
+                        406,
+                        493,
+                        580,
+                        667
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.giraph.types.ops.collections#BasicArrayList', None)": [
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        123,
+                        124,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        272,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        379,
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474,
+                        486,
+                        498,
+                        499,
+                        500,
+                        501,
+                        502,
+                        567,
+                        568,
+                        569,
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        575,
+                        576,
+                        577,
+                        578,
+                        579,
+                        580,
+                        581,
+                        593,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        674,
+                        675,
+                        676,
+                        677,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682,
+                        683,
+                        684,
+                        685,
+                        686,
+                        687,
+                        688,
+                        700,
+                        712,
+                        713,
+                        714,
+                        715,
+                        716,
+                        781,
+                        782,
+                        783,
+                        784,
+                        785,
+                        786,
+                        787,
+                        788,
+                        789,
+                        790,
+                        791,
+                        792,
+                        793,
+                        794,
+                        795,
+                        807
+                    ],
+                    "('org.apache.giraph.types.ops.collections#BasicArrayList', 'fill(int,int,T)')": [
+                        112
+                    ],
+                    "('org.apache.giraph.types.ops.collections#BasicArrayList', 'unwrap')": [
+                        122
+                    ]
+                }
+            }
+        }
+    },
+    "43de1d8cddacf02e48cf6a7ac5a5888369e978cd": {
+        "authored_data": "2015 Jan 16 18:41",
+        "commit.message": "GIRAPH-962: TextAggregatorWriter with frequency AT_THE_END writes in every superstep (mju via majakabiljo)\n",
+        "commit.author.name": "Maja Kabiljo",
+        "pcid": "9d20d69fdb0be53a5410711489173f808fbe6f4e",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/aggregators/TextAggregatorWriter.java": {
+                "old": {
+                    "('org.apache.giraph.aggregators#TextAggregatorWriter', 'shouldWrite(long)')": [
+                        117
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.aggregators#TextAggregatorWriter', 'shouldWrite(long)')": [
+                        117,
+                        118
+                    ]
+                }
+            }
+        }
+    },
+    "9d20d69fdb0be53a5410711489173f808fbe6f4e": {
+        "authored_data": "2015 Jan 16 18:07",
+        "commit.message": "GIRAPH-967: (Strongly Connected Components) bug fix (mhan via majakabiljo)\n",
+        "commit.author.name": "Maja Kabiljo",
+        "pcid": "8af7670c3afb4924b2603712c1532925ce8b89fa",
+        "changes": {
+            "giraph-examples/src/main/java/org/apache/giraph/examples/scc/SccPhaseMasterCompute.java": {
+                "old": {
+                    "(None, None)": [
+                        20
+                    ],
+                    "('org.apache.giraph.examples.scc#SccPhaseMasterCompute', 'initialize')": [
+                        67,
+                        68
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20
+                    ],
+                    "('org.apache.giraph.examples.scc#SccPhaseMasterCompute', 'initialize')": [
+                        67,
+                        68
+                    ]
+                }
+            }
+        }
+    },
+    "8af7670c3afb4924b2603712c1532925ce8b89fa": {
+        "authored_data": "2015 Jan 14 22:06",
+        "commit.message": "GIRAPH-980 Way to disable checkpoints for particular job and on particular supersteps\n\nSummary:\nAdded CheckpointSupportedChecker, using this interface one can specify whether the job is checkpointable or not.\nBy default all jobs that don't do output during the computation are checkpointable.\n\nTest Plan: Run several jobs with output during the computation enabled and disabled. Also wrote custom CheckpointSupportedChecker to test if I can disable checkpoints on particular superstep\n\nReviewers: majakabiljo, pavanka, pavanka.26, maja.kabiljo\n\nReviewed By: maja.kabiljo\n\nDifferential Revision: https://reviews.facebook.net/D31113\n",
+        "commit.author.name": "Sergey Edunov",
+        "pcid": "5a58a775403afb89fd24918ee4abd95046cfd7d5",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/conf/GiraphConfiguration.java": {
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.giraph.conf#GiraphConfiguration', None)": [
+                        1007,
+                        1008,
+                        1009,
+                        1010,
+                        1011,
+                        1012,
+                        1016,
+                        1017,
+                        1018
+                    ],
+                    "('org.apache.giraph.conf#GiraphConfiguration', 'setCheckpointSupportedChecker(Class)')": [
+                        1013,
+                        1014,
+                        1015
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/conf/GiraphConstants.java": {
+                "old": {
+                    "(None, None)": [
+                        1162
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        1164,
+                        1172,
+                        1173,
+                        1174,
+                        1175,
+                        1176,
+                        1177,
+                        1178,
+                        1179,
+                        1180,
+                        1181,
+                        1182,
+                        1183,
+                        1184
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/graph/FinishedSuperstepStats.java": {
+                "old": {
+                    "(None, None)": [
+                        20
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/graph/GlobalStats.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/graph/GraphTaskManager.java": {
+                "old": {
+                    "(None, None)": [
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/master/BspServiceMaster.java": {
+                "old": {
+                    "(None, None)": [
+                        53
+                    ],
+                    "('org.apache.giraph.master#BspServiceMaster', 'getCheckpointStatus(long)')": [
+                        1762,
+                        1782
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        53,
+                        55,
+                        60,
+                        94
+                    ],
+                    "('org.apache.giraph.master#BspServiceMaster', None)": [
+                        199,
+                        200,
+                        239,
+                        240,
+                        241,
+                        1801,
+                        1802,
+                        1803,
+                        1804,
+                        1805,
+                        1806,
+                        1807,
+                        1808,
+                        1809,
+                        1810,
+                        1815,
+                        1816
+                    ],
+                    "('org.apache.giraph.master#BspServiceMaster', 'getCheckpointStatus(long)')": [
+                        1770,
+                        1771,
+                        1772,
+                        1773,
+                        1774,
+                        1775,
+                        1795,
+                        1796,
+                        1797
+                    ],
+                    "('org.apache.giraph.master#BspServiceMaster', 'isCheckpointingSupported(GiraphConfiguration,MasterCompute)')": [
+                        1811,
+                        1812,
+                        1813,
+                        1814
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/worker/BspServiceWorker.java": {
+                "old": {
+                    "(None, None)": [
+                        45
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        45
+                    ]
+                }
+            }
+        }
+    },
+    "5a58a775403afb89fd24918ee4abd95046cfd7d5": {
+        "authored_data": "2015 Jan 14 00:32",
+        "commit.message": "GIRAPH-983 Remove checkpoint related error messages from console\n",
+        "commit.author.name": "Sergey Edunov",
+        "pcid": "c8db59b6a19e23f0665dae2d06c3d44da2895602",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/utils/CheckpointingUtils.java": {
+                "old": {
+                    "('org.apache.giraph.utils#CheckpointingUtils', 'getLastCheckpointedSuperstep(FileSystem,String)')": [
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.utils#CheckpointingUtils', 'getLastCheckpointedSuperstep(FileSystem,String)')": [
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        125
+                    ]
+                }
+            }
+        }
+    },
+    "705f93d15cbe6294229ad483667527eeef830a73": {
+        "authored_data": "2015 Jan 07 18:59",
+        "commit.message": "GIRAPH-979: Add type of input to 'missing input' error message (majakabiljo)\n",
+        "commit.author.name": "Maja Kabiljo",
+        "pcid": "dc4d9a2a7f5d2e40fc1e28c3b8da011306d7dccc",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/master/BspServiceMaster.java": {
+                "old": {
+                    "('org.apache.giraph.master#BspServiceMaster', 'createInputSplits(GiraphInputFormat,InputSplitPaths,String)')": [
+                        655
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.master#BspServiceMaster', 'createInputSplits(GiraphInputFormat,InputSplitPaths,String)')": [
+                        655,
+                        656
+                    ]
+                }
+            }
+        }
+    },
+    "dc4d9a2a7f5d2e40fc1e28c3b8da011306d7dccc": {
+        "authored_data": "2014 Dec 24 00:04",
+        "commit.message": "GIRAPH-975 In-proc ZooKeeper server with Master process\n\nhttps://reviews.facebook.net/D30693\n",
+        "commit.author.name": "Sergey Edunov",
+        "pcid": "78931c03f36e2371bb1870d485be73e6bc2146a6",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/conf/GiraphConstants.java": {
+                "new": {
+                    "(None, None)": [
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/graph/GraphTaskManager.java": {
+                "old": {
+                    "('org.apache.giraph.graph#GraphTaskManager', 'zooKeeperCleanup')": [
+                        959
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.graph#GraphTaskManager', 'zooKeeperCleanup')": [
+                        959
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/zk/ZooKeeperManager.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        35,
+                        37,
+                        38,
+                        39,
+                        43,
+                        44,
+                        50,
+                        53
+                    ],
+                    "('org.apache.giraph.zk#ZooKeeperManager', None)": [
+                        100,
+                        101,
+                        102,
+                        103,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        942,
+                        943,
+                        955,
+                        956,
+                        957,
+                        958,
+                        959,
+                        960,
+                        961,
+                        962
+                    ],
+                    "('org.apache.giraph.zk#ZooKeeperManager', 'onlineZooKeeperServers')": [
+                        655,
+                        656,
+                        657,
+                        658,
+                        659,
+                        660,
+                        661,
+                        662,
+                        663,
+                        664,
+                        665,
+                        666,
+                        667,
+                        668,
+                        669,
+                        670,
+                        671,
+                        672,
+                        673,
+                        674,
+                        675,
+                        676,
+                        677,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682,
+                        683,
+                        684,
+                        685,
+                        686,
+                        687,
+                        688,
+                        689,
+                        690,
+                        691,
+                        692,
+                        693,
+                        694,
+                        695,
+                        696,
+                        697,
+                        698,
+                        699,
+                        700,
+                        701,
+                        702,
+                        703,
+                        704,
+                        705,
+                        706,
+                        707,
+                        708,
+                        709,
+                        710,
+                        711,
+                        712,
+                        713,
+                        714,
+                        715
+                    ],
+                    "('org.apache.giraph.zk#ZooKeeperManager', 'offlineZooKeeperServers(State)')": [
+                        910,
+                        920,
+                        921,
+                        924,
+                        925,
+                        928,
+                        929,
+                        930,
+                        931,
+                        934,
+                        938,
+                        939,
+                        940,
+                        941
+                    ],
+                    "('org.apache.giraph.zk#ZooKeeperManager', 'runsZooKeeper')": [
+                        954
+                    ],
+                    "('org.apache.giraph.zk#ZooKeeperManager', 'logZooKeeperOutput(Level)')": [
+                        963,
+                        964,
+                        965,
+                        966,
+                        967,
+                        968
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35
+                    ],
+                    "('org.apache.giraph.zk#ZooKeeperManager', None)": [
+                        92,
+                        93,
+                        799,
+                        800,
+                        801,
+                        802,
+                        803,
+                        804,
+                        805,
+                        806,
+                        807,
+                        808,
+                        809,
+                        830,
+                        831,
+                        832,
+                        833,
+                        834,
+                        835
+                    ],
+                    "('org.apache.giraph.zk#ZooKeeperManager', 'onlineZooKeeperServers')": [
+                        578,
+                        579,
+                        580
+                    ],
+                    "('org.apache.giraph.zk#ZooKeeperManager', 'offlineZooKeeperServers(State)')": [
+                        775,
+                        785,
+                        792,
+                        796,
+                        797,
+                        798
+                    ],
+                    "('org.apache.giraph.zk#ZooKeeperManager', 'createRunner')": [
+                        810,
+                        811,
+                        812,
+                        813,
+                        814,
+                        815,
+                        816,
+                        817,
+                        818
+                    ],
+                    "('org.apache.giraph.zk#ZooKeeperManager', 'runsZooKeeper')": [
+                        829
+                    ],
+                    "('org.apache.giraph.zk#ZooKeeperManager', 'cleanup')": [
+                        836,
+                        837,
+                        838
+                    ]
+                }
+            }
+        }
+    },
+    "78931c03f36e2371bb1870d485be73e6bc2146a6": {
+        "authored_data": "2014 Dec 31 02:51",
+        "commit.message": "GIRAPH-977: useMessageSizeEncoding is broken\n\nSummary: When useMessageSizeEncoding is set to true, any application using messaging and no combiner will fail. It looks like writing lengths of messages was lost at some point, so we are just trying to read the lengths without ever writing them.\n\nTest Plan: Added a test, it failed without the change but succeeded with it.\n\nReviewers: sergey.edunov, pavanka\n\nDifferential Revision: https://reviews.facebook.net/D30825\n",
+        "commit.author.name": "Maja Kabiljo",
+        "pcid": "5def2380c35c4b42faf4fe30b7b81910a963d919",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/utils/ByteArrayVertexIdMessages.java": {
+                "new": {
+                    "('org.apache.giraph.utils#ByteArrayVertexIdMessages', 'add(I,M)')": [
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108
+                    ],
+                    "('org.apache.giraph.utils#ByteArrayVertexIdMessages', None)": [
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        138,
+                        139,
+                        140
+                    ],
+                    "('org.apache.giraph.utils#ByteArrayVertexIdMessages', 'add(byte,int,M)')": [
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122
+                    ],
+                    "('org.apache.giraph.utils#ByteArrayVertexIdMessages', 'writeMessageWithSize(M)')": [
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137
+                    ]
+                }
+            },
+            "giraph-core/src/test/java/org/apache/giraph/comm/messages/TestIntFloatPrimitiveMessageStores.java": {
+                "old": {
+                    "('org.apache.giraph.comm.messages#TestIntFloatPrimitiveMessageStores', 'createIntFloatConf')": [
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93
+                    ],
+                    "('org.apache.giraph.comm.messages#TestIntFloatPrimitiveMessageStores', None)": [
+                        94,
+                        95
+                    ],
+                    "('org.apache.giraph.comm.messages#TestIntFloatPrimitiveMessageStores', 'createIntFloatMessages')": [
+                        101
+                    ],
+                    "('org.apache.giraph.comm.messages#TestIntFloatPrimitiveMessageStores', 'testIntByteArrayMessageStore')": [
+                        152
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31,
+                        182
+                    ],
+                    "('org.apache.giraph.comm.messages#TestIntFloatPrimitiveMessageStores', None)": [
+                        56,
+                        57,
+                        175,
+                        176
+                    ],
+                    "('org.apache.giraph.comm.messages#TestIntFloatPrimitiveMessageStores', 'prepare')": [
+                        80,
+                        81,
+                        82,
+                        83
+                    ],
+                    "('org.apache.giraph.comm.messages#TestIntFloatPrimitiveMessageStores', 'createIntFloatMessages')": [
+                        100
+                    ],
+                    "('org.apache.giraph.comm.messages#TestIntFloatPrimitiveMessageStores', 'testIntByteArrayMessageStore')": [
+                        151
+                    ],
+                    "('org.apache.giraph.comm.messages#TestIntFloatPrimitiveMessageStores', 'testIntByteArrayMessageStoreWithMessageEncoding')": [
+                        177,
+                        178,
+                        179,
+                        180,
+                        181
+                    ]
+                }
+            }
+        }
+    }
+}

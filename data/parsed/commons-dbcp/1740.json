@@ -1,0 +1,878 @@
+{
+    "ae96f743eb45c91011bd3cc4756ceaa42acfe1b6": {
+        "authored_data": "2011 Apr 25 18:22",
+        "commit.message": "Modified createDataSource method in BasicDataSource to ensure that GenericObjectPool\nEvictor tasks are not started and orphaned when BasicDataSource encounters errors on\ninitialization.  Prior to this fix, when minIdle and timeBetweenEvictionRunsMillis\nare both positive, Evictors orphaned by failed initialization can continue to\ngenerate database connection requests.\nJIRA: DBCP-352\nJIRA: DBCP-339\nJIRA: DBCP-93\nReported by Byungchol Kim, Mike Bartlett \nPatched by Byungchol Kim, Dmitry Semibratov \n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@1096549 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Phil Steitz",
+        "pcid": "66fac49530b9d55395c55cf577427b7ce4af8447",
+        "changes": {
+            "src/java/org/apache/commons/dbcp/BasicDataSource.java": {
+                "old": {
+                    "('org.apache.commons.dbcp#BasicDataSource', 'createDataSource')": [
+                        1461,
+                        1462,
+                        1463,
+                        1464
+                    ],
+                    "('org.apache.commons.dbcp#BasicDataSource', 'createConnectionPool')": [
+                        1586
+                    ],
+                    "('org.apache.commons.dbcp#BasicDataSource', None)": [
+                        1596
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp#BasicDataSource', 'createDataSource')": [
+                        1461,
+                        1462,
+                        1463,
+                        1464,
+                        1465,
+                        1466,
+                        1467,
+                        1468,
+                        1469,
+                        1470,
+                        1471,
+                        1472,
+                        1473,
+                        1474,
+                        1475,
+                        1476,
+                        1478,
+                        1479,
+                        1480,
+                        1481,
+                        1482,
+                        1483,
+                        1484,
+                        1485,
+                        1486,
+                        1487,
+                        1488,
+                        1489,
+                        1490,
+                        1491,
+                        1492,
+                        1493,
+                        1494,
+                        1495,
+                        1501,
+                        1504,
+                        1505,
+                        1506
+                    ],
+                    "('org.apache.commons.dbcp#BasicDataSource', None)": [
+                        1604,
+                        1605,
+                        1606,
+                        1607,
+                        1608,
+                        1609,
+                        1632,
+                        1633,
+                        1634,
+                        1635,
+                        1642,
+                        1643,
+                        1644,
+                        1645,
+                        1646,
+                        1647,
+                        1648,
+                        1649,
+                        1650,
+                        1655,
+                        1656,
+                        1660
+                    ],
+                    "('org.apache.commons.dbcp#BasicDataSource', 'closeConnectionPool')": [
+                        1636,
+                        1637,
+                        1638,
+                        1639,
+                        1640,
+                        1641
+                    ],
+                    "('org.apache.commons.dbcp#BasicDataSource', 'startPoolMaintenance')": [
+                        1651,
+                        1652,
+                        1653,
+                        1654
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/dbcp/TestBasicDataSource.java": {
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        26,
+                        564,
+                        566,
+                        567,
+                        568,
+                        569,
+                        591,
+                        592
+                    ],
+                    "('org.apache.commons.dbcp#TestBasicDataSource', None)": [
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524
+                    ],
+                    "('org.apache.commons.dbcp#TestBasicDataSource', 'testCreateDataSourceCleanupEvictor')": [
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563
+                    ],
+                    "('org.apache.commons.dbcp#TesterConnRequestCountDriver', None)": [
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        578,
+                        579,
+                        580,
+                        583,
+                        584,
+                        587,
+                        588
+                    ],
+                    "('org.apache.commons.dbcp#TesterConnRequestCountDriver', 'connect(String,Properties)')": [
+                        575,
+                        576,
+                        577
+                    ],
+                    "('org.apache.commons.dbcp#TesterConnRequestCountDriver', 'acceptsURL(String)')": [
+                        581,
+                        582
+                    ],
+                    "('org.apache.commons.dbcp#TesterConnRequestCountDriver', 'getConnectionRequestCount')": [
+                        585,
+                        586
+                    ],
+                    "('org.apache.commons.dbcp#TesterConnRequestCountDriver', 'initConnRequestCount')": [
+                        589,
+                        590
+                    ]
+                }
+            }
+        }
+    },
+    "f76f2616ec9e6e84b5c5236762bab01c9c2253ed": {
+        "authored_data": "2011 Apr 23 23:55",
+        "commit.message": "Changed DelegatingDatabaseMetaData to no longer add itself to the AbandonedTrace of its parent\nconnection.  This was causing excessive memory consumption and was not necessary, as\nresultsets created by DelegatingDatabaseMetaData instances are attached to the parent\nconnection's trace on creation.\nJIRA: DBCP-330\nJIRA: DBCP-352\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@1096260 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Phil Steitz",
+        "pcid": "31bd85fd78153666ec6ba14ead5edd4659c1b076",
+        "changes": {
+            "src/java/org/apache/commons/dbcp/DelegatingDatabaseMetaData.java": {
+                "old": {
+                    "(None, None)": [
+                        29,
+                        30,
+                        31,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingDatabaseMetaData', None)": [
+                        41,
+                        42,
+                        52
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        30,
+                        31,
+                        34
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingDatabaseMetaData', None)": [
+                        36,
+                        46
+                    ]
+                }
+            }
+        }
+    },
+    "31bd85fd78153666ec6ba14ead5edd4659c1b076": {
+        "authored_data": "2011 Apr 23 23:04",
+        "commit.message": "Modified execute methods of Statement objects to ensure that whenever\na statement is used, the lastUsed property of its parent connection is updated.\nJIRA: DBCP-343\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@1096257 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Phil Steitz",
+        "pcid": "4088bd0c012cc51f1f15de6a8fab633acc35323b",
+        "changes": {
+            "src/java/org/apache/commons/dbcp/AbandonedConfig.java": {
+                "old": {
+                    "('org.apache.commons.dbcp#AbandonedConfig', None)": [
+                        37,
+                        38,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        53,
+                        54,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        86,
+                        88,
+                        89,
+                        90
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp#AbandonedConfig', None)": [
+                        37,
+                        38,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        53,
+                        54,
+                        56,
+                        57,
+                        58,
+                        62,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        100,
+                        101,
+                        102
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/dbcp/BasicDataSource.java": {
+                "old": {
+                    "('org.apache.commons.dbcp#BasicDataSource', None)": [
+                        1183,
+                        1184,
+                        1185,
+                        1186,
+                        1187,
+                        1188,
+                        1189,
+                        1190,
+                        1191,
+                        1192,
+                        1206,
+                        1217,
+                        1218,
+                        1219,
+                        1220,
+                        1221,
+                        1222,
+                        1231
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp#BasicDataSource', None)": [
+                        1183,
+                        1184,
+                        1185,
+                        1186,
+                        1187,
+                        1188,
+                        1189,
+                        1190,
+                        1191,
+                        1192,
+                        1197,
+                        1198,
+                        1208,
+                        1209,
+                        1210,
+                        1211,
+                        1212,
+                        1213,
+                        1214,
+                        1215,
+                        1216,
+                        1217,
+                        1218,
+                        1219,
+                        1230,
+                        1231,
+                        1232,
+                        1233,
+                        1234,
+                        1235,
+                        1236,
+                        1237,
+                        1238,
+                        1239,
+                        1240,
+                        1241,
+                        1242,
+                        1243,
+                        1244,
+                        1245,
+                        1254,
+                        1255,
+                        1256,
+                        1257,
+                        1258,
+                        1259,
+                        1260,
+                        1261,
+                        1262
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/dbcp/DelegatingPreparedStatement.java": {
+                "old": {
+                    "('org.apache.commons.dbcp#DelegatingPreparedStatement', 'executeUpdate')": [
+                        104,
+                        105
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingPreparedStatement', 'execute')": [
+                        171,
+                        172
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp#DelegatingPreparedStatement', 'executeQuery')": [
+                        95,
+                        96,
+                        97
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingPreparedStatement', 'executeUpdate')": [
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingPreparedStatement', None)": [
+                        117,
+                        118,
+                        194,
+                        195
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingPreparedStatement', 'execute')": [
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/dbcp/DelegatingStatement.java": {
+                "old": {
+                    "('org.apache.commons.dbcp#DelegatingStatement', 'executeUpdate(String)')": [
+                        227,
+                        228
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingStatement', 'execute(String)')": [
+                        263,
+                        264
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingStatement', 'executeBatch')": [
+                        296,
+                        297
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingStatement', 'executeUpdate(String,int)')": [
+                        322,
+                        323,
+                        325,
+                        326
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingStatement', None)": [
+                        324,
+                        327,
+                        330,
+                        333,
+                        336
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingStatement', 'executeUpdate(String,String)')": [
+                        328,
+                        329
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingStatement', 'execute(String,int)')": [
+                        331,
+                        332,
+                        334,
+                        335
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingStatement', 'execute(String,String)')": [
+                        337,
+                        338
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp#DelegatingStatement', 'executeQuery(String)')": [
+                        207,
+                        208,
+                        209
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingStatement', 'executeUpdate(String)')": [
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingStatement', None)": [
+                        239,
+                        240,
+                        285,
+                        286,
+                        328,
+                        329,
+                        364,
+                        365,
+                        366,
+                        377,
+                        378,
+                        379,
+                        390,
+                        391,
+                        392,
+                        403,
+                        404,
+                        405,
+                        416,
+                        417,
+                        418,
+                        429,
+                        430
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingStatement', 'execute(String)')": [
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingStatement', 'executeBatch')": [
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingStatement', 'executeUpdate(String,int)')": [
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingStatement', 'executeUpdate(String,String)')": [
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingStatement', 'execute(String,int)')": [
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415
+                    ],
+                    "('org.apache.commons.dbcp#DelegatingStatement', 'execute(String,String)')": [
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/dbcp/TestAbandonedBasicDataSource.java": {
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        25,
+                        248
+                    ],
+                    "('org.apache.commons.dbcp#TestAbandonedBasicDataSource', None)": [
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244
+                    ],
+                    "('org.apache.commons.dbcp#TestAbandonedBasicDataSource', 'testLastUsedPreparedStatementUse')": [
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187
+                    ],
+                    "('org.apache.commons.dbcp#TestAbandonedBasicDataSource', 'testLastUsedUpdate')": [
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203
+                    ],
+                    "('org.apache.commons.dbcp#TestAbandonedBasicDataSource', 'checkLastUsedStatement(Statement,DelegatingConnection)')": [
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227
+                    ],
+                    "('org.apache.commons.dbcp#TestAbandonedBasicDataSource', 'checkLastUsedPreparedStatement(PreparedStatement,DelegatingConnection)')": [
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239
+                    ],
+                    "('org.apache.commons.dbcp#TestAbandonedBasicDataSource', 'assertAndReset(DelegatingConnection)')": [
+                        245,
+                        246,
+                        247
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/dbcp/TesterPreparedStatement.java": {
+                "old": {
+                    "('org.apache.commons.dbcp#TesterPreparedStatement', 'executeUpdate(String,int)')": [
+                        252,
+                        257
+                    ],
+                    "('org.apache.commons.dbcp#TesterPreparedStatement', 'executeUpdate(String,String)')": [
+                        262
+                    ],
+                    "('org.apache.commons.dbcp#TesterPreparedStatement', 'execute(String,int)')": [
+                        267,
+                        272
+                    ],
+                    "('org.apache.commons.dbcp#TesterPreparedStatement', 'execute(String,String)')": [
+                        277
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp#TesterPreparedStatement', 'executeUpdate(String,int)')": [
+                        252,
+                        257
+                    ],
+                    "('org.apache.commons.dbcp#TesterPreparedStatement', 'executeUpdate(String,String)')": [
+                        262
+                    ],
+                    "('org.apache.commons.dbcp#TesterPreparedStatement', 'execute(String,int)')": [
+                        267,
+                        272
+                    ],
+                    "('org.apache.commons.dbcp#TesterPreparedStatement', 'execute(String,String)')": [
+                        277
+                    ]
+                }
+            }
+        }
+    },
+    "4088bd0c012cc51f1f15de6a8fab633acc35323b": {
+        "authored_data": "2011 Apr 23 23:04",
+        "commit.message": "Updated dbcp, pool versions.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@1096256 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Phil Steitz",
+        "pcid": "95949e95a112f37b89aac9d55b843faa2cca8142",
+        "changes": {
+            "doc/JOCLPoolingDriverExample.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        37,
+                        41,
+                        42,
+                        76
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        37,
+                        41,
+                        42,
+                        76
+                    ]
+                }
+            }
+        }
+    },
+    "29c9c55ebf9c6267ed1197d05bea9d4b8fc0229a": {
+        "authored_data": "2011 Apr 15 15:00",
+        "commit.message": "Fixed spelling errors; updated pool, dbcp versions to latest releases.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@1092731 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Phil Steitz",
+        "pcid": "a83c7e21c8cf693923385cda4ebaf0e01cea1309",
+        "changes": {
+            "doc/BasicDataSourceExample.java": {
+                "old": {
+                    "(None, None)": [
+                        44,
+                        45,
+                        50,
+                        51,
+                        65
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        44,
+                        45,
+                        50,
+                        51,
+                        65
+                    ]
+                }
+            },
+            "doc/ManualPoolingDataSourceExample.java": {
+                "old": {
+                    "(None, None)": [
+                        41,
+                        46,
+                        59,
+                        60,
+                        74
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        41,
+                        46,
+                        59,
+                        60,
+                        74
+                    ]
+                }
+            },
+            "doc/ManualPoolingDriverExample.java": {
+                "old": {
+                    "(None, None)": [
+                        47,
+                        48,
+                        53,
+                        54,
+                        67
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        47,
+                        48,
+                        53,
+                        54,
+                        67
+                    ]
+                }
+            }
+        }
+    },
+    "a1eb1a48a16f58638c8130fca1040c47ef48bf17": {
+        "authored_data": "2011 Mar 22 23:13",
+        "commit.message": "Unnecessary cast\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@1084406 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "b6443b7d6a05ee51d8ac43e7ad6cd012a6627edd",
+        "changes": {
+            "src/java/org/apache/commons/dbcp/datasources/PerUserPoolDataSource.java": {
+                "old": {
+                    "('org.apache.commons.dbcp.datasources#PerUserPoolDataSource', 'getPooledConnectionAndInfo(String,String)')": [
+                        419
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp.datasources#PerUserPoolDataSource', 'getPooledConnectionAndInfo(String,String)')": [
+                        419
+                    ]
+                }
+            }
+        }
+    }
+}
