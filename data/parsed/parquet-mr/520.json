@@ -1,0 +1,2575 @@
+{
+    "741944332d5bd90112b610a8b5f2eeefe51e08bc": {
+        "authored_data": "2015 Jul 07 15:55",
+        "commit.message": "PARQUET-327. Show statistics in the dump output.\n\nCloses #237\n",
+        "commit.author.name": "Tom White",
+        "pcid": "36ce032b612fc0a1156d28bca7327e06337c8815",
+        "changes": {
+            "parquet-tools/src/main/java/org/apache/parquet/tools/command/DumpCommand.java": {
+                "new": {
+                    "(None, None)": [
+                        51
+                    ],
+                    "('org.apache.parquet.tools.command#DumpCommand', 'dump(PrettyPrintWriter,PageReadStore,ColumnDescriptor)')": [
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288
+                    ]
+                }
+            }
+        }
+    },
+    "36ce032b612fc0a1156d28bca7327e06337c8815": {
+        "authored_data": "2016 Apr 21 03:47",
+        "commit.message": "PARQUET-585: Slowly ramp up sizes of int[]s in IntList to keep sizes small when data sets are small\n\nOne of the follow up items from PR - https://github.com/apache/parquet-mr/pull/339 was to slowly ramp up the size of the int[] created in IntList to ensure we don't allocate 64K arrays right off the bat. This PR updates the code to start with a 4K array then keeps doubling till 64K (and stays at 64K after that).\n\nAuthor: Piyush Narang <pnarang@twitter.com>\n\nCloses #341 from piyushnarang/master and squashes the following commits:\n\n0bc6b84 [Piyush Narang] Fix review comments - add spaces, check slab size, fix slab init\nd1b4df1 [Piyush Narang] Make IntListTest values relative to constants in IntList\n9617015 [Piyush Narang] Update IntList slab creation to keep bumping up size gradually\nebf1c58 [Piyush Narang] Merge branch 'master' of https://github.com/apache/parquet-mr\n3ecc577 [Piyush Narang] Remove redundant IntList ctor\nf7dfd5f [Piyush Narang] Switch int[] initialization in IntList to be lazy\n",
+        "commit.author.name": "Piyush Narang",
+        "pcid": "6b24a1d1b5e2792a7821ad172a45e38d2b04f9b8",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/column/values/dictionary/IntList.java": {
+                "old": {
+                    "('org.apache.parquet.column.values.dictionary#IntList', None)": [
+                        34,
+                        47,
+                        53,
+                        71,
+                        72
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#IntList', 'initSlab')": [
+                        85,
+                        86
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#IntList', 'add(int)')": [
+                        95,
+                        98
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#IntList', 'iterator')": [
+                        111,
+                        116
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#IntList', 'size')": [
+                        123
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.column.values.dictionary#IntList', None)": [
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        47,
+                        59,
+                        60,
+                        62,
+                        63,
+                        69,
+                        87,
+                        88,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        112,
+                        113,
+                        114,
+                        120,
+                        121
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#IntList', 'getCurrentSlabSize')": [
+                        45,
+                        46
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#IntList', 'allocateSlab')": [
+                        109,
+                        110
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#IntList', 'updateCurrentSlabSize')": [
+                        115,
+                        116,
+                        117,
+                        118,
+                        119
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#IntList', 'add(int)')": [
+                        129,
+                        132,
+                        133
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#IntList', 'iterator')": [
+                        146,
+                        151
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#IntList', 'size')": [
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163
+                    ]
+                }
+            }
+        }
+    },
+    "6b24a1d1b5e2792a7821ad172a45e38d2b04f9b8": {
+        "authored_data": "2016 Apr 20 15:41",
+        "commit.message": "PARQUET-358: Add support for Avro's logical types API.\n\nThis adds support for Avro's logical types API to parquet-avro.\n\n* The logical types API was introduced in Avro 1.8.0, so this bumps the Avro dependency version to 1.8.0.\n* Types supported are: decimal, date, time-millis, time-micros, timestamp-millis, and timestamp-micros\n* Tests have been copied from Avro and ported to the parquet-avro API\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #318 from rdblue/PARQUET-358-add-avro-logical-types-api and squashes the following commits:\n\nbd81f9c [Ryan Blue] PARQUET-358: Fix review items.\n0a882ee [Ryan Blue] PARQUET-358: Add logical types circular reference test.\n5124618 [Ryan Blue] PARQUET-358: Add license documentation for code from Avro.\ndcb14be [Ryan Blue] PARQUET-358: Add support for Avro's logical types API.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "82b8ecc3275d7c3578a6531ac3f1da3ffada9dcc",
+        "changes": {
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroIndexedRecordConverter.java": {
+                "old": {
+                    "('org.apache.parquet.avro#AvroIndexedRecordConverter', 'newConverter(Schema,Type,GenericData,ParentValueContainer)')": [
+                        136
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25
+                    ],
+                    "('org.apache.parquet.avro#AvroIndexedRecordConverter', 'getDatumClass(GenericData,Schema)')": [
+                        116,
+                        117,
+                        118,
+                        119,
+                        120
+                    ],
+                    "('org.apache.parquet.avro#AvroIndexedRecordConverter', 'newConverter(Schema,Type,GenericData,ParentValueContainer)')": [
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152
+                    ]
+                }
+            },
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroReadSupport.java": {
+                "old": {
+                    "('org.apache.parquet.avro#AvroReadSupport', 'prepareForRead(Configuration,Map,MessageType,ReadContext)')": [
+                        113,
+                        115
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.avro#AvroReadSupport', 'prepareForRead(Configuration,Map,MessageType,ReadContext)')": [
+                        113,
+                        115
+                    ]
+                }
+            },
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroRecordConverter.java": {
+                "old": {
+                    "('org.apache.parquet.avro#AvroRecordConverter', None)": [
+                        72,
+                        116,
+                        505,
+                        508,
+                        646,
+                        650,
+                        651,
+                        652,
+                        659
+                    ],
+                    "('org.apache.parquet.avro#AvroRecordConverter', 'newConverter(Schema,Type,GenericData,ParentValueContainer)')": [
+                        168,
+                        172,
+                        190,
+                        204
+                    ],
+                    "('org.apache.parquet.avro#AvroRecordConverter', 'getDatumClass(Schema,GenericData)')": [
+                        269
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        40,
+                        41,
+                        42,
+                        43,
+                        46,
+                        47
+                    ],
+                    "('org.apache.parquet.avro#AvroRecordConverter', None)": [
+                        79,
+                        80,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        120,
+                        121,
+                        134,
+                        135,
+                        137,
+                        171,
+                        202,
+                        203,
+                        206,
+                        207,
+                        228,
+                        229,
+                        344,
+                        345,
+                        598,
+                        601,
+                        739,
+                        743,
+                        744,
+                        745,
+                        752
+                    ],
+                    "('org.apache.parquet.avro#AvroRecordConverter', 'getFieldsByName(Class,boolean)')": [
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201
+                    ],
+                    "('org.apache.parquet.avro#AvroRecordConverter', 'isTransientOrStatic(Field)')": [
+                        204,
+                        205
+                    ],
+                    "('org.apache.parquet.avro#AvroRecordConverter', 'newConverter(Schema,Type,GenericData,ParentValueContainer)')": [
+                        225,
+                        226,
+                        227
+                    ],
+                    "('org.apache.parquet.avro#AvroRecordConverter', 'newConverter(Schema,Type,GenericData,Class,ParentValueContainer)')": [
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        246,
+                        264,
+                        278
+                    ],
+                    "('org.apache.parquet.avro#AvroRecordConverter', 'getDatumClass(Schema,GenericData)')": [
+                        342,
+                        343
+                    ],
+                    "('org.apache.parquet.avro#AvroRecordConverter', 'getDatumClass(Conversion,Class,Schema,GenericData)')": [
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359
+                    ],
+                    "('org.apache.parquet.avro#AvroRecordConverter', 'end')": [
+                        407,
+                        408,
+                        409
+                    ]
+                }
+            },
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroSchemaConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        26,
+                        33,
+                        34
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'convertField(String,Schema,Type)')": [
+                        119,
+                        121,
+                        123,
+                        125,
+                        127,
+                        129,
+                        131,
+                        135,
+                        149,
+                        150,
+                        153,
+                        154
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'convertUnion(String,Schema,Type)')": [
+                        158,
+                        178
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', None)": [
+                        189,
+                        190,
+                        196,
+                        197,
+                        202,
+                        203
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'primitive(String,PrimitiveType,Type,int,OriginalType)')": [
+                        191,
+                        192,
+                        193,
+                        194,
+                        195
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'primitive(String,PrimitiveType,Type,OriginalType)')": [
+                        198,
+                        199,
+                        200,
+                        201
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'primitive(String,PrimitiveType,Type)')": [
+                        204,
+                        205,
+                        206
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'convertFields(String,List)')": [
+                        220,
+                        221,
+                        223
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'convertField(Type)')": [
+                        234,
+                        235,
+                        236,
+                        269
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        27,
+                        32,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', None)": [
+                        122,
+                        359,
+                        360,
+                        378,
+                        379
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'convertField(String,Schema,Type)')": [
+                        124,
+                        127,
+                        129,
+                        131,
+                        133,
+                        135,
+                        137,
+                        139,
+                        143,
+                        157,
+                        158,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'convertUnion(String,Schema,Type)')": [
+                        186,
+                        206
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'convertFields(String,List)')": [
+                        230,
+                        231,
+                        233,
+                        234
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'convertField(Type)')": [
+                        244,
+                        246,
+                        247,
+                        248,
+                        281,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'convertLogicalType(LogicalType)')": [
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'convertOriginalType(OriginalType,DecimalMetadata)')": [
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398
+                    ]
+                }
+            },
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroWriteSupport.java": {
+                "old": {
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'write(IndexedRecord)')": [
+                        139,
+                        140,
+                        141
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'write(T)')": [
+                        146,
+                        147,
+                        148
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', None)": [
+                        240
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeValue(Type,Schema,Object)')": [
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'fromAvroString(Object)')": [
+                        286
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', None)": [
+                        74,
+                        75,
+                        89,
+                        97,
+                        163,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        275,
+                        276,
+                        277,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'write(IndexedRecord)')": [
+                        145
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'write(T)')": [
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeUnion(GroupType,Schema,Object)')": [
+                        244,
+                        245
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeValue(Type,Schema,Object)')": [
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'convert(Schema,LogicalType,Conversion,Object)')": [
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeValueWithoutConversion(Type,Schema,Object)')": [
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'fromAvroString(Object)')": [
+                        367
+                    ]
+                }
+            },
+            "parquet-avro/src/main/java/org/apache/parquet/avro/ParentValueContainer.java": {
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        236,
+                        237
+                    ],
+                    "('org.apache.parquet.avro#ParentValueContainer', None)": [
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127
+                    ],
+                    "('org.apache.parquet.avro#ParentValueContainer', 'getConversionContainer(ParentValueContainer,Conversion,Schema)')": [
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235
+                    ]
+                }
+            },
+            "parquet-avro/src/test/java/org/apache/parquet/avro/AvroTestUtil.java": {
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        26,
+                        30,
+                        31,
+                        32,
+                        33,
+                        35,
+                        36,
+                        121
+                    ],
+                    "('org.apache.parquet.avro#AvroTestUtil', 'read(GenericData,Schema,File)')": [
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99
+                    ],
+                    "('org.apache.parquet.avro#AvroTestUtil', None)": [
+                        100,
+                        101,
+                        102
+                    ],
+                    "('org.apache.parquet.avro#AvroTestUtil', 'write(TemporaryFolder,GenericData,Schema,D)')": [
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120
+                    ]
+                }
+            },
+            "parquet-avro/src/test/java/org/apache/parquet/avro/TestAvroSchemaConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testTopLevelMustBeARecord')": [
+                        134
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testOptionalFields')": [
+                        273
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testOptionalMapValue')": [
+                        287
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testOptionalArrayElement')": [
+                        306
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testUnionOfTwoTypes')": [
+                        326
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testOldAvroListOfLists')": [
+                        399
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testOldThriftListOfLists')": [
+                        428
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testUnknownTwoLevelListOfLists')": [
+                        461
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testParquetMapWithoutMapKeyValueAnnotation')": [
+                        491
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        761,
+                        762,
+                        763
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testTopLevelMustBeARecord')": [
+                        155
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testOptionalFields')": [
+                        294
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testOptionalMapValue')": [
+                        308
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testOptionalArrayElement')": [
+                        327
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testUnionOfTwoTypes')": [
+                        347
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testOldAvroListOfLists')": [
+                        420
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testOldThriftListOfLists')": [
+                        449
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testUnknownTwoLevelListOfLists')": [
+                        482
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testParquetMapWithoutMapKeyValueAnnotation')": [
+                        512
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', None)": [
+                        528,
+                        540,
+                        541,
+                        542,
+                        554,
+                        555,
+                        556,
+                        567,
+                        568,
+                        569,
+                        579,
+                        580,
+                        581,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        636,
+                        637,
+                        638,
+                        639,
+                        640,
+                        641,
+                        666,
+                        667,
+                        668,
+                        669,
+                        670,
+                        671,
+                        696,
+                        697,
+                        698,
+                        699,
+                        700,
+                        701,
+                        726,
+                        727,
+                        728,
+                        729,
+                        730,
+                        736,
+                        741,
+                        742,
+                        743,
+                        744,
+                        745,
+                        746,
+                        747,
+                        748
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testDecimalBytesType')": [
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testDecimalFixedType')": [
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testDecimalIntegerType')": [
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testDecimalLongType')": [
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        575,
+                        576,
+                        577,
+                        578
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testDateType')": [
+                        582,
+                        583,
+                        584,
+                        585,
+                        586,
+                        587,
+                        588,
+                        589,
+                        590,
+                        591,
+                        592,
+                        593,
+                        594,
+                        595,
+                        596,
+                        597,
+                        598,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604,
+                        605
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testTimeMillisType')": [
+                        612,
+                        613,
+                        614,
+                        615,
+                        616,
+                        617,
+                        618,
+                        619,
+                        620,
+                        621,
+                        622,
+                        623,
+                        624,
+                        625,
+                        626,
+                        627,
+                        628,
+                        629,
+                        630,
+                        631,
+                        632,
+                        633,
+                        634,
+                        635
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testTimeMicrosType')": [
+                        642,
+                        643,
+                        644,
+                        645,
+                        646,
+                        647,
+                        648,
+                        649,
+                        650,
+                        651,
+                        652,
+                        653,
+                        654,
+                        655,
+                        656,
+                        657,
+                        658,
+                        659,
+                        660,
+                        661,
+                        662,
+                        663,
+                        664,
+                        665
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testTimestampMillisType')": [
+                        672,
+                        673,
+                        674,
+                        675,
+                        676,
+                        677,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682,
+                        683,
+                        684,
+                        685,
+                        686,
+                        687,
+                        688,
+                        689,
+                        690,
+                        691,
+                        692,
+                        693,
+                        694,
+                        695
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'testTimestampMicrosType')": [
+                        702,
+                        703,
+                        704,
+                        705,
+                        706,
+                        707,
+                        708,
+                        709,
+                        710,
+                        711,
+                        712,
+                        713,
+                        714,
+                        715,
+                        716,
+                        717,
+                        718,
+                        719,
+                        720,
+                        721,
+                        722,
+                        723,
+                        724,
+                        725
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'message(PrimitiveType)')": [
+                        737,
+                        738,
+                        739,
+                        740
+                    ],
+                    "('org.apache.parquet.avro#TestAvroSchemaConverter', 'assertThrows(String,Class,Runnable)')": [
+                        749,
+                        750,
+                        751,
+                        752,
+                        753,
+                        754,
+                        755,
+                        756,
+                        757,
+                        758,
+                        759,
+                        760
+                    ]
+                }
+            },
+            "parquet-avro/src/test/java/org/apache/parquet/avro/TestReadWrite.java": {
+                "old": {
+                    "(None, None)": [
+                        22
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        32,
+                        36,
+                        37,
+                        38,
+                        47,
+                        53,
+                        54,
+                        56
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', None)": [
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        290,
+                        291,
+                        292
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', 'testDecimalValues')": [
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', 'testFixedDecimalValues')": [
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341
+                    ]
+                }
+            },
+            "parquet-avro/src/test/java/org/apache/parquet/avro/TestReadWriteOldListBehavior.java": {
+                "old": {
+                    "(None, None)": [
+                        50
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/io/api/Binary.java": {
+                "old": {
+                    "('org.apache.parquet.io.api#Binary', None)": [
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromReusedByteBuffer(ByteBuffer)')": [
+                        524
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromConstantByteBuffer(ByteBuffer)')": [
+                        528
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromString(String)')": [
+                        539
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29,
+                        30,
+                        31
+                    ],
+                    "('org.apache.parquet.io.api#Binary', None)": [
+                        216,
+                        217,
+                        218,
+                        219,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        560,
+                        561
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromReusedByteBuffer(ByteBuffer)')": [
+                        542
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromConstantByteBuffer(ByteBuffer)')": [
+                        546
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromString(String)')": [
+                        557,
+                        558,
+                        559
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromString(CharSequence)')": [
+                        562
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/schema/Types.java": {
+                "old": {
+                    "('org.apache.parquet.schema#Types', None)": [
+                        339,
+                        341,
+                        354,
+                        356,
+                        372,
+                        374
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.schema#Types', None)": [
+                        339,
+                        341,
+                        354,
+                        356,
+                        372,
+                        374
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/io/api/TestBinary.java": {
+                "old": {
+                    "('org.apache.parquet.io.api#TestBinary', 'testConstantCopy(BinaryFactory)')": [
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210
+                    ]
+                }
+            }
+        }
+    },
+    "82b8ecc3275d7c3578a6531ac3f1da3ffada9dcc": {
+        "authored_data": "2016 Apr 19 16:17",
+        "commit.message": "PARQUET-484: Warn when Decimal is stored as INT64 while could be stored as INT32\n\nBelow is documented in [LogicalTypes.md](https://github.com/Parquet/parquet-format/blob/master/LogicalTypes.md#decimal):\n\n> int32: for 1 <= precision <= 9\n> int64: for 1 <= precision <= 18; precision < 10 will produce a warning\n\nThis PR implements the `precision < 10 will produce a warning` part.\n\n@rdblue @liancheng would mind taking a look at this when you have time? It's a fairly small addition; cheers.\n\nAuthor: Liwei Lin <proflin.me@gmail.com>\nAuthor: proflin <proflin.me@gmail.com>\n\nCloses #316 from lw-lin/P-484-2 and squashes the following commits:\n\n207e509 [Liwei Lin] Address comments\nb227484 [proflin] PARQUET-484: Warn when Decimal is stored as INT64 while could be stored as INT32\n",
+        "commit.author.name": "Liwei Lin",
+        "pcid": "dc08bb8ea6cdf01188f6699559e779e6cc296287",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/schema/Types.java": {
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29
+                    ],
+                    "('org.apache.parquet.schema#Types', None)": [
+                        310,
+                        313,
+                        314,
+                        414,
+                        415,
+                        416,
+                        417
+                    ]
+                }
+            }
+        }
+    },
+    "dc08bb8ea6cdf01188f6699559e779e6cc296287": {
+        "authored_data": "2016 Apr 19 15:26",
+        "commit.message": "PARQUET-584 show proper command usage when there's no arguments\n\nAuthor: Kaufman Ng <kaufman@cloudera.com>\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #336 from coughman/master and squashes the following commits:\n\ncd459f9 [Kaufman Ng] PARQUET-584: fixed formatting\n1d1e965 [Kaufman Ng] Merge branch 'master' of https://github.com/coughman/incubator-parquet-mr\n25b6d86 [Kaufman Ng] Merge branch 'master' of https://github.com/apache/parquet-mr\nbee66e5 [Ryan Blue] PARQUET-384: Add dictionary filtering.\n283f7c7 [Kaufman Ng] show proper command usage when there's no arguments\n",
+        "commit.author.name": "Kaufman Ng",
+        "pcid": "ac62c1c29f319a97a2552c39f32c8e6acd70c9e1",
+        "changes": {
+            "parquet-tools/src/main/java/org/apache/parquet/tools/Main.java": {
+                "old": {
+                    "('org.apache.parquet.tools#Main', 'die(String,boolean,String,Command)')": [
+                        153,
+                        154,
+                        155
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.tools#Main', 'die(String,boolean,String,Command)')": [
+                        153,
+                        154,
+                        155,
+                        156
+                    ]
+                }
+            }
+        }
+    },
+    "ac62c1c29f319a97a2552c39f32c8e6acd70c9e1": {
+        "authored_data": "2016 Apr 17 00:25",
+        "commit.message": "PARQUET-580: Switch int[] initialization in IntList to be lazy\n\nNoticed that for a dataset that we were trying to import that had a lot of columns (few thousand) that weren't being used, we ended up allocating a lot of unnecessary int arrays (each 64K in size). Heap footprint for all those int[]s turned out to be around 2GB or so (and results in some jobs OOMing). This seems unnecessary for columns that might not be used. The changes in this PR switch over to initialize the int[] only when it being used for the first time.\n\nAlso wondering if 64K is the right size to start off with. Wondering if a potential improvement is if we could allocate these int[]s in IntList in a way that slowly ramps up their size. So rather than create arrays of size 64K at a time (which is potentially wasteful if there are only a few hundred bytes), we could create say a 4K int[], then when it fills up an 8K[] and so on till we reach 64K (at which point the behavior is the same as the current implementation). If this sounds like a reasonable idea, I can update this PR to do that as well. Wasn't sure if there was some historical context around that..\n\nAuthor: Piyush Narang <pnarang@twitter.com>\n\nCloses #339 from piyushnarang/master and squashes the following commits:\n\n3ecc577 [Piyush Narang] Remove redundant IntList ctor\nf7dfd5f [Piyush Narang] Switch int[] initialization in IntList to be lazy\n",
+        "commit.author.name": "Piyush Narang",
+        "pcid": "d4021487539b0f7758ec644f2e0d83df95c66bba",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/column/values/dictionary/IntList.java": {
+                "old": {
+                    "('org.apache.parquet.column.values.dictionary#IntList', None)": [
+                        61,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#IntList', 'add(int)')": [
+                        98
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.column.values.dictionary#IntList', None)": [
+                        61,
+                        79,
+                        80,
+                        81
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#IntList', 'add(int)')": [
+                        94,
+                        95,
+                        96,
+                        100
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#IntList', 'iterator')": [
+                        110,
+                        111,
+                        112,
+                        113
+                    ]
+                }
+            }
+        }
+    },
+    "d4021487539b0f7758ec644f2e0d83df95c66bba": {
+        "authored_data": "2016 Apr 17 00:23",
+        "commit.message": "PARQUET-581: Fix two instances of the conflation of the min and max row\n\ncount for page size check in ParquetOutputFormat.java\n\nAuthor: Michael Allman <michael@videoamp.com>\n\nCloses #340 from mallman/fix_minmax_conflation and squashes the following commits:\n\n79331a5 [Michael Allman] PARQUET-581: Fix two instances of the conflation of the min and max row count for page size check in ParquetOutputFormat.java\n",
+        "commit.author.name": "Michael Allman",
+        "pcid": "e9928c94ce1385ec72028336417f19f30ac38ac0",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetOutputFormat.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'getMaxRowCountForPageSizeCheck(Configuration)')": [
+                        255
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'getRecordWriter(Configuration,Path,CompressionCodecName)')": [
+                        386
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'getMaxRowCountForPageSizeCheck(Configuration)')": [
+                        255
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'getRecordWriter(Configuration,Path,CompressionCodecName)')": [
+                        386
+                    ]
+                }
+            }
+        }
+    },
+    "e9928c94ce1385ec72028336417f19f30ac38ac0": {
+        "authored_data": "2016 Mar 25 19:19",
+        "commit.message": "PARQUET-571: Fix potential leak in ParquetFileReader.close()\n\nIf an exception occurs when closing the input stream `f`, the codecs\nwill not be released. This may cause native memory leaks for some codecs. \\cc @rdblue\n\nAuthor: Nezih Yigitbasi <nyigitbasi@netflix.com>\n\nCloses #338 from nezihyigitbasi/leak-fix and squashes the following commits:\n\nfcc5528 [Nezih Yigitbasi] Fix potential leak in close()\n",
+        "commit.author.name": "Nezih Yigitbasi",
+        "pcid": "4b1ff8f4b9dfa0ccb064ef286cf2953bfb2c492d",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileReader.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'close')": [
+                        779,
+                        780,
+                        781,
+                        782,
+                        783
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'close')": [
+                        779,
+                        780,
+                        781,
+                        782,
+                        783,
+                        784,
+                        785
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', None)": [
+                        786
+                    ]
+                }
+            }
+        }
+    },
+    "4b1ff8f4b9dfa0ccb064ef286cf2953bfb2c492d": {
+        "authored_data": "2016 Mar 09 21:20",
+        "commit.message": "PARQUET-384: Add dictionary filtering.\n\nThis builds on #286 from @danielcweeks and cleans up some of the interfaces. It introduces `DictionaryPageReadStore` to expose dictionary pages to the filters and cleans up some internal calls by passing `ParquetFileReader`.\n\nWhen committed, this closes #286.\n\nAuthor: Ryan Blue <blue@apache.org>\nAuthor: Daniel Weeks <dweeks@netflix.com>\n\nCloses #330 from rdblue/PARQUET-384-add-dictionary-filtering and squashes the following commits:\n\nff89424 [Ryan Blue] PARQUET-384: Add a cache to DictionaryPageReader.\n1f6861c [Ryan Blue] PARQUET-384: Use ParquetFileReader to initialize readers.\n21ef4b6 [Daniel Weeks] PARQUET-384: Add dictionary row group filter.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "1f91c79de5e2d852c6e7d0cf7a4255087ef618ef",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/filter2/compat/RowGroupFilter.java": {
+                "old": {
+                    "('org.apache.parquet.filter2.compat#RowGroupFilter', 'visit(FilterCompat)')": [
+                        64
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        28,
+                        32
+                    ],
+                    "('org.apache.parquet.filter2.compat#RowGroupFilter', None)": [
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        62,
+                        63,
+                        64,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76
+                    ],
+                    "('org.apache.parquet.filter2.compat#RowGroupFilter', 'filterRowGroups(List,Filter,List,ParquetFileReader)')": [
+                        59,
+                        60,
+                        61
+                    ],
+                    "('org.apache.parquet.filter2.compat#RowGroupFilter', 'visit(FilterCompat)')": [
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/format/converter/ParquetMetadataConverter.java": {
+                "old": {
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', None)": [
+                        432,
+                        475,
+                        487
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'filterFileMetaData(FileMetaData,RangeMetadataFilter)')": [
+                        502
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream,MetadataFilter)')": [
+                        547
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', None)": [
+                        432,
+                        439,
+                        449,
+                        456,
+                        457,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        490,
+                        493,
+                        499,
+                        504,
+                        505,
+                        506,
+                        509,
+                        516,
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'offsets(long)')": [
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'filterFileMetaData(FileMetaData,OffsetMetadataFilter)')": [
+                        539
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream,MetadataFilter)')": [
+                        584
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ColumnChunkPageReadStore.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ColumnChunkPageReadStore', None)": [
+                        45,
+                        139
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('org.apache.parquet.hadoop#ColumnChunkPageReadStore', None)": [
+                        46,
+                        140,
+                        165,
+                        168,
+                        169
+                    ],
+                    "('org.apache.parquet.hadoop#ColumnChunkPageReadStore', 'readDictionaryPage(ColumnDescriptor)')": [
+                        166,
+                        167
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordReader.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        30,
+                        33,
+                        40,
+                        48,
+                        50
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', None)": [
+                        84,
+                        189,
+                        190
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'initialize(MessageType,FileMetaData,Path,List,Configuration)')": [
+                        166,
+                        167,
+                        168,
+                        176,
+                        177,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'contains(GroupType,String,int)')": [
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'nextKeyValue')": [
+                        243
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'initialize(ParquetFileReader,Configuration)')": [
+                        159,
+                        162,
+                        163,
+                        164,
+                        174
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'nextKeyValue')": [
+                        216
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileReader.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readFooter(Configuration,FileStatus,MetadataFilter)')": [
+                        425,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        457
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', None)": [
+                        458,
+                        459,
+                        460,
+                        468,
+                        470,
+                        472,
+                        473,
+                        496,
+                        498,
+                        555,
+                        556,
+                        557,
+                        625,
+                        648,
+                        667
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'open(Configuration,Path)')": [
+                        461,
+                        462,
+                        463,
+                        464
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readNextRowGroup')": [
+                        528,
+                        550,
+                        551,
+                        552,
+                        554
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'close')": [
+                        561,
+                        562
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        61,
+                        62,
+                        63,
+                        64
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readFooter(Configuration,FileStatus,MetadataFilter)')": [
+                        431,
+                        433,
+                        435
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', None)": [
+                        436,
+                        437,
+                        438,
+                        469,
+                        470,
+                        473,
+                        474,
+                        477,
+                        478,
+                        485,
+                        487,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        497,
+                        498,
+                        515,
+                        519,
+                        523,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569,
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        575,
+                        576,
+                        577,
+                        578,
+                        579,
+                        580,
+                        581,
+                        582,
+                        583,
+                        584,
+                        585,
+                        586,
+                        587,
+                        588,
+                        599,
+                        600,
+                        606,
+                        607,
+                        614,
+                        615,
+                        618,
+                        619,
+                        633,
+                        634,
+                        637,
+                        638,
+                        690,
+                        691,
+                        694,
+                        695,
+                        706,
+                        707,
+                        708,
+                        709,
+                        710,
+                        711,
+                        712,
+                        713,
+                        714,
+                        720,
+                        721,
+                        724,
+                        725,
+                        726,
+                        727,
+                        728,
+                        729,
+                        730,
+                        731,
+                        732,
+                        733,
+                        734,
+                        758,
+                        759,
+                        775,
+                        784,
+                        847,
+                        870,
+                        889
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readFooter(FileStatus,FSDataInputStream,MetadataFilter)')": [
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'open(Configuration,Path)')": [
+                        471,
+                        472
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'open(Configuration,Path,MetadataFilter)')": [
+                        475,
+                        476
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'open(Configuration,Path,ParquetMetadata)')": [
+                        479,
+                        480
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'getFooter')": [
+                        589,
+                        590,
+                        591,
+                        592,
+                        593,
+                        594,
+                        595,
+                        596,
+                        597,
+                        598
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'getFileMetaData')": [
+                        601,
+                        602,
+                        603,
+                        604,
+                        605
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'getRecordCount')": [
+                        608,
+                        609,
+                        610,
+                        611,
+                        612,
+                        613
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'getPath')": [
+                        616,
+                        617
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'filterRowGroups(FilterCompat)')": [
+                        620,
+                        621,
+                        622,
+                        623,
+                        624,
+                        625,
+                        626,
+                        627,
+                        628,
+                        629,
+                        630,
+                        631,
+                        632
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'getRowGroups')": [
+                        635,
+                        636
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readNextRowGroup')": [
+                        656,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682,
+                        683,
+                        684,
+                        685,
+                        686,
+                        687,
+                        688,
+                        689
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'skipNextRowGroup')": [
+                        692,
+                        693
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'advanceToNextBlock')": [
+                        696,
+                        697,
+                        698,
+                        699,
+                        700,
+                        701,
+                        703,
+                        704,
+                        705
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'getNextDictionaryReader')": [
+                        715,
+                        716,
+                        717,
+                        718,
+                        719
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'getDictionaryReader(BlockMetaData)')": [
+                        722,
+                        723
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readDictionary(ColumnChunkMetaData)')": [
+                        735,
+                        736,
+                        737,
+                        738,
+                        739,
+                        740,
+                        741,
+                        742,
+                        743,
+                        744,
+                        745,
+                        746,
+                        747,
+                        748,
+                        749,
+                        750,
+                        751,
+                        752,
+                        753,
+                        754,
+                        755,
+                        756,
+                        757
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readCompressedDictionary(PageHeader,FSDataInputStream)')": [
+                        760,
+                        761,
+                        762,
+                        763,
+                        764,
+                        765,
+                        766,
+                        767,
+                        768,
+                        769,
+                        770,
+                        771,
+                        772,
+                        773,
+                        774
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'close')": [
+                        779,
+                        780,
+                        781,
+                        782,
+                        783
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetReader.java": {
+                "old": {
+                    "(None, None)": [
+                        38,
+                        40,
+                        42
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetReader', 'initReader')": [
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        152,
+                        153,
+                        154
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetReader', 'initReader')": [
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        148,
+                        149
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetRecordReader.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        24,
+                        54,
+                        58
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetRecordReader', 'initializeInternalReader(ParquetInputSplit,Configuration)')": [
+                        157,
+                        158,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        49,
+                        50
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetRecordReader', 'initializeInternalReader(ParquetInputSplit,Configuration)')": [
+                        156,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187
+                    ]
+                }
+            }
+        }
+    },
+    "1f91c79de5e2d852c6e7d0cf7a4255087ef618ef": {
+        "authored_data": "2016 Mar 05 11:45",
+        "commit.message": "PARQUET-528: Fix flush() for RecordConsumer and implementations\n\n`flush()` was added in `RecordConsumer` and `MessageColumnIO` to help implementing nulls caching.\n\nHowever, other `RecordConsumer` implementations should also implements `flush()` properly. For instance, `RecordConsumerLoggingWrapper` and `ValidatingRecordConsumer` should call `delegate.flush()` in their `flush()` methods, otherwise data might be mistakenly truncated.\n\nThis PR:\n- makes `flush()` abstract in `RecordConsumer`\n- implements `flush()` properly for all `RecordConsumer` subclasses, specifically:\n - `RecordConsumerLoggingWrapper`\n - `ValidatingRecordConsumer`\n - `ConverterConsumer `\n - `ExpectationValidatingRecordConsumer `\n\nAuthor: proflin <proflin.me@gmail.com>\nAuthor: Liwei Lin <proflin.me@gmail.com>\n\nCloses #325 from proflin/PARQUET-528 and squashes the following commits:\n\n2c90740 [proflin] Minor style issue\n25444b9 [proflin] Still keep RecordConsumer.flush() non-abstract\n8776e3a [proflin] PARQUET-528: Fix flush() for RecordConsumer and implementations\nbb4283a [Liwei Lin] Merge branch 'master' of https://github.com/proflin/parquet-mr\n839b458 [proflin] Merge remote-tracking branch 'refs/remotes/apache/master'\n",
+        "commit.author.name": "proflin",
+        "pcid": "fb46b941f7763314d667c437c06b1675e61c3d38",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/io/MessageColumnIO.java": {
+                "old": {
+                    "('org.apache.parquet.io#MessageColumnIO', None)": [
+                        490
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.io#MessageColumnIO', None)": [
+                        490,
+                        491,
+                        492
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/io/RecordConsumerLoggingWrapper.java": {
+                "new": {
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'flush')": [
+                        141,
+                        142,
+                        143
+                    ],
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', None)": [
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/io/ValidatingRecordConsumer.java": {
+                "new": {
+                    "('org.apache.parquet.io#ValidatingRecordConsumer', None)": [
+                        129,
+                        130,
+                        131,
+                        132
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/io/api/RecordConsumer.java": {
+                "new": {
+                    "('org.apache.parquet.io.api#RecordConsumer', None)": [
+                        132
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/io/ConverterConsumer.java": {
+                "new": {
+                    "('org.apache.parquet.io#ConverterConsumer', None)": [
+                        117,
+                        118,
+                        119,
+                        120
+                    ],
+                    "('org.apache.parquet.io#ConverterConsumer', 'flush')": [
+                        121
+                    ],
+                    "(None, None)": [
+                        122,
+                        123,
+                        124
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/io/ExpectationValidatingRecordConsumer.java": {
+                "new": {
+                    "('org.apache.parquet.io#ExpectationValidatingRecordConsumer', None)": [
+                        103,
+                        104,
+                        105,
+                        106
+                    ],
+                    "('org.apache.parquet.io#ExpectationValidatingRecordConsumer', 'flush')": [
+                        107,
+                        108
+                    ],
+                    "(None, None)": [
+                        109,
+                        110
+                    ]
+                }
+            }
+        }
+    }
+}

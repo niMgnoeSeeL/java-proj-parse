@@ -1,0 +1,797 @@
+{
+    "b05da82dfc33bcf590fe5b21bc55023b0c6fb27d": {
+        "authored_data": "2021 Mar 05 22:29",
+        "commit.message": "VFS-782 - Pass correct proxy authentication credentials (#117)\n\n* VFS-782 - pass correct proxy authentication credentials\r\n\r\n* Add test case for proxy authentication correction\r\n\r\n* Revert unwanted changes",
+        "commit.author.name": "satish-csi",
+        "pcid": "6fe765a2242f8178fe930006768f79958f261e96",
+        "changes": {
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/http4/Http4FileProvider.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider.http4#Http4FileProvider', 'createHttpClientContext(Http4FileSystemConfigBuilder,GenericFileName,FileSystemOptions,UserAuthenticationData)')": [
+                        251,
+                        253
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.provider.http4#Http4FileProvider', 'createHttpClientContext(Http4FileSystemConfigBuilder,GenericFileName,FileSystemOptions,UserAuthenticationData)')": [
+                        251,
+                        253
+                    ]
+                }
+            },
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/http5/Http5FileProvider.java": {
+                "old": [
+                    "JavaSyntaxError",
+                    "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/http5/Http5FileProvider.java",
+                    [
+                        262,
+                        263
+                    ]
+                ],
+                "new": [
+                    "JavaSyntaxError",
+                    "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/http5/Http5FileProvider.java",
+                    [
+                        262,
+                        263
+                    ]
+                ]
+            }
+        }
+    },
+    "6fe765a2242f8178fe930006768f79958f261e96": {
+        "authored_data": "2021 Mar 05 20:44",
+        "commit.message": "Use Java 8 API. Remove unused import.\n",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "a4b14452accc072cc7d52e4989d57d55ac3a5f52",
+        "changes": {
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/cache/SoftRefFilesCache.java": {
+                "old": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'getOrCreateFilesystemCache(FileSystem)')": [
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'getOrCreateFilesystemCache(FileSystem)')": [
+                        240
+                    ]
+                }
+            }
+        }
+    },
+    "df56399d784094a24c0ab784c3eddee0908952eb": {
+        "authored_data": "2021 Mar 05 20:27",
+        "commit.message": "Rework SoftRefFilesCache locking (#154)\n\n* SoftRefFilesCache: no ReferenceQueue timeout, sleep indefinitely\r\n\r\nWaking up once a second is just a waste of CPU time.  Let\r\nReferenceQueue.remove() only wake up if there's something to do (or if\r\nthe thread got interrupted).\r\n\r\n* SoftRefFilesCache: eliminate the requestEnd flag\r\n\r\nThe Thread class keeps track for us already, and if it's interrupted,\r\nwe'll catch InterruptedException and quit the thread.\r\n\r\n* SoftRefFilesCache: fix ReentrantLock usage in {start,end}Thread()\r\n\r\nCan't use the \"synchronized\" keyword on a Lock; this will only lock\r\nthe java.lang.Object, but not the Lock.\r\n\r\nThis wrong usage was added by commit f09035290b1 (SVN r1704932).\r\n\r\n* SoftRefFilesCache: add missing lock to removeFile()\r\n\r\nThe API documentation of close(FileSystem) requires that the caller\r\nholds the lock, but removeFile() didn't do that.\r\n\r\n* SoftRefFilesCache: require lock while calling removeFile(FileSystemAndNameKey)\r\n\r\nThis allows merging the lock with the caller, fixing a race condition\r\nin removeFile(FileSystem,FileName).\r\n\r\n* SoftRefFilesCache: require lock while calling getOrCreateFilesystemCache()\r\n\r\nIt is an illusion to believe that not requiring the lock would be\r\nfaster, because all callers will obtain the lock right after\r\ngetOrCreateFilesystemCache() returns.\r\n\r\nAs a wanted side effect, this also fixes a time-of-check-time-of-use\r\nbug: if the fileSystemCache becomes non-empty by another thread\r\nbetween the isEmpty() and the get() call (with removeFile() calls by\r\nyet another thread), the SoftRefReleaseThread will never be started.\r\n\r\n* SoftRefFilesCache: don't use ConcurrentMap\r\n\r\nNow that all accesses to fileSystemCache happen while the lock is\r\nheld, we don't need another layer of synchronization.\r\n\r\n* SoftRefFilesCache: eliminate \"volatile\" on softRefReleaseThread\r\n\r\nThat \"double checked locking\" in startThread() is rather pointless,\r\nbecause the overhead saved by not locking never materializes.\r\nstartThread() is only ever called when there is no thread, and\r\noptimizing for a corner case with a data race isn't worth the\r\ncomplexity.  So let's just do everything inside the lock and remove\r\n\"volatile\".\r\n\r\n* SoftRefFilesCache: move endThread() call inside the lock\r\n\r\nThis avoids locking the Lock twice, because the two lock sections are\r\nmerged.\r\n\r\n* SoftRefFilesCache: require lock for startThread(), endThread()\r\n\r\nAll callers already do that, this just documents the fact and removes\r\nthe explicit lock()/unlock() calls from those methods.\r\n\r\n* SoftRefFilesCache: move code to removeFile(Reference)\r\n\r\n* SoftRefFilesCache: eliminate ReentrantLock, use \"synchronized\"\r\n\r\nThis class uses no special ReentrantLock/Lock feature, it's just basic\r\nthread synchronization.  Using \"synchronized\" is easier to use and\r\nless error prone.",
+        "commit.author.name": "Max Kellermann",
+        "pcid": "7b7f61c3b99f0bb9827ad4c361421f8df1d9591b",
+        "changes": {
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/cache/SoftRefFilesCache.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27,
+                        28,
+                        35
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', None)": [
+                        46,
+                        47,
+                        50,
+                        54,
+                        55,
+                        56,
+                        63,
+                        64,
+                        73,
+                        74,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        91,
+                        92,
+                        93,
+                        94,
+                        112,
+                        113,
+                        114,
+                        115,
+                        123,
+                        207,
+                        208,
+                        209,
+                        210,
+                        234,
+                        235,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        264,
+                        265,
+                        266,
+                        267,
+                        291,
+                        292,
+                        293
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'startThread')": [
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'endThread')": [
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'putFile(FileObject)')": [
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        145,
+                        146
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'putFileIfAbsent(FileObject)')": [
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        180,
+                        181
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'getFile(FileSystem,FileName)')": [
+                        190,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'clear(FileSystem)')": [
+                        211,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'close(FileSystem)')": [
+                        238
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'close')": [
+                        254,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'removeFile(FileSystem,FileName)')": [
+                        268
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'removeFile(FileSystemAndNameKey)')": [
+                        274,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'getOrCreateFilesystemCache(FileSystem)')": [
+                        294,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        307
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', None)": [
+                        43,
+                        47,
+                        62,
+                        63,
+                        68,
+                        82,
+                        83,
+                        84,
+                        163,
+                        164,
+                        165,
+                        195,
+                        196,
+                        197,
+                        204,
+                        205,
+                        206,
+                        226,
+                        227,
+                        233,
+                        234,
+                        235
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'startThread')": [
+                        78,
+                        79,
+                        80,
+                        81
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'endThread')": [
+                        85,
+                        86,
+                        87,
+                        88,
+                        89
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'putFile(FileObject)')": [
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'putFileIfAbsent(FileObject)')": [
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'getFile(FileSystem,FileName)')": [
+                        150,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'clear(FileSystem)')": [
+                        166,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'close(FileSystem)')": [
+                        186
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'close')": [
+                        198,
+                        201,
+                        202,
+                        203
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'removeFile(FileSystem,FileName)')": [
+                        207
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'removeFile(FileSystemAndNameKey)')": [
+                        213,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'removeFile(Reference)')": [
+                        228,
+                        229,
+                        230,
+                        231,
+                        232
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'getOrCreateFilesystemCache(FileSystem)')": [
+                        236,
+                        241,
+                        242,
+                        244,
+                        245
+                    ]
+                }
+            }
+        }
+    },
+    "7b7f61c3b99f0bb9827ad4c361421f8df1d9591b": {
+        "authored_data": "2021 Mar 05 20:04",
+        "commit.message": "No need to nest in else.\n",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "02ff1ee6f73474f39bfb914e6692e0df74937334",
+        "changes": {
+            "commons-vfs2-jackrabbit1/src/main/java/org/apache/commons/vfs2/provider/webdav/ExceptionConverter.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider.webdav#ExceptionConverter', 'generate(DavException,DavMethod)')": [
+                        61
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.provider.webdav#ExceptionConverter', 'generate(DavException,DavMethod)')": [
+                        61,
+                        62
+                    ]
+                }
+            },
+            "commons-vfs2-jackrabbit2/src/main/java/org/apache/commons/vfs2/provider/webdav4/ExceptionConverter.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider.webdav4#ExceptionConverter', 'generate(DavException)')": [
+                        55
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.provider.webdav4#ExceptionConverter', 'generate(DavException)')": [
+                        55,
+                        56
+                    ]
+                }
+            },
+            "commons-vfs2-sandbox/src/main/java/org/apache/commons/vfs2/provider/smb/SmbFileObject.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider.smb#SmbFileObject', 'doGetType')": [
+                        119,
+                        121
+                    ],
+                    "('org.apache.commons.vfs2.provider.smb#SmbFileObject', 'doGetInputStream(int)')": [
+                        197
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.provider.smb#SmbFileObject', 'doGetType')": [
+                        119,
+                        120,
+                        122,
+                        123
+                    ],
+                    "('org.apache.commons.vfs2.provider.smb#SmbFileObject', 'doGetInputStream(int)')": [
+                        199,
+                        200
+                    ]
+                }
+            },
+            "commons-vfs2-sandbox/src/test/java/org/apache/commons/vfs2/provider/smb/test/SmbProviderTestCase.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider.smb.test#SmbProviderTestCase', 'suite')": [
+                        38,
+                        39
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.provider.smb.test#SmbProviderTestCase', 'suite')": [
+                        39
+                    ]
+                }
+            },
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/auth/StaticUserAuthenticator.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.auth#StaticUserAuthenticator', 'compareStringOrNull(String,String)')": [
+                        123,
+                        124,
+                        125,
+                        126,
+                        127
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.auth#StaticUserAuthenticator', 'compareStringOrNull(String,String)')": [
+                        123,
+                        130,
+                        131,
+                        132
+                    ]
+                }
+            },
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/impl/DefaultFileMonitor.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.impl#DefaultFileMonitor', 'setDelay(long)')": [
+                        238
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.impl#DefaultFileMonitor', 'setDelay(long)')": [
+                        238
+                    ]
+                }
+            },
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/AbstractFileName.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider#AbstractFileName', 'getParent')": [
+                        194
+                    ],
+                    "('org.apache.commons.vfs2.provider#AbstractFileName', 'getRelativeName(FileName)')": [
+                        308,
+                        320
+                    ],
+                    "('org.apache.commons.vfs2.provider#AbstractFileName', 'checkName(String,String,NameScope)')": [
+                        516,
+                        518,
+                        520
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.provider#AbstractFileName', 'getParent')": [
+                        194,
+                        195
+                    ],
+                    "('org.apache.commons.vfs2.provider#AbstractFileName', 'getRelativeName(FileName)')": [
+                        309,
+                        310,
+                        322,
+                        323
+                    ],
+                    "('org.apache.commons.vfs2.provider#AbstractFileName', 'checkName(String,String,NameScope)')": [
+                        519,
+                        520,
+                        522,
+                        523,
+                        525,
+                        526
+                    ]
+                }
+            },
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/AbstractFileObject.java": {
+                "old": [
+                    "JavaSyntaxError",
+                    "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/AbstractFileObject.java",
+                    [
+                        1107
+                    ]
+                ],
+                "new": [
+                    "JavaSyntaxError",
+                    "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/AbstractFileObject.java",
+                    [
+                        1107,
+                        1108
+                    ]
+                ]
+            },
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/DelegateFileObject.java": {
+                "old": [
+                    "JavaSyntaxError",
+                    "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/DelegateFileObject.java",
+                    [
+                        126,
+                        128,
+                        129,
+                        130
+                    ]
+                ],
+                "new": [
+                    "JavaSyntaxError",
+                    "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/DelegateFileObject.java",
+                    [
+                        126,
+                        127,
+                        129,
+                        130
+                    ]
+                ]
+            },
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/ftp/FtpFileObject.java": {
+                "old": [
+                    "JavaSyntaxError",
+                    "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/ftp/FtpFileObject.java",
+                    [
+                        372,
+                        374,
+                        376
+                    ]
+                ],
+                "new": [
+                    "JavaSyntaxError",
+                    "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/ftp/FtpFileObject.java",
+                    [
+                        372,
+                        373,
+                        375,
+                        376,
+                        378,
+                        379
+                    ]
+                ]
+            },
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/http/HttpFileObject.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider.http#HttpFileObject', 'doGetType')": [
+                        172,
+                        174,
+                        175
+                    ],
+                    "('org.apache.commons.vfs2.provider.http#HttpFileObject', None)": [
+                        176
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.provider.http#HttpFileObject', 'doGetType')": [
+                        172,
+                        173,
+                        175,
+                        176
+                    ]
+                }
+            },
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/http4/Http4FileObject.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider.http4#Http4FileObject', 'doGetType')": [
+                        162,
+                        164,
+                        165
+                    ],
+                    "('org.apache.commons.vfs2.provider.http4#Http4FileObject', None)": [
+                        166
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.provider.http4#Http4FileObject', 'doGetType')": [
+                        162,
+                        163,
+                        165,
+                        166
+                    ]
+                }
+            },
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/http5/Http5FileObject.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider.http5#Http5FileObject', 'doGetType')": [
+                        163,
+                        165,
+                        166
+                    ],
+                    "('org.apache.commons.vfs2.provider.http5#Http5FileObject', None)": [
+                        167
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.provider.http5#Http5FileObject', 'doGetType')": [
+                        163,
+                        164,
+                        166,
+                        167
+                    ]
+                }
+            },
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/jar/JarFileSystem.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider.jar#JarFileSystem', 'lookupName(String)')": [
+                        107,
+                        109,
+                        111,
+                        113,
+                        115,
+                        117,
+                        119,
+                        121,
+                        123,
+                        125,
+                        127,
+                        129,
+                        131,
+                        133,
+                        135,
+                        137,
+                        139,
+                        140
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.provider.jar#JarFileSystem', 'lookupName(String)')": [
+                        107,
+                        108,
+                        110,
+                        111,
+                        113,
+                        114,
+                        116,
+                        117,
+                        119,
+                        120,
+                        122,
+                        123,
+                        125,
+                        126,
+                        128,
+                        129,
+                        131,
+                        132,
+                        134,
+                        135,
+                        137,
+                        138,
+                        140,
+                        141,
+                        143,
+                        144,
+                        146,
+                        147,
+                        149,
+                        150,
+                        152,
+                        153,
+                        156
+                    ]
+                }
+            },
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/tar/TarFileSystem.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider.tar#TarFileSystem', 'createTarFile(File)')": [
+                        98
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.provider.tar#TarFileSystem', 'createTarFile(File)')": [
+                        98,
+                        99
+                    ]
+                }
+            },
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/provider/url/UrlFileNameParser.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider.url#UrlFileNameParser', 'countSlashes(String)')": [
+                        106,
+                        107,
+                        108
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.provider.url#UrlFileNameParser', 'countSlashes(String)')": [
+                        106,
+                        109
+                    ]
+                }
+            },
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/util/Os.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.util#Os', 'determineOsFamily')": [
+                        264,
+                        266,
+                        268,
+                        273,
+                        275,
+                        276
+                    ],
+                    "(None, None)": [
+                        277
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.util#Os', 'determineOsFamily')": [
+                        264,
+                        265,
+                        267,
+                        268,
+                        270,
+                        271,
+                        276,
+                        277,
+                        279,
+                        280
+                    ]
+                }
+            },
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/util/RandomAccessMode.java": {
+                "old": {
+                    "(None, None)": [
+                        60
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        60,
+                        61
+                    ]
+                }
+            },
+            "commons-vfs2/src/test/java/org/apache/commons/vfs2/provider/sftp/AbstractSftpProviderTestCase.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider.sftp#AbstractSftpProviderTestCase', None)": [
+                        370,
+                        371
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.provider.sftp#AbstractSftpProviderTestCase', None)": [
+                        371
+                    ]
+                }
+            },
+            "commons-vfs2/src/test/java/org/apache/commons/vfs2/provider/zip/ParseXmlInZipTestCase.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider.zip#ParseXmlInZipTestCase', 'newDocumentBuilder(FileObject,FileObject,String)')": [
+                        69,
+                        70,
+                        71,
+                        72
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.provider.zip#ParseXmlInZipTestCase', 'newDocumentBuilder(FileObject,FileObject,String)')": [
+                        69,
+                        73,
+                        74
+                    ]
+                }
+            }
+        }
+    }
+}

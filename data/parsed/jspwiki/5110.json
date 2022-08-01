@@ -1,0 +1,771 @@
+{
+    "17438daa877caed663502cdf585221f08f0e524d": {
+        "authored_data": "2006 May 28 23:25",
+        "commit.message": "Bug fix: WikiDocument now stores its reference to WikiContext as a WeakReference, so that caching operations won't prevent GC of the WikiContext.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625352 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "",
+        "pcid": "e8cd084d462aab6c41e66da2edefc75cb1c5cfb7",
+        "changes": {
+            "src/com/ecyrd/jspwiki/parser/WikiDocument.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki.parser#WikiDocument', None)": [
+                        45
+                    ],
+                    "('com.ecyrd.jspwiki.parser#WikiDocument', 'setContext(WikiContext)')": [
+                        74
+                    ],
+                    "('com.ecyrd.jspwiki.parser#WikiDocument', 'getContext')": [
+                        79
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22
+                    ],
+                    "('com.ecyrd.jspwiki.parser#WikiDocument', None)": [
+                        47,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84
+                    ],
+                    "('com.ecyrd.jspwiki.parser#WikiDocument', 'setContext(WikiContext)')": [
+                        76
+                    ],
+                    "('com.ecyrd.jspwiki.parser#WikiDocument', 'getContext')": [
+                        87
+                    ]
+                }
+            }
+        }
+    },
+    "e8cd084d462aab6c41e66da2edefc75cb1c5cfb7": {
+        "authored_data": "2006 May 28 23:24",
+        "commit.message": "Bug fix: WebContainerAuthorizer now recognizes roles declared in web.xml for elements web-app/security-role/role-name, in addition to those declared for web-app/security-constraint/auth-constraint/role-name. As part of the memory-leak fix, WebContainerAuthorizer no longer relies on a sneaky call to WikiSession.getLastContext().getHttpRequest() to test whether a user possesses a particular container role. Instead, we (only) inspect the user's Subject's Principal set for the desired role. This means that changes to container's user/role mappings are NOT reflected until the next time the user logs in.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625351 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "",
+        "pcid": "2cc2fecb4ae7bd7b189f9135fae1b8581822230a",
+        "changes": {
+            "src/com/ecyrd/jspwiki/auth/authorize/WebContainerAuthorizer.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        37
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#WebContainerAuthorizer', None)": [
+                        130,
+                        361
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#WebContainerAuthorizer', 'isUserInRole(WikiSession,Principal)')": [
+                        140,
+                        141,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#WebContainerAuthorizer', None)": [
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        375
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#WebContainerAuthorizer', 'isUserInRole(WikiSession,Principal)')": [
+                        147,
+                        151,
+                        152
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#WebContainerAuthorizer', 'getRoles(Document)')": [
+                        307,
+                        308,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325
+                    ]
+                }
+            }
+        }
+    },
+    "2cc2fecb4ae7bd7b189f9135fae1b8581822230a": {
+        "authored_data": "2006 May 28 23:23",
+        "commit.message": "Bug fix: DefaultGroup and DefaultGroupManager now store their WikiEventListeners in WeakHashMaps to prevent listener objects (such as WikiSession) from being reclaimed by GC. Bug fix: Fixed listener bug DefaultGroupManager that was preventing WikiSessions from receiving updated GroupPrincipals when groups were changed to include new members in certain cases.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625350 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "",
+        "pcid": "ee10dc288b12d222241941d017f2b22fa05b6579",
+        "changes": {
+            "src/com/ecyrd/jspwiki/auth/authorize/DefaultGroup.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        6,
+                        15
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#DefaultGroup', None)": [
+                        21
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#DefaultGroup', 'addWikiEventListener(WikiEventListener)')": [
+                        58
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#DefaultGroup', 'fireEvent(WikiSecurityEvent)')": [
+                        186
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        3,
+                        6,
+                        8,
+                        16
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#DefaultGroup', None)": [
+                        22
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#DefaultGroup', 'addWikiEventListener(WikiEventListener)')": [
+                        59
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#DefaultGroup', 'fireEvent(WikiSecurityEvent)')": [
+                        187
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/auth/authorize/DefaultGroupManager.java": {
+                "old": {
+                    "(None, None)": [
+                        7,
+                        11,
+                        56
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#DefaultGroupManager', None)": [
+                        78,
+                        80,
+                        138,
+                        139,
+                        140,
+                        144,
+                        145,
+                        146
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#DefaultGroupManager', 'addWikiEventListener(WikiEventListener)')": [
+                        179
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#DefaultGroupManager', 'fireEvent(WikiSecurityEvent)')": [
+                        381
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        3,
+                        4,
+                        11,
+                        14,
+                        58
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#DefaultGroupManager', None)": [
+                        80,
+                        81,
+                        140,
+                        141,
+                        142,
+                        146,
+                        147,
+                        148
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#DefaultGroupManager', 'addWikiEventListener(WikiEventListener)')": [
+                        181
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#DefaultGroupManager', 'fireEvent(WikiSecurityEvent)')": [
+                        383
+                    ],
+                    "('com.ecyrd.jspwiki.auth.authorize#DefaultGroupManager', 'updateGroup(String,List)')": [
+                        403,
+                        404,
+                        405,
+                        406
+                    ]
+                }
+            }
+        }
+    },
+    "ee10dc288b12d222241941d017f2b22fa05b6579": {
+        "authored_data": "2006 May 28 23:22",
+        "commit.message": "Removed divide-by-zero error from SecurityVerifier.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625349 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "",
+        "pcid": "8175f7427cecb91cea1aedd6b7120b129be346af",
+        "changes": {
+            "src/com/ecyrd/jspwiki/auth/SecurityVerifier.java": {
+                "old": {
+                    "(None, None)": [
+                        60
+                    ],
+                    "('com.ecyrd.jspwiki.auth#SecurityVerifier', 'policyRoleTable')": [
+                        160
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        60
+                    ],
+                    "('com.ecyrd.jspwiki.auth#SecurityVerifier', 'policyRoleTable')": [
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168
+                    ]
+                }
+            }
+        }
+    },
+    "8175f7427cecb91cea1aedd6b7120b129be346af": {
+        "authored_data": "2006 May 28 23:21",
+        "commit.message": "As part of the memory-leak fix, WebContainerAuthorizer no longer relies on a sneaky call to WikiSession.getLastContext().getHttpRequest() to test whether a user possesses a particular container role. Instead, we (only) inspect the user's Subject's Principal set for the desired role. This means that changes to container's user/role mappings are NOT reflected until the next time the user logs in.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625348 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "",
+        "pcid": "22fdf0a080356edfb965045cfc09f3b5d03c9b94",
+        "changes": {
+            "src/com/ecyrd/jspwiki/auth/AuthorizationManager.java": {
+                "old": {
+                    "(None, None)": [
+                        43,
+                        82
+                    ],
+                    "('com.ecyrd.jspwiki.auth#AuthorizationManager', None)": [
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        278,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        333,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        376,
+                        377,
+                        379,
+                        385,
+                        396,
+                        397,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437
+                    ],
+                    "('com.ecyrd.jspwiki.auth#AuthorizationManager', 'getRoles(WikiSession)')": [
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307
+                    ],
+                    "('com.ecyrd.jspwiki.auth#AuthorizationManager', 'isUserInRole(WikiSession,Principal)')": [
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358
+                    ],
+                    "('com.ecyrd.jspwiki.auth#AuthorizationManager', 'hasRoleOrPrincipal(WikiSession,Principal)')": [
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        424
+                    ],
+                    "('com.ecyrd.jspwiki.auth#AuthorizationManager', 'hasUserPrincipal(Subject,Principal)')": [
+                        438,
+                        439,
+                        444
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        81
+                    ],
+                    "('com.ecyrd.jspwiki.auth#AuthorizationManager', None)": [
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        278,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        315,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        356,
+                        357,
+                        359,
+                        365,
+                        376,
+                        377
+                    ],
+                    "('com.ecyrd.jspwiki.auth#AuthorizationManager', 'getRoles(WikiSession)')": [
+                        288,
+                        289
+                    ],
+                    "('com.ecyrd.jspwiki.auth#AuthorizationManager', 'isUserInRole(WikiSession,Principal)')": [
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336
+                    ],
+                    "('com.ecyrd.jspwiki.auth#AuthorizationManager', 'hasRoleOrPrincipal(WikiSession,Principal)')": [
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        395,
+                        396
+                    ]
+                }
+            }
+        }
+    },
+    "22fdf0a080356edfb965045cfc09f3b5d03c9b94": {
+        "authored_data": "2006 May 28 23:19",
+        "commit.message": "WikiSession received minor refactorings to remove the set/getLastContext() methods. These were used for only one purpose anyhow (WebContainerAuthorizer) and the net result was that their inclusion was preventing garbage collection of expired WikiSessions. WikiSession also receives a removeWikiSession() method, which removes wiki sessions from its internal cache, and is called during logout.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625347 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "",
+        "pcid": "32bc2c98f676b1cbbd0be3897868173ca6286c17",
+        "changes": {
+            "src/com/ecyrd/jspwiki/WikiContext.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki#WikiContext', None)": [
+                        175,
+                        191,
+                        192
+                    ]
+                },
+                "new": {
+                    "('com.ecyrd.jspwiki#WikiContext', None)": [
+                        175,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/WikiSession.java": {
+                "old": {
+                    "(None, None)": [
+                        35
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', None)": [
+                        47,
+                        57,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        128,
+                        175,
+                        176,
+                        177,
+                        178,
+                        182,
+                        183,
+                        184
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'hasPrincipal(Principal)')": [
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'setLastContext(WikiContext)')": [
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'isAuthenticated')": [
+                        147
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getLastContext')": [
+                        179,
+                        180,
+                        181
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'actionPerformed(WikiEvent)')": [
+                        464,
+                        474
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getStatus')": [
+                        566
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', None)": [
+                        47,
+                        57,
+                        91,
+                        92,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        373,
+                        374,
+                        375
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'isNew')": [
+                        93,
+                        94,
+                        95
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'setNew(boolean)')": [
+                        102,
+                        103,
+                        104
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'isAuthenticated')": [
+                        123
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'removeWikiSession(HttpServletRequest)')": [
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'actionPerformed(WikiEvent)')": [
+                        445,
+                        455
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getStatus')": [
+                        547
+                    ]
+                }
+            }
+        }
+    },
+    "32bc2c98f676b1cbbd0be3897868173ca6286c17": {
+        "authored_data": "2006 May 28 23:16",
+        "commit.message": "Incremented release and ChangeLog.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625346 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "",
+        "pcid": "6f32cebbd58fb8f68823ee67356e971596c202ed",
+        "changes": {
+            "src/com/ecyrd/jspwiki/Release.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki#Release', None)": [
+                        46
+                    ]
+                },
+                "new": {
+                    "('com.ecyrd.jspwiki#Release', None)": [
+                        46
+                    ]
+                }
+            }
+        }
+    },
+    "6f32cebbd58fb8f68823ee67356e971596c202ed": {
+        "authored_data": "2006 May 28 10:43",
+        "commit.message": "*** empty log message ***\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625345 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Janne Jalkanen",
+        "pcid": "9c049f818cb07d5b1c6fd19f1fc5caed9c302ef1",
+        "changes": {
+            "src/com/ecyrd/jspwiki/Release.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki#Release', None)": [
+                        42,
+                        46
+                    ]
+                },
+                "new": {
+                    "('com.ecyrd.jspwiki#Release', None)": [
+                        42,
+                        46
+                    ]
+                }
+            }
+        }
+    },
+    "6c89172b066678d44e2c096cc8eedac2895934c0": {
+        "authored_data": "2006 May 28 10:42",
+        "commit.message": "Fixed Atom feeds to have proper namespace and rel=self references\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@625343 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Janne Jalkanen",
+        "pcid": "714860a41668381094c6a033199fa44f38cea315",
+        "changes": {
+            "src/com/ecyrd/jspwiki/rss/AtomFeed.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki.rss#AtomFeed', 'getItems')": [
+                        74,
+                        80,
+                        81,
+                        82,
+                        83,
+                        88,
+                        89,
+                        90,
+                        106
+                    ],
+                    "('com.ecyrd.jspwiki.rss#AtomFeed', 'getString')": [
+                        130,
+                        145,
+                        146,
+                        147,
+                        148,
+                        153,
+                        154,
+                        155
+                    ]
+                },
+                "new": {
+                    "('com.ecyrd.jspwiki.rss#AtomFeed', 'getItems')": [
+                        74,
+                        80,
+                        81,
+                        82,
+                        83,
+                        88,
+                        89,
+                        90,
+                        106
+                    ],
+                    "('com.ecyrd.jspwiki.rss#AtomFeed', 'getString')": [
+                        130,
+                        131,
+                        146,
+                        147,
+                        148,
+                        149,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165
+                    ],
+                    "('com.ecyrd.jspwiki.rss#AtomFeed', 'getElement(String)')": [
+                        193,
+                        194,
+                        195
+                    ],
+                    "(None, None)": [
+                        196
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/rss/Feed.java": {
+                "new": {
+                    "('com.ecyrd.jspwiki.rss#Feed', None)": [
+                        30,
+                        31,
+                        35,
+                        36
+                    ],
+                    "('com.ecyrd.jspwiki.rss#Feed', 'setMode(String)')": [
+                        37,
+                        38,
+                        39
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/rss/RSSGenerator.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki.rss#RSSGenerator', 'generateFeed(WikiContext,List,String,String)')": [
+                        254,
+                        258,
+                        267,
+                        271,
+                        275
+                    ]
+                },
+                "new": {
+                    "('com.ecyrd.jspwiki.rss#RSSGenerator', None)": [
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258
+                    ],
+                    "('com.ecyrd.jspwiki.rss#RSSGenerator', 'generateFeed(WikiContext,List,String,String)')": [
+                        265,
+                        269,
+                        278,
+                        279,
+                        280,
+                        284,
+                        288,
+                        293,
+                        295
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,999 @@
+{
+    "2fdc70bd5549d8ce14120322eeab91ed0f5cbb05": {
+        "authored_data": "2020 Aug 15 02:15",
+        "commit.message": "Restore old test.\n",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "3aff3e03cd83c9d77ea97fe3eec9c4f563bd51ab",
+        "changes": {
+            "src/test/java/org/apache/commons/io/FileUtilsCleanDirectoryTestCase.java": {
+                "new": {
+                    "('org.apache.commons.io#FileUtilsCleanDirectoryTestCase', 'testThrowsOnNullList')": [
+                        90,
+                        91,
+                        92,
+                        93
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanDirectoryTestCase', 'testThrowsOnCannotDeleteFile')": [
+                        110,
+                        111,
+                        112,
+                        113
+                    ]
+                }
+            }
+        }
+    },
+    "5026e5428cf507aa1f3e9e8e6d776aa23da8b40f": {
+        "authored_data": "2020 Aug 15 01:50",
+        "commit.message": "Assert that the test set up worked.\n",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "7adaaca7002ac57031c4786ee5d3c1f98a2b4acf",
+        "changes": {
+            "src/test/java/org/apache/commons/io/FileUtilsCleanDirectoryTestCase.java": {
+                "old": {
+                    "('org.apache.commons.io#FileUtilsCleanDirectoryTestCase', 'chmod(File,int,boolean)')": [
+                        132,
+                        133
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io#FileUtilsCleanDirectoryTestCase', 'chmod(File,int,boolean)')": [
+                        132
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/FileUtilsCleanSymlinksTestCase.java": {
+                "old": {
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'testCleanDirWithSymlinkFile')": [
+                        60
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'testCleanDirWithASymlinkDir')": [
+                        97
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'testCleanDirWithParentSymlinks')": [
+                        132,
+                        137
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'testStillClearsIfGivenDirectoryIsASymlink')": [
+                        162
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'testIdentifiesSymlinkDir')": [
+                        181
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'testIdentifiesSymlinkFile')": [
+                        198
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'testIdentifiesBrokenSymlinkFile')": [
+                        216
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'testCorrectlyIdentifySymlinkWithParentSymLink')": [
+                        235,
+                        241
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'setupSymlink(File,File)')": [
+                        247,
+                        259
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'testCleanDirWithSymlinkFile')": [
+                        60
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'testCleanDirWithASymlinkDir')": [
+                        97
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'testCleanDirWithParentSymlinks')": [
+                        132,
+                        137
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'testStillClearsIfGivenDirectoryIsASymlink')": [
+                        162
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'testIdentifiesSymlinkDir')": [
+                        181
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'testIdentifiesSymlinkFile')": [
+                        198
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'testIdentifiesBrokenSymlinkFile')": [
+                        216
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'testCorrectlyIdentifySymlinkWithParentSymLink')": [
+                        235,
+                        241
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanSymlinksTestCase', 'setupSymlink(File,File)')": [
+                        247,
+                        259
+                    ]
+                }
+            }
+        }
+    },
+    "8fe59e41e8f092b33923bcb9a281fbc228a2bf8f": {
+        "authored_data": "2020 Aug 15 01:40",
+        "commit.message": "[IO-684] Add force version of PathUtils.delete() APIs and friends.\n\n- Add PathUtils.delete(Path, DeleteOption...).\n- Add PathUtils.deleteDirectory(Path, DeleteOption...).\n- Add PathUtils.deleteFile(Path, DeleteOption...).\n- Add PathUtils.setReadOnly(Path, boolean, LinkOption...).\n- Add CleaningPathVisitor.CleaningPathVisitor(PathCounters,\nDeleteOption[], String...).\n- Add DeletingPathVisitor.DeletingPathVisitor(PathCounters,\nDeleteOption[], String...).\n\nSince the NIO APIs in Files class are parameterized with interfaces\nimplemented by enums (e.g. StandardCopyOption implements CopyOption),\nthe new PathUtils APIs here similarly work with a new enum called\nStandardDeleteOption that implements a new DeleteOption interface. This\nallow the API signature to remain stable while additional features can\nbe provided by new enums or adding values to StandardDeleteOption.\n",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "a6af21186677821755f443fa69d9c46f8ff32029",
+        "changes": {
+            "src/main/java/org/apache/commons/io/FileUtils.java": {
+                "old": {
+                    "('org.apache.commons.io#FileUtils', 'forceDelete(File)')": [
+                        1440
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        52
+                    ],
+                    "('org.apache.commons.io#FileUtils', None)": [
+                        329,
+                        354
+                    ],
+                    "('org.apache.commons.io#FileUtils', 'forceDelete(File)')": [
+                        1443
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/io/file/CleaningPathVisitor.java": {
+                "old": {
+                    "('org.apache.commons.io.file#CleaningPathVisitor', 'visitFile(Path,BasicFileAttributes)')": [
+                        88
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.commons.io.file#CleaningPathVisitor', None)": [
+                        57,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        83
+                    ],
+                    "('org.apache.commons.io.file#CleaningPathVisitor', 'visitFile(Path,BasicFileAttributes)')": [
+                        104,
+                        105,
+                        106,
+                        107,
+                        108
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/io/file/DeletingPathVisitor.java": {
+                "old": {
+                    "('org.apache.commons.io.file#DeletingPathVisitor', 'visitFile(Path,BasicFileAttributes)')": [
+                        98
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.commons.io.file#DeletingPathVisitor', None)": [
+                        58,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        84
+                    ],
+                    "('org.apache.commons.io.file#DeletingPathVisitor', 'visitFile(Path,BasicFileAttributes)')": [
+                        113,
+                        114,
+                        115,
+                        116,
+                        117
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/io/file/PathUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', None)": [
+                        79,
+                        94,
+                        95,
+                        97,
+                        164,
+                        288,
+                        303
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'accumulate(Path,int,FileVisitOption)')": [
+                        144,
+                        146
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'cleanDirectory(Path)')": [
+                        157
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'cleanDirectory(Path,FileVisitOption)')": [
+                        169,
+                        170,
+                        171,
+                        172
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'copyDirectory(Path,Path,CopyOption)')": [
+                        185,
+                        187,
+                        188
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'copyFile(URL,Path,CopyOption)')": [
+                        202
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'copyFileToDirectory(Path,Path,CopyOption)')": [
+                        220
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'copyFileToDirectory(URL,Path,CopyOption)')": [
+                        235
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'delete(Path)')": [
+                        270
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'deleteDirectory(Path)')": [
+                        281
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'deleteDirectory(Path,FileVisitOption)')": [
+                        293,
+                        294
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'deleteFile(Path)')": [
+                        306,
+                        307,
+                        310
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'directoryAndFileContentEquals(Path,Path)')": [
+                        329
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'directoryAndFileContentEquals(Path,Path,LinkOption,OpenOption,FileVisitOption)')": [
+                        345,
+                        346,
+                        358,
+                        366
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'directoryContentEquals(Path,Path)')": [
+                        390
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'directoryContentEquals(Path,Path,int,LinkOption,FileVisitOption)')": [
+                        406
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'fileContentEquals(Path,Path,LinkOption,OpenOption)')": [
+                        443,
+                        478
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'relativize(Collection,Path,boolean,Comparator)')": [
+                        544,
+                        545
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'toFileVisitOptionSet(FileVisitOption)')": [
+                        561
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'visitFileTree(T,Path)')": [
+                        577
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'visitFileTree(T,Path,Set,int)')": [
+                        596,
+                        597
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'visitFileTree(T,String,String)')": [
+                        616
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'visitFileTree(T,URI)')": [
+                        633
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30,
+                        36,
+                        37,
+                        38,
+                        39
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', None)": [
+                        83,
+                        98,
+                        99,
+                        101,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        175,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        322,
+                        338,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        626,
+                        627,
+                        628,
+                        629,
+                        630,
+                        631,
+                        632,
+                        633,
+                        634,
+                        635,
+                        636,
+                        637,
+                        660,
+                        661,
+                        662
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'accumulate(Path,int,FileVisitOption)')": [
+                        155,
+                        157
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'cleanDirectory(Path)')": [
+                        168
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'cleanDirectory(Path,DeleteOption)')": [
+                        180,
+                        181,
+                        182
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'copyDirectory(Path,Path,CopyOption)')": [
+                        195,
+                        197,
+                        198
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'copyFile(URL,Path,CopyOption)')": [
+                        212
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'copyFileToDirectory(Path,Path,CopyOption)')": [
+                        230
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'copyFileToDirectory(URL,Path,CopyOption)')": [
+                        245
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'delete(Path)')": [
+                        280
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'delete(Path,DeleteOption)')": [
+                        301,
+                        302,
+                        303,
+                        304
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'deleteDirectory(Path)')": [
+                        315
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'deleteDirectory(Path,DeleteOption)')": [
+                        327,
+                        328,
+                        329
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'deleteFile(Path)')": [
+                        341
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'deleteFile(Path,DeleteOption)')": [
+                        354,
+                        355,
+                        356,
+                        357,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'overrideReadOnly(DeleteOption)')": [
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'directoryAndFileContentEquals(Path,Path)')": [
+                        401
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'directoryAndFileContentEquals(Path,Path,LinkOption,OpenOption,FileVisitOption)')": [
+                        417,
+                        418,
+                        430,
+                        438
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'directoryContentEquals(Path,Path)')": [
+                        462
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'directoryContentEquals(Path,Path,int,LinkOption,FileVisitOption)')": [
+                        478
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'fileContentEquals(Path,Path,LinkOption,OpenOption)')": [
+                        515,
+                        550
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'relativize(Collection,Path,boolean,Comparator)')": [
+                        616,
+                        617
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'setReadOnly(Path,boolean,LinkOption)')": [
+                        638,
+                        639,
+                        640,
+                        641,
+                        642,
+                        643,
+                        644,
+                        645,
+                        646,
+                        647,
+                        648,
+                        649,
+                        650,
+                        651,
+                        652,
+                        653,
+                        654,
+                        655,
+                        656,
+                        657,
+                        658,
+                        659
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'toFileVisitOptionSet(FileVisitOption)')": [
+                        670
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'visitFileTree(T,Path)')": [
+                        686
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'visitFileTree(T,Path,Set,int)')": [
+                        705,
+                        706
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'visitFileTree(T,String,String)')": [
+                        725
+                    ],
+                    "('org.apache.commons.io.file#PathUtils', 'visitFileTree(T,URI)')": [
+                        742
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/FileUtilsCleanDirectoryTestCase.java": {
+                "old": {
+                    "('org.apache.commons.io#FileUtilsCleanDirectoryTestCase', 'testThrowsOnNullList')": [
+                        89,
+                        90,
+                        91,
+                        92
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanDirectoryTestCase', 'testThrowsOnCannotDeleteFile')": [
+                        108,
+                        109,
+                        110,
+                        111
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanDirectoryTestCase', 'chmod(File,int,boolean)')": [
+                        119
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io#FileUtilsCleanDirectoryTestCase', 'testThrowsOnNullList')": [
+                        88
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanDirectoryTestCase', 'testThrowsOnCannotDeleteFile')": [
+                        104
+                    ],
+                    "('org.apache.commons.io#FileUtilsCleanDirectoryTestCase', None)": [
+                        111
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/file/PathUtilsDeleteDirectoryTest.java": {
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteDirectoryTest', None)": [
+                        64,
+                        65,
+                        72,
+                        73,
+                        74,
+                        77,
+                        78,
+                        79,
+                        82,
+                        83,
+                        84
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteDirectoryTest', 'testDeleteDirectory1FileSize0(DeleteOption)')": [
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteDirectoryTest', 'testDeleteDirectory1FileSize0NoOptions')": [
+                        75,
+                        76
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteDirectoryTest', 'testDeleteDirectory1FileSize0OverrideReadOnly')": [
+                        80,
+                        81
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/file/PathUtilsDeleteFileTest.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        24,
+                        27
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteFileTest', 'testDeleteFileEmptyDirectory')": [
+                        99
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        25,
+                        29
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteFileTest', 'testDeleteFileEmptyDirectory')": [
+                        100,
+                        101,
+                        102
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteFileTest', None)": [
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteFileTest', 'testDeleteReadOnlyFileDirectory1FileSize1')": [
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteFileTest', 'testSetReadOnlyFileDirectory1FileSize1')": [
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/file/PathUtilsDeleteTest.java": {
+                "old": {
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', None)": [
+                        53,
+                        54,
+                        55,
+                        67,
+                        68,
+                        69
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteDirectory1FileSize0')": [
+                        60,
+                        61
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteDirectory1FileSize1')": [
+                        74,
+                        75
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        25
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteDirectory1FileSize0')": [
+                        59,
+                        60
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteDirectory1FileSize0(DeleteOption)')": [
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', None)": [
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        90,
+                        91,
+                        92,
+                        95,
+                        96,
+                        97,
+                        100,
+                        101,
+                        111,
+                        112,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        138,
+                        139,
+                        140,
+                        143,
+                        144,
+                        145,
+                        160,
+                        161,
+                        162,
+                        167,
+                        168,
+                        174,
+                        175,
+                        176,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        187,
+                        188,
+                        189,
+                        192,
+                        193,
+                        194,
+                        197,
+                        198,
+                        199
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteDirectory1FileSize0ForceOff')": [
+                        80,
+                        81
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteDirectory1FileSize0ForceOn')": [
+                        88,
+                        89
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteDirectory1FileSize0NoOption')": [
+                        93,
+                        94
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteDirectory1FileSize0OverrideReadonly')": [
+                        98,
+                        99
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteDirectory1FileSize1')": [
+                        106,
+                        107
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteDirectory1FileSize1(DeleteOption)')": [
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteDirectory1FileSize1ForceOff')": [
+                        128,
+                        129
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteDirectory1FileSize1ForceOn')": [
+                        136,
+                        137
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteDirectory1FileSize1NoOption')": [
+                        141,
+                        142
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteDirectory1FileSize1OverrideReadOnly')": [
+                        146,
+                        147
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteEmptyDirectory(DeleteOption)')": [
+                        163,
+                        164,
+                        165,
+                        166
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteEmptyDirectoryForceOff')": [
+                        177,
+                        178
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteEmptyDirectoryForceOn')": [
+                        185,
+                        186
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteEmptyDirectoryNoOption')": [
+                        190,
+                        191
+                    ],
+                    "('org.apache.commons.io.file#PathUtilsDeleteTest', 'testDeleteEmptyDirectoryOverrideReadOnly')": [
+                        195,
+                        196
+                    ]
+                }
+            }
+        }
+    },
+    "a6af21186677821755f443fa69d9c46f8ff32029": {
+        "authored_data": "2020 Aug 12 01:04",
+        "commit.message": "Add ReversedLinesFileReader.readLines(int).\n",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "acda84537b9f3031bf3f61727225541ec088191e",
+        "changes": {
+            "src/main/java/org/apache/commons/io/input/ReversedLinesFileReader.java": {
+                "old": {
+                    "('org.apache.commons.io.input#ReversedLinesFileReader', None)": [
+                        228
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31,
+                        32,
+                        33
+                    ],
+                    "('org.apache.commons.io.input#ReversedLinesFileReader', None)": [
+                        231,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270
+                    ],
+                    "('org.apache.commons.io.input#ReversedLinesFileReader', 'readLines(int)')": [
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/io/input/ReversedLinesFileReaderTestSimple.java": {
+                "old": {
+                    "(None, None)": [
+                        28,
+                        31,
+                        68,
+                        69
+                    ],
+                    "('org.apache.commons.io.input#ReversedLinesFileReaderTestSimple', None)": [
+                        33,
+                        34,
+                        35,
+                        36,
+                        40,
+                        41,
+                        42,
+                        43
+                    ],
+                    "('org.apache.commons.io.input#ReversedLinesFileReaderTestSimple', 'closeReader')": [
+                        37,
+                        38,
+                        39
+                    ],
+                    "('org.apache.commons.io.input#ReversedLinesFileReaderTestSimple', 'testFileSizeIsExactMultipleOfBlockSize')": [
+                        49,
+                        50,
+                        51
+                    ],
+                    "('org.apache.commons.io.input#ReversedLinesFileReaderTestSimple', 'testUnsupportedEncodingUTF16')": [
+                        58
+                    ],
+                    "('org.apache.commons.io.input#ReversedLinesFileReaderTestSimple', 'testUnsupportedEncodingBig5')": [
+                        65
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        27
+                    ],
+                    "('org.apache.commons.io.input#ReversedLinesFileReaderTestSimple', 'testFileSizeIsExactMultipleOfBlockSize')": [
+                        38,
+                        39,
+                        40,
+                        41
+                    ],
+                    "('org.apache.commons.io.input#ReversedLinesFileReaderTestSimple', None)": [
+                        42,
+                        43,
+                        44,
+                        45,
+                        58
+                    ],
+                    "('org.apache.commons.io.input#ReversedLinesFileReaderTestSimple', 'testLineCount')": [
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57
+                    ],
+                    "('org.apache.commons.io.input#ReversedLinesFileReaderTestSimple', 'testUnsupportedEncodingUTF16')": [
+                        65
+                    ],
+                    "('org.apache.commons.io.input#ReversedLinesFileReaderTestSimple', 'testUnsupportedEncodingBig5')": [
+                        72
+                    ]
+                }
+            }
+        }
+    },
+    "acda84537b9f3031bf3f61727225541ec088191e": {
+        "authored_data": "2020 Aug 11 12:14",
+        "commit.message": "identify class fields\n",
+        "commit.author.name": "Sebb",
+        "pcid": "31a349b763b346a61b2c269dac3d1bfac629627f",
+        "changes": {
+            "src/main/java/org/apache/commons/io/input/ReversedLinesFileReader.java": {
+                "old": {
+                    "('org.apache.commons.io.input#ReversedLinesFileReader', None)": [
+                        169,
+                        170,
+                        171,
+                        174,
+                        175,
+                        176,
+                        178,
+                        180,
+                        181,
+                        185
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.input#ReversedLinesFileReader', None)": [
+                        169,
+                        170,
+                        171,
+                        174,
+                        175,
+                        176,
+                        178,
+                        180,
+                        181,
+                        185
+                    ]
+                }
+            }
+        }
+    }
+}

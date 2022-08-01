@@ -1,0 +1,783 @@
+{
+    "95793c7aab86868fc1ebb5ba177481a36d91450f": {
+        "authored_data": "2014 Feb 07 14:54",
+        "commit.message": "Fix DBCP-177\nEnable DBCP to work with a SecurityManager such that only DBCP needs to be granted the necessary permissions to communicate with the database.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@1565667 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mark Thomas",
+        "pcid": "eee139828ddf33eb1937c4412d953eae43263fa4",
+        "changes": {
+            "src/main/java/org/apache/commons/dbcp2/BasicDataSource.java": {
+                "new": {
+                    "('org.apache.commons.dbcp2#BasicDataSource', None)": [
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103
+                    ]
+                }
+            }
+        }
+    },
+    "eee139828ddf33eb1937c4412d953eae43263fa4": {
+        "authored_data": "2014 Feb 07 12:26",
+        "commit.message": "Start work on DBCP-177\nEnable getConnection() to work under a security manager\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@1565630 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mark Thomas",
+        "pcid": "194a937b49e61c86793ce5c62a50820be88c4028",
+        "changes": {
+            "src/main/java/org/apache/commons/dbcp2/BasicDataSource.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2#BasicDataSource', 'getConnection')": [
+                        1344
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30,
+                        31,
+                        32,
+                        2223,
+                        2224
+                    ],
+                    "('org.apache.commons.dbcp2#BasicDataSource', 'getConnection')": [
+                        1347,
+                        1348,
+                        1349,
+                        1350,
+                        1351,
+                        1352,
+                        1353,
+                        1354,
+                        1355,
+                        1356,
+                        1357,
+                        1358,
+                        1359,
+                        1360
+                    ],
+                    "('org.apache.commons.dbcp2#BasicDataSource', None)": [
+                        1361,
+                        2217,
+                        2218,
+                        2219,
+                        2220,
+                        2221,
+                        2222
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/dbcp2/Utils.java": {
+                "new": {
+                    "('org.apache.commons.dbcp2#Utils', None)": [
+                        34,
+                        35,
+                        36,
+                        37
+                    ]
+                }
+            }
+        }
+    },
+    "a3cefc2063d220efdc8a42a66164a5ff0bfd690a": {
+        "authored_data": "2014 Feb 05 22:30",
+        "commit.message": "Fix DBCP-180\nThe garbage collector needs to be able to collect JDBC resources that the client is no longer referencing. The AbandonedTrace code was stopping this. This has been fixed by using WeakReferences. A secondary issue was that pooled statements would not get returned to the pool once the WeakReference was used since AbandonedTrace lost the ability to trace all the child resources. Use of a finalizer (I couldn't think of a better way) addresses that.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@1564961 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mark Thomas",
+        "pcid": "1886e00dc914bb2f7d64afac59bcde0fefdc8387",
+        "changes": {
+            "src/main/java/org/apache/commons/dbcp2/AbandonedTrace.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2#AbandonedTrace', None)": [
+                        37
+                    ],
+                    "('org.apache.commons.dbcp2#AbandonedTrace', 'addTrace(AbandonedTrace)')": [
+                        104
+                    ],
+                    "('org.apache.commons.dbcp2#AbandonedTrace', 'getTrace')": [
+                        126
+                    ],
+                    "('org.apache.commons.dbcp2#AbandonedTrace', 'removeTrace(AbandonedTrace)')": [
+                        137
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        21,
+                        159,
+                        160
+                    ],
+                    "('org.apache.commons.dbcp2#AbandonedTrace', None)": [
+                        39
+                    ],
+                    "('org.apache.commons.dbcp2#AbandonedTrace', 'addTrace(AbandonedTrace)')": [
+                        106
+                    ],
+                    "('org.apache.commons.dbcp2#AbandonedTrace', 'getTrace')": [
+                        127,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        140
+                    ],
+                    "('org.apache.commons.dbcp2#AbandonedTrace', 'removeTrace(AbandonedTrace)')": [
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/dbcp2/DelegatingStatement.java": {
+                "new": {
+                    "('org.apache.commons.dbcp2#DelegatingStatement', None)": [
+                        539,
+                        540
+                    ],
+                    "('org.apache.commons.dbcp2#DelegatingStatement', 'finalize')": [
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551
+                    ],
+                    "(None, None)": [
+                        552
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/dbcp2/PoolablePreparedStatement.java": {
+                "old": {
+                    "(None, None)": [
+                        149
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestAbandonedBasicDataSource.java": {
+                "new": {
+                    "(None, None)": [
+                        27,
+                        28,
+                        29
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', None)": [
+                        213,
+                        214,
+                        215,
+                        216,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        253,
+                        254,
+                        258,
+                        259,
+                        260,
+                        261
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'testGarbageCollectorCleanUp01')": [
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'testGarbageCollectorCleanUp02')": [
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'createStatement(Connection)')": [
+                        255,
+                        256,
+                        257
+                    ]
+                }
+            }
+        }
+    },
+    "1886e00dc914bb2f7d64afac59bcde0fefdc8387": {
+        "authored_data": "2014 Feb 05 19:56",
+        "commit.message": "Keep FindBugs happy\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@1564905 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mark Thomas",
+        "pcid": "819c57617cca6d764504ee50692971b6db8b2ea4",
+        "changes": {
+            "src/main/java/org/apache/commons/dbcp2/BasicDataSource.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2#BasicDataSource', None)": [
+                        1329
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2#BasicDataSource', None)": [
+                        1329
+                    ]
+                }
+            }
+        }
+    },
+    "819c57617cca6d764504ee50692971b6db8b2ea4": {
+        "authored_data": "2014 Feb 05 17:13",
+        "commit.message": "constant does not need to be exposed to sub-classes\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@1564836 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "a4ab4f14811b382206ffd3c7ed10af8f1962d218",
+        "changes": {
+            "src/test/java/org/apache/commons/dbcp2/TestBasicDataSource.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2#TesterConnRequestCountDriver', None)": [
+                        576
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2#TesterConnRequestCountDriver', None)": [
+                        576
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TesterDriver.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2#TesterDriver', None)": [
+                        135
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2#TesterDriver', None)": [
+                        135
+                    ]
+                }
+            }
+        }
+    },
+    "a4ab4f14811b382206ffd3c7ed10af8f1962d218": {
+        "authored_data": "2014 Feb 05 17:09",
+        "commit.message": "Privatise constants - there are public getters\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@1564833 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "0326677c17051a0e1369327d1f956e7218329c49",
+        "changes": {
+            "src/test/java/org/apache/commons/dbcp2/TesterDriver.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2#TesterDriver', None)": [
+                        138,
+                        139
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2#TesterDriver', None)": [
+                        138,
+                        139
+                    ]
+                }
+            }
+        }
+    },
+    "0326677c17051a0e1369327d1f956e7218329c49": {
+        "authored_data": "2014 Feb 05 13:08",
+        "commit.message": "Fix class cast errors and make it harder to create a similar issue in the future\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@1564763 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mark Thomas",
+        "pcid": "446cea6dbe7abc06336b6762aae1253830a185a5",
+        "changes": {
+            "src/main/java/org/apache/commons/dbcp2/PStmtKey.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2#PStmtKey', None)": [
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        48,
+                        52,
+                        56,
+                        59,
+                        69,
+                        73,
+                        76
+                    ],
+                    "('org.apache.commons.dbcp2#PStmtKey', 'getStmtType')": [
+                        106
+                    ],
+                    "('org.apache.commons.dbcp2#PStmtKey', 'hashCode')": [
+                        172
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21
+                    ],
+                    "('org.apache.commons.dbcp2#PStmtKey', None)": [
+                        43,
+                        44,
+                        45,
+                        48,
+                        52,
+                        56,
+                        59,
+                        69,
+                        73,
+                        76
+                    ],
+                    "('org.apache.commons.dbcp2#PStmtKey', 'getStmtType')": [
+                        106
+                    ],
+                    "('org.apache.commons.dbcp2#PStmtKey', 'hashCode')": [
+                        172
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/dbcp2/PoolingConnection.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2#PoolingConnection', None)": [
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        264,
+                        265,
+                        292,
+                        293,
+                        294,
+                        320
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'prepareCall(String)')": [
+                        179
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'prepareCall(String,int,int)')": [
+                        202
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'createKey(String,int,int,byte)')": [
+                        266
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'createKey(String,byte)')": [
+                        295,
+                        302
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'makeObject(PStmtKey)')": [
+                        329,
+                        344
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'prepareCall(String)')": [
+                        172
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'prepareCall(String,int,int)')": [
+                        195
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingConnection', None)": [
+                        257,
+                        258,
+                        285,
+                        286,
+                        287,
+                        313,
+                        417,
+                        418
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'createKey(String,int,int,StatementType)')": [
+                        259
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'createKey(String,StatementType)')": [
+                        288,
+                        295
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'makeObject(PStmtKey)')": [
+                        322,
+                        337
+                    ],
+                    "(None, None)": [
+                        419,
+                        420,
+                        421
+                    ]
+                }
+            }
+        }
+    },
+    "446cea6dbe7abc06336b6762aae1253830a185a5": {
+        "authored_data": "2014 Feb 05 10:31",
+        "commit.message": "Simplify SQLException creation\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@1564704 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mark Thomas",
+        "pcid": "ccc4d3451144312fedea301067a76b657aa5fdd2",
+        "changes": {
+            "src/main/java/org/apache/commons/dbcp2/PoolableConnection.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2#PoolableConnection', 'close')": [
+                        100,
+                        117,
+                        129
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2#PoolableConnection', 'close')": [
+                        100,
+                        117,
+                        129
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/dbcp2/PoolingConnection.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'close')": [
+                        91
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'prepareStatement(String)')": [
+                        117
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'prepareStatement(String,int)')": [
+                        135,
+                        141
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'prepareStatement(String,int,int)')": [
+                        161,
+                        165
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'close')": [
+                        91
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'prepareStatement(String)')": [
+                        117
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'prepareStatement(String,int)')": [
+                        135,
+                        141
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingConnection', 'prepareStatement(String,int,int)')": [
+                        161,
+                        165
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/dbcp2/PoolingDriver.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2#PoolingDriver', 'closePool(String)')": [
+                        102
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingDriver', 'connect(String,Properties)')": [
+                        136,
+                        140
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2#PoolingDriver', 'closePool(String)')": [
+                        102
+                    ],
+                    "('org.apache.commons.dbcp2#PoolingDriver', 'connect(String,Properties)')": [
+                        136,
+                        140
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/dbcp2/datasources/CPDSConnectionFactory.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2.datasources#CPDSConnectionFactory', 'invalidate(PooledConnection)')": [
+                        301
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#CPDSConnectionFactory', 'closePool(String)')": [
+                        339
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2.datasources#CPDSConnectionFactory', 'invalidate(PooledConnection)')": [
+                        301
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#CPDSConnectionFactory', 'closePool(String)')": [
+                        339
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/dbcp2/datasources/InstanceKeyDataSource.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2.datasources#InstanceKeyDataSource', 'getConnection(String,String)')": [
+                        815,
+                        816
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2.datasources#InstanceKeyDataSource', 'getConnection(String,String)')": [
+                        815,
+                        816
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/dbcp2/datasources/KeyedCPDSConnectionFactory.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2.datasources#KeyedCPDSConnectionFactory', 'invalidate(PooledConnection)')": [
+                        313
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#KeyedCPDSConnectionFactory', 'closePool(String)')": [
+                        344
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2.datasources#KeyedCPDSConnectionFactory', 'invalidate(PooledConnection)')": [
+                        313
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#KeyedCPDSConnectionFactory', 'closePool(String)')": [
+                        344
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/dbcp2/datasources/PerUserPoolDataSource.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2.datasources#PerUserPoolDataSource', 'getPooledConnectionAndInfo(String,String)')": [
+                        472,
+                        473,
+                        489,
+                        490
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2.datasources#PerUserPoolDataSource', 'getPooledConnectionAndInfo(String,String)')": [
+                        472,
+                        473,
+                        489,
+                        490
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/dbcp2/managed/BasicManagedDataSource.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2.managed#BasicManagedDataSource', 'createConnectionFactory')": [
+                        150,
+                        157
+                    ],
+                    "('org.apache.commons.dbcp2.managed#BasicManagedDataSource', 'createPoolableConnectionFactory(ConnectionFactory)')": [
+                        205
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2.managed#BasicManagedDataSource', 'createConnectionFactory')": [
+                        150,
+                        157
+                    ],
+                    "('org.apache.commons.dbcp2.managed#BasicManagedDataSource', 'createPoolableConnectionFactory(ConnectionFactory)')": [
+                        205
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/dbcp2/managed/ManagedConnection.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2.managed#ManagedConnection', 'updateTransactionStatus')": [
+                        127
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2.managed#ManagedConnection', 'updateTransactionStatus')": [
+                        127
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/dbcp2/managed/TransactionContext.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2.managed#TransactionContext', 'setSharedConnection(Connection)')": [
+                        93
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TransactionContext', 'addTransactionContextListener(TransactionContextListener)')": [
+                        121
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TransactionContext', 'isActive')": [
+                        139
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2.managed#TransactionContext', 'setSharedConnection(Connection)')": [
+                        93
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TransactionContext', 'addTransactionContextListener(TransactionContextListener)')": [
+                        121
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TransactionContext', 'isActive')": [
+                        139
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/dbcp2/managed/TransactionRegistry.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2.managed#TransactionRegistry', 'getActiveTransactionContext')": [
+                        108
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2.managed#TransactionRegistry', 'getActiveTransactionContext')": [
+                        108
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TesterConnection.java": {
+                "old": {
+                    "(None, None)": [
+                        8,
+                        10,
+                        42
+                    ],
+                    "('org.apache.commons.dbcp2#TesterConnection', None)": [
+                        64,
+                        237,
+                        241,
+                        242,
+                        243,
+                        247
+                    ],
+                    "('org.apache.commons.dbcp2#TesterConnection', 'checkFailure')": [
+                        240
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        8,
+                        10,
+                        42
+                    ],
+                    "('org.apache.commons.dbcp2#TesterConnection', None)": [
+                        64,
+                        237,
+                        241,
+                        242,
+                        243,
+                        247
+                    ],
+                    "('org.apache.commons.dbcp2#TesterConnection', 'checkFailure')": [
+                        240
+                    ]
+                }
+            }
+        }
+    },
+    "ccc4d3451144312fedea301067a76b657aa5fdd2": {
+        "authored_data": "2014 Feb 05 10:29",
+        "commit.message": "Fix equals() for PStmtKey and remove unnecessary code from sub-class now PStmtKey handles autoGeneratedKeys\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/dbcp/trunk@1564702 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mark Thomas",
+        "pcid": "be40a7e6bff870d36acce4509dc57fc7691e2cfa",
+        "changes": {
+            "src/main/java/org/apache/commons/dbcp2/PStmtKey.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2#PStmtKey', None)": [
+                        56
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2#PStmtKey', None)": [
+                        56
+                    ],
+                    "('org.apache.commons.dbcp2#PStmtKey', 'equals(Object)')": [
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/dbcp2/cpdsadapter/PStmtKeyCPDS.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2.cpdsadapter#PStmtKeyCPDS', None)": [
+                        27,
+                        34,
+                        41,
+                        42,
+                        50,
+                        60,
+                        68,
+                        76,
+                        79,
+                        80,
+                        81
+                    ],
+                    "('org.apache.commons.dbcp2.cpdsadapter#PStmtKeyCPDS', 'getAutoGeneratedKeys')": [
+                        82,
+                        83
+                    ],
+                    "('org.apache.commons.dbcp2.cpdsadapter#PStmtKeyCPDS', 'equals(Object)')": [
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105
+                    ],
+                    "('org.apache.commons.dbcp2.cpdsadapter#PStmtKeyCPDS', 'hashCode')": [
+                        127
+                    ],
+                    "('org.apache.commons.dbcp2.cpdsadapter#PStmtKeyCPDS', 'toString')": [
+                        148,
+                        149
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2.cpdsadapter#PStmtKeyCPDS', None)": [
+                        39
+                    ]
+                }
+            }
+        }
+    }
+}

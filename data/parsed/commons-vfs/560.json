@@ -1,0 +1,305 @@
+{
+    "37a15d583c9bfe3d1bab5ebfcd86d8b1fbe30629": {
+        "authored_data": "2021 Feb 28 14:08",
+        "commit.message": "Add @SuppressWarnings and use avoid naming confusion b/w File and\nFileObject.\n",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "2bd0e4e448fc3bc69d04ce5b0fbf29a79b82b1c0",
+        "changes": {
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/cache/LRUFilesCache.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.cache#LRUFilesCache', None)": [
+                        81,
+                        85,
+                        97
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.cache#LRUFilesCache', None)": [
+                        81,
+                        82,
+                        86,
+                        98
+                    ]
+                }
+            }
+        }
+    },
+    "4e37bb698b6c8d18e4e102a6ed6e6b35925ee35f": {
+        "authored_data": "2021 Feb 28 13:58",
+        "commit.message": "Rework SoftRefFilesCache locking part 1 (#158)\n\n* SoftRefFilesCache: don't call super.close()\r\n\r\nAbstractVfsComponent.close() is documented to do nothing, so there's\r\nno point in calling it.\r\n\r\n* SoftRefFilesCache: use isEmpty() instead of \"size()<1\"\r\n\r\nFor some containers, size() is O(n), but isEmpty() is always O(1).\r\n\r\n* SoftRefFilesCache: remove redundant isInterrupted() check\r\n\r\nThe following ReferenceQueue.remove() call will do that check again.\r\n\r\n* SoftRefFilesCache: simplify the InterruptedException catch block\r\n\r\nBy reversing the order of \"while\" and \"try/catch\", we can simply omit\r\nthe \"break\" pseudo-goto statement.",
+        "commit.author.name": "Max Kellermann",
+        "pcid": "1887559eb510abb420ccd96823f21f16eb77c691",
+        "changes": {
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/cache/SoftRefFilesCache.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', None)": [
+                        72,
+                        73,
+                        89,
+                        90,
+                        91,
+                        93,
+                        94
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'close(FileSystem)')": [
+                        245
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'close')": [
+                        256,
+                        257
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'getOrCreateFilesystemCache(FileSystem)')": [
+                        298
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', None)": [
+                        72,
+                        73,
+                        89,
+                        90,
+                        91,
+                        92
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'close(FileSystem)')": [
+                        244
+                    ],
+                    "('org.apache.commons.vfs2.cache#SoftRefFilesCache', 'getOrCreateFilesystemCache(FileSystem)')": [
+                        295
+                    ]
+                }
+            }
+        }
+    },
+    "c98846e06605ba618beaf3ab215391d445a137f9": {
+        "authored_data": "2021 Feb 25 17:50",
+        "commit.message": "Don't output to the console in tests unless you actually have something\nto report.\n",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "d20492a6a736d7615ea1e3f2b2a175db7b651c02",
+        "changes": {
+            "commons-vfs2/src/test/java/org/apache/commons/vfs2/AbstractTestSuite.java": {
+                "old": {
+                    "('org.apache.commons.vfs2#AbstractTestSuite', 'dumpThreadSnapshot(Thread)')": [
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        258,
+                        260,
+                        291
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        30
+                    ],
+                    "('org.apache.commons.vfs2#AbstractTestSuite', 'dumpThreadSnapshot(Thread)')": [
+                        244,
+                        245,
+                        246,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        264,
+                        266,
+                        297,
+                        298,
+                        299
+                    ]
+                }
+            }
+        }
+    },
+    "d20492a6a736d7615ea1e3f2b2a175db7b651c02": {
+        "authored_data": "2021 Feb 25 17:47",
+        "commit.message": "Fix Javadoc typo.\n",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "3840fd0108acd604fb11f94423ada2423d28d88a",
+        "changes": {
+            "commons-vfs2/src/test/java/org/apache/commons/vfs2/filter/BaseFilterTest.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.filter#BaseFilterTest', None)": [
+                        51,
+                        52
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.filter#BaseFilterTest', None)": [
+                        51
+                    ]
+                }
+            }
+        }
+    },
+    "fdb039900ceb9898555afc1522d8d348e9961ff9": {
+        "authored_data": "2021 Feb 25 16:33",
+        "commit.message": "Fix file resource leak in CombinedResources (properties file) which\nkeeps the jar file open.\n\n- The Messages class' singleton loads a CombinedResources which loads a\nproperty file.\n- This means the jar file remains open while the JVM is up which\nprevents the jar file from being deleted when a webapp is undeplyed from\nTomcat for example.\n- Simplify initialization.\n",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "e86d486f1943014c5bcd52504ecd25b813adc769",
+        "changes": {
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/util/CombinedResources.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.util#CombinedResources', None)": [
+                        36,
+                        95,
+                        98,
+                        99,
+                        100,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120
+                    ],
+                    "('org.apache.commons.vfs2.util#CombinedResources', 'loadResources(Locale)')": [
+                        58
+                    ],
+                    "('org.apache.commons.vfs2.util#CombinedResources', 'loadResources(String)')": [
+                        84,
+                        85
+                    ],
+                    "('org.apache.commons.vfs2.util#CombinedResources', 'getResourceName')": [
+                        96,
+                        97
+                    ],
+                    "('org.apache.commons.vfs2.util#CombinedResources', 'getKeys')": [
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114
+                    ],
+                    "('org.apache.commons.vfs2.util#CombinedResources', 'handleGetObject(String)')": [
+                        121,
+                        122,
+                        123,
+                        124,
+                        125
+                    ],
+                    "(None, None)": [
+                        126
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20
+                    ],
+                    "('org.apache.commons.vfs2.util#CombinedResources', None)": [
+                        37,
+                        42,
+                        43,
+                        44,
+                        45,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        64,
+                        65,
+                        66
+                    ],
+                    "('org.apache.commons.vfs2.util#CombinedResources', 'getKeys')": [
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56
+                    ],
+                    "('org.apache.commons.vfs2.util#CombinedResources', 'getResourceName')": [
+                        62,
+                        63
+                    ],
+                    "('org.apache.commons.vfs2.util#CombinedResources', 'handleGetObject(String)')": [
+                        67,
+                        68
+                    ],
+                    "('org.apache.commons.vfs2.util#CombinedResources', 'loadResources(Locale)')": [
+                        86
+                    ],
+                    "('org.apache.commons.vfs2.util#CombinedResources', 'loadResources(String)')": [
+                        112,
+                        113
+                    ]
+                }
+            }
+        }
+    },
+    "e86d486f1943014c5bcd52504ecd25b813adc769": {
+        "authored_data": "2021 Feb 25 16:16",
+        "commit.message": "Cleanups.\n\n- Inline single use local vars.\n- Use Java 8 API.\n- Sort methods.\n",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "c67a5ade862c8b42c94fc26a2084f6b77f9cbbf2",
+        "changes": {
+            "commons-vfs2/src/main/java/org/apache/commons/vfs2/util/Messages.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.util#Messages', None)": [
+                        37,
+                        84,
+                        85,
+                        86
+                    ],
+                    "('org.apache.commons.vfs2.util#Messages', 'getString(String,Object)')": [
+                        76,
+                        77,
+                        78
+                    ],
+                    "('org.apache.commons.vfs2.util#Messages', 'findMessage(String)')": [
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.util#Messages', None)": [
+                        31,
+                        38,
+                        39,
+                        40,
+                        88
+                    ],
+                    "('org.apache.commons.vfs2.util#Messages', 'findMessage(String)')": [
+                        41,
+                        42,
+                        43
+                    ],
+                    "('org.apache.commons.vfs2.util#Messages', 'getString(String,Object)')": [
+                        82
+                    ],
+                    "(None, None)": [
+                        89
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,1194 @@
+{
+    "92e6d716069686583b852a6dcf12af986d6dc694": {
+        "authored_data": "2014 Nov 07 19:02",
+        "commit.message": "PARQUET-122: make task side metadata true by default\n\nAuthor: julien <julien@twitter.com>\n\nCloses #78 from julienledem/task_side_metadata_default_true and squashes the following commits:\n\n32451a7 [julien] make task side metadata true by default\n",
+        "commit.author.name": "julien",
+        "pcid": "f1da5e927ed18aeec1610bec67f88facd6a470e1",
+        "changes": {
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetInputFormat.java": {
+                "old": {
+                    "(None, None)": [
+                        58
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'isTaskSideMetaData(Configuration)')": [
+                        113
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', None)": [
+                        110,
+                        111,
+                        112,
+                        113,
+                        114
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'isTaskSideMetaData(Configuration)')": [
+                        124
+                    ]
+                }
+            }
+        }
+    },
+    "f1da5e927ed18aeec1610bec67f88facd6a470e1": {
+        "authored_data": "2014 Nov 03 14:11",
+        "commit.message": "PARQUET-121: Allow Parquet to build with Java 8\n\nThere are test failures running with Java 8 due to http://openjdk.java.net/jeps/180 which changed retrieval order for HashMap.\n\nHere's how I tested this:\n\n```bash\nuse-java8\nmvn clean install -DskipTests -Dmaven.javadoc.skip=true\nmvn test\nmvn test -P hadoop-2\n```\n\nI also compiled the main code with Java 7 (target=1.6 bytecode), and compiled the tests with Java 8, and ran them with Java 8. The idea here is to simulate users who want to run Parquet with JRE 8.\n```bash\nuse-java7\nmvn clean install -DskipTests -Dmaven.javadoc.skip=true\nuse-java8\nfind . -name test-classes | grep target/test-classes | grep -v 'parquet-scrooge' | xargs rm -rf\nmvn test -DtargetJavaVersion=1.8 -Dmaven.main.skip=true -Dscala.maven.test.skip=true\n```\nA couple of notes about this:\n* The targetJavaVersion property is used since other Hadoop projects use the same name.\n* I couldn\u2019t get parquet-scrooge to compile with target=1.8, which is why I introduced scala.maven.test.skip (and updated scala-maven-plugin to the latest version which supports the property). Compiling with target=1.8 should be fixed in another JIRA as it looks pretty involved.\n\nAuthor: Tom White <tom@cloudera.com>\n\nCloses #77 from tomwhite/PARQUET-121-java8 and squashes the following commits:\n\n8717e13 [Tom White] Fix tests to run under Java 8.\n35ea670 [Tom White] PARQUET-121. Allow Parquet to build with Java 8.\n",
+        "commit.author.name": "Tom White",
+        "pcid": "a29815abf4f0e51b332a8af1b83ad344104c14d9",
+        "changes": {
+            "parquet-pig/src/main/java/parquet/pig/convert/MapConverter.java": {
+                "old": {
+                    "('parquet.pig.convert#MapConverter', 'end')": [
+                        81
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('parquet.pig.convert#MapConverter', 'end')": [
+                        82
+                    ]
+                }
+            },
+            "parquet-pig/src/test/java/parquet/pig/TestParquetStorer.java": {
+                "old": {
+                    "('parquet.pig#TestParquetStorer', 'testMultipleSchema')": [
+                        124,
+                        125,
+                        132,
+                        133
+                    ]
+                },
+                "new": {
+                    "('parquet.pig#TestParquetStorer', 'testMultipleSchema')": [
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        144,
+                        145
+                    ]
+                }
+            },
+            "parquet-pig/src/test/java/parquet/pig/TestPigSchemaConverter.java": {
+                "old": {
+                    "('parquet.pig#TestPigSchemaConverter', 'testSchemaEvolution')": [
+                        217,
+                        218
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        32
+                    ],
+                    "('parquet.pig#TestPigSchemaConverter', 'testSchemaEvolution')": [
+                        220,
+                        221
+                    ]
+                }
+            },
+            "parquet-thrift/src/test/java/parquet/thrift/TestParquetWriteProtocol.java": {
+                "old": {
+                    "('parquet.thrift#TestParquetWriteProtocol', 'testMap')": [
+                        103
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('parquet.thrift#TestParquetWriteProtocol', 'testMap')": [
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140
+                    ]
+                }
+            }
+        }
+    },
+    "a29815abf4f0e51b332a8af1b83ad344104c14d9": {
+        "authored_data": "2014 Nov 03 14:00",
+        "commit.message": "PARQUET-123: Enable dictionary support in AvroIndexedRecordConverter\n\nIf consumers are loading Parquet records into an immutable structure\nlike an Apache Spark RDD, being able to configure string reuse in\nAvroIndexedRecordConverter can drastically reduce the overall memory\nfootprint of strings.\n\nNOTE: This isn't meant to be a merge-able PR (yet). I want to use\nthis PR as a way to discuss: (1) if this is a reasonable approach\nand (2) to learn if PrimitiveConverter needs to be thread-safe as\nI'm currently using a ConcurrentHashMap. If there's agreement\nthat this would be worthwhile, I'll create a JIRA and write some\nunit tests.\n\nAuthor: Matt Massie <massie@cs.berkeley.edu>\n\nCloses #76 from massie/immutable-strings and squashes the following commits:\n\n88ce5bf [Matt Massie] PARQUET-123: Enable dictionary support in AvroIndexedRecordConverter\n",
+        "commit.author.name": "Matt Massie",
+        "pcid": "ccfca8f714055cd9fbd00cf7e847b880132cae69",
+        "changes": {
+            "parquet-avro/src/main/java/parquet/avro/AvroIndexedRecordConverter.java": {
+                "old": {
+                    "('parquet.avro#AvroIndexedRecordConverter', 'newConverter(Schema,Type,ParentValueContainer)')": [
+                        122
+                    ],
+                    "('parquet.avro#AvroIndexedRecordConverter', None)": [
+                        323,
+                        324,
+                        325
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        36
+                    ],
+                    "('parquet.avro#AvroIndexedRecordConverter', 'newConverter(Schema,Type,ParentValueContainer)')": [
+                        124
+                    ],
+                    "('parquet.avro#AvroIndexedRecordConverter', None)": [
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354
+                    ]
+                }
+            },
+            "parquet-avro/src/test/java/parquet/avro/TestSpecificInputOutputFormat.java": {
+                "old": {
+                    "('parquet.avro#TestSpecificInputOutputFormat', 'nextRecord(int)')": [
+                        53,
+                        57
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('parquet.avro#TestSpecificInputOutputFormat', 'nextRecord(int)')": [
+                        54,
+                        58
+                    ],
+                    "('parquet.avro#TestSpecificInputOutputFormat', 'testReadWrite')": [
+                        190,
+                        193,
+                        194,
+                        195,
+                        196,
+                        208
+                    ]
+                }
+            }
+        }
+    },
+    "ccfca8f714055cd9fbd00cf7e847b880132cae69": {
+        "authored_data": "2014 Oct 29 18:10",
+        "commit.message": "PARQUET-106: Relax InputSplit Protections\n\nhttps://issues.apache.org/jira/browse/PARQUET-106\n\nAuthor: Daniel Weeks <dweeks@netflix.com>\n\nCloses #67 from dcw-netflix/input-split2 and squashes the following commits:\n\n2f2c0c7 [Daniel Weeks] Update ParquetInputSplit.java\n12bd3c1 [Daniel Weeks] Update ParquetInputSplit.java\n6c662ee [Daniel Weeks] Update ParquetInputSplit.java\n5f9f02e [Daniel Weeks] Update ParquetInputSplit.java\nd19e1ac [Daniel Weeks] Merge branch 'master' into input-split2\nc4172bb [Daniel Weeks] Merge remote-tracking branch 'upstream/master'\n01a5e8f [Daniel Weeks] Relaxed protections on input split class\nd37a6de [Daniel Weeks] Resetting pom to main\n0c1572e [Daniel Weeks] Merge remote-tracking branch 'upstream/master'\n98c6607 [Daniel Weeks] Merge remote-tracking branch 'upstream/master'\n96ba602 [Daniel Weeks] Disabled projects that don't compile\n",
+        "commit.author.name": "Daniel Weeks",
+        "pcid": "31fb4dfef212791f86f052ce8a3adeabaf830cf2",
+        "changes": {
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetInputSplit.java": {
+                "old": {
+                    "('parquet.hadoop#ParquetInputSplit', 'getRequestedSchema')": [
+                        135
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'getEnd')": [
+                        142
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'getReadSupportMetadata')": [
+                        149
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'getRowGroupOffsets')": [
+                        156
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'readFields(DataInput)')": [
+                        186
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'write(DataOutput)')": [
+                        206
+                    ]
+                },
+                "new": {
+                    "('parquet.hadoop#ParquetInputSplit', 'getRequestedSchema')": [
+                        135
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'getEnd')": [
+                        142
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'getReadSupportMetadata')": [
+                        149
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'getRowGroupOffsets')": [
+                        156
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'readFields(DataInput)')": [
+                        186
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'write(DataOutput)')": [
+                        206
+                    ]
+                }
+            }
+        }
+    },
+    "31fb4dfef212791f86f052ce8a3adeabaf830cf2": {
+        "authored_data": "2014 Oct 21 16:54",
+        "commit.message": "PARQUET-105: use mvn shade plugin to create uber jar, support meta on a folder\n\n1. Make hadoop dependency from parquet-tools so it is provided. It can be used against different version of hadoop\n2. Use maven shade plugin to create a all in one jar, which can be used both locally or in hadoop\n3. Make parquet-meta command support both folder(read summary file) and a single file\n\nAuthor: Tianshuo Deng <tdeng@twitter.com>\n\nCloses #69 from tsdeng/bundle_parquet_tools and squashes the following commits:\n\nd8dcd3e [Tianshuo Deng] print file offset, file path, and cancel autoCrop\na2d1399 [Tianshuo Deng] support local mode\n5009a85 [Tianshuo Deng] fix README\n0756f81 [Tianshuo Deng] remove semver check for parquet_tools\n78c7f4b [Tianshuo Deng] use mvn shade plugin to create uber jar, support meta on a folder\n",
+        "commit.author.name": "Tianshuo Deng",
+        "pcid": "be1222ef4a3260ddcf516d73c6ceecd144a134cb",
+        "changes": {
+            "parquet-tools/src/main/java/parquet/tools/Main.java": {
+                "old": {
+                    "('parquet.tools#Main', 'main(String)')": [
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182
+                    ]
+                },
+                "new": {
+                    "('parquet.tools#Main', 'main(String)')": [
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/command/ShowMetaCommand.java": {
+                "old": {
+                    "(None, None)": [
+                        18
+                    ],
+                    "('parquet.tools.command#ShowMetaCommand', None)": [
+                        31,
+                        32
+                    ],
+                    "('parquet.tools.command#ShowMetaCommand', 'execute(CommandLine)')": [
+                        55,
+                        59,
+                        64,
+                        65
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        22,
+                        25,
+                        32,
+                        33,
+                        71
+                    ],
+                    "('parquet.tools.command#ShowMetaCommand', 'execute(CommandLine)')": [
+                        57,
+                        58,
+                        59,
+                        67,
+                        68,
+                        69,
+                        70
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/command/ShowSchemaCommand.java": {
+                "old": {
+                    "('parquet.tools.command#ShowSchemaCommand', None)": [
+                        35,
+                        36
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/util/MetadataUtils.java": {
+                "old": {
+                    "('parquet.tools.util#MetadataUtils', 'showDetails(PrettyPrintWriter,BlockMetaData,Long)')": [
+                        82,
+                        83
+                    ]
+                },
+                "new": {
+                    "('parquet.tools.util#MetadataUtils', 'showDetails(PrettyPrintWriter,BlockMetaData,Long)')": [
+                        82,
+                        83,
+                        84
+                    ]
+                }
+            }
+        }
+    },
+    "be1222ef4a3260ddcf516d73c6ceecd144a134cb": {
+        "authored_data": "2014 Oct 01 21:14",
+        "commit.message": "PARQUET-107: Add option to disable summary metadata.\n\nThis adds an option to the commitJob phase of the MR OutputCommitter,\nparquet.enable.summary-metadata (default true), that can be used to\ndisable the summary metadata files generated from the footers of all of\nthe files produced. This enables more control over when those summary\nfiles are produced and makes it possible to rename MR outputs and then\ngenerate the summaries.\n\nAuthor: Ryan Blue <rblue@cloudera.com>\n\nCloses #68 from rdblue/PARQUET-107-add-summary-metadata-option and squashes the following commits:\n\n261e5e4 [Ryan Blue] PARQUET-107: Add option to disable summary metadata.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "da9129927bce90feb6d2860745263f4d74d0dfa8",
+        "changes": {
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetOutputCommitter.java": {
+                "old": {
+                    "('parquet.hadoop#ParquetOutputCommitter', 'commitJob(JobContext)')": [
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        50,
+                        53,
+                        54,
+                        55,
+                        56,
+                        58,
+                        59
+                    ]
+                },
+                "new": {
+                    "('parquet.hadoop#ParquetOutputCommitter', 'commitJob(JobContext)')": [
+                        44,
+                        45,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetOutputFormat.java": {
+                "new": {
+                    "(None, None)": [
+                        76,
+                        77,
+                        78,
+                        79
+                    ],
+                    "('parquet.hadoop#ParquetOutputFormat', None)": [
+                        106
+                    ]
+                }
+            }
+        }
+    },
+    "da9129927bce90feb6d2860745263f4d74d0dfa8": {
+        "authored_data": "2014 Oct 01 20:44",
+        "commit.message": "PARQUET-64: Add new OriginalTypes in parquet-format 2.2.0.\n\nThis implements the restrictions for those types documented in the parquet-format logical types spec.\n\nThis requires a release of parquet-format 2.2.0 with the new types. I'll rebase and update the dependency when it is released.\n\nAuthor: Ryan Blue <rblue@cloudera.com>\n\nCloses #31 from rdblue/PARQUET-64-add-new-types and squashes the following commits:\n\n10feab9 [Ryan Blue] PARQUET-64: Add new OriginalTypes in parquet-format 2.2.0.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "0b17cbee9541998df66d33c8a99b675ced80d9aa",
+        "changes": {
+            "parquet-column/src/main/java/parquet/schema/OriginalType.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/schema/Types.java": {
+                "old": {
+                    "('parquet.schema#Types', None)": [
+                        314
+                    ]
+                },
+                "new": {
+                    "('parquet.schema#Types', None)": [
+                        312,
+                        313,
+                        316,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/parquet/parser/TestParquetParser.java": {
+                "old": {
+                    "('parquet.parser#TestParquetParser', 'testUTF8Annotation')": [
+                        120
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testMAPAnnotations')": [
+                        168
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testLISTAnnotation')": [
+                        192
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testDecimalFixedAnnotation')": [
+                        211
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testDecimalBinaryAnnotation')": [
+                        229
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        35,
+                        38,
+                        309
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testUTF8Annotation')": [
+                        123
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testMAPAnnotations')": [
+                        171
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testLISTAnnotation')": [
+                        195
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testDecimalFixedAnnotation')": [
+                        214
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testDecimalBinaryAnnotation')": [
+                        232
+                    ],
+                    "('parquet.parser#TestParquetParser', None)": [
+                        241,
+                        261,
+                        262,
+                        263,
+                        291,
+                        292,
+                        293
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testTimeAnnotations')": [
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testIntAnnotations')": [
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290
+                    ],
+                    "('parquet.parser#TestParquetParser', 'testEmbeddedAnnotations')": [
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/parquet/schema/TestTypeBuilders.java": {
+                "old": {
+                    "('parquet.schema#TestTypeBuilders', 'testGroupTypeConstruction')": [
+                        45
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testDecimalAnnotation')": [
+                        197,
+                        200,
+                        207,
+                        210,
+                        217,
+                        219,
+                        226,
+                        229
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testDecimalAnnotationMissingScale')": [
+                        239,
+                        242,
+                        249,
+                        252,
+                        259,
+                        261,
+                        268,
+                        271
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testDecimalAnnotationMissingPrecision')": [
+                        284,
+                        294,
+                        304,
+                        315
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testDecimalAnnotationPrecisionScaleBound')": [
+                        330,
+                        340,
+                        350,
+                        361
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testDecimalAnnotationLengthCheck')": [
+                        377,
+                        386,
+                        396,
+                        405
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testDECIMALAnnotationRejectsUnsupportedTypes')": [
+                        423
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testUTF8Annotation')": [
+                        431,
+                        432,
+                        433,
+                        434
+                    ],
+                    "('parquet.schema#TestTypeBuilders', None)": [
+                        435,
+                        436,
+                        437
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testUTF8AnnotationRejectsNonBinary')": [
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        447,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        9
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testGroupTypeConstruction')": [
+                        46
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testDecimalAnnotation')": [
+                        198,
+                        201,
+                        208,
+                        211,
+                        218,
+                        220,
+                        227,
+                        230
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testDecimalAnnotationMissingScale')": [
+                        240,
+                        243,
+                        250,
+                        253,
+                        260,
+                        262,
+                        269,
+                        272
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testDecimalAnnotationMissingPrecision')": [
+                        285,
+                        295,
+                        305,
+                        316
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testDecimalAnnotationPrecisionScaleBound')": [
+                        331,
+                        341,
+                        351,
+                        362
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testDecimalAnnotationLengthCheck')": [
+                        378,
+                        387,
+                        397,
+                        406
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testDECIMALAnnotationRejectsUnsupportedTypes')": [
+                        424
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testBinaryAnnotations')": [
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438
+                    ],
+                    "('parquet.schema#TestTypeBuilders', None)": [
+                        439,
+                        440,
+                        441,
+                        442,
+                        468,
+                        469,
+                        470,
+                        478,
+                        479,
+                        480,
+                        481,
+                        504,
+                        505,
+                        506,
+                        507,
+                        508,
+                        509,
+                        517,
+                        518,
+                        519,
+                        520,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        554,
+                        555,
+                        556,
+                        567,
+                        568,
+                        569,
+                        570,
+                        571,
+                        572
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testBinaryAnnotationsRejectsNonBinary')": [
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        463,
+                        464
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testInt32Annotations')": [
+                        471,
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testInt32AnnotationsRejectNonInt32')": [
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        499,
+                        500,
+                        501,
+                        502,
+                        503
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testInt64Annotations')": [
+                        510,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testInt64AnnotationsRejectNonInt64')": [
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testIntervalAnnotation')": [
+                        549,
+                        550,
+                        551,
+                        552,
+                        553
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testIntervalAnnotationRejectsNonFixed')": [
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566
+                    ],
+                    "('parquet.schema#TestTypeBuilders', 'testIntervalAnnotationRejectsNonFixed12')": [
+                        573,
+                        574,
+                        575,
+                        576,
+                        577,
+                        578,
+                        579
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/format/converter/ParquetMetadataConverter.java": {
+                "new": {
+                    "(None, None)": [
+                        32
+                    ],
+                    "('parquet.format.converter#ParquetMetadataConverter', 'getOriginalType(ConvertedType)')": [
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342
+                    ],
+                    "('parquet.format.converter#ParquetMetadataConverter', 'getConvertedType(OriginalType)')": [
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/parquet/format/converter/TestParquetMetadataConverter.java": {
+                "new": {
+                    "('parquet.format.converter#TestParquetMetadataConverter', 'testEnumEquivalence')": [
+                        135,
+                        136,
+                        137,
+                        138,
+                        139
+                    ],
+                    "('parquet.format.converter#TestParquetMetadataConverter', None)": [
+                        140
+                    ]
+                }
+            }
+        }
+    },
+    "0b17cbee9541998df66d33c8a99b675ced80d9aa": {
+        "authored_data": "2014 Sep 29 19:00",
+        "commit.message": "PARQUET-104: Fix writing empty row group at the end of the file\n\nAt then end of a parquet file, it may writes an empty rowgroup.\nThis happens when: numberOfRecords mod sizeOfRowGroup = 0\n\nAuthor: Tianshuo Deng <tdeng@twitter.com>\n\nCloses #66 from tsdeng/fix_empty_row_group and squashes the following commits:\n\n10b93fb [Tianshuo Deng] rename\ne3a5896 [Tianshuo Deng] format\n91fa0d4 [Tianshuo Deng] fix empty row group\n",
+        "commit.author.name": "Tianshuo Deng",
+        "pcid": "bf20abbf4825fa5892d8e15c066e768671a39289",
+        "changes": {
+            "parquet-hadoop/src/main/java/parquet/hadoop/InternalParquetRecordWriter.java": {
+                "old": {
+                    "('parquet.hadoop#InternalParquetRecordWriter', None)": [
+                        45,
+                        49,
+                        60,
+                        64,
+                        68,
+                        69,
+                        72,
+                        76,
+                        83,
+                        87
+                    ],
+                    "('parquet.hadoop#InternalParquetRecordWriter', 'initStore')": [
+                        101,
+                        106,
+                        108
+                    ],
+                    "('parquet.hadoop#InternalParquetRecordWriter', 'close')": [
+                        112,
+                        116
+                    ],
+                    "('parquet.hadoop#InternalParquetRecordWriter', 'checkBlockSizeReached')": [
+                        127,
+                        128,
+                        129,
+                        130,
+                        136
+                    ],
+                    "('parquet.hadoop#InternalParquetRecordWriter', 'flushStore')": [
+                        144,
+                        146,
+                        147,
+                        148,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155
+                    ]
+                },
+                "new": {
+                    "('parquet.hadoop#InternalParquetRecordWriter', None)": [
+                        45,
+                        49,
+                        60,
+                        64,
+                        68,
+                        69,
+                        72,
+                        76,
+                        83,
+                        87
+                    ],
+                    "('parquet.hadoop#InternalParquetRecordWriter', 'initStore')": [
+                        101,
+                        106,
+                        108
+                    ],
+                    "('parquet.hadoop#InternalParquetRecordWriter', 'close')": [
+                        112,
+                        116
+                    ],
+                    "('parquet.hadoop#InternalParquetRecordWriter', 'checkBlockSizeReached')": [
+                        127,
+                        128,
+                        129,
+                        130,
+                        136
+                    ],
+                    "('parquet.hadoop#InternalParquetRecordWriter', 'flushRowGroupToStore')": [
+                        144,
+                        146,
+                        147,
+                        148,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159
+                    ]
+                }
+            }
+        }
+    },
+    "bf20abbf4825fa5892d8e15c066e768671a39289": {
+        "authored_data": "2014 Sep 25 23:45",
+        "commit.message": "PARQUET-96: fill out some missing methods on parquet.example classes\n\nI'm slightly embarrassed to say that we use these, and we'd really like to stop needing a fork, so here we are.\n\nAuthor: Colin Marc <colinmarc@gmail.com>\n\nCloses #59 from colinmarc/missing-group-methods and squashes the following commits:\n\naf8ea08 [Colin Marc] fill out some missing methods on parquet.example classes\n",
+        "commit.author.name": "Colin Marc",
+        "pcid": "3a082e8e390898646c094d20f4ec1eeba45b79ac",
+        "changes": {
+            "parquet-column/src/main/java/parquet/example/data/Group.java": {
+                "new": {
+                    "('parquet.example.data#Group', 'add(String,Group)')": [
+                        59,
+                        60
+                    ],
+                    "('parquet.example.data#Group', None)": [
+                        61,
+                        62,
+                        87
+                    ],
+                    "('parquet.example.data#Group', 'add(int,Group)')": [
+                        88
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/example/data/GroupValueSource.java": {
+                "new": {
+                    "('parquet.example.data#GroupValueSource', 'getDouble(String,int)')": [
+                        43,
+                        44
+                    ],
+                    "('parquet.example.data#GroupValueSource', None)": [
+                        45,
+                        46,
+                        49,
+                        50,
+                        74,
+                        76
+                    ],
+                    "('parquet.example.data#GroupValueSource', 'getFloat(String,int)')": [
+                        47,
+                        48
+                    ],
+                    "('parquet.example.data#GroupValueSource', 'getDouble(int,int)')": [
+                        73
+                    ],
+                    "('parquet.example.data#GroupValueSource', 'getFloat(int,int)')": [
+                        75
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/example/data/simple/SimpleGroup.java": {
+                "old": {
+                    "('parquet.example.data.simple#SimpleGroup', 'addGroup(int)')": [
+                        75
+                    ]
+                },
+                "new": {
+                    "('parquet.example.data.simple#SimpleGroup', 'addGroup(int)')": [
+                        75
+                    ],
+                    "('parquet.example.data.simple#SimpleGroup', None)": [
+                        132,
+                        133,
+                        134,
+                        137,
+                        138,
+                        139,
+                        217,
+                        218,
+                        219
+                    ],
+                    "('parquet.example.data.simple#SimpleGroup', 'getDouble(int,int)')": [
+                        135,
+                        136
+                    ],
+                    "('parquet.example.data.simple#SimpleGroup', 'getFloat(int,int)')": [
+                        140,
+                        141
+                    ],
+                    "('parquet.example.data.simple#SimpleGroup', 'add(int,Group)')": [
+                        215,
+                        216
+                    ]
+                }
+            }
+        }
+    }
+}

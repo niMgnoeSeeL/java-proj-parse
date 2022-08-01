@@ -1,0 +1,1628 @@
+{
+    "77b054c71a2587d67abfc9ffcea4aaec3d4e2618": {
+        "authored_data": "2014 Mar 17 21:07",
+        "commit.message": "Added a method for querying a node handler for a tracked node to InMemoryNodeModel.\n\nThis functionality is needed for operating on sub trees of the model.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/branches/immutableNodes@1578573 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "e7bd5fffcd4a46dd404b576e0c1290c905b7abd4",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/tree/InMemoryNodeModel.java": {
+                "new": {
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', None)": [
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        436,
+                        437,
+                        438
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'getTrackedNodeHandler(NodeSelector)')": [
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/tree/TestInMemoryNodeModelTrackedNodes.java": {
+                "new": {
+                    "(None, None)": [
+                        22,
+                        695
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', None)": [
+                        659,
+                        660,
+                        661,
+                        662,
+                        663,
+                        664,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682,
+                        683
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testGetTrackedNodeHandlerActive')": [
+                        665,
+                        666,
+                        667,
+                        668,
+                        669,
+                        670,
+                        671,
+                        672,
+                        673,
+                        674,
+                        675,
+                        676,
+                        677
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testGetTrackedNodeHandlerDetached')": [
+                        684,
+                        685,
+                        686,
+                        687,
+                        688,
+                        689,
+                        690,
+                        691,
+                        692,
+                        693,
+                        694
+                    ]
+                }
+            }
+        }
+    },
+    "bd08b474eab0b6ea881de145ebff03d5c7bf8457": {
+        "authored_data": "2014 Mar 17 21:06",
+        "commit.message": "Extracted a base class for ImmutableNode node handlers.\n\nA special implementation will be required for tracked nodes. Thereforem common\nfunctionality has been extracted into a new base class.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/branches/immutableNodes@1578570 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "3450d95ffa0f56293a2ba6217504d0bc7b9bfbb0",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/tree/TreeData.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        22,
+                        24,
+                        25,
+                        26
+                    ],
+                    "('org.apache.commons.configuration.tree#TreeData', None)": [
+                        37,
+                        91,
+                        92,
+                        96,
+                        97,
+                        101,
+                        102,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        124,
+                        125,
+                        129,
+                        130,
+                        134,
+                        135,
+                        145,
+                        146,
+                        147,
+                        151,
+                        152,
+                        156,
+                        157,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        243,
+                        244,
+                        245
+                    ],
+                    "('org.apache.commons.configuration.tree#TreeData', 'nodeName(ImmutableNode)')": [
+                        93,
+                        94,
+                        95
+                    ],
+                    "('org.apache.commons.configuration.tree#TreeData', 'getValue(ImmutableNode)')": [
+                        98,
+                        99,
+                        100
+                    ],
+                    "('org.apache.commons.configuration.tree#TreeData', 'getChildren(ImmutableNode)')": [
+                        103,
+                        104,
+                        105
+                    ],
+                    "('org.apache.commons.configuration.tree#TreeData', 'getChildren(ImmutableNode,String)')": [
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123
+                    ],
+                    "('org.apache.commons.configuration.tree#TreeData', 'getChild(ImmutableNode,int)')": [
+                        126,
+                        127,
+                        128
+                    ],
+                    "('org.apache.commons.configuration.tree#TreeData', 'indexOfChild(ImmutableNode,ImmutableNode)')": [
+                        131,
+                        132,
+                        133
+                    ],
+                    "('org.apache.commons.configuration.tree#TreeData', 'getChildrenCount(ImmutableNode,String)')": [
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144
+                    ],
+                    "('org.apache.commons.configuration.tree#TreeData', 'getAttributes(ImmutableNode)')": [
+                        148,
+                        149,
+                        150
+                    ],
+                    "('org.apache.commons.configuration.tree#TreeData', 'hasAttributes(ImmutableNode)')": [
+                        153,
+                        154,
+                        155
+                    ],
+                    "('org.apache.commons.configuration.tree#TreeData', 'getAttributeValue(ImmutableNode,String)')": [
+                        158,
+                        159,
+                        160
+                    ],
+                    "('org.apache.commons.configuration.tree#TreeData', 'isDefined(ImmutableNode)')": [
+                        167,
+                        168,
+                        169
+                    ],
+                    "('org.apache.commons.configuration.tree#TreeData', 'checkIfNodeDefined(ImmutableNode)')": [
+                        239,
+                        240,
+                        241,
+                        242
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.tree#TreeData', None)": [
+                        31
+                    ]
+                }
+            }
+        }
+    },
+    "3450d95ffa0f56293a2ba6217504d0bc7b9bfbb0": {
+        "authored_data": "2014 Mar 09 21:06",
+        "commit.message": "Implemented special treatment for transactions which detach their root node.\n\nPer default, a tracked node that becomes detached is not changed; this means\nthat the last instance of this tracked node is used. However, if the node was\nthe root of the transaction which caused it to become detached, this behavior\nis not desired. Rather, it can be assumed that the transaction cleared this\nnode or the sub tree it belongs to. Therefore, in this scenario the node is\nreplaced by a new empty node instance.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/branches/immutableNodes@1575770 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "cd1ec7325f4c34c88eaf5da5297f991e1826a4a0",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/tree/ModelTransaction.java": {
+                "old": {
+                    "('org.apache.commons.configuration.tree#ModelTransaction', 'execute')": [
+                        261
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.tree#ModelTransaction', None)": [
+                        86,
+                        87,
+                        88,
+                        136
+                    ],
+                    "('org.apache.commons.configuration.tree#ModelTransaction', 'execute')": [
+                        265
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/configuration/tree/NodeTracker.java": {
+                "old": {
+                    "('org.apache.commons.configuration.tree#NodeTracker', None)": [
+                        191,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        440,
+                        441,
+                        444,
+                        445,
+                        446,
+                        447
+                    ],
+                    "('org.apache.commons.configuration.tree#NodeTracker', 'update(ImmutableNode,NodeKeyResolver,NodeHandler)')": [
+                        198,
+                        213
+                    ],
+                    "('org.apache.commons.configuration.tree#NodeTracker', 'detachAllTrackedNodes')": [
+                        241
+                    ],
+                    "('org.apache.commons.configuration.tree#NodeTracker', 'determineUpdatedTrackedNodeData(ImmutableNode,NodeKeyResolver,NodeHandler,Map)')": [
+                        259,
+                        269,
+                        270
+                    ],
+                    "('org.apache.commons.configuration.tree#NodeTracker', 'getTrackedNodeData(NodeSelector)')": [
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.tree#NodeTracker', None)": [
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        201,
+                        202,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        285,
+                        286,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497,
+                        500,
+                        501,
+                        502,
+                        503,
+                        504,
+                        505
+                    ],
+                    "('org.apache.commons.configuration.tree#NodeTracker', 'update(ImmutableNode,NodeSelector,NodeKeyResolver,NodeHandler)')": [
+                        207,
+                        222,
+                        223,
+                        224,
+                        225
+                    ],
+                    "('org.apache.commons.configuration.tree#NodeTracker', 'detachAllTrackedNodes')": [
+                        253
+                    ],
+                    "('org.apache.commons.configuration.tree#NodeTracker', 'getTrackedNodeData(NodeSelector)')": [
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276
+                    ],
+                    "('org.apache.commons.configuration.tree#NodeTracker', 'determineUpdatedTrackedNodeData(ImmutableNode,NodeSelector,NodeKeyResolver,NodeHandler,Map)')": [
+                        292,
+                        293,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307
+                    ],
+                    "('org.apache.commons.configuration.tree#NodeTracker', 'detachedTrackedNodeData(NodeSelector,Map)')": [
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328
+                    ],
+                    "('org.apache.commons.configuration.tree#NodeTracker', 'createEmptyTrackedNode(TrackedNodeData)')": [
+                        339,
+                        340,
+                        341,
+                        342
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/tree/TestInMemoryNodeModelTrackedNodes.java": {
+                "new": {
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', None)": [
+                        640,
+                        641,
+                        642,
+                        643,
+                        644,
+                        645,
+                        646,
+                        647
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testTrackedNodeClearedInOperation')": [
+                        648,
+                        649,
+                        650,
+                        651,
+                        652,
+                        653,
+                        654,
+                        655,
+                        656
+                    ],
+                    "(None, None)": [
+                        657
+                    ]
+                }
+            }
+        }
+    },
+    "cd1ec7325f4c34c88eaf5da5297f991e1826a4a0": {
+        "authored_data": "2014 Mar 09 21:05",
+        "commit.message": "InMemoryNodeModel now supports setProperty() on a tracked node.\n\nThe implementation is analogous to other operations on tracked nodes.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/branches/immutableNodes@1575769 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "f1fd8a31175b5e1c40bc0483bc456d4e4f4a5bc3",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/tree/InMemoryNodeModel.java": {
+                "old": {
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'setProperty(String,Object,NodeKeyResolver)')": [
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        213,
+                        214,
+                        215,
+                        216,
+                        229
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'setProperty(String,Object,NodeKeyResolver)')": [
+                        206,
+                        207,
+                        208,
+                        209
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', None)": [
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'setProperty(String,NodeSelector,Object,NodeKeyResolver)')": [
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        235,
+                        236,
+                        237,
+                        238,
+                        251
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/tree/TestInMemoryNodeModelTrackedNodes.java": {
+                "old": {
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'checkForAddedField(ImmutableNode)')": [
+                        465
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        639
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'checkForAddedField(ImmutableNode)')": [
+                        461
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', None)": [
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        583,
+                        584,
+                        585,
+                        586,
+                        587,
+                        588,
+                        589,
+                        590,
+                        591,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        621,
+                        622,
+                        623,
+                        624,
+                        625,
+                        626
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'checkFieldNode(ImmutableNode,String)')": [
+                        470,
+                        471,
+                        477
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'prepareResolverForUpdateKeys(NodeKeyResolver)')": [
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569,
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        575,
+                        576,
+                        577,
+                        578,
+                        579,
+                        580,
+                        581,
+                        582
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'checkedForChangedField(ImmutableNode,int)')": [
+                        592,
+                        593,
+                        594,
+                        595,
+                        596,
+                        597,
+                        598,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testSetPropertyOnTrackedNode')": [
+                        612,
+                        613,
+                        614,
+                        615,
+                        616,
+                        617,
+                        618,
+                        619,
+                        620
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testSetPropertyOnDetachedNode')": [
+                        627,
+                        628,
+                        629,
+                        630,
+                        631,
+                        632,
+                        633,
+                        634,
+                        635,
+                        636,
+                        637,
+                        638
+                    ]
+                }
+            }
+        }
+    },
+    "f1fd8a31175b5e1c40bc0483bc456d4e4f4a5bc3": {
+        "authored_data": "2014 Mar 09 21:05",
+        "commit.message": "InMemoryNodeModel now supports addNodes() on a tracked node.\n\nThe implementation is analogous to other operations on tracked nodes.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/branches/immutableNodes@1575768 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "22d94157a996b2907acb7f1c2d7784e77d3ff416",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/tree/InMemoryNodeModel.java": {
+                "old": {
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'addNodes(String,Collection,NodeKeyResolver)')": [
+                        143,
+                        154,
+                        155,
+                        167,
+                        168,
+                        182
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'addNodes(String,Collection,NodeKeyResolver)')": [
+                        143,
+                        144,
+                        145,
+                        146
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', None)": [
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'addNodes(String,NodeSelector,Collection,NodeKeyResolver)')": [
+                        163,
+                        174,
+                        175,
+                        187,
+                        188,
+                        202
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/tree/TestInMemoryNodeModelTrackedNodes.java": {
+                "new": {
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', None)": [
+                        501,
+                        502,
+                        503,
+                        504,
+                        505,
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testAddNodesOnTrackedNode')": [
+                        506,
+                        507,
+                        508,
+                        509,
+                        510,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testAddNodesOnDetachedNode')": [
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535
+                    ],
+                    "(None, None)": [
+                        536
+                    ]
+                }
+            }
+        }
+    },
+    "22d94157a996b2907acb7f1c2d7784e77d3ff416": {
+        "authored_data": "2014 Mar 09 21:04",
+        "commit.message": "InMemoryNodeModel now supports addProperty() on a tracked node.\n\nThe implementation is analogous to other operations on tracked nodes.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/branches/immutableNodes@1575767 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "44fadaf1b98e3d712c02d62bf0f7d09eb9419391",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/tree/InMemoryNodeModel.java": {
+                "old": {
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'addProperty(String,Iterable,NodeKeyResolver)')": [
+                        107,
+                        112,
+                        113,
+                        117
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'setProperty(String,Object,NodeKeyResolver)')": [
+                        167,
+                        168,
+                        169,
+                        170,
+                        176,
+                        177
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'clearTree(String,NodeSelector,NodeKeyResolver)')": [
+                        218,
+                        219,
+                        220,
+                        221,
+                        224,
+                        225,
+                        226,
+                        227,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'initializeAddTransaction(ModelTransaction,String,Iterable,NodeKeyResolver)')": [
+                        467
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'addProperty(String,Iterable,NodeKeyResolver)')": [
+                        107,
+                        108,
+                        109,
+                        110
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', None)": [
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        233
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'addProperty(String,NodeSelector,Iterable,NodeKeyResolver)')": [
+                        126,
+                        127,
+                        132,
+                        133,
+                        134,
+                        135,
+                        139
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'setProperty(String,Object,NodeKeyResolver)')": [
+                        189,
+                        190,
+                        196
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'clearTree(String,NodeSelector,NodeKeyResolver)')": [
+                        238,
+                        239,
+                        242,
+                        243,
+                        246,
+                        247
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'initializeAddTransaction(ModelTransaction,String,Iterable,NodeKeyResolver)')": [
+                        480
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/tree/TestInMemoryNodeModelTrackedNodes.java": {
+                "old": {
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'createResolver')": [
+                        78
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testClearPropertyOnTrackedNode')": [
+                        332,
+                        333
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testClearPropertyOnDetachedNode')": [
+                        348,
+                        349,
+                        350
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testClearTreeOnTrackedNode')": [
+                        363,
+                        364
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testClearTreeOnDetachedNode')": [
+                        379,
+                        380,
+                        381
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        32,
+                        500
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', None)": [
+                        45,
+                        46,
+                        47,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'createResolver')": [
+                        80
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'createResolver(boolean)')": [
+                        91,
+                        92,
+                        96,
+                        97,
+                        98,
+                        99
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'fieldsNodeFromModel')": [
+                        321,
+                        322,
+                        323
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'fieldsNodeFromTrackedNode')": [
+                        331,
+                        332,
+                        333,
+                        334
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testClearPropertyOnTrackedNode')": [
+                        374
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testClearPropertyOnDetachedNode')": [
+                        389
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testClearTreeOnTrackedNode')": [
+                        402
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testClearTreeOnDetachedNode')": [
+                        417
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'prepareResolverForAddKeys(NodeKeyResolver)')": [
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'checkForAddedField(ImmutableNode)')": [
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testAddPropertyOnTrackedNode')": [
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testAddPropertyOnDetachedNode')": [
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        499
+                    ]
+                }
+            }
+        }
+    },
+    "44fadaf1b98e3d712c02d62bf0f7d09eb9419391": {
+        "authored_data": "2014 Mar 09 21:03",
+        "commit.message": "InMemoryNodeModel now supports clearTree() on a tracked node.\n\nThe implementation is analogous to clearProperty().\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/branches/immutableNodes@1575766 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "cffc51180df3263ee3263472e9a649c8b1ad89a0",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/tree/InMemoryNodeModel.java": {
+                "old": {
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'clearTree(String,NodeKeyResolver)')": [
+                        198,
+                        206,
+                        207,
+                        208,
+                        230
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'clearTree(String,NodeKeyResolver)')": [
+                        198,
+                        199,
+                        200
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', None)": [
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'clearTree(String,NodeSelector,NodeKeyResolver)')": [
+                        215,
+                        223,
+                        224,
+                        246
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/tree/TestInMemoryNodeModelTrackedNodes.java": {
+                "old": {
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testClearPropertyOnTrackedNode')": [
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', None)": [
+                        310,
+                        311,
+                        312,
+                        313
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testClearPropertyOnDetachedNode')": [
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', None)": [
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        321,
+                        322,
+                        323,
+                        335,
+                        336,
+                        337,
+                        338,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'checkForRemovedField(ImmutableNode,int)')": [
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testClearPropertyOnTrackedNode')": [
+                        334
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testClearPropertyOnDetachedNode')": [
+                        351
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testClearTreeOnTrackedNode')": [
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testClearTreeOnDetachedNode')": [
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382
+                    ]
+                }
+            }
+        }
+    },
+    "cffc51180df3263ee3263472e9a649c8b1ad89a0": {
+        "authored_data": "2014 Mar 09 21:02",
+        "commit.message": "InMemoryModel now supports clearProperty() on a tracked node.\n\nWhen executing update operations on tracked nodes it has to be distinguished\nwhether the node is detached or not. For Non-detached nodes the update\noperation can be performed on the model's current node structure. Detached\nnodes live in an independent node structure. This is implemented by storing\nthem in a separate node model.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/branches/immutableNodes@1575764 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "ab199061c0d534c601e600cfe7bea79164aba762",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/tree/InMemoryNodeModel.java": {
+                "old": {
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'addProperty(String,Iterable,NodeKeyResolver)')": [
+                        117
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'addNodes(String,Collection,NodeKeyResolver)')": [
+                        160
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'setProperty(String,Object,NodeKeyResolver)')": [
+                        190
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'clearTree(String,NodeKeyResolver)')": [
+                        230
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'clearProperty(String,NodeKeyResolver)')": [
+                        237,
+                        240,
+                        241,
+                        242,
+                        243,
+                        245,
+                        250
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'updateParentMapping(Map,ImmutableNode)')": [
+                        392
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'updateModel(TransactionInitializer,NodeKeyResolver)')": [
+                        697,
+                        703,
+                        704,
+                        706,
+                        708,
+                        709,
+                        710,
+                        711,
+                        712,
+                        713
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'addProperty(String,Iterable,NodeKeyResolver)')": [
+                        117
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'addNodes(String,Collection,NodeKeyResolver)')": [
+                        160
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'setProperty(String,Object,NodeKeyResolver)')": [
+                        190
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'clearTree(String,NodeKeyResolver)')": [
+                        230
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'clearProperty(String,NodeKeyResolver)')": [
+                        237,
+                        238,
+                        239,
+                        240
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', None)": [
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        711,
+                        712,
+                        729,
+                        730,
+                        731,
+                        732,
+                        733,
+                        734,
+                        735,
+                        736,
+                        737,
+                        738,
+                        739,
+                        740,
+                        741,
+                        759,
+                        760,
+                        761,
+                        762,
+                        763,
+                        764,
+                        765,
+                        766,
+                        767,
+                        768,
+                        769,
+                        770,
+                        771,
+                        772,
+                        773,
+                        774
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'clearProperty(String,NodeSelector,NodeKeyResolver)')": [
+                        256,
+                        259,
+                        260,
+                        262,
+                        267
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'updateParentMapping(Map,ImmutableNode)')": [
+                        409
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'updateModel(TransactionInitializer,NodeSelector,NodeKeyResolver)')": [
+                        716,
+                        722,
+                        723,
+                        724,
+                        725,
+                        726,
+                        727,
+                        728
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'executeTransactionOnCurrentStructure(TransactionInitializer,NodeSelector,TreeData,NodeKeyResolver)')": [
+                        742,
+                        743,
+                        744,
+                        745,
+                        746,
+                        747,
+                        748,
+                        749,
+                        750,
+                        751,
+                        752,
+                        753,
+                        754,
+                        755,
+                        756,
+                        757,
+                        758
+                    ],
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', 'executeTransactionOnDetachedTrackedNode(TransactionInitializer,NodeSelector,TreeData,NodeKeyResolver)')": [
+                        775,
+                        776,
+                        777,
+                        778,
+                        779,
+                        780,
+                        781,
+                        782,
+                        783,
+                        785,
+                        786,
+                        788,
+                        789,
+                        790
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/configuration/tree/ModelTransaction.java": {
+                "old": {
+                    "('org.apache.commons.configuration.tree#ModelTransaction', None)": [
+                        80,
+                        81,
+                        82,
+                        116,
+                        119,
+                        122,
+                        123
+                    ],
+                    "('org.apache.commons.configuration.tree#ModelTransaction', 'rebuildParentMapping')": [
+                        361
+                    ],
+                    "('org.apache.commons.configuration.tree#ModelTransaction', 'updateParentMappingForAddedNodes')": [
+                        371
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.tree#ModelTransaction', None)": [
+                        82,
+                        83,
+                        84,
+                        116,
+                        117,
+                        118,
+                        119,
+                        122,
+                        125,
+                        132,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        326,
+                        327,
+                        328
+                    ],
+                    "('org.apache.commons.configuration.tree#ModelTransaction', 'getQueryRoot')": [
+                        153,
+                        154,
+                        155
+                    ],
+                    "('org.apache.commons.configuration.tree#ModelTransaction', 'initQueryRoot(TreeData,NodeSelector)')": [
+                        322,
+                        323,
+                        324,
+                        325
+                    ],
+                    "('org.apache.commons.configuration.tree#ModelTransaction', 'rebuildParentMapping')": [
+                        392
+                    ],
+                    "('org.apache.commons.configuration.tree#ModelTransaction', 'updateParentMappingForAddedNodes')": [
+                        402
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/configuration/tree/NodeTracker.java": {
+                "old": {
+                    "('org.apache.commons.configuration.tree#NodeTracker', None)": [
+                        320,
+                        321,
+                        331,
+                        340,
+                        343,
+                        347,
+                        357,
+                        367,
+                        378,
+                        392,
+                        405,
+                        417
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.tree#NodeTracker', None)": [
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        185,
+                        186,
+                        187,
+                        337,
+                        338,
+                        348,
+                        357,
+                        360,
+                        364,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        396,
+                        407,
+                        421,
+                        434,
+                        446,
+                        447
+                    ],
+                    "('org.apache.commons.configuration.tree#NodeTracker', 'getDetachedNodeModel(NodeSelector)')": [
+                        182,
+                        183,
+                        184
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/tree/TestInMemoryNodeModelTrackedNodes.java": {
+                "old": {
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testGetTrackedNodeAfterUpdateNoLongerExisting')": [
+                        145
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testIsDetachedTrue')": [
+                        249,
+                        250
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testGetTrackedNodeAfterUpdateNoLongerExisting')": [
+                        143,
+                        144
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', None)": [
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'initDetachedNode(NodeKeyResolver)')": [
+                        153,
+                        154
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testIsDetachedTrue')": [
+                        260
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testClearPropertyOnTrackedNode')": [
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309
+                    ],
+                    "('org.apache.commons.configuration.tree#TestInMemoryNodeModelTrackedNodes', 'testClearPropertyOnDetachedNode')": [
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332
+                    ],
+                    "(None, None)": [
+                        333
+                    ]
+                }
+            }
+        }
+    },
+    "ab199061c0d534c601e600cfe7bea79164aba762": {
+        "authored_data": "2014 Mar 09 21:01",
+        "commit.message": "NodeModel no longer defines the getRootNode() method.\n\nThe root node now has to be obtained from the NodeHandler. This is necessary at\nleast for implementations like InMemoryNodeModel which use immutable structures\nthat can be replaced by new instances. A NodeHandler is a kind of snapshot of\nsuch a structure at a certain point in time. If the root node is obtained in a\ndifferent method call, it may no longer be compatible with the snapshot used by\nthe node handler.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/configuration/branches/immutableNodes@1575763 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Oliver Heger",
+        "pcid": "fbcadbf4be12acf12df1bf7b712737fd409cacfc",
+        "changes": {
+            "src/main/java/org/apache/commons/configuration/AbstractHierarchicalConfiguration.java": {
+                "old": {
+                    "('org.apache.commons.configuration#AbstractHierarchicalConfiguration', 'getRootNode')": [
+                        216
+                    ],
+                    "('org.apache.commons.configuration#AbstractHierarchicalConfiguration', 'getKeysInternal')": [
+                        602
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration#AbstractHierarchicalConfiguration', 'getRootNode')": [
+                        216
+                    ],
+                    "('org.apache.commons.configuration#AbstractHierarchicalConfiguration', 'getKeysInternal')": [
+                        602
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/configuration/tree/InMemoryNodeModel.java": {
+                "new": {
+                    "('org.apache.commons.configuration.tree#InMemoryNodeModel', None)": [
+                        87,
+                        88,
+                        89,
+                        90,
+                        91
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/configuration/tree/NodeModel.java": {
+                "old": {
+                    "(None, None)": [
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/configuration/TestAbstractHierarchicalConfiguration.java": {
+                "old": {
+                    "('org.apache.commons.configuration#TestAbstractHierarchicalConfiguration', None)": [
+                        911
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.configuration#TestAbstractHierarchicalConfiguration', None)": [
+                        911
+                    ]
+                }
+            }
+        }
+    }
+}

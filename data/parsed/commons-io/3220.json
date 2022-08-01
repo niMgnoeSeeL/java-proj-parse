@@ -1,0 +1,1150 @@
+{
+    "a56cc14c2dd316cf6439e94444530b3ab4894949": {
+        "authored_data": "2006 Oct 13 04:46",
+        "commit.message": "IO-86 - Update cancellation behaviour in DirectoryWalker to use a new CancelException, also add IOException to \"lifecycle\" method definitions.\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@463560 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Niall Pemberton",
+        "pcid": "a9d448fbed45bed36941cb06dce0fc6139c1e525",
+        "changes": {
+            "src/java/org/apache/commons/io/DirectoryWalker.java": {
+                "old": {
+                    "(None, None)": [
+                        31,
+                        32,
+                        40,
+                        68,
+                        97,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        117,
+                        118,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        372,
+                        373
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', None)": [
+                        186,
+                        188,
+                        204,
+                        205,
+                        245,
+                        263,
+                        277,
+                        290,
+                        303,
+                        316,
+                        327,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'walk(File,Collection)')": [
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'walk(File,int,Collection)')": [
+                        206,
+                        207,
+                        208,
+                        209,
+                        220,
+                        221,
+                        222,
+                        224,
+                        225,
+                        226,
+                        234
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'handleStart(File,Collection)')": [
+                        246
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'handleDirectory(File,int,Collection)')": [
+                        264
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'handleDirectoryStart(File,int,Collection)')": [
+                        278
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'handleFile(File,int,Collection)')": [
+                        291
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'handleRestricted(File,int,Collection)')": [
+                        304
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'handleDirectoryEnd(File,int,Collection)')": [
+                        317
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'handleEnd(Collection)')": [
+                        328
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'isCancelled')": [
+                        340,
+                        341
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'handleCancelled(File,int,Collection)')": [
+                        369,
+                        370,
+                        371
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        52,
+                        80,
+                        81,
+                        110,
+                        111,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        149,
+                        150,
+                        151,
+                        152,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        479,
+                        480
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', None)": [
+                        264,
+                        265,
+                        276,
+                        285,
+                        286,
+                        317,
+                        318,
+                        336,
+                        337,
+                        351,
+                        352,
+                        365,
+                        366,
+                        379,
+                        380,
+                        393,
+                        394,
+                        405,
+                        406,
+                        408,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'walk(File,Collection)')": [
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'walk(File,int,Collection)')": [
+                        287,
+                        298
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'handleStart(File,Collection)')": [
+                        319
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'handleDirectory(File,int,Collection)')": [
+                        338
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'handleDirectoryStart(File,int,Collection)')": [
+                        353
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'handleFile(File,int,Collection)')": [
+                        367
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'handleRestricted(File,int,Collection)')": [
+                        381
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'handleDirectoryEnd(File,int,Collection)')": [
+                        395
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'handleEnd(Collection)')": [
+                        407
+                    ],
+                    "('org.apache.commons.io#DirectoryWalker', 'handleCancelled(File,Collection,CancelException)')": [
+                        422,
+                        423,
+                        424,
+                        425
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/io/DirectoryWalkerTestCase.java": {
+                "old": {
+                    "('org.apache.commons.io#DirectoryWalkerTestCase', 'testCancel')": [
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219
+                    ],
+                    "('org.apache.commons.io#DirectoryWalkerTestCase', None)": [
+                        237,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        283,
+                        284,
+                        288,
+                        290,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        306,
+                        307,
+                        308,
+                        309,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.commons.io#DirectoryWalkerTestCase', 'testCancel')": [
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245
+                    ],
+                    "('org.apache.commons.io#DirectoryWalkerTestCase', None)": [
+                        246,
+                        247,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        309,
+                        310,
+                        311,
+                        312,
+                        314,
+                        315,
+                        319,
+                        321,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345
+                    ]
+                }
+            }
+        }
+    },
+    "a9d448fbed45bed36941cb06dce0fc6139c1e525": {
+        "authored_data": "2006 Oct 13 00:56",
+        "commit.message": "IO-84 - add tests for files > 2GB to IOUtils.copy(), CountingInputStream and CountingOutputStream\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@463537 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Niall Pemberton",
+        "pcid": "1815c8b4ce117826c614023e5d8897a590174362",
+        "changes": {
+            "src/test/org/apache/commons/io/IOUtilsCopyTestCase.java": {
+                "new": {
+                    "(None, None)": [
+                        24,
+                        33,
+                        34,
+                        36,
+                        37,
+                        384,
+                        385,
+                        386
+                    ],
+                    "('org.apache.commons.io#IOUtilsCopyTestCase', None)": [
+                        119,
+                        120,
+                        121,
+                        140,
+                        141,
+                        363,
+                        364,
+                        365
+                    ],
+                    "('org.apache.commons.io#IOUtilsCopyTestCase', 'testCopy_inputStreamToOutputStream_IO84')": [
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139
+                    ],
+                    "('org.apache.commons.io#IOUtilsCopyTestCase', 'testCopy_readerToWriter_IO84')": [
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/io/input/CountingInputStreamTest.java": {
+                "new": {
+                    "(None, None)": [
+                        20,
+                        24,
+                        25
+                    ],
+                    "('org.apache.commons.io.input#CountingInputStreamTest', None)": [
+                        73,
+                        74,
+                        75,
+                        76,
+                        104,
+                        105
+                    ],
+                    "('org.apache.commons.io.input#CountingInputStreamTest', 'testLargeFiles_IO84')": [
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/io/output/CountingOutputStreamTest.java": {
+                "new": {
+                    "(None, None)": [
+                        20,
+                        25,
+                        26
+                    ],
+                    "('org.apache.commons.io.output#CountingOutputStreamTest', None)": [
+                        76,
+                        77,
+                        78,
+                        107,
+                        108
+                    ],
+                    "('org.apache.commons.io.output#CountingOutputStreamTest', 'testLargeFiles_IO84')": [
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106
+                    ]
+                }
+            }
+        }
+    },
+    "1815c8b4ce117826c614023e5d8897a590174362": {
+        "authored_data": "2006 Oct 13 00:54",
+        "commit.message": "javadoc only\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@463536 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Niall Pemberton",
+        "pcid": "d330a6819d27f86340f6ff0fa264d6516c2ab96f",
+        "changes": {
+            "src/java/org/apache/commons/io/output/CountingOutputStream.java": {
+                "new": {
+                    "('org.apache.commons.io.output#CountingOutputStream', None)": [
+                        80
+                    ]
+                }
+            }
+        }
+    },
+    "d330a6819d27f86340f6ff0fa264d6516c2ab96f": {
+        "authored_data": "2006 Oct 13 00:37",
+        "commit.message": "IO-94 - Re-name MockInputStream/MockReader to NullInputStream/NullReader\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@463529 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Niall Pemberton",
+        "pcid": "7df4f8c850e512ec7de15ecbf5df78d7f9d44449",
+        "changes": {
+            "src/test/org/apache/commons/io/input/PackageTestSuite.java": {
+                "old": {
+                    "('org.apache.commons.io.input#PackageTestSuite', 'suite')": [
+                        38,
+                        39
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.input#PackageTestSuite', 'suite')": [
+                        38,
+                        39
+                    ]
+                }
+            }
+        }
+    },
+    "7df4f8c850e512ec7de15ecbf5df78d7f9d44449": {
+        "authored_data": "2006 Oct 12 16:34",
+        "commit.message": "Fixing #IO-82, in JDK 1.6 the gc call does not seem to be giving us the garbage collection, so Stephen came up with this to force that to happen. Speed seems good in JDK 1.4->1.6 and happily this isn't an issue with the underlying source, just the test. \n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@463310 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Henri Yandell",
+        "pcid": "4147a50bae4e937d0bd41c397b13009b56a8cf2a",
+        "changes": {
+            "src/test/org/apache/commons/io/FileCleanerTestCase.java": {
+                "old": {
+                    "('org.apache.commons.io#FileCleanerTestCase', 'testFileCleanerFile')": [
+                        82,
+                        83,
+                        84
+                    ],
+                    "('org.apache.commons.io#FileCleanerTestCase', 'testFileCleanerDirectory')": [
+                        101,
+                        102,
+                        103,
+                        104
+                    ],
+                    "('org.apache.commons.io#FileCleanerTestCase', 'testFileCleanerDirectory_NullStrategy')": [
+                        121,
+                        122,
+                        123
+                    ],
+                    "('org.apache.commons.io#FileCleanerTestCase', 'testFileCleanerDirectory_ForceStrategy')": [
+                        141,
+                        142,
+                        143
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io#FileCleanerTestCase', 'testFileCleanerFile')": [
+                        82,
+                        83
+                    ],
+                    "('org.apache.commons.io#FileCleanerTestCase', 'testFileCleanerDirectory')": [
+                        100,
+                        101,
+                        102
+                    ],
+                    "('org.apache.commons.io#FileCleanerTestCase', 'testFileCleanerDirectory_NullStrategy')": [
+                        119,
+                        120
+                    ],
+                    "('org.apache.commons.io#FileCleanerTestCase', 'testFileCleanerDirectory_ForceStrategy')": [
+                        138,
+                        139
+                    ],
+                    "('org.apache.commons.io#FileCleanerTestCase', 'waitUntilTrackCount')": [
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180
+                    ],
+                    "(None, None)": [
+                        181,
+                        182,
+                        183
+                    ]
+                }
+            }
+        }
+    },
+    "4147a50bae4e937d0bd41c397b13009b56a8cf2a": {
+        "authored_data": "2006 Oct 12 08:24",
+        "commit.message": "IO-84 Modify copy() methods that return an int to throw an ArithmeticException if the returned size is too large for an int to handle. Add two new equivalent copyLarge() methods that return a long for large files.\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@463154 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Niall Pemberton",
+        "pcid": "46c56e67b6c10b1e5f4813f372f19bf1da7ffd38",
+        "changes": {
+            "src/java/org/apache/commons/io/IOUtils.java": {
+                "old": {
+                    "('org.apache.commons.io#IOUtils', None)": [
+                        985,
+                        986,
+                        1065,
+                        1066
+                    ],
+                    "('org.apache.commons.io#IOUtils', 'copy(InputStream,OutputStream)')": [
+                        998
+                    ],
+                    "('org.apache.commons.io#IOUtils', 'copy(Reader,Writer)')": [
+                        1077
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io#IOUtils', None)": [
+                        985,
+                        986,
+                        987,
+                        988,
+                        995,
+                        1005,
+                        1006,
+                        1007,
+                        1008,
+                        1009,
+                        1010,
+                        1011,
+                        1012,
+                        1013,
+                        1014,
+                        1015,
+                        1016,
+                        1017,
+                        1018,
+                        1019,
+                        1020,
+                        1091,
+                        1092,
+                        1093,
+                        1094,
+                        1101,
+                        1110,
+                        1111,
+                        1112,
+                        1113,
+                        1114,
+                        1115,
+                        1116,
+                        1117,
+                        1118,
+                        1119,
+                        1120,
+                        1121,
+                        1122,
+                        1123,
+                        1124
+                    ],
+                    "('org.apache.commons.io#IOUtils', 'copy(InputStream,OutputStream)')": [
+                        1000,
+                        1001,
+                        1002,
+                        1003,
+                        1004
+                    ],
+                    "('org.apache.commons.io#IOUtils', 'copyLarge(InputStream,OutputStream)')": [
+                        1021,
+                        1022,
+                        1024
+                    ],
+                    "('org.apache.commons.io#IOUtils', 'copy(Reader,Writer)')": [
+                        1105,
+                        1106,
+                        1107,
+                        1108,
+                        1109
+                    ],
+                    "('org.apache.commons.io#IOUtils', 'copyLarge(Reader,Writer)')": [
+                        1125,
+                        1127
+                    ]
+                }
+            }
+        }
+    },
+    "46c56e67b6c10b1e5f4813f372f19bf1da7ffd38": {
+        "authored_data": "2006 Oct 11 16:44",
+        "commit.message": "IO-94 - MockInputStream/MockReader\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@462847 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stephen Colebourne",
+        "pcid": "45a0b1fdfa0dec0ba60dc941e768a4898b8f070a",
+        "changes": {
+            "src/java/org/apache/commons/io/input/MockInputStream.java": {
+                "old": {
+                    "(None, None)": [
+                        41
+                    ],
+                    "('org.apache.commons.io.input#MockInputStream', None)": [
+                        56,
+                        116,
+                        271,
+                        272,
+                        284,
+                        285
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.input#MockInputStream', None)": [
+                        55,
+                        56,
+                        116,
+                        271,
+                        284,
+                        291
+                    ],
+                    "('org.apache.commons.io.input#MockInputStream', 'processByte')": [
+                        276
+                    ],
+                    "(None, None)": [
+                        309
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/io/input/MockReader.java": {
+                "old": {
+                    "(None, None)": [
+                        41
+                    ],
+                    "('org.apache.commons.io.input#MockReader', None)": [
+                        56,
+                        255,
+                        256,
+                        268,
+                        269
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.input#MockReader', None)": [
+                        55,
+                        56,
+                        255,
+                        268,
+                        275
+                    ],
+                    "('org.apache.commons.io.input#MockReader', 'processChar')": [
+                        260
+                    ],
+                    "(None, None)": [
+                        293
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/io/input/MockInputStreamTestCase.java": {
+                "old": {
+                    "('org.apache.commons.io.input#MockInputStreamTestCase', 'testSkip')": [
+                        217
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/io/input/MockReaderTestCase.java": {
+                "old": {
+                    "('org.apache.commons.io.input#MockReaderTestCase', 'testSkip')": [
+                        214
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/io/input/PackageTestSuite.java": {
+                "new": {
+                    "('org.apache.commons.io.input#PackageTestSuite', 'suite')": [
+                        38,
+                        39
+                    ]
+                }
+            }
+        }
+    },
+    "45a0b1fdfa0dec0ba60dc941e768a4898b8f070a": {
+        "authored_data": "2006 Oct 11 16:30",
+        "commit.message": "IO-96 - FileBasedTestCase - Fixed bug in compare content methods identified by GNU classpath\nbased on patch from Anthony Green\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@462842 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stephen Colebourne",
+        "pcid": "464ebe809781e60e7bd56017bcbd3c0aaa2ecd1f",
+        "changes": {
+            "src/test/org/apache/commons/io/testtools/FileBasedTestCase.java": {
+                "old": {
+                    "('org.apache.commons.io.testtools#FileBasedTestCase', 'assertEqualContent(byte,File)')": [
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180
+                    ],
+                    "('org.apache.commons.io.testtools#FileBasedTestCase', 'assertEqualContent(char,File)')": [
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.testtools#FileBasedTestCase', 'assertEqualContent(byte,File)')": [
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180
+                    ],
+                    "('org.apache.commons.io.testtools#FileBasedTestCase', 'assertEqualContent(char,File)')": [
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199
+                    ]
+                }
+            }
+        }
+    },
+    "464ebe809781e60e7bd56017bcbd3c0aaa2ecd1f": {
+        "authored_data": "2006 Oct 11 15:49",
+        "commit.message": "IO-95 - Add NullWriter\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@462833 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stephen Colebourne",
+        "pcid": "c6f8977ee31ff4bfd45f5f03968ced153a95738e",
+        "changes": {
+            "src/test/org/apache/commons/io/output/PackageTestSuite.java": {
+                "new": {
+                    "('org.apache.commons.io.output#PackageTestSuite', 'suite')": [
+                        41
+                    ]
+                }
+            }
+        }
+    },
+    "c6f8977ee31ff4bfd45f5f03968ced153a95738e": {
+        "authored_data": "2006 Oct 11 15:48",
+        "commit.message": "IO-95 - Remove throws IOException from methods\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/io/trunk@462832 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stephen Colebourne",
+        "pcid": "15cdfdb631c1b0892cab218710b7b59ad3dd35f4",
+        "changes": {
+            "src/java/org/apache/commons/io/output/NullWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        25
+                    ],
+                    "('org.apache.commons.io.output#NullWriter', 'write(int)')": [
+                        39
+                    ],
+                    "('org.apache.commons.io.output#NullWriter', 'write(char)')": [
+                        44
+                    ],
+                    "('org.apache.commons.io.output#NullWriter', 'write(char,int,int)')": [
+                        49
+                    ],
+                    "('org.apache.commons.io.output#NullWriter', 'write(String)')": [
+                        54
+                    ],
+                    "('org.apache.commons.io.output#NullWriter', 'write(String,int,int)')": [
+                        59
+                    ],
+                    "('org.apache.commons.io.output#NullWriter', 'flush')": [
+                        64
+                    ],
+                    "('org.apache.commons.io.output#NullWriter', 'close')": [
+                        69
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.commons.io.output#NullWriter', 'write(int)')": [
+                        38
+                    ],
+                    "('org.apache.commons.io.output#NullWriter', 'write(char)')": [
+                        43
+                    ],
+                    "('org.apache.commons.io.output#NullWriter', 'write(char,int,int)')": [
+                        48
+                    ],
+                    "('org.apache.commons.io.output#NullWriter', 'write(String)')": [
+                        53
+                    ],
+                    "('org.apache.commons.io.output#NullWriter', 'write(String,int,int)')": [
+                        58
+                    ],
+                    "('org.apache.commons.io.output#NullWriter', 'flush')": [
+                        63
+                    ],
+                    "('org.apache.commons.io.output#NullWriter', 'close')": [
+                        68
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/io/output/NullWriterTest.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        21,
+                        23,
+                        31
+                    ],
+                    "('org.apache.commons.io.output#NullWriterTest', 'testNull')": [
+                        38
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.io.output#NullWriterTest', 'testNull')": [
+                        33
+                    ]
+                }
+            }
+        }
+    }
+}

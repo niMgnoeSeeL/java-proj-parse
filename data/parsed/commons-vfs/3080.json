@@ -1,0 +1,1715 @@
+{
+    "5735aba9317f60d4ce23e1ce93753d72e9833eec": {
+        "authored_data": "2004 May 20 19:44",
+        "commit.message": "handle filesystemoptions\n\nif a new url should be resolved and the current is a file get the parent (=directory) to correctly resolve relative urls.\n\nAlso to make JEditorPane happy.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/sandbox/vfs/trunk@148047 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mario Ivankovits",
+        "pcid": "bfe06096445bcd34b7b6e51d012e4b2ab7928d50",
+        "changes": {
+            "src/java/org/apache/commons/vfs/provider/DefaultURLStreamHandler.java": {
+                "old": {
+                    "('org.apache.commons.vfs.provider#DefaultURLStreamHandler', 'openConnection(URL)')": [
+                        45
+                    ],
+                    "('org.apache.commons.vfs.provider#DefaultURLStreamHandler', 'parseURL(URL,String,int,int)')": [
+                        56,
+                        61,
+                        65
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21
+                    ],
+                    "('org.apache.commons.vfs.provider#DefaultURLStreamHandler', None)": [
+                        38,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        48
+                    ],
+                    "('org.apache.commons.vfs.provider#DefaultURLStreamHandler', 'openConnection(URL)')": [
+                        54
+                    ],
+                    "('org.apache.commons.vfs.provider#DefaultURLStreamHandler', 'parseURL(URL,String,int,int)')": [
+                        65,
+                        70,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82
+                    ]
+                }
+            }
+        }
+    },
+    "bfe06096445bcd34b7b6e51d012e4b2ab7928d50": {
+        "authored_data": "2004 May 20 19:43",
+        "commit.message": "implement getHeaderField.\n\nNeedet to make JEditorPane happy.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/sandbox/vfs/trunk@148046 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mario Ivankovits",
+        "pcid": "74db18612c979de98ff28e765c74a3dfbe05219d",
+        "changes": {
+            "src/java/org/apache/commons/vfs/provider/DefaultURLConnection.java": {
+                "new": {
+                    "(None, None)": [
+                        18,
+                        94,
+                        95
+                    ],
+                    "('org.apache.commons.vfs.provider#DefaultURLConnection', 'getHeaderField(String)')": [
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93
+                    ]
+                }
+            }
+        }
+    },
+    "74db18612c979de98ff28e765c74a3dfbe05219d": {
+        "authored_data": "2004 May 20 19:42",
+        "commit.message": "pass filesystem configuration to the UrlStreamHandler\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/sandbox/vfs/trunk@148045 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mario Ivankovits",
+        "pcid": "ecaf2af71507d843e16b80a6bddee163a6fc9e74",
+        "changes": {
+            "src/java/org/apache/commons/vfs/provider/AbstractFileObject.java": {
+                "old": {
+                    "('org.apache.commons.vfs.provider#AbstractFileObject', 'getURL')": [
+                        343
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs.provider#AbstractFileObject', 'getURL')": [
+                        343
+                    ]
+                }
+            }
+        }
+    },
+    "ecaf2af71507d843e16b80a6bddee163a6fc9e74": {
+        "authored_data": "2004 May 20 19:34",
+        "commit.message": "add content-type and content-encoding to the file attributes\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/sandbox/vfs/trunk@148044 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mario Ivankovits",
+        "pcid": "3cc66405a27d9d48a0ed5952c1962acc0572711a",
+        "changes": {
+            "src/java/org/apache/commons/vfs/provider/http/HttpFileObject.java": {
+                "old": {
+                    "(None, None)": [
+                        38
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        34,
+                        35,
+                        41,
+                        208
+                    ],
+                    "('org.apache.commons.vfs.provider.http#HttpFileObject', None)": [
+                        191
+                    ],
+                    "('org.apache.commons.vfs.provider.http#HttpFileObject', 'doGetAttributes')": [
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207
+                    ]
+                }
+            }
+        }
+    },
+    "3cc66405a27d9d48a0ed5952c1962acc0572711a": {
+        "authored_data": "2004 May 20 18:47",
+        "commit.message": "Now found the ultimative solution.\n\nIntroduce ResourceFileProvider.\nThis provider do not have its own filesystem implemention.\nIt simply resolve a full filename using the current or passed classloader and using the filesystemmanager to finally resolv the file.\n\nIn the case of a resource within an jar this will result in passing back a vfs jar-fileobject with all its goodies missing in an simple url connection.\n\nThe capability of such a provider is \"Dispatcher\" as it cant know much about the filesystem finally used to handle the resource.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/sandbox/vfs/trunk@148043 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mario Ivankovits",
+        "pcid": "fb99df24f51c4f4cf5c3ea37c2ac0a9e9686919e",
+        "changes": {
+            "src/java/org/apache/commons/vfs/Capability.java": {
+                "old": {
+                    "(None, None)": [
+                        22
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.commons.vfs#Capability', None)": [
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/url/UrlFileProvider.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        39
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileProvider', 'findFile(FileObject,String,FileSystemOptions)')": [
+                        66,
+                        67,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        96
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileProvider', 'getConfigBuilder')": [
+                        111
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileProvider', 'findFile(FileObject,String,FileSystemOptions)')": [
+                        65,
+                        67
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileProvider', 'getConfigBuilder')": [
+                        87
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/vfs/provider/res/test/ResourceProviderTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        32
+                    ],
+                    "('org.apache.commons.vfs.provider.res.test#ResourceProviderTestCase', 'prepare(DefaultFileSystemManager)')": [
+                        47
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        34
+                    ],
+                    "('org.apache.commons.vfs.provider.res.test#ResourceProviderTestCase', 'prepare(DefaultFileSystemManager)')": [
+                        49,
+                        50,
+                        51
+                    ]
+                }
+            }
+        }
+    },
+    "fb99df24f51c4f4cf5c3ea37c2ac0a9e9686919e": {
+        "authored_data": "2004 May 20 17:40",
+        "commit.message": "\"resolve Resource\" aka ResourceFileProvider.\n\nres:META-INF/LICENSE.txt\n\nUsing its own FileProvider was not possible. Some internal tests failed and until i dont know better, i dont want to adjust the test-case. I treat them as a bible - what they say is fact :-)\n\nI found a solution by adding the scheme \"res\" to the UrlFileProvider too and explicity query this prefix during the resolveFile process.\nThe con is, that now there exists a scheme-name which also \"configures\" a provider and could not be changed by editing providers.xml.\n\nUsing UrlFileSystemConfigBuilder one could set the classloader to use.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/sandbox/vfs/trunk@148042 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mario Ivankovits",
+        "pcid": "a08fb68a93180a569becfaa72a7bd9fd7895f8b2",
+        "changes": {
+            "src/java/org/apache/commons/vfs/provider/UriParser.java": {
+                "old": {
+                    "('org.apache.commons.vfs.provider#UriParser', 'encode(StringBuffer,int,int,char)')": [
+                        345,
+                        346,
+                        347,
+                        348,
+                        349
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs.provider#UriParser', 'encode(StringBuffer,int,int,char)')": [
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/url/UrlFileObject.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileObject', 'doAttach')": [
+                        59
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        35
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileObject', 'doAttach')": [
+                        60,
+                        61
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileObject', None)": [
+                        63,
+                        64
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileObject', 'createURL(FileName)')": [
+                        65,
+                        66,
+                        67
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/url/UrlFileProvider.java": {
+                "old": {
+                    "(None, None)": [
+                        37
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileProvider', 'findFile(FileObject,String,FileSystemOptions)')": [
+                        64
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        27,
+                        39
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileProvider', 'findFile(FileObject,String,FileSystemOptions)')": [
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        96
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileProvider', 'getConfigBuilder')": [
+                        109,
+                        110,
+                        111
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileProvider', None)": [
+                        112,
+                        113
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/url/UrlFileSystem.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileSystem', None)": [
+                        32
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileSystem', None)": [
+                        32
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/AbstractVfsTestCase.java": {
+                "old": {
+                    "('org.apache.commons#AbstractVfsTestCase', 'getTestResource(String,boolean)')": [
+                        80
+                    ],
+                    "('org.apache.commons#AbstractVfsTestCase', 'getTestDirectory')": [
+                        97,
+                        98
+                    ],
+                    "('org.apache.commons#AbstractVfsTestCase', 'getTestDirectory(String)')": [
+                        114
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons#AbstractVfsTestCase', 'getTestResource(String,boolean)')": [
+                        80
+                    ],
+                    "('org.apache.commons#AbstractVfsTestCase', 'getTestDirectoryFile')": [
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105
+                    ],
+                    "('org.apache.commons#AbstractVfsTestCase', None)": [
+                        106,
+                        107,
+                        111,
+                        118
+                    ],
+                    "('org.apache.commons#AbstractVfsTestCase', 'getTestDirectory')": [
+                        108,
+                        109,
+                        110
+                    ],
+                    "('org.apache.commons#AbstractVfsTestCase', 'getTestDirectory(String)')": [
+                        128
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/vfs/cache/NullFilesCacheTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.commons.vfs.cache#NullFilesCacheTestCase', 'getBaseTestFolder(FileSystemManager)')": [
+                        53
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.commons.vfs.cache#NullFilesCacheTestCase', 'getBaseTestFolder(FileSystemManager)')": [
+                        53
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/vfs/provider/local/test/LocalProviderTestCase.java": {
+                "old": {
+                    "('org.apache.commons.vfs.provider.local.test#LocalProviderTestCase', 'getBaseTestFolder(FileSystemManager)')": [
+                        52
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs.provider.local.test#LocalProviderTestCase', 'getBaseTestFolder(FileSystemManager)')": [
+                        52
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/vfs/provider/temp/test/TemporaryProviderTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('org.apache.commons.vfs.provider.temp.test#TemporaryProviderTestCase', 'prepare(DefaultFileSystemManager)')": [
+                        54
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('org.apache.commons.vfs.provider.temp.test#TemporaryProviderTestCase', 'prepare(DefaultFileSystemManager)')": [
+                        54
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/vfs/provider/test/JunctionTests.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.commons.vfs.provider.test#JunctionTests', 'getBaseDir')": [
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.commons.vfs.provider.test#JunctionTests', 'getBaseDir')": [
+                        37
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/vfs/provider/test/VirtualProviderTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.commons.vfs.provider.test#VirtualProviderTestCase', 'getBaseTestFolder(FileSystemManager)')": [
+                        48
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.commons.vfs.provider.test#VirtualProviderTestCase', 'getBaseTestFolder(FileSystemManager)')": [
+                        48
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/vfs/provider/url/test/UrlProviderTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('org.apache.commons.vfs.provider.url.test#UrlProviderTestCase', 'getBaseTestFolder(FileSystemManager)')": [
+                        59
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('org.apache.commons.vfs.provider.url.test#UrlProviderTestCase', 'getBaseTestFolder(FileSystemManager)')": [
+                        59
+                    ]
+                }
+            }
+        }
+    },
+    "a08fb68a93180a569becfaa72a7bd9fd7895f8b2": {
+        "authored_data": "2004 May 19 19:34",
+        "commit.message": "moved filesystem capabilities to fileprovider (kept old methods for compatibility) to allow to get them before a filesystem is accessed.\n\nintroduced new interface SystemInfo (get an instance from FileSystemManager).\nIt allows us to get the currently available schemes (depending on the found external jars (jcifs, jsch, ...)) and to query the capabilities of the filesystem.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/sandbox/vfs/trunk@148041 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mario Ivankovits",
+        "pcid": "e7ef0c0c63b5f253c307a3cb3b4d208be1664170",
+        "changes": {
+            "src/java/org/apache/commons/vfs/FileSystemManager.java": {
+                "new": {
+                    "(None, None)": [
+                        202,
+                        203,
+                        204,
+                        205,
+                        206
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/impl/DefaultFileSystemManager.java": {
+                "new": {
+                    "(None, None)": [
+                        25,
+                        38,
+                        628
+                    ],
+                    "('org.apache.commons.vfs.impl#DefaultFileSystemManager', None)": [
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        619,
+                        620,
+                        621,
+                        622,
+                        623,
+                        624
+                    ],
+                    "('org.apache.commons.vfs.impl#DefaultFileSystemManager', 'getSystemInfo')": [
+                        625,
+                        626,
+                        627
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/impl/VirtualFileProvider.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/AbstractFileProvider.java": {
+                "new": {
+                    "(None, None)": [
+                        20,
+                        97
+                    ],
+                    "('org.apache.commons.vfs.provider#AbstractFileProvider', None)": [
+                        93
+                    ],
+                    "('org.apache.commons.vfs.provider#AbstractFileProvider', 'getConfigBuilder')": [
+                        94,
+                        95,
+                        96
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/FileProvider.java": {
+                "new": {
+                    "(None, None)": [
+                        19,
+                        22,
+                        23,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/ftp/FtpFileProvider.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        21,
+                        27,
+                        28,
+                        29,
+                        30,
+                        35,
+                        91
+                    ],
+                    "('org.apache.commons.vfs.provider.ftp#FtpFileProvider', None)": [
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        82,
+                        86,
+                        87
+                    ],
+                    "('org.apache.commons.vfs.provider.ftp#FtpFileProvider', 'getConfigBuilder')": [
+                        83,
+                        84,
+                        85
+                    ],
+                    "('org.apache.commons.vfs.provider.ftp#FtpFileProvider', 'getCapabilities')": [
+                        88,
+                        89,
+                        90
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/ftp/FtpFileSystem.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.commons.vfs.provider.ftp#FtpFileSystem', 'addCapabilities(Collection)')": [
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs.provider.ftp#FtpFileSystem', 'addCapabilities(Collection)')": [
+                        94
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/ftp/FtpFileSystemConfigBuilder.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.commons.vfs.provider.ftp#FtpFileSystemConfigBuilder', None)": [
+                        33,
+                        34,
+                        35,
+                        36
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/http/HttpFileProvider.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        21,
+                        26,
+                        27,
+                        28,
+                        29,
+                        36,
+                        80
+                    ],
+                    "('org.apache.commons.vfs.provider.http#HttpFileProvider', None)": [
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        71,
+                        75,
+                        76
+                    ],
+                    "('org.apache.commons.vfs.provider.http#HttpFileProvider', 'getConfigBuilder')": [
+                        72,
+                        73,
+                        74
+                    ],
+                    "('org.apache.commons.vfs.provider.http#HttpFileProvider', 'getCapabilities')": [
+                        77,
+                        78,
+                        79
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/http/HttpFileSystem.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        37
+                    ],
+                    "('org.apache.commons.vfs.provider.http#HttpFileSystem', 'addCapabilities(Collection)')": [
+                        56,
+                        57,
+                        58,
+                        59
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36
+                    ],
+                    "('org.apache.commons.vfs.provider.http#HttpFileSystem', 'addCapabilities(Collection)')": [
+                        55
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/http/HttpFileSystemConfigBuilder.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.commons.vfs.provider.http#HttpFileSystemConfigBuilder', None)": [
+                        34,
+                        35,
+                        36,
+                        37
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/jar/JarFileProvider.java": {
+                "old": {
+                    "(None, None)": [
+                        32
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        38,
+                        85
+                    ],
+                    "('org.apache.commons.vfs.provider.jar#JarFileProvider', None)": [
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        81
+                    ],
+                    "('org.apache.commons.vfs.provider.jar#JarFileProvider', 'getCapabilities')": [
+                        82,
+                        83,
+                        84
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/jar/JarFileSystem.java": {
+                "old": {
+                    "(None, None)": [
+                        18,
+                        40
+                    ],
+                    "('org.apache.commons.vfs.provider.jar#JarFileSystem', 'addCapabilities(Collection)')": [
+                        78,
+                        79,
+                        80,
+                        81,
+                        82
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        39
+                    ],
+                    "('org.apache.commons.vfs.provider.jar#JarFileSystem', 'addCapabilities(Collection)')": [
+                        77,
+                        78
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/local/DefaultLocalFileProvider.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        29,
+                        30,
+                        31,
+                        37,
+                        126
+                    ],
+                    "('org.apache.commons.vfs.provider.local#DefaultLocalFileProvider', None)": [
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        122
+                    ],
+                    "('org.apache.commons.vfs.provider.local#DefaultLocalFileProvider', 'getCapabilities')": [
+                        123,
+                        124,
+                        125
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/local/LocalFileSystem.java": {
+                "old": {
+                    "(None, None)": [
+                        18
+                    ],
+                    "('org.apache.commons.vfs.provider.local#LocalFileSystem', 'addCapabilities(Collection)')": [
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs.provider.local#LocalFileSystem', 'addCapabilities(Collection)')": [
+                        62
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/sftp/SftpFileProvider.java": {
+                "old": {
+                    "(None, None)": [
+                        35
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        23,
+                        31,
+                        32,
+                        33,
+                        40,
+                        182
+                    ],
+                    "('org.apache.commons.vfs.provider.sftp#SftpFileProvider', None)": [
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        173,
+                        177,
+                        178
+                    ],
+                    "('org.apache.commons.vfs.provider.sftp#SftpFileProvider', 'getConfigBuilder')": [
+                        174,
+                        175,
+                        176
+                    ],
+                    "('org.apache.commons.vfs.provider.sftp#SftpFileProvider', 'getCapabilities')": [
+                        179,
+                        180,
+                        181
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/sftp/SftpFileSystem.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        39
+                    ],
+                    "('org.apache.commons.vfs.provider.sftp#SftpFileSystem', 'addCapabilities(Collection)')": [
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38
+                    ],
+                    "('org.apache.commons.vfs.provider.sftp#SftpFileSystem', 'addCapabilities(Collection)')": [
+                        136
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/sftp/SftpFileSystemConfigBuilder.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.commons.vfs.provider.sftp#SftpFileSystemConfigBuilder', None)": [
+                        35,
+                        36,
+                        37,
+                        38
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/smb/SmbFileProvider.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        26,
+                        27,
+                        28,
+                        29,
+                        34,
+                        80
+                    ],
+                    "('org.apache.commons.vfs.provider.smb#SmbFileProvider', None)": [
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        76
+                    ],
+                    "('org.apache.commons.vfs.provider.smb#SmbFileProvider', 'getCapabilities')": [
+                        77,
+                        78,
+                        79
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/smb/SmbFileSystem.java": {
+                "old": {
+                    "(None, None)": [
+                        18
+                    ],
+                    "('org.apache.commons.vfs.provider.smb#SmbFileSystem', 'addCapabilities(Collection)')": [
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs.provider.smb#SmbFileSystem', 'addCapabilities(Collection)')": [
+                        54
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/temp/TemporaryFileProvider.java": {
+                "old": {
+                    "(None, None)": [
+                        35
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        31,
+                        37,
+                        122
+                    ],
+                    "('org.apache.commons.vfs.provider.temp#TemporaryFileProvider', None)": [
+                        118
+                    ],
+                    "('org.apache.commons.vfs.provider.temp#TemporaryFileProvider', 'getCapabilities')": [
+                        119,
+                        120,
+                        121
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/url/UrlFileProvider.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        29,
+                        30,
+                        31,
+                        37,
+                        86
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileProvider', None)": [
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        82
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileProvider', 'getCapabilities')": [
+                        83,
+                        84,
+                        85
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/url/UrlFileSystem.java": {
+                "old": {
+                    "(None, None)": [
+                        18,
+                        31
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileSystem', 'addCapabilities(Collection)')": [
+                        55,
+                        56,
+                        57
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.commons.vfs.provider.url#UrlFileSystem', 'addCapabilities(Collection)')": [
+                        54
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/webdav/WebDavFileSystem.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        37
+                    ],
+                    "('org.apache.commons.vfs.provider.webdav#WebDavFileSystem', 'addCapabilities(Collection)')": [
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36
+                    ],
+                    "('org.apache.commons.vfs.provider.webdav#WebDavFileSystem', 'addCapabilities(Collection)')": [
+                        54
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/webdav/WebdavFileProvider.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        26,
+                        27,
+                        28,
+                        29,
+                        34,
+                        80
+                    ],
+                    "('org.apache.commons.vfs.provider.webdav#WebdavFileProvider', None)": [
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        76
+                    ],
+                    "('org.apache.commons.vfs.provider.webdav#WebdavFileProvider', 'getCapabilities')": [
+                        77,
+                        78,
+                        79
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/zip/ZipFileProvider.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        27,
+                        28,
+                        29,
+                        30,
+                        35,
+                        87
+                    ],
+                    "('org.apache.commons.vfs.provider.zip#ZipFileProvider', None)": [
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        83
+                    ],
+                    "('org.apache.commons.vfs.provider.zip#ZipFileProvider', 'getCapabilities')": [
+                        84,
+                        85,
+                        86
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/zip/ZipFileSystem.java": {
+                "old": {
+                    "(None, None)": [
+                        20
+                    ],
+                    "('org.apache.commons.vfs.provider.zip#ZipFileSystem', 'addCapabilities(Collection)')": [
+                        160,
+                        161,
+                        162,
+                        163,
+                        164
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs.provider.zip#ZipFileSystem', 'addCapabilities(Collection)')": [
+                        159
+                    ]
+                }
+            }
+        }
+    },
+    "e7ef0c0c63b5f253c307a3cb3b4d208be1664170": {
+        "authored_data": "2004 May 18 06:20",
+        "commit.message": "PR: 29007\nSubmitted By: Anthony Goubard (adagoubard@chello.nl)\n\nChange temporary filename from\n\"basename_filecount.tmp\"\nto \"tmp_filecount_basename\".\n\nAdvantage of this is to keep the \"fileidentity\" as the file-extension of the original file is kept.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/sandbox/vfs/trunk@148040 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mario Ivankovits",
+        "pcid": "3cf91e9116c17dc2112f2439d90213145d58f9c9",
+        "changes": {
+            "src/java/org/apache/commons/vfs/impl/DefaultFileReplicator.java": {
+                "old": {
+                    "(None, None)": [
+                        3,
+                        7,
+                        9,
+                        160
+                    ],
+                    "('org.apache.commons.vfs.impl#DefaultFileReplicator', 'createFilename(String)')": [
+                        133
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        3,
+                        7,
+                        9
+                    ],
+                    "('org.apache.commons.vfs.impl#DefaultFileReplicator', 'createFilename(String)')": [
+                        133,
+                        134,
+                        135
+                    ]
+                }
+            }
+        }
+    },
+    "3cf91e9116c17dc2112f2439d90213145d58f9c9": {
+        "authored_data": "2004 May 17 20:14",
+        "commit.message": "added private constructor\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/sandbox/vfs/trunk@148039 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mario Ivankovits",
+        "pcid": "72af895fcd5b5186bedb08ec9f79a03ed8e9ce3f",
+        "changes": {
+            "src/java/org/apache/commons/vfs/VfsLog.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.commons.vfs#VfsLog', None)": [
+                        30,
+                        31,
+                        32,
+                        33,
+                        34
+                    ]
+                }
+            }
+        }
+    },
+    "72af895fcd5b5186bedb08ec9f79a03ed8e9ce3f": {
+        "authored_data": "2004 May 17 20:13",
+        "commit.message": "Refactored to make them VfsComponents to get the context&logger.\nChanged logging to correctly use commons-logging.\nThe user could override this by set its own logger using setLogger(). (have had to keep this to be able to handle AntLogger)\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/sandbox/vfs/trunk@148038 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Mario Ivankovits",
+        "pcid": "503b59209134e936b68f55539723754ac1ef51de",
+        "changes": {
+            "src/java/org/apache/commons/vfs/FilesCache.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        50
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        50
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/GlobalConfiguration.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.commons.vfs#GlobalConfiguration', None)": [
+                        26
+                    ],
+                    "('org.apache.commons.vfs#GlobalConfiguration', 'init')": [
+                        53
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        26
+                    ],
+                    "('org.apache.commons.vfs#GlobalConfiguration', None)": [
+                        28,
+                        62,
+                        63,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77
+                    ],
+                    "('org.apache.commons.vfs#GlobalConfiguration', 'init')": [
+                        55,
+                        57,
+                        58,
+                        59,
+                        60
+                    ],
+                    "('org.apache.commons.vfs#GlobalConfiguration', 'setupComponent(Object)')": [
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71
+                    ],
+                    "('org.apache.commons.vfs#GlobalConfiguration', 'close')": [
+                        78,
+                        79,
+                        80,
+                        81,
+                        82
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/VFS.java": {
+                "old": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        20,
+                        29
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.commons.vfs#VFS', 'createManager(String)')": [
+                        61,
+                        73
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/cache/DefaultFilesCache.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        32
+                    ],
+                    "('org.apache.commons.vfs.cache#DefaultFilesCache', None)": [
+                        34
+                    ],
+                    "('org.apache.commons.vfs.cache#DefaultFilesCache', 'clear')": [
+                        68
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.commons.vfs.cache#DefaultFilesCache', None)": [
+                        33
+                    ],
+                    "('org.apache.commons.vfs.cache#DefaultFilesCache', 'close')": [
+                        67,
+                        69,
+                        70
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/cache/NullFilesCache.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        34
+                    ],
+                    "('org.apache.commons.vfs.cache#NullFilesCache', None)": [
+                        36
+                    ],
+                    "('org.apache.commons.vfs.cache#NullFilesCache', 'clear')": [
+                        51
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.commons.vfs.cache#NullFilesCache', None)": [
+                        35
+                    ],
+                    "('org.apache.commons.vfs.cache#NullFilesCache', 'close')": [
+                        50,
+                        52
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/cache/SoftRefFilesCache.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        39
+                    ],
+                    "('org.apache.commons.vfs.cache#SoftRefFilesCache', None)": [
+                        42,
+                        89
+                    ],
+                    "('org.apache.commons.vfs.cache#SoftRefFilesCache', 'clear')": [
+                        181,
+                        182
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        39
+                    ],
+                    "('org.apache.commons.vfs.cache#SoftRefFilesCache', None)": [
+                        42,
+                        89
+                    ],
+                    "('org.apache.commons.vfs.cache#SoftRefFilesCache', 'close')": [
+                        181,
+                        182,
+                        183,
+                        184
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/impl/DefaultFileReplicator.java": {
+                "old": {
+                    "('org.apache.commons.vfs.impl#DefaultFileReplicator', 'close')": [
+                        90
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        24
+                    ],
+                    "('org.apache.commons.vfs.impl#DefaultFileReplicator', None)": [
+                        44
+                    ],
+                    "('org.apache.commons.vfs.impl#DefaultFileReplicator', 'close')": [
+                        94,
+                        95
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/impl/DefaultFileSystemManager.java": {
+                "old": {
+                    "(None, None)": [
+                        19
+                    ],
+                    "('org.apache.commons.vfs.impl#DefaultFileSystemManager', None)": [
+                        84
+                    ],
+                    "('org.apache.commons.vfs.impl#DefaultFileSystemManager', 'getLog')": [
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107
+                    ],
+                    "('org.apache.commons.vfs.impl#DefaultFileSystemManager', 'setupComponent(Object)')": [
+                        277
+                    ],
+                    "('org.apache.commons.vfs.impl#DefaultFileSystemManager', 'init')": [
+                        338
+                    ],
+                    "('org.apache.commons.vfs.impl#DefaultFileSystemManager', 'close')": [
+                        372,
+                        373,
+                        374,
+                        375
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs.impl#DefaultFileSystemManager', None)": [
+                        83
+                    ],
+                    "('org.apache.commons.vfs.impl#DefaultFileSystemManager', 'getLogger')": [
+                        101,
+                        102
+                    ],
+                    "('org.apache.commons.vfs.impl#DefaultFileSystemManager', 'setGlobalConfiguration(GlobalConfiguration)')": [
+                        212
+                    ],
+                    "('org.apache.commons.vfs.impl#DefaultFileSystemManager', 'setupComponent(Object)')": [
+                        273
+                    ],
+                    "('org.apache.commons.vfs.impl#DefaultFileSystemManager', 'init')": [
+                        334
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/impl/StandardFileSystemManager.java": {
+                "old": {
+                    "(None, None)": [
+                        37
+                    ],
+                    "('org.apache.commons.vfs.impl#StandardFileSystemManager', 'addProvider(Element,boolean)')": [
+                        194
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        21,
+                        40
+                    ],
+                    "('org.apache.commons.vfs.impl#StandardFileSystemManager', None)": [
+                        45,
+                        46
+                    ],
+                    "('org.apache.commons.vfs.impl#StandardFileSystemManager', 'addProvider(Element,boolean)')": [
+                        199
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/AbstractFileSystem.java": {
+                "old": {
+                    "('org.apache.commons.vfs.provider#AbstractFileSystem', 'fireEvent(ChangeEvent)')": [
+                        375
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        31
+                    ],
+                    "('org.apache.commons.vfs.provider#AbstractFileSystem', None)": [
+                        51,
+                        52
+                    ],
+                    "('org.apache.commons.vfs.provider#AbstractFileSystem', 'fireEvent(ChangeEvent)')": [
+                        380,
+                        381
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/AbstractVfsComponent.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/ftp/FtpFileSystem.java": {
+                "old": {
+                    "('org.apache.commons.vfs.provider.ftp#FtpFileSystem', 'closeConnection(FTPClient)')": [
+                        118
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        28
+                    ],
+                    "('org.apache.commons.vfs.provider.ftp#FtpFileSystem', None)": [
+                        44,
+                        45
+                    ],
+                    "('org.apache.commons.vfs.provider.ftp#FtpFileSystem', 'closeConnection(FTPClient)')": [
+                        123,
+                        124
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/vfs/provider/zip/ZipFileSystem.java": {
+                "old": {
+                    "('org.apache.commons.vfs.provider.zip#ZipFileSystem', 'close')": [
+                        143
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        27
+                    ],
+                    "('org.apache.commons.vfs.provider.zip#ZipFileSystem', None)": [
+                        47,
+                        48
+                    ],
+                    "('org.apache.commons.vfs.provider.zip#ZipFileSystem', 'close')": [
+                        148,
+                        149
+                    ]
+                }
+            }
+        }
+    }
+}

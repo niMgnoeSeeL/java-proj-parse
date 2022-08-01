@@ -1,0 +1,2288 @@
+{
+    "bc56d6353c98c3ff4ed51033ac9ec8a09351926a": {
+        "authored_data": "2010 Nov 25 11:20",
+        "commit.message": "[MRM-1097]\no upgrade nexus indexer to 3.0.1 + added logger bean which is needed by NexusIndexer\no for deployments/proxied artifacts, create and close indexing context when indexing task is executed as compared to the original behavior where the indexing context is created \nbefore it is queued (so as the indexing task queue builds up, more indexing contexts are being opened/created which might be causing the too many open files problem) \no updated unit tests with changes made\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1039004 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Maria Odea B. Ching",
+        "pcid": "0452f87c94754cd795fd526b0bcba8f1f1d937aa",
+        "changes": {
+            "archiva-cli/src/main/java/org/apache/maven/archiva/cli/AbstractProgressConsumer.java": {
+                "new": {
+                    "('org.apache.maven.archiva.cli#AbstractProgressConsumer', 'beginScan(ManagedRepositoryConfiguration,Date,boolean)')": [
+                        46,
+                        47,
+                        48,
+                        49
+                    ],
+                    "('org.apache.maven.archiva.cli#AbstractProgressConsumer', None)": [
+                        50,
+                        51,
+                        67,
+                        68
+                    ],
+                    "('org.apache.maven.archiva.cli#AbstractProgressConsumer', 'processFile(String,boolean)')": [
+                        63,
+                        64,
+                        65,
+                        66
+                    ],
+                    "('org.apache.maven.archiva.cli#AbstractProgressConsumer', 'completeScan(boolean)')": [
+                        74,
+                        75,
+                        76
+                    ],
+                    "(None, None)": [
+                        77,
+                        78
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-consumer-api/src/main/java/org/apache/maven/archiva/consumers/RepositoryContentConsumer.java": {
+                "new": {
+                    "(None, None)": [
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-core-consumers/src/main/java/org/apache/maven/archiva/consumers/core/ArtifactMissingChecksumsConsumer.java": {
+                "new": {
+                    "('org.apache.maven.archiva.consumers.core#ArtifactMissingChecksumsConsumer', 'beginScan(ManagedRepositoryConfiguration,Date,boolean)')": [
+                        102,
+                        103,
+                        104,
+                        105
+                    ],
+                    "('org.apache.maven.archiva.consumers.core#ArtifactMissingChecksumsConsumer', None)": [
+                        106,
+                        107,
+                        111,
+                        112,
+                        133,
+                        134
+                    ],
+                    "('org.apache.maven.archiva.consumers.core#ArtifactMissingChecksumsConsumer', 'completeScan(boolean)')": [
+                        113,
+                        114,
+                        115
+                    ],
+                    "('org.apache.maven.archiva.consumers.core#ArtifactMissingChecksumsConsumer', 'processFile(String,boolean)')": [
+                        135,
+                        136,
+                        137,
+                        138
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-core-consumers/src/main/java/org/apache/maven/archiva/consumers/core/AutoRemoveConsumer.java": {
+                "new": {
+                    "('org.apache.maven.archiva.consumers.core#AutoRemoveConsumer', 'beginScan(ManagedRepositoryConfiguration,Date,boolean)')": [
+                        98,
+                        99,
+                        100,
+                        101
+                    ],
+                    "('org.apache.maven.archiva.consumers.core#AutoRemoveConsumer', None)": [
+                        102,
+                        103,
+                        107,
+                        108,
+                        133,
+                        134
+                    ],
+                    "('org.apache.maven.archiva.consumers.core#AutoRemoveConsumer', 'completeScan(boolean)')": [
+                        109,
+                        110,
+                        111
+                    ],
+                    "('org.apache.maven.archiva.consumers.core#AutoRemoveConsumer', 'processFile(String,boolean)')": [
+                        135,
+                        136,
+                        137,
+                        138
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-core-consumers/src/main/java/org/apache/maven/archiva/consumers/core/AutoRenameConsumer.java": {
+                "new": {
+                    "('org.apache.maven.archiva.consumers.core#AutoRenameConsumer', 'beginScan(ManagedRepositoryConfiguration,Date,boolean)')": [
+                        99,
+                        100,
+                        101,
+                        102
+                    ],
+                    "('org.apache.maven.archiva.consumers.core#AutoRenameConsumer', None)": [
+                        103,
+                        104,
+                        108,
+                        109,
+                        157
+                    ],
+                    "('org.apache.maven.archiva.consumers.core#AutoRenameConsumer', 'completeScan(boolean)')": [
+                        110,
+                        111,
+                        112
+                    ],
+                    "('org.apache.maven.archiva.consumers.core#AutoRenameConsumer', 'processFile(String,boolean)')": [
+                        158,
+                        159,
+                        160,
+                        161
+                    ],
+                    "(None, None)": [
+                        162
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-core-consumers/src/main/java/org/apache/maven/archiva/consumers/core/MetadataUpdaterConsumer.java": {
+                "new": {
+                    "('org.apache.maven.archiva.consumers.core#MetadataUpdaterConsumer', None)": [
+                        145,
+                        150,
+                        151,
+                        155,
+                        156,
+                        157,
+                        192,
+                        197,
+                        198
+                    ],
+                    "('org.apache.maven.archiva.consumers.core#MetadataUpdaterConsumer', 'beginScan(ManagedRepositoryConfiguration,Date,boolean)')": [
+                        146,
+                        147,
+                        148,
+                        149
+                    ],
+                    "('org.apache.maven.archiva.consumers.core#MetadataUpdaterConsumer', 'completeScan(boolean)')": [
+                        158,
+                        159,
+                        160
+                    ],
+                    "('org.apache.maven.archiva.consumers.core#MetadataUpdaterConsumer', 'processFile(String,boolean)')": [
+                        193,
+                        194,
+                        195,
+                        196
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-core-consumers/src/main/java/org/apache/maven/archiva/consumers/core/ValidateChecksumConsumer.java": {
+                "new": {
+                    "('org.apache.maven.archiva.consumers.core#ValidateChecksumConsumer', None)": [
+                        105,
+                        110,
+                        111,
+                        115,
+                        116,
+                        117,
+                        159,
+                        164,
+                        165
+                    ],
+                    "('org.apache.maven.archiva.consumers.core#ValidateChecksumConsumer', 'beginScan(ManagedRepositoryConfiguration,Date,boolean)')": [
+                        106,
+                        107,
+                        108,
+                        109
+                    ],
+                    "('org.apache.maven.archiva.consumers.core#ValidateChecksumConsumer', 'completeScan(boolean)')": [
+                        118,
+                        119,
+                        120
+                    ],
+                    "('org.apache.maven.archiva.consumers.core#ValidateChecksumConsumer', 'processFile(String,boolean)')": [
+                        160,
+                        161,
+                        162,
+                        163
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-core-consumers/src/main/java/org/apache/maven/archiva/consumers/core/repository/RepositoryPurgeConsumer.java": {
+                "new": {
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumer', None)": [
+                        160,
+                        165,
+                        166,
+                        185,
+                        190,
+                        191,
+                        195,
+                        196,
+                        197
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumer', 'beginScan(ManagedRepositoryConfiguration,Date,boolean)')": [
+                        161,
+                        162,
+                        163,
+                        164
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumer', 'processFile(String,boolean)')": [
+                        186,
+                        187,
+                        188,
+                        189
+                    ],
+                    "('org.apache.maven.archiva.consumers.core.repository#RepositoryPurgeConsumer', 'completeScan(boolean)')": [
+                        198,
+                        199,
+                        200
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-dependency-tree-consumer/src/main/java/org/apache/archiva/consumers/dependencytree/DependencyTreeGeneratorConsumer.java": {
+                "new": {
+                    "('org.apache.archiva.consumers.dependencytree#DependencyTreeGeneratorConsumer', 'beginScan(ManagedRepositoryConfiguration,Date,boolean)')": [
+                        158,
+                        159,
+                        160,
+                        161
+                    ],
+                    "('org.apache.archiva.consumers.dependencytree#DependencyTreeGeneratorConsumer', None)": [
+                        162,
+                        163,
+                        166,
+                        167,
+                        264,
+                        265
+                    ],
+                    "('org.apache.archiva.consumers.dependencytree#DependencyTreeGeneratorConsumer', 'completeScan(boolean)')": [
+                        168,
+                        169,
+                        170
+                    ],
+                    "('org.apache.archiva.consumers.dependencytree#DependencyTreeGeneratorConsumer', 'processFile(String,boolean)')": [
+                        260,
+                        261,
+                        262,
+                        263
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-lucene-consumers/src/main/java/org/apache/archiva/consumers/lucene/NexusIndexerConsumer.java": {
+                "new": {
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumer', 'beginScan(ManagedRepositoryConfiguration,Date)')": [
+                        102
+                    ],
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumer', None)": [
+                        112,
+                        113,
+                        114,
+                        115,
+                        148,
+                        171,
+                        172,
+                        173,
+                        174,
+                        191,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201
+                    ],
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumer', 'beginScan(ManagedRepositoryConfiguration,Date,boolean)')": [
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126
+                    ],
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumer', 'processFile(String,boolean)')": [
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170
+                    ],
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumer', 'completeScan(boolean)')": [
+                        192,
+                        193,
+                        194,
+                        195,
+                        196
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-consumers/archiva-metadata-consumer/src/main/java/org/apache/archiva/consumers/metadata/ArchivaMetadataCreationConsumer.java": {
+                "new": {
+                    "('org.apache.archiva.consumers.metadata#ArchivaMetadataCreationConsumer', 'beginScan(ManagedRepositoryConfiguration,Date,boolean)')": [
+                        130,
+                        131,
+                        132,
+                        133
+                    ],
+                    "('org.apache.archiva.consumers.metadata#ArchivaMetadataCreationConsumer', None)": [
+                        134,
+                        135,
+                        187,
+                        188,
+                        192,
+                        193
+                    ],
+                    "('org.apache.archiva.consumers.metadata#ArchivaMetadataCreationConsumer', 'processFile(String,boolean)')": [
+                        183,
+                        184,
+                        185,
+                        186
+                    ],
+                    "('org.apache.archiva.consumers.metadata#ArchivaMetadataCreationConsumer', 'completeScan(boolean)')": [
+                        194,
+                        195,
+                        196
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-converter/src/main/java/org/apache/maven/archiva/converter/legacy/LegacyConverterArtifactConsumer.java": {
+                "new": {
+                    "('org.apache.maven.archiva.converter.legacy#LegacyConverterArtifactConsumer', None)": [
+                        91,
+                        96,
+                        97,
+                        101,
+                        102,
+                        103,
+                        138,
+                        139,
+                        140
+                    ],
+                    "('org.apache.maven.archiva.converter.legacy#LegacyConverterArtifactConsumer', 'beginScan(ManagedRepositoryConfiguration,Date,boolean)')": [
+                        92,
+                        93,
+                        94,
+                        95
+                    ],
+                    "('org.apache.maven.archiva.converter.legacy#LegacyConverterArtifactConsumer', 'completeScan(boolean)')": [
+                        104,
+                        105,
+                        106
+                    ],
+                    "('org.apache.maven.archiva.converter.legacy#LegacyConverterArtifactConsumer', 'processFile(String,boolean)')": [
+                        141,
+                        142,
+                        143,
+                        144
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-scanner/src/main/java/org/apache/archiva/repository/scanner/RepositoryContentConsumers.java": {
+                "old": {
+                    "('org.apache.archiva.repository.scanner#RepositoryContentConsumers', 'executeConsumers(ManagedRepositoryConfiguration,File,boolean)')": [
+                        240,
+                        272,
+                        283
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.repository.scanner#RepositoryContentConsumers', 'executeConsumers(ManagedRepositoryConfiguration,File,boolean)')": [
+                        240,
+                        270,
+                        271,
+                        274,
+                        275,
+                        286
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-scanner/src/main/java/org/apache/archiva/repository/scanner/RepositoryScannerInstance.java": {
+                "old": {
+                    "('org.apache.archiva.repository.scanner#RepositoryScannerInstance', None)": [
+                        85
+                    ],
+                    "('org.apache.archiva.repository.scanner#RepositoryScannerInstance', 'directoryWalkFinished')": [
+                        148
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.repository.scanner#RepositoryScannerInstance', None)": [
+                        85
+                    ],
+                    "('org.apache.archiva.repository.scanner#RepositoryScannerInstance', 'directoryWalkStep(int,File)')": [
+                        134
+                    ],
+                    "('org.apache.archiva.repository.scanner#RepositoryScannerInstance', 'directoryWalkFinished')": [
+                        149
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-scanner/src/main/java/org/apache/archiva/repository/scanner/functors/ConsumerProcessFileClosure.java": {
+                "old": {
+                    "('org.apache.archiva.repository.scanner.functors#ConsumerProcessFileClosure', 'execute(Object)')": [
+                        50
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.repository.scanner.functors#ConsumerProcessFileClosure', None)": [
+                        40,
+                        41,
+                        78,
+                        79,
+                        83,
+                        84
+                    ],
+                    "('org.apache.archiva.repository.scanner.functors#ConsumerProcessFileClosure', 'execute(Object)')": [
+                        52
+                    ],
+                    "('org.apache.archiva.repository.scanner.functors#ConsumerProcessFileClosure', 'isExecuteOnEntireRepo')": [
+                        75,
+                        76,
+                        77
+                    ],
+                    "('org.apache.archiva.repository.scanner.functors#ConsumerProcessFileClosure', 'setExecuteOnEntireRepo(boolean)')": [
+                        80,
+                        81,
+                        82
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-scanner/src/main/java/org/apache/archiva/repository/scanner/functors/TriggerBeginScanClosure.java": {
+                "old": {
+                    "('org.apache.archiva.repository.scanner.functors#TriggerBeginScanClosure', 'execute(Object)')": [
+                        64
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.repository.scanner.functors#TriggerBeginScanClosure', None)": [
+                        45,
+                        46,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63
+                    ],
+                    "('org.apache.archiva.repository.scanner.functors#TriggerBeginScanClosure', 'execute(Object)')": [
+                        72
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-scanner/src/main/java/org/apache/archiva/repository/scanner/functors/TriggerScanCompletedClosure.java": {
+                "old": {
+                    "('org.apache.archiva.repository.scanner.functors#TriggerScanCompletedClosure', 'execute(Object)')": [
+                        48
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.repository.scanner.functors#TriggerScanCompletedClosure', None)": [
+                        38,
+                        39,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48
+                    ],
+                    "('org.apache.archiva.repository.scanner.functors#TriggerScanCompletedClosure', 'execute(Object)')": [
+                        56
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-scanner/src/test/java/org/apache/archiva/repository/scanner/InvalidScanConsumer.java": {
+                "new": {
+                    "('org.apache.archiva.repository.scanner#InvalidScanConsumer', 'beginScan(ManagedRepositoryConfiguration,Date,boolean)')": [
+                        52,
+                        53,
+                        54,
+                        55
+                    ],
+                    "('org.apache.archiva.repository.scanner#InvalidScanConsumer', None)": [
+                        56,
+                        57,
+                        61,
+                        62,
+                        82,
+                        83
+                    ],
+                    "('org.apache.archiva.repository.scanner#InvalidScanConsumer', 'completeScan(boolean)')": [
+                        63,
+                        64,
+                        65
+                    ],
+                    "('org.apache.archiva.repository.scanner#InvalidScanConsumer', 'processFile(String,boolean)')": [
+                        84,
+                        85,
+                        86,
+                        87
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-scanner/src/test/java/org/apache/archiva/repository/scanner/KnownScanConsumer.java": {
+                "new": {
+                    "('org.apache.archiva.repository.scanner#KnownScanConsumer', None)": [
+                        79,
+                        84,
+                        85,
+                        92,
+                        97,
+                        98,
+                        102,
+                        103,
+                        104
+                    ],
+                    "('org.apache.archiva.repository.scanner#KnownScanConsumer', 'beginScan(ManagedRepositoryConfiguration,Date,boolean)')": [
+                        80,
+                        81,
+                        82,
+                        83
+                    ],
+                    "('org.apache.archiva.repository.scanner#KnownScanConsumer', 'processFile(String,boolean)')": [
+                        93,
+                        94,
+                        95,
+                        96
+                    ],
+                    "('org.apache.archiva.repository.scanner#KnownScanConsumer', 'completeScan(boolean)')": [
+                        105,
+                        106,
+                        107
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-scanner/src/test/java/org/apache/archiva/repository/scanner/RepositoryContentConsumersTest.java": {
+                "old": {
+                    "('org.apache.archiva.repository.scanner#RepositoryContentConsumersTest', 'testExecution')": [
+                        273,
+                        278,
+                        282,
+                        296,
+                        304,
+                        305,
+                        321,
+                        327,
+                        328
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.repository.scanner#RepositoryContentConsumersTest', 'testExecution')": [
+                        273,
+                        278,
+                        282,
+                        296,
+                        304,
+                        305,
+                        321,
+                        327,
+                        328
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-scanner/src/test/java/org/apache/archiva/repository/scanner/SampleKnownConsumer.java": {
+                "new": {
+                    "('org.apache.archiva.repository.scanner#SampleKnownConsumer', None)": [
+                        53,
+                        58,
+                        59,
+                        63,
+                        64,
+                        65,
+                        87,
+                        92,
+                        93
+                    ],
+                    "('org.apache.archiva.repository.scanner#SampleKnownConsumer', 'beginScan(ManagedRepositoryConfiguration,Date,boolean)')": [
+                        54,
+                        55,
+                        56,
+                        57
+                    ],
+                    "('org.apache.archiva.repository.scanner#SampleKnownConsumer', 'completeScan(boolean)')": [
+                        66,
+                        67,
+                        68
+                    ],
+                    "('org.apache.archiva.repository.scanner#SampleKnownConsumer', 'processFile(String,boolean)')": [
+                        88,
+                        89,
+                        90,
+                        91
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduler/archiva-scheduler-indexing/src/main/java/org/apache/archiva/scheduler/indexing/ArchivaIndexingTaskExecutor.java": {
+                "old": {
+                    "('org.apache.archiva.scheduler.indexing#ArchivaIndexingTaskExecutor', 'executeTask(Task)')": [
+                        80,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        117
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        42
+                    ],
+                    "('org.apache.archiva.scheduler.indexing#ArchivaIndexingTaskExecutor', 'executeTask(Task)')": [
+                        81,
+                        82,
+                        84,
+                        85,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157
+                    ],
+                    "('org.apache.archiva.scheduler.indexing#ArchivaIndexingTaskExecutor', 'finishIndexingTask(ArtifactIndexingTask,ManagedRepositoryConfiguration,IndexingContext)')": [
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214
+                    ],
+                    "('org.apache.archiva.scheduler.indexing#ArchivaIndexingTaskExecutor', None)": [
+                        215,
+                        216,
+                        217,
+                        218,
+                        219
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduler/archiva-scheduler-indexing/src/main/java/org/apache/archiva/scheduler/indexing/ArtifactIndexingTask.java": {
+                "new": {
+                    "('org.apache.archiva.scheduler.indexing#ArtifactIndexingTask', None)": [
+                        48,
+                        49,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        69,
+                        70
+                    ],
+                    "('org.apache.archiva.scheduler.indexing#ArtifactIndexingTask', 'isExecuteOnEntireRepo')": [
+                        66,
+                        67,
+                        68
+                    ],
+                    "('org.apache.archiva.scheduler.indexing#ArtifactIndexingTask', 'setExecuteOnEntireRepo(boolean)')": [
+                        71,
+                        72,
+                        73
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduler/archiva-scheduler-repository/src/test/java/org/apache/archiva/scheduler/repository/TestConsumer.java": {
+                "new": {
+                    "('org.apache.archiva.scheduler.repository#TestConsumer', None)": [
+                        90,
+                        95,
+                        96,
+                        113,
+                        118,
+                        119,
+                        122,
+                        123,
+                        124
+                    ],
+                    "('org.apache.archiva.scheduler.repository#TestConsumer', 'beginScan(ManagedRepositoryConfiguration,Date,boolean)')": [
+                        91,
+                        92,
+                        93,
+                        94
+                    ],
+                    "('org.apache.archiva.scheduler.repository#TestConsumer', 'processFile(String,boolean)')": [
+                        114,
+                        115,
+                        116,
+                        117
+                    ],
+                    "('org.apache.archiva.scheduler.repository#TestConsumer', 'completeScan(boolean)')": [
+                        125,
+                        126,
+                        127
+                    ]
+                }
+            },
+            "archiva-modules/plugins/problem-reports/src/main/java/org/apache/archiva/reports/consumers/DuplicateArtifactsConsumer.java": {
+                "new": {
+                    "('org.apache.archiva.reports.consumers#DuplicateArtifactsConsumer', 'beginScan(ManagedRepositoryConfiguration,Date,boolean)')": [
+                        135,
+                        136,
+                        137,
+                        138
+                    ],
+                    "('org.apache.archiva.reports.consumers#DuplicateArtifactsConsumer', None)": [
+                        139,
+                        140,
+                        215,
+                        216,
+                        220,
+                        221
+                    ],
+                    "('org.apache.archiva.reports.consumers#DuplicateArtifactsConsumer', 'processFile(String,boolean)')": [
+                        211,
+                        212,
+                        213,
+                        214
+                    ],
+                    "('org.apache.archiva.reports.consumers#DuplicateArtifactsConsumer', 'completeScan(boolean)')": [
+                        222,
+                        223,
+                        224
+                    ]
+                }
+            }
+        }
+    },
+    "0452f87c94754cd795fd526b0bcba8f1f1d937aa": {
+        "authored_data": "2010 Nov 25 04:23",
+        "commit.message": "slight logging adjustment\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1038916 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "8e9ef5cb4a0e809e0b16cc7b0cdc3a92b57a24ce",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/main/java/org/apache/archiva/web/xmlrpc/services/AdministrationServiceImpl.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'merge(String,boolean)')": [
+                        496,
+                        497,
+                        499,
+                        500,
+                        522,
+                        523,
+                        525,
+                        526,
+                        528
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'merge(String,boolean)')": [
+                        496,
+                        498,
+                        499,
+                        500,
+                        501,
+                        502,
+                        503,
+                        525,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        534
+                    ]
+                }
+            }
+        }
+    },
+    "031f607b735abf81e5415fbbdf6b55e01c2e368b": {
+        "authored_data": "2010 Nov 05 11:22",
+        "commit.message": "[MRM-1303] fixed npe in delete artifact + unit test\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1031518 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Maria Odea B. Ching",
+        "pcid": "b719ecb81801d0ea69bcf5ece393d731cbe4d4f1",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/DeleteArtifactAction.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.action#DeleteArtifactAction', 'updateMetadata(ArchivaRepositoryMetadata,File,Date)')": [
+                        342
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.web.action#DeleteArtifactAction', 'updateMetadata(ArchivaRepositoryMetadata,File,Date)')": [
+                        342
+                    ],
+                    "('org.apache.maven.archiva.web.action#DeleteArtifactAction', None)": [
+                        407,
+                        411,
+                        412,
+                        416,
+                        417
+                    ],
+                    "('org.apache.maven.archiva.web.action#DeleteArtifactAction', 'setRepositoryFactory(RepositoryContentFactory)')": [
+                        408,
+                        409,
+                        410
+                    ],
+                    "('org.apache.maven.archiva.web.action#DeleteArtifactAction', 'setConfiguration(ArchivaConfiguration)')": [
+                        413,
+                        414,
+                        415
+                    ],
+                    "('org.apache.maven.archiva.web.action#DeleteArtifactAction', 'setMetadataRepository(MetadataRepository)')": [
+                        418,
+                        419,
+                        420
+                    ],
+                    "(None, None)": [
+                        421
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/test/java/org/apache/maven/archiva/web/action/DeleteArtifactActionTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.action#DeleteArtifactActionTest', 'testGetListeners')": [
+                        31,
+                        32
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        155
+                    ],
+                    "('org.apache.maven.archiva.web.action#DeleteArtifactActionTest', None)": [
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        88,
+                        89,
+                        90,
+                        97,
+                        98,
+                        105,
+                        140,
+                        141
+                    ],
+                    "('org.apache.maven.archiva.web.action#DeleteArtifactActionTest', 'setUp')": [
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87
+                    ],
+                    "('org.apache.maven.archiva.web.action#DeleteArtifactActionTest', 'tearDown')": [
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96
+                    ],
+                    "('org.apache.maven.archiva.web.action#DeleteArtifactActionTest', 'testNPEInDeleteArtifact')": [
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139
+                    ],
+                    "('org.apache.maven.archiva.web.action#DeleteArtifactActionTest', 'createConfiguration')": [
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154
+                    ]
+                }
+            }
+        }
+    },
+    "b719ecb81801d0ea69bcf5ece393d731cbe4d4f1": {
+        "authored_data": "2010 Oct 15 05:15",
+        "commit.message": "check if metadata exists first before updating and copying to target repo\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1022822 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Maria Odea B. Ching",
+        "pcid": "421229b886b790648967152d31faaaea6e19cc9a",
+        "changes": {
+            "archiva-modules/plugins/stage-repository-merge/src/main/java/org/apache/archiva/stagerepository/merge/Maven2RepositoryMerger.java": {
+                "old": {
+                    "('org.apache.archiva.stagerepository.merge#Maven2RepositoryMerger', 'createFolderStructure(String,String,ArtifactMetadata)')": [
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.stagerepository.merge#Maven2RepositoryMerger', 'createFolderStructure(String,String,ArtifactMetadata)')": [
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226
+                    ],
+                    "('org.apache.archiva.stagerepository.merge#Maven2RepositoryMerger', None)": [
+                        227
+                    ]
+                }
+            }
+        }
+    },
+    "421229b886b790648967152d31faaaea6e19cc9a": {
+        "authored_data": "2010 Oct 15 02:58",
+        "commit.message": "o fix bug when checking for conflicting artifacts, compare managed repo & staging repo instead of both staging repo\no added debug logs\no removed alwaysmatcher for test so we can catch the specific values of passed params\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1022813 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Maria Odea B. Ching",
+        "pcid": "e01a96d5f4ecea12128ae465136014631f80d151",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/main/java/org/apache/archiva/web/xmlrpc/services/AdministrationServiceImpl.java": {
+                "old": {
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'merge(String,boolean)')": [
+                        491,
+                        505
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'merge(String,boolean)')": [
+                        478,
+                        479,
+                        490,
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        499,
+                        500,
+                        501,
+                        502,
+                        504,
+                        505,
+                        510,
+                        516,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        530,
+                        531,
+                        532,
+                        536,
+                        537,
+                        538,
+                        543,
+                        544,
+                        545
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/test/java/org/apache/archiva/web/xmlrpc/services/AdministrationServiceImplTest.java": {
+                "old": {
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testMergeRepositoriesAndScan')": [
+                        723
+                    ]
+                }
+            }
+        }
+    },
+    "e01a96d5f4ecea12128ae465136014631f80d151": {
+        "authored_data": "2010 Oct 09 13:48",
+        "commit.message": "[MRM-1424] Implement WS for creating stage repository\nsubmitted by Warner Pinero\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1006162 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Maria Odea B. Ching",
+        "pcid": "e1c5bb5b9185ace1e5f316ef3338f5e30b31073b",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-api/src/main/java/org/apache/archiva/web/xmlrpc/api/AdministrationService.java": {
+                "old": {
+                    "(None, None)": [
+                        104
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        104
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/main/java/org/apache/archiva/web/xmlrpc/services/AdministrationServiceImpl.java": {
+                "old": {
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', None)": [
+                        90,
+                        92,
+                        94,
+                        101,
+                        102,
+                        549
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'addManagedRepository(String,String,String,String,boolean,boolean,boolean,String)')": [
+                        347,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'deleteManagedRepository(String)')": [
+                        449,
+                        450
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'merge(String,boolean)')": [
+                        481,
+                        485,
+                        486,
+                        488,
+                        489,
+                        492,
+                        493,
+                        495,
+                        496,
+                        497,
+                        503,
+                        504,
+                        508,
+                        510,
+                        512,
+                        513,
+                        517,
+                        530,
+                        536,
+                        543,
+                        544,
+                        546
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'createAuditEvent(ManagedRepositoryConfiguration)')": [
+                        558,
+                        559
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'mergeWithOutSnapshots(List,String,String)')": [
+                        569,
+                        574,
+                        577,
+                        579
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', None)": [
+                        90,
+                        92,
+                        94,
+                        101,
+                        102,
+                        545,
+                        563,
+                        564,
+                        597
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'addManagedRepository(String,String,String,String,boolean,boolean,boolean,boolean,String)')": [
+                        347,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'deleteManagedRepository(String)')": [
+                        443
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'merge(String,boolean)')": [
+                        474,
+                        478,
+                        479,
+                        481,
+                        482,
+                        485,
+                        486,
+                        488,
+                        489,
+                        490,
+                        491,
+                        497,
+                        498,
+                        502,
+                        504,
+                        505,
+                        507,
+                        508,
+                        509,
+                        513,
+                        526,
+                        532,
+                        539,
+                        540,
+                        542
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'addRepository(ManagedRepositoryConfiguration,Configuration)')": [
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'createAuditEvent(ManagedRepositoryConfiguration)')": [
+                        573,
+                        574
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'mergeWithOutSnapshots(List,String,String)')": [
+                        584,
+                        589,
+                        592,
+                        594
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImpl', 'getStageRepoConfig(ManagedRepositoryConfiguration)')": [
+                        598,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612,
+                        613,
+                        614,
+                        615,
+                        616
+                    ],
+                    "(None, None)": [
+                        617
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/test/java/org/apache/archiva/web/xmlrpc/services/AdministrationServiceImplTest.java": {
+                "old": {
+                    "(None, None)": [
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', None)": [
+                        70,
+                        72,
+                        74,
+                        76,
+                        78,
+                        80,
+                        84,
+                        87,
+                        89,
+                        101,
+                        104,
+                        106,
+                        118,
+                        120,
+                        122,
+                        124,
+                        128,
+                        178,
+                        179,
+                        180,
+                        181,
+                        204,
+                        290,
+                        291,
+                        292,
+                        293,
+                        316,
+                        317,
+                        318,
+                        319,
+                        364,
+                        478,
+                        500,
+                        501,
+                        502,
+                        503,
+                        537,
+                        565,
+                        587,
+                        588,
+                        589,
+                        590,
+                        639,
+                        640,
+                        641,
+                        642,
+                        663,
+                        664,
+                        686,
+                        687,
+                        743,
+                        808,
+                        809,
+                        810,
+                        817,
+                        818,
+                        829,
+                        854,
+                        867,
+                        879,
+                        936
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'setUp')": [
+                        133,
+                        135,
+                        136,
+                        138,
+                        139,
+                        145,
+                        146,
+                        148,
+                        149,
+                        150,
+                        152,
+                        153,
+                        154,
+                        157,
+                        158,
+                        161,
+                        167,
+                        170,
+                        172,
+                        175,
+                        176,
+                        177
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testGetAllRepoConsumers')": [
+                        184,
+                        186,
+                        190,
+                        191,
+                        192,
+                        196
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testConfigureValidRepositoryConsumer')": [
+                        207,
+                        211,
+                        212,
+                        213,
+                        215,
+                        218,
+                        219,
+                        222,
+                        225,
+                        230,
+                        231,
+                        241,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        251,
+                        254,
+                        258,
+                        261,
+                        265,
+                        268,
+                        274,
+                        278,
+                        281,
+                        284
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testConfigureInvalidRepositoryConsumer')": [
+                        298,
+                        302,
+                        312,
+                        315
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testDeleteM2ArtifactArtifactExists')": [
+                        323,
+                        324,
+                        327,
+                        330,
+                        332,
+                        336,
+                        337,
+                        338,
+                        345,
+                        346,
+                        347,
+                        348,
+                        351,
+                        353,
+                        354,
+                        360
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testDeleteM1ArtifactArtifactExists')": [
+                        369,
+                        370,
+                        372,
+                        373,
+                        375,
+                        378,
+                        383,
+                        385,
+                        387,
+                        391,
+                        392,
+                        393,
+                        400,
+                        408,
+                        410,
+                        411,
+                        419,
+                        423
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testDeleteArtifactArtifactDoesNotExist')": [
+                        433,
+                        434,
+                        437,
+                        440,
+                        442,
+                        446,
+                        456
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'createManagedRepo(String,String)')": [
+                        462,
+                        465
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testDeleteArtifacRepositoryDoesNotExist')": [
+                        481,
+                        484,
+                        485,
+                        486,
+                        487,
+                        497,
+                        498,
+                        499
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testExecuteRepoScannerRepoExistsAndNotBeingScanned')": [
+                        506,
+                        510,
+                        512,
+                        513,
+                        514,
+                        518,
+                        532
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testExecuteRepoScannerRepoExistsButBeingScanned')": [
+                        540,
+                        544,
+                        545,
+                        546,
+                        550,
+                        560
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testExecuteRepoScannerRepoDoesNotExist')": [
+                        571,
+                        572,
+                        573,
+                        574,
+                        584,
+                        585,
+                        586
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testGetAllManagedRepositories')": [
+                        594,
+                        597,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        611
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testGetAllRemoteRepositories')": [
+                        619,
+                        620,
+                        621,
+                        622,
+                        625,
+                        626,
+                        627,
+                        628,
+                        629,
+                        630,
+                        631,
+                        632,
+                        633,
+                        636,
+                        638
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testMergeRepositoryWithInvalidRepository')": [
+                        648,
+                        649,
+                        650,
+                        651,
+                        656,
+                        660,
+                        661,
+                        662
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testMergeWithNoStagingRepository')": [
+                        666,
+                        667,
+                        668,
+                        669,
+                        671,
+                        672,
+                        673,
+                        674,
+                        679,
+                        683,
+                        684,
+                        685
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testMergeRepositoriesAndScan')": [
+                        688,
+                        692,
+                        696,
+                        698,
+                        702,
+                        705,
+                        709,
+                        711,
+                        715,
+                        716,
+                        721,
+                        723,
+                        726,
+                        735
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testMergeRepositoriesWithConflictsAndScan')": [
+                        744,
+                        751,
+                        755,
+                        758,
+                        761,
+                        763,
+                        765,
+                        768,
+                        772,
+                        776,
+                        778,
+                        782,
+                        786,
+                        788,
+                        790,
+                        791,
+                        800,
+                        805
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'assertRemoteRepo(RemoteRepository,RemoteRepositoryConfiguration)')": [
+                        816
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'createRemoteRepository(String,String,String,String)')": [
+                        819,
+                        826
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'assertManagedRepo(ManagedRepository,ManagedRepositoryConfiguration)')": [
+                        835,
+                        836,
+                        837
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'createManagedRepo(String,String,String,boolean,boolean)')": [
+                        851
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'createStagingRepo(ManagedRepositoryConfiguration)')": [
+                        864
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'createAuditEvent(ManagedRepositoryConfiguration)')": [
+                        871,
+                        875,
+                        876
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'recordRepoConsumers')": [
+                        885,
+                        886,
+                        889,
+                        890,
+                        893,
+                        894
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'recordInManagedLegacyRepoContent(MockControl,FileTypes,MockControl,PathParser)')": [
+                        903,
+                        904,
+                        905,
+                        906,
+                        907,
+                        908,
+                        909,
+                        917,
+                        918,
+                        920,
+                        921,
+                        923,
+                        924,
+                        926,
+                        927,
+                        929,
+                        930,
+                        932,
+                        933
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'getArtifacts')": [
+                        940
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'createArtifactReference(String,String,String,String)')": [
+                        959
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        52,
+                        1039
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', None)": [
+                        73,
+                        75,
+                        77,
+                        79,
+                        81,
+                        83,
+                        87,
+                        90,
+                        92,
+                        104,
+                        107,
+                        109,
+                        121,
+                        123,
+                        125,
+                        127,
+                        131,
+                        181,
+                        182,
+                        183,
+                        184,
+                        207,
+                        293,
+                        294,
+                        295,
+                        318,
+                        319,
+                        320,
+                        321,
+                        367,
+                        482,
+                        504,
+                        505,
+                        506,
+                        507,
+                        542,
+                        571,
+                        593,
+                        594,
+                        595,
+                        596,
+                        646,
+                        647,
+                        648,
+                        649,
+                        670,
+                        671,
+                        694,
+                        695,
+                        754,
+                        822,
+                        873,
+                        874,
+                        875,
+                        876,
+                        883,
+                        884,
+                        895,
+                        921,
+                        934,
+                        946,
+                        1006,
+                        1032
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'setUp')": [
+                        136,
+                        138,
+                        139,
+                        141,
+                        142,
+                        148,
+                        149,
+                        151,
+                        152,
+                        153,
+                        155,
+                        156,
+                        157,
+                        160,
+                        161,
+                        164,
+                        170,
+                        173,
+                        175,
+                        178,
+                        179,
+                        180
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testGetAllRepoConsumers')": [
+                        187,
+                        189,
+                        193,
+                        194,
+                        195,
+                        199
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testConfigureValidRepositoryConsumer')": [
+                        210,
+                        214,
+                        215,
+                        216,
+                        218,
+                        221,
+                        222,
+                        225,
+                        228,
+                        233,
+                        234,
+                        244,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        254,
+                        257,
+                        261,
+                        264,
+                        268,
+                        271,
+                        277,
+                        281,
+                        284,
+                        287
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testConfigureInvalidRepositoryConsumer')": [
+                        300,
+                        304,
+                        314,
+                        317
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testDeleteM2ArtifactArtifactExists')": [
+                        325,
+                        326,
+                        329,
+                        332,
+                        334,
+                        338,
+                        339,
+                        340,
+                        341,
+                        348,
+                        349,
+                        350,
+                        351,
+                        354,
+                        356,
+                        357,
+                        363
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testDeleteM1ArtifactArtifactExists')": [
+                        372,
+                        373,
+                        375,
+                        376,
+                        378,
+                        381,
+                        386,
+                        388,
+                        390,
+                        394,
+                        395,
+                        396,
+                        397,
+                        404,
+                        412,
+                        414,
+                        415,
+                        423,
+                        427
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testDeleteArtifactArtifactDoesNotExist')": [
+                        437,
+                        438,
+                        441,
+                        444,
+                        446,
+                        450,
+                        460
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'createManagedRepo(String,String)')": [
+                        466,
+                        469
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testDeleteArtifacRepositoryDoesNotExist')": [
+                        485,
+                        488,
+                        489,
+                        490,
+                        491,
+                        501,
+                        502,
+                        503
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testExecuteRepoScannerRepoExistsAndNotBeingScanned')": [
+                        510,
+                        514,
+                        516,
+                        517,
+                        518,
+                        519,
+                        523,
+                        537
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testExecuteRepoScannerRepoExistsButBeingScanned')": [
+                        545,
+                        549,
+                        550,
+                        551,
+                        552,
+                        556,
+                        566
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testExecuteRepoScannerRepoDoesNotExist')": [
+                        577,
+                        578,
+                        579,
+                        580,
+                        590,
+                        591,
+                        592
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testGetAllManagedRepositories')": [
+                        600,
+                        603,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612,
+                        613,
+                        614,
+                        617
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testGetAllRemoteRepositories')": [
+                        625,
+                        626,
+                        627,
+                        628,
+                        629,
+                        632,
+                        633,
+                        634,
+                        635,
+                        636,
+                        637,
+                        638,
+                        639,
+                        640,
+                        643,
+                        645
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testMergeRepositoryWithInvalidRepository')": [
+                        655,
+                        656,
+                        657,
+                        658,
+                        663,
+                        667,
+                        668,
+                        669
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testMergeWithNoStagingRepository')": [
+                        673,
+                        674,
+                        675,
+                        676,
+                        677,
+                        679,
+                        680,
+                        681,
+                        682,
+                        687,
+                        691,
+                        692,
+                        693
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testMergeRepositoriesAndScan')": [
+                        696,
+                        700,
+                        704,
+                        706,
+                        710,
+                        713,
+                        717,
+                        719,
+                        720,
+                        721,
+                        725,
+                        726,
+                        727,
+                        732,
+                        734,
+                        737,
+                        746
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testMergeRepositoriesWithConflictsAndScan')": [
+                        755,
+                        762,
+                        766,
+                        769,
+                        772,
+                        774,
+                        776,
+                        779,
+                        783,
+                        787,
+                        789,
+                        790,
+                        791,
+                        795,
+                        796,
+                        800,
+                        802,
+                        804,
+                        805,
+                        814,
+                        819
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'testAddManagedRepository')": [
+                        823,
+                        824,
+                        825,
+                        826,
+                        827,
+                        828,
+                        829,
+                        830,
+                        831,
+                        832,
+                        833,
+                        834,
+                        835,
+                        836,
+                        837,
+                        838,
+                        839,
+                        840,
+                        841,
+                        842,
+                        843,
+                        844,
+                        845,
+                        846,
+                        847,
+                        848,
+                        849,
+                        850,
+                        851,
+                        852,
+                        853,
+                        854,
+                        855,
+                        856,
+                        857,
+                        858,
+                        859,
+                        860,
+                        861,
+                        862,
+                        863,
+                        864,
+                        865,
+                        866,
+                        867,
+                        868,
+                        869,
+                        870,
+                        871,
+                        872
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'assertRemoteRepo(RemoteRepository,RemoteRepositoryConfiguration)')": [
+                        882
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'createRemoteRepository(String,String,String,String)')": [
+                        885,
+                        892
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'assertManagedRepo(ManagedRepository,ManagedRepositoryConfiguration)')": [
+                        901,
+                        902,
+                        903,
+                        904
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'createManagedRepo(String,String,String,boolean,boolean)')": [
+                        918
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'createStagingRepo(ManagedRepositoryConfiguration)')": [
+                        931
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'createAuditEvent(ManagedRepositoryConfiguration)')": [
+                        938,
+                        942,
+                        943
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'recordRepoConsumers')": [
+                        952,
+                        953,
+                        954,
+                        957,
+                        958,
+                        959,
+                        962,
+                        963,
+                        964
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'recordInManagedLegacyRepoContent(MockControl,FileTypes,MockControl,PathParser)')": [
+                        973,
+                        974,
+                        975,
+                        976,
+                        977,
+                        978,
+                        979,
+                        987,
+                        988,
+                        990,
+                        991,
+                        993,
+                        994,
+                        996,
+                        997,
+                        999,
+                        1000,
+                        1002,
+                        1003
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'getArtifacts')": [
+                        1010
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'createArtifactReference(String,String,String,String)')": [
+                        1029
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#AdministrationServiceImplTest', 'createRepoGroupConfig(String,List)')": [
+                        1033,
+                        1034,
+                        1035,
+                        1036,
+                        1037,
+                        1038
+                    ]
+                }
+            }
+        }
+    }
+}

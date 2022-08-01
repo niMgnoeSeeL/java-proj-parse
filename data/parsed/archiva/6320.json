@@ -1,0 +1,870 @@
+{
+    "243a71a5862fdb24e09816895ab276e2b4a11ff0": {
+        "authored_data": "2009 Feb 18 02:42",
+        "commit.message": "[MRM-1042]\no hide timestamped SNAPSHOT versions in version list browse\no add 'Other Versions' field in the artifact info page if the artifact is a snapshot & has other timestamped versions\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@745362 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Maria Odea B. Ching",
+        "pcid": "f7b27068d782e17d3d7534565c029cb466ce858f",
+        "changes": {
+            "archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/DefaultRepositoryBrowsing.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', None)": [
+                        59,
+                        144,
+                        164,
+                        165,
+                        166,
+                        205,
+                        206,
+                        207,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        307,
+                        338,
+                        364
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getRoot(String,List)')": [
+                        74
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectArtifactId(String,List,String,String)')": [
+                        83,
+                        84,
+                        88,
+                        91,
+                        94,
+                        95,
+                        96
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectGroupId(String,List,String)')": [
+                        101,
+                        105,
+                        108,
+                        109
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectVersion(String,List,String,String,String)')": [
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getRepositoryId(String,List,String,String,String)')": [
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        163
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getArtifact(String,List,String,String,String)')": [
+                        167,
+                        168,
+                        173,
+                        177,
+                        180,
+                        190,
+                        191,
+                        192,
+                        202,
+                        203,
+                        204
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getUsedBy(String,List,String,String,String)')": [
+                        208,
+                        209,
+                        212,
+                        213
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'processSnapshots(List)')": [
+                        242,
+                        243,
+                        244,
+                        249,
+                        251,
+                        253,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'handleGenericSnapshots(String,String,String,String)')": [
+                        282,
+                        297,
+                        298
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getProjectModel(String,String,String)')": [
+                        323,
+                        324,
+                        325,
+                        331,
+                        332,
+                        333
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getNoPomArtifactRepoId(String,List,String,String,String,String)')": [
+                        339,
+                        343,
+                        345,
+                        350,
+                        357,
+                        358,
+                        359
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getArtifactType(String,String,String)')": [
+                        369,
+                        372,
+                        373,
+                        381,
+                        382,
+                        383
+                    ],
+                    "(None, None)": [
+                        386
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        435
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', None)": [
+                        60,
+                        71,
+                        72,
+                        73,
+                        87,
+                        88,
+                        89,
+                        107,
+                        108,
+                        109,
+                        132,
+                        133,
+                        134,
+                        158,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        209,
+                        210,
+                        251,
+                        252,
+                        253,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        354,
+                        385,
+                        412
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getRoot(String,List)')": [
+                        78
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectArtifactId(String,List,String,String)')": [
+                        90,
+                        91,
+                        95,
+                        98,
+                        99,
+                        102
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectGroupId(String,List,String)')": [
+                        110,
+                        111,
+                        115,
+                        118,
+                        119,
+                        120
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'selectVersion(String,List,String,String,String)')": [
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getRepositoryId(String,List,String,String,String)')": [
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        177,
+                        178
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getTimestampedSnapshots(List,String,String,String)')": [
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getArtifact(String,List,String,String,String)')": [
+                        211,
+                        212,
+                        217,
+                        221,
+                        222,
+                        225,
+                        235,
+                        236,
+                        237,
+                        238,
+                        248,
+                        249,
+                        250
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getUsedBy(String,List,String,String,String)')": [
+                        254,
+                        255,
+                        258,
+                        259
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'processSnapshots(List)')": [
+                        282,
+                        283,
+                        284,
+                        289,
+                        291,
+                        293,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'handleGenericSnapshots(String,String,String,String)')": [
+                        317,
+                        318,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getProjectModel(String,String,String)')": [
+                        370,
+                        371,
+                        372,
+                        378,
+                        379,
+                        380
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getNoPomArtifactRepoId(String,List,String,String,String,String)')": [
+                        386,
+                        387,
+                        391,
+                        393,
+                        398,
+                        405,
+                        406,
+                        407
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getArtifactType(String,String,String)')": [
+                        417,
+                        420,
+                        421,
+                        422,
+                        430,
+                        431,
+                        432
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/RepositoryBrowsing.java": {
+                "new": {
+                    "(None, None)": [
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107
+                    ]
+                }
+            },
+            "archiva-modules/archiva-database/src/test/java/org/apache/maven/archiva/database/browsing/RepositoryBrowsingTest.java": {
+                "new": {
+                    "('org.apache.maven.archiva.database.browsing#RepositoryBrowsingTest', 'saveTestData')": [
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#RepositoryBrowsingTest', None)": [
+                        151,
+                        166
+                    ],
+                    "('org.apache.maven.archiva.database.browsing#RepositoryBrowsingTest', 'testSelectArtifactId')": [
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/ShowArtifactAction.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.action#ShowArtifactAction', 'artifact')": [
+                        106,
+                        107,
+                        113
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        322,
+                        323
+                    ],
+                    "('org.apache.maven.archiva.web.action#ShowArtifactAction', None)": [
+                        98,
+                        99,
+                        317,
+                        318
+                    ],
+                    "('org.apache.maven.archiva.web.action#ShowArtifactAction', 'artifact')": [
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        132
+                    ],
+                    "('org.apache.maven.archiva.web.action#ShowArtifactAction', 'getSnapshotVersions')": [
+                        314,
+                        315,
+                        316
+                    ],
+                    "('org.apache.maven.archiva.web.action#ShowArtifactAction', 'setSnapshotVersions(List)')": [
+                        319,
+                        320,
+                        321
+                    ]
+                }
+            }
+        }
+    },
+    "f7b27068d782e17d3d7534565c029cb466ce858f": {
+        "authored_data": "2009 Feb 18 02:24",
+        "commit.message": "[MRM-1041]\no show shared basic project info in versions list browse\no fix model not being set in repository browse\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@745359 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Maria Odea B. Ching",
+        "pcid": "5f39994250707aa0a318a3aad1728bca2e79868b",
+        "changes": {
+            "archiva-modules/archiva-database/src/main/java/org/apache/maven/archiva/database/browsing/DefaultRepositoryBrowsing.java": {
+                "old": {
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getProjectModel(String,String,String)')": [
+                        321
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.database.browsing#DefaultRepositoryBrowsing', 'getProjectModel(String,String,String)')": [
+                        321
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/BrowseAction.java": {
+                "old": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.maven.archiva.web.action#BrowseAction', None)": [
+                        66
+                    ],
+                    "('org.apache.maven.archiva.web.action#BrowseAction', 'browseArtifact')": [
+                        120
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29,
+                        32,
+                        277
+                    ],
+                    "('org.apache.maven.archiva.web.action#BrowseAction', None)": [
+                        68,
+                        69,
+                        70,
+                        130,
+                        131,
+                        203,
+                        204,
+                        268,
+                        272,
+                        273
+                    ],
+                    "('org.apache.maven.archiva.web.action#BrowseAction', 'browseArtifact')": [
+                        126,
+                        127,
+                        128
+                    ],
+                    "('org.apache.maven.archiva.web.action#BrowseAction', 'populateSharedModel')": [
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202
+                    ],
+                    "('org.apache.maven.archiva.web.action#BrowseAction', 'getSharedModel')": [
+                        269,
+                        270,
+                        271
+                    ],
+                    "('org.apache.maven.archiva.web.action#BrowseAction', 'setSharedModel(ArchivaProjectModel)')": [
+                        274,
+                        275,
+                        276
+                    ]
+                }
+            }
+        }
+    },
+    "5f39994250707aa0a318a3aad1728bca2e79868b": {
+        "authored_data": "2009 Feb 16 07:31",
+        "commit.message": "[MRM-1043]\no added row count in search criteria\no cleaned up jsp\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@744832 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Maria Odea B. Ching",
+        "pcid": "87f3147e7eca4e2f8d027735a73ea23fb2b10ceb",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/SearchAction.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.action#SearchAction', 'filteredSearch')": [
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        213
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.web.action#SearchAction', 'prepare')": [
+                        173
+                    ],
+                    "('org.apache.maven.archiva.web.action#SearchAction', 'clearSearchFields')": [
+                        186
+                    ],
+                    "('org.apache.maven.archiva.web.action#SearchAction', 'filteredSearch')": [
+                        193
+                    ]
+                }
+            }
+        }
+    },
+    "87f3147e7eca4e2f8d027735a73ea23fb2b10ceb": {
+        "authored_data": "2009 Feb 16 04:06",
+        "commit.message": "[MRM-1043]\no provide list for repositories that can be searched\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@744797 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Maria Odea B. Ching",
+        "pcid": "db5102aaaf9caeb2609747815d3694e57c7b48fa",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/SearchAction.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.action#SearchAction', 'prepare')": [
+                        173
+                    ]
+                }
+            }
+        }
+    },
+    "db5102aaaf9caeb2609747815d3694e57c7b48fa": {
+        "authored_data": "2009 Feb 16 00:28",
+        "commit.message": "MRM-1066 - Shutdown of Tomcat causes Exception when running Archiva Project\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@744785 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "James William Dumay",
+        "pcid": "fa4039e25f919a688f2ee672555011ac4afae1b3",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/startup/ArchivaStartup.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.startup#ArchivaStartup', 'contextDestroyed(ServletContextEvent)')": [
+                        62
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        30,
+                        70
+                    ],
+                    "('org.apache.maven.archiva.web.startup#ArchivaStartup', 'contextDestroyed(ServletContextEvent)')": [
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69
+                    ]
+                }
+            }
+        }
+    },
+    "462af40d1ee2e1af7b73ae8e3b16bbda2be2bc24": {
+        "authored_data": "2009 Feb 13 11:25",
+        "commit.message": "[MRM-1043]\no moved the advanced search to the quick search page\no dynamically add search criteria\no added additional test in SearchAction\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@744080 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Maria Odea B. Ching",
+        "pcid": "7e85179685fe3b74b1ad1250cf14121632caae17",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-consumers/archiva-lucene-consumers/src/main/java/org/apache/archiva/consumers/lucene/NexusIndexerConsumer.java": {
+                "old": {
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumer', None)": [
+                        60,
+                        61,
+                        62,
+                        63,
+                        64
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.consumers.lucene#NexusIndexerConsumer', None)": [
+                        60,
+                        61,
+                        62,
+                        63,
+                        64
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-indexer/src/test/java/org/apache/archiva/indexer/search/NexusRepositorySearchTest.java": {
+                "new": {
+                    "(None, None)": [
+                        428
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/SearchAction.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.action#SearchAction', None)": [
+                        63
+                    ],
+                    "('org.apache.maven.archiva.web.action#SearchAction', 'filteredSearch')": [
+                        169,
+                        171,
+                        173,
+                        181,
+                        182,
+                        189,
+                        192,
+                        196
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        691
+                    ],
+                    "('org.apache.maven.archiva.web.action#SearchAction', None)": [
+                        64,
+                        135,
+                        136,
+                        177,
+                        178,
+                        682,
+                        686,
+                        687
+                    ],
+                    "('org.apache.maven.archiva.web.action#SearchAction', 'prepare')": [
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176
+                    ],
+                    "('org.apache.maven.archiva.web.action#SearchAction', 'clearSearchFields')": [
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186
+                    ],
+                    "('org.apache.maven.archiva.web.action#SearchAction', 'filteredSearch')": [
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        207,
+                        209,
+                        217,
+                        218,
+                        219,
+                        226,
+                        229,
+                        233,
+                        234
+                    ],
+                    "('org.apache.maven.archiva.web.action#SearchAction', 'getSearchFields')": [
+                        683,
+                        684,
+                        685
+                    ],
+                    "('org.apache.maven.archiva.web.action#SearchAction', 'setSearchFields(Map)')": [
+                        688,
+                        689,
+                        690
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/test/java/org/apache/maven/archiva/web/action/SearchActionTest.java": {
+                "new": {
+                    "('org.apache.maven.archiva.web.action#SearchActionTest', 'testAdvancedSearchUserHasNoAccessToAnyRepository')": [
+                        454
+                    ],
+                    "('org.apache.maven.archiva.web.action#SearchActionTest', None)": [
+                        460,
+                        461
+                    ],
+                    "('org.apache.maven.archiva.web.action#SearchActionTest', 'testAdvancedSearchNoSpecifiedCriteria')": [
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474
+                    ]
+                }
+            }
+        }
+    },
+    "77481fb93c9cef2b1da5b6891bf18f27554a2707": {
+        "authored_data": "2009 Feb 12 06:47",
+        "commit.message": "MRM-1084 - Upgrade modello maven plugin to 1.0 to support Java 5 generics\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@743630 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "James William Dumay",
+        "pcid": "48fc7e2f6f92cfb9898679d44aaf8836019f662c",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-proxy/src/test/java/org/apache/maven/archiva/proxy/MetadataTransferTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.proxy#MetadataTransferTest', 'assertGroupMetadata(File,ProjectReference,String)')": [
+                        1115
+                    ],
+                    "('org.apache.maven.archiva.proxy#MetadataTransferTest', 'assertProjectMetadataContents(String,String,String,String)')": [
+                        1151
+                    ],
+                    "('org.apache.maven.archiva.proxy#MetadataTransferTest', 'assertReleaseMetadataContents(String)')": [
+                        1179
+                    ],
+                    "('org.apache.maven.archiva.proxy#MetadataTransferTest', 'assertSnapshotMetadata(File,VersionedReference,String,String,int)')": [
+                        1257
+                    ],
+                    "('org.apache.maven.archiva.proxy#MetadataTransferTest', 'assertRepoProjectMetadata(String,String,String)')": [
+                        1293
+                    ],
+                    "('org.apache.maven.archiva.proxy#MetadataTransferTest', 'assertRepoReleaseMetadataContents(String,String)')": [
+                        1323
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-layer/src/main/java/org/apache/maven/archiva/repository/metadata/RepositoryMetadataMerge.java": {
+                "old": {
+                    "('org.apache.maven.archiva.repository.metadata#RepositoryMetadataMerge', 'clonePlugins(List)')": [
+                        222
+                    ]
+                }
+            }
+        }
+    }
+}

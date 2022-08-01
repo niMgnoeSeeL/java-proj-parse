@@ -1,0 +1,1170 @@
+{
+    "1f3d5f4130ddc4026f6f833a5d78d56ed9a30742": {
+        "authored_data": "2008 Apr 01 13:44",
+        "commit.message": "Re-factored the authentication subsystem to remove the need for JAAS configuration files. WEB-INF/jspwiki.jaas goes away, as does the need for PolicyLoader. Also, responsibilities for web authentication move to WikiServletFilter. Authentication is now configured via jspwiki.properties -- see that file for details. WikiSession API change: getLoginContext() vanishes.\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@643397 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Andrew R. Jaquith",
+        "pcid": "0e468d054b45d6173243bae1c72a5f1c259db73c",
+        "changes": {
+            "tests/com/ecyrd/jspwiki/WikiSessionTest.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'testIsContainerStatusChanged')": [
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        186,
+                        187
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', None)": [
+                        188,
+                        189,
+                        191
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'testGetStatus')": [
+                        190
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'anonymousSession(WikiEngine)')": [
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        214,
+                        215
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'assertedSession(WikiEngine,String,Principal)')": [
+                        231,
+                        238,
+                        243,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'authenticatedSession(WikiEngine,String,String)')": [
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        286,
+                        287
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'containerAuthenticatedSession(WikiEngine,String,Principal)')": [
+                        302,
+                        307,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        3,
+                        9,
+                        10,
+                        11,
+                        13,
+                        26,
+                        27
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'testIPAddress')": [
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        120,
+                        121,
+                        122
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', None)": [
+                        123,
+                        124,
+                        141,
+                        142,
+                        158,
+                        159,
+                        176,
+                        177,
+                        196,
+                        197,
+                        228,
+                        229,
+                        375,
+                        382
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'testUserPrincipal')": [
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'testRemoteUser')": [
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        154,
+                        155,
+                        156,
+                        157
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'testUserPrincipalAndRemoteUser')": [
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        172,
+                        173,
+                        174,
+                        175
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'testAssertionCookie')": [
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        192,
+                        193,
+                        194,
+                        195
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'testAuthenticationCookieDefaults')": [
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'testAuthenticationCookieWhenOn')": [
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'anonymousSession(WikiEngine)')": [
+                        279,
+                        280,
+                        281
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'assertedSession(WikiEngine,String,Principal)')": [
+                        298,
+                        305,
+                        310,
+                        318,
+                        319,
+                        320
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'authenticatedSession(WikiEngine,String,String)')": [
+                        337,
+                        338,
+                        339
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'containerAuthenticatedSession(WikiEngine,String,Principal)')": [
+                        355,
+                        360,
+                        364,
+                        365,
+                        366,
+                        367
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSessionTest', 'runSecurityFilter(WikiEngine,HttpServletRequest)')": [
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381
+                    ]
+                }
+            }
+        }
+    },
+    "0497c12f256f90c651f45f16fa474c2ca603b4eb": {
+        "authored_data": "2008 Apr 01 07:23",
+        "commit.message": "Now using Generics and JDK5 loops\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@643310 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Janne Jalkanen",
+        "pcid": "8c18d999e1f978ca2f8dcc3f25fb14e4118cfaeb",
+        "changes": {
+            "src/com/ecyrd/jspwiki/WikiSession.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki#WikiSession', None)": [
+                        109,
+                        113,
+                        331,
+                        342
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'addMessage(String,String)')": [
+                        297,
+                        300
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'clearMessages(String)')": [
+                        320
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getMessages(String)')": [
+                        347
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getPrincipals')": [
+                        364,
+                        367,
+                        368,
+                        369
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getRoles')": [
+                        394
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'staticGuestSession(WikiEngine)')": [
+                        795
+                    ]
+                },
+                "new": {
+                    "('com.ecyrd.jspwiki#WikiSession', None)": [
+                        109,
+                        113,
+                        331,
+                        342
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'addMessage(String,String)')": [
+                        297,
+                        300
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'clearMessages(String)')": [
+                        320
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getMessages(String)')": [
+                        347
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getPrincipals')": [
+                        364,
+                        367,
+                        368
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'getRoles')": [
+                        393
+                    ],
+                    "('com.ecyrd.jspwiki#WikiSession', 'staticGuestSession(WikiEngine)')": [
+                        794
+                    ]
+                }
+            }
+        }
+    },
+    "8c18d999e1f978ca2f8dcc3f25fb14e4118cfaeb": {
+        "authored_data": "2008 Apr 01 07:01",
+        "commit.message": "Switched to ASF preamble, removed extra @author tags.\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@643304 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Janne Jalkanen",
+        "pcid": "35f349800e51b9e15f01a2f223f97b8f16c7dfd1",
+        "changes": {
+            "src/com/ecyrd/jspwiki/ui/admin/AdminBean.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        6,
+                        7,
+                        8,
+                        9,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        28
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        12,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/admin/AdminBeanManager.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        48
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/admin/SimpleAdminBean.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        6,
+                        7,
+                        8,
+                        9,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        36
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        12,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/admin/WikiFormAdminBean.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        6,
+                        7,
+                        8,
+                        9,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        34
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        12,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/admin/beans/CoreBean.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        6,
+                        7,
+                        8,
+                        9,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        31
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        12,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/admin/beans/PlainEditorAdminBean.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        6,
+                        7,
+                        8,
+                        9,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        34
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        12,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/admin/beans/PluginBean.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/admin/beans/SearchManagerBean.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/admin/beans/UserBean.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/admin/beans/WikiWizardAdminBean.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        4,
+                        6,
+                        7,
+                        8,
+                        9,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        30
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        12,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/progress/ProgressItem.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        6,
+                        7,
+                        8,
+                        9,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        25
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        12,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/ui/progress/ProgressManager.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        6,
+                        7,
+                        8,
+                        9,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        12,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ]
+                }
+            }
+        }
+    },
+    "a945d4a3822fb289222d7e885ac503b42c074849": {
+        "authored_data": "2008 Apr 01 06:50",
+        "commit.message": "Switched to ASF preamble, removed extra @author tags.\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@643298 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Janne Jalkanen",
+        "pcid": "4ec975e78e9745dd3f7e5f2925521b8ace81a7fc",
+        "changes": {
+            "src/com/ecyrd/jspwiki/xmlrpc/AbstractRPCHandler.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        6,
+                        7,
+                        8,
+                        9,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        12,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/xmlrpc/MetaWeblogHandler.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        43
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/xmlrpc/RPCHandler.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        36
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/xmlrpc/RPCHandlerUTF8.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        38
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/xmlrpc/RPCServlet.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        49
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ]
+                }
+            },
+            "src/com/ecyrd/jspwiki/xmlrpc/WikiRPCHandler.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        6,
+                        7,
+                        8,
+                        9,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        28,
+                        31,
+                        32
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        12,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        31,
+                        32
+                    ]
+                }
+            },
+            "src/com/ecyrd/management/SimpleMBean.java": {
+                "old": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        40
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ]
+                }
+            }
+        }
+    },
+    "6054952098d2e74f140b03aa770d7f320bb338f8": {
+        "authored_data": "2008 Apr 01 04:04",
+        "commit.message": "Version/changelog bump.\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@643269 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Andrew R. Jaquith",
+        "pcid": "08179b8964feb94635aca18a0217a09b02d8ba65",
+        "changes": {
+            "src/com/ecyrd/jspwiki/Release.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki#Release', None)": [
+                        80
+                    ]
+                },
+                "new": {
+                    "('com.ecyrd.jspwiki#Release', None)": [
+                        80
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,640 @@
+{
+    "848a8144bc42fddbbc466a38a897f5c09f0d49e2": {
+        "authored_data": "2006 Dec 22 19:51",
+        "commit.message": "Fixed import. Also optimised list.toArray(..) to use new Token[list.size()] so that the passed in array is used and not reflection. Latter reported by FindBugs\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/lang/trunk@489740 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Henri Yandell",
+        "pcid": "5a4594cd372b7564de8f55faef20306326449ff8",
+        "changes": {
+            "src/java/org/apache/commons/lang/time/DurationFormatUtils.java": {
+                "old": {
+                    "('org.apache.commons.lang.time#DurationFormatUtils', 'lexx(String)')": [
+                        491,
+                        542
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.commons.lang.time#DurationFormatUtils', 'lexx(String)')": [
+                        492,
+                        543
+                    ]
+                }
+            }
+        }
+    },
+    "5a4594cd372b7564de8f55faef20306326449ff8": {
+        "authored_data": "2006 Dec 22 19:31",
+        "commit.message": "new Boolean -> Boolean.valueOf. (Reported by FindBugs)\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/lang/trunk@489734 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Henri Yandell",
+        "pcid": "37875137e960277858ca39b676f6e19fec36a50a",
+        "changes": {
+            "src/java/org/apache/commons/lang/mutable/MutableBoolean.java": {
+                "old": {
+                    "('org.apache.commons.lang.mutable#MutableBoolean', 'getValue')": [
+                        124
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang.mutable#MutableBoolean', 'getValue')": [
+                        124
+                    ]
+                }
+            }
+        }
+    },
+    "37875137e960277858ca39b676f6e19fec36a50a": {
+        "authored_data": "2006 Dec 22 19:29",
+        "commit.message": "Removing the Serializable implements. As far as I can tell, Number has been serializable since at the least Java 1.2. (Reported by FindBugs)\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/lang/trunk@489733 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Henri Yandell",
+        "pcid": "03cc852bef47d5c27e37186fba438f81bb9e5761",
+        "changes": {
+            "src/java/org/apache/commons/lang/math/Fraction.java": {
+                "old": {
+                    "(None, None)": [
+                        19
+                    ],
+                    "('org.apache.commons.lang.math#Fraction', None)": [
+                        37
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang.math#Fraction', None)": [
+                        36
+                    ]
+                }
+            }
+        }
+    },
+    "03cc852bef47d5c27e37186fba438f81bb9e5761": {
+        "authored_data": "2006 Dec 20 06:24",
+        "commit.message": "Added a test for the under a day range in formatPeriod\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/lang/trunk@488929 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Henri Yandell",
+        "pcid": "4f514d5eb3e80703012df9be190ae42d35d25bdc",
+        "changes": {
+            "src/test/org/apache/commons/lang/time/DurationFormatUtilsTest.java": {
+                "old": {
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', None)": [
+                        541,
+                        542
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', None)": [
+                        412,
+                        413,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426
+                    ],
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', 'testLowDurations')": [
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421
+                    ]
+                }
+            }
+        }
+    },
+    "4f514d5eb3e80703012df9be190ae42d35d25bdc": {
+        "authored_data": "2006 Dec 20 06:10",
+        "commit.message": "More tests, more bugfixes (aka rewrite of the guts). \n\nIt's looking much better, the only edge case that throws it for a loop is if things start on the 29th of February in a year. I've hacked it in the day mode, but I'm not sure why I had to do that - however I trust the brute force test to be right in day mode. \nIn month mode, it's even trickier as to what the correct answer is. How many months between 29th Feb and 28th of Feb the next year? The answer is 11, or with days included it's 11 months and 28 days. I can't see any reason to define that better, so I'm declaring that law. \n\nThings are weird if you start on Feb 29 :)\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/lang/trunk@488926 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Henri Yandell",
+        "pcid": "381ed0c0f6016993a81563edc857d3235daafea3",
+        "changes": {
+            "src/java/org/apache/commons/lang/time/DurationFormatUtils.java": {
+                "old": {
+                    "('org.apache.commons.lang.time#DurationFormatUtils', 'formatPeriod(long,long,String,boolean,TimeZone)')": [
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang.time#DurationFormatUtils', 'formatPeriod(long,long,String,boolean,TimeZone)')": [
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/lang/time/DurationFormatUtilsTest.java": {
+                "old": {
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', None)": [
+                        472,
+                        473,
+                        479,
+                        480,
+                        481
+                    ],
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', 'testDurationsByBruteForce')": [
+                        477,
+                        478
+                    ],
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', 'bruteForce(int,int,int)')": [
+                        482,
+                        488,
+                        493,
+                        494
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', 'testEdgeDurations')": [
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        499
+                    ],
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', None)": [
+                        500,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516,
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        541,
+                        542
+                    ],
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', 'testDurationsByBruteForce')": [
+                        504,
+                        505,
+                        506,
+                        507,
+                        508,
+                        509,
+                        510
+                    ],
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', 'bruteForce(int,int,int,String,int)')": [
+                        526,
+                        532,
+                        537,
+                        538
+                    ]
+                }
+            }
+        }
+    },
+    "381ed0c0f6016993a81563edc857d3235daafea3": {
+        "authored_data": "2006 Dec 20 00:00",
+        "commit.message": "Added new tests (failing) in comments. Improved output for debugging brute force tests.\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/lang/trunk@488859 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Henri Yandell",
+        "pcid": "93aa88fded0cb63a8634cf8021cb889bc38505bf",
+        "changes": {
+            "src/test/org/apache/commons/lang/time/DurationFormatUtilsTest.java": {
+                "old": {
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', None)": [
+                        477
+                    ],
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', 'bruteForce(int,int,int)')": [
+                        481,
+                        490
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', None)": [
+                        472,
+                        473,
+                        479
+                    ],
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', 'bruteForce(int,int,int)')": [
+                        483,
+                        492,
+                        493
+                    ]
+                }
+            }
+        }
+    },
+    "93aa88fded0cb63a8634cf8021cb889bc38505bf": {
+        "authored_data": "2006 Dec 19 23:59",
+        "commit.message": "Updated comment\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/lang/trunk@488858 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Henri Yandell",
+        "pcid": "15360774099b2a7230e020751acdf6979b6e3f58",
+        "changes": {
+            "src/java/org/apache/commons/lang/time/DurationFormatUtils.java": {
+                "old": {
+                    "('org.apache.commons.lang.time#DurationFormatUtils', 'formatPeriod(long,long,String,boolean,TimeZone)')": [
+                        321,
+                        324,
+                        325
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang.time#DurationFormatUtils', 'formatPeriod(long,long,String,boolean,TimeZone)')": [
+                        321,
+                        322
+                    ]
+                }
+            }
+        }
+    },
+    "15360774099b2a7230e020751acdf6979b6e3f58": {
+        "authored_data": "2006 Dec 19 21:50",
+        "commit.message": "Fixing LANG-300 (reported by Jeremy Lemaire) - 1L to 9L incorrectly throw exceptions when passed into NumberUtils.createNumber. Fixed in both the math.NumbersUtils and the deprecated NumberUtils classes. \n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/lang/trunk@488819 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Henri Yandell",
+        "pcid": "868dd284443b6f950a2f360b0422dbf09a599ae9",
+        "changes": {
+            "src/java/org/apache/commons/lang/NumberUtils.java": {
+                "old": {
+                    "('org.apache.commons.lang#NumberUtils', 'createNumber(String)')": [
+                        195,
+                        196
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang#NumberUtils', 'createNumber(String)')": [
+                        195
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/lang/math/NumberUtils.java": {
+                "old": {
+                    "('org.apache.commons.lang.math#NumberUtils', 'createNumber(String)')": [
+                        454,
+                        455
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang.math#NumberUtils', 'createNumber(String)')": [
+                        454
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/lang/math/NumberUtilsTest.java": {
+                "new": {
+                    "('org.apache.commons.lang.math#NumberUtilsTest', None)": [
+                        1367
+                    ],
+                    "('org.apache.commons.lang.math#NumberUtilsTest', 'testLang300')": [
+                        1368,
+                        1369,
+                        1370,
+                        1371
+                    ],
+                    "(None, None)": [
+                        1372
+                    ]
+                }
+            }
+        }
+    },
+    "868dd284443b6f950a2f360b0422dbf09a599ae9": {
+        "authored_data": "2006 Dec 13 07:12",
+        "commit.message": "Let a few tab characters slip in - Eclipse wasn't configured yet. Replacing with spaces. \n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/lang/trunk@486525 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Henri Yandell",
+        "pcid": "dd23ae863a8910581362b69c660b26d8e8f699b7",
+        "changes": {
+            "src/java/org/apache/commons/lang/time/DurationFormatUtils.java": {
+                "old": {
+                    "('org.apache.commons.lang.time#DurationFormatUtils', 'formatPeriod(long,long,String,boolean,TimeZone)')": [
+                        358,
+                        361,
+                        369,
+                        370,
+                        371
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang.time#DurationFormatUtils', 'formatPeriod(long,long,String,boolean,TimeZone)')": [
+                        358,
+                        361,
+                        369,
+                        370,
+                        371
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/lang/time/DurationFormatUtilsTest.java": {
+                "old": {
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', 'testEdgeDurations')": [
+                        427,
+                        432
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', 'testEdgeDurations')": [
+                        427,
+                        432
+                    ]
+                }
+            }
+        }
+    },
+    "dd23ae863a8910581362b69c660b26d8e8f699b7": {
+        "authored_data": "2006 Dec 13 07:09",
+        "commit.message": "More unit tests and bugfixes. The currently failing test is commented out, so more bugfixes to come.\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/lang/trunk@486523 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Henri Yandell",
+        "pcid": "9b0b19a9162ae8d217b06716962b982703ab4d1b",
+        "changes": {
+            "src/java/org/apache/commons/lang/time/DurationFormatUtils.java": {
+                "old": {
+                    "('org.apache.commons.lang.time#DurationFormatUtils', 'formatPeriod(long,long,String,boolean,TimeZone)')": [
+                        334,
+                        339,
+                        340,
+                        341,
+                        347,
+                        348,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.commons.lang.time#DurationFormatUtils', 'formatPeriod(long,long,String,boolean,TimeZone)')": [
+                        316,
+                        317,
+                        318,
+                        327,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        353,
+                        358,
+                        359,
+                        360,
+                        365,
+                        367,
+                        368,
+                        369,
+                        370,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/lang/time/DurationFormatUtilsTest.java": {
+                "old": {
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', 'assertEqualDuration(String,int,int,String)')": [
+                        456
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', 'testEdgeDurations')": [
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471
+                    ],
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', None)": [
+                        472,
+                        473,
+                        477,
+                        478,
+                        479,
+                        492,
+                        497,
+                        512
+                    ],
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', 'testDurationsByBruteForce')": [
+                        474,
+                        475,
+                        476
+                    ],
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', 'bruteForce(int,int,int)')": [
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491
+                    ],
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', 'assertEqualDuration(String,int,int,String)')": [
+                        496
+                    ],
+                    "('org.apache.commons.lang.time#DurationFormatUtilsTest', 'assertEqualDuration(String,String,int,int,String)')": [
+                        498,
+                        508,
+                        509,
+                        510,
+                        511
+                    ]
+                }
+            }
+        }
+    }
+}

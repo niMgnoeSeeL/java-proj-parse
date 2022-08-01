@@ -1,0 +1,238 @@
+{
+    "5cb988334179b4f04a27c59c1e6a888db0dbfc9c": {
+        "authored_data": "2017 Oct 12 08:41",
+        "commit.message": "LANG-1358: Improve StringUtils#replace throughput (closes #300)\n\nMotivation:\n\n`StringUtils#replace` uses `substring` to append a String region into a\nStringBuilder. This causes useless copies, as `StringBuilder#append`\ncan take start and end indexes.\n\nModification:\n\nUse proper `StringBuilder#append` [overload](https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html#append-java.lang.CharSequence-int-int-).\n\nResult:\n\nBased on benchmark from [JOOQ\u2019s post](https://blog.jooq.org/2017/10/11/benchmarking-jdk-string-replace-vs-apache-commons-stringutils-replace):\n\nBenchmark Mode Cnt Score Error Units\nStringReplaceBenchmark.testFastStringReplaceLongStringOneMatch thrpt 21\n7546534,219 \u00b1 145523,962 ops/s\nStringReplaceBenchmark.testStringUtilsReplaceLongStringOneMatch thrpt\n21 7353512,552 \u00b1 124498,228 ops/s\n\nStringReplaceBenchmark.testFastStringReplaceLongStringSeveralMatches\nthrpt 21 5077255,810 \u00b1 62358,937 ops/s\nStringReplaceBenchmark.testStringUtilsReplaceLongStringSeveralMatches\nthrpt 21 4108357,612 \u00b1 92909,038 ops/s\n\nStringReplaceBenchmark.testFastStringReplaceShortStringOneMatch thrpt\n21 15911221,949 \u00b1 541064,693 ops/s\nStringReplaceBenchmark.testStringUtilsReplaceShortStringOneMatch thrpt\n21 10677897,475 \u00b1 491091,973 ops/s\n\nStringReplaceBenchmark.testFastStringReplaceShortStringSeveralMatches\nthrpt 21 9271742,251 \u00b1 220150,121 ops/s\nStringReplaceBenchmark.testStringUtilsReplaceShortStringSeveralMatches\nthrpt 21 6158829,188 \u00b1 99637,607 ops/s\n",
+        "commit.author.name": "Stephane Landelle",
+        "pcid": "274dbfe81f5f43a47639623c62fc998b5eccd5f0",
+        "changes": {
+            "src/main/java/org/apache/commons/lang3/StringUtils.java": {
+                "old": {
+                    "('org.apache.commons.lang3#StringUtils', 'replace(String,String,String,int,boolean)')": [
+                        5518,
+                        5525
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang3#StringUtils', 'replace(String,String,String,int,boolean)')": [
+                        5518,
+                        5525
+                    ]
+                }
+            }
+        }
+    },
+    "07f3694a5c85ff5ee8c556817c0d2ea3504f26f7": {
+        "authored_data": "2017 Oct 11 15:50",
+        "commit.message": "revert LANG-1354; java7 has synthetic fields on Integer, jacoco does not yet work with java9\n",
+        "commit.author.name": "Chas Honton",
+        "pcid": "0f32b292c2c86776f7ce3e47105c16359e0fe5a4",
+        "changes": {
+            "src/main/java/org/apache/commons/lang3/reflect/FieldUtils.java": {
+                "old": {
+                    "('org.apache.commons.lang3.reflect#FieldUtils', None)": [
+                        189,
+                        205,
+                        231,
+                        232
+                    ],
+                    "('org.apache.commons.lang3.reflect#FieldUtils', 'getAllFieldsList(Class)')": [
+                        219,
+                        220,
+                        221,
+                        222,
+                        223
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.commons.lang3.reflect#FieldUtils', 'getAllFieldsList(Class)')": [
+                        218,
+                        219
+                    ]
+                }
+            }
+        }
+    },
+    "0f32b292c2c86776f7ce3e47105c16359e0fe5a4": {
+        "authored_data": "2017 Oct 11 15:15",
+        "commit.message": "remove checkstyle error\n",
+        "commit.author.name": "Chas Honton",
+        "pcid": "e7b3e1d20f754729e9d9d478575831082225804b",
+        "changes": {
+            "src/main/java/org/apache/commons/lang3/reflect/FieldUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ]
+                }
+            }
+        }
+    },
+    "c56b87d6efe530590b6d9a07e41ca00af208ce37": {
+        "authored_data": "2017 Oct 11 03:52",
+        "commit.message": "LANG-1354: FieldUtils should ignore any synthetic fields\n",
+        "commit.author.name": "Chas Honton",
+        "pcid": "1e9e36640f762d29c07d8322c361ece163b179fb",
+        "changes": {
+            "src/main/java/org/apache/commons/lang3/reflect/FieldUtils.java": {
+                "old": {
+                    "('org.apache.commons.lang3.reflect#FieldUtils', 'getAllFieldsList(Class)')": [
+                        218,
+                        219
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang3.reflect#FieldUtils', None)": [
+                        190,
+                        206,
+                        232,
+                        233
+                    ],
+                    "('org.apache.commons.lang3.reflect#FieldUtils', 'getAllFieldsList(Class)')": [
+                        220,
+                        221,
+                        222,
+                        223,
+                        224
+                    ]
+                }
+            }
+        }
+    },
+    "1e9e36640f762d29c07d8322c361ece163b179fb": {
+        "authored_data": "2017 Oct 10 22:28",
+        "commit.message": "Make private fields final.",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "9a7de3974d64a5410e577933e141797928adca71",
+        "changes": {
+            "src/test/java/org/apache/commons/lang3/builder/ReflectionDiffBuilderTest.java": {
+                "old": {
+                    "('org.apache.commons.lang3.builder#ReflectionDiffBuilderTest', None)": [
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        37,
+                        38,
+                        39,
+                        40,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang3.builder#ReflectionDiffBuilderTest', None)": [
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        37,
+                        38,
+                        39,
+                        40,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/lang3/builder/ReflectionToStringBuilderExcludeNullValuesTest.java": {
+                "old": {
+                    "('org.apache.commons.lang3.builder#ReflectionToStringBuilderExcludeNullValuesTest', None)": [
+                        29,
+                        31
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang3.builder#ReflectionToStringBuilderExcludeNullValuesTest', None)": [
+                        29,
+                        31
+                    ]
+                }
+            }
+        }
+    },
+    "9a7de3974d64a5410e577933e141797928adca71": {
+        "authored_data": "2017 Oct 10 18:03",
+        "commit.message": "Sort members.",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "060e66bf995177adfc4d73a2a4c9bea70dc5e441",
+        "changes": {
+            "src/main/java/org/apache/commons/lang3/time/FastTimeZone.java": {
+                "old": {
+                    "('org.apache.commons.lang3.time#FastTimeZone', None)": [
+                        31,
+                        32,
+                        33,
+                        34,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        59,
+                        60,
+                        61
+                    ],
+                    "('org.apache.commons.lang3.time#FastTimeZone', 'getTimeZone(String)')": [
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.lang3.time#FastTimeZone', None)": [
+                        30,
+                        31,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        81,
+                        82,
+                        91,
+                        92
+                    ],
+                    "('org.apache.commons.lang3.time#FastTimeZone', 'getTimeZone(String)')": [
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80
+                    ],
+                    "(None, None)": [
+                        93,
+                        94
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,754 @@
+{
+    "43bc08d7c390c0eec53d11f0678b075a068dd151": {
+        "authored_data": "2009 Jun 28 21:51",
+        "commit.message": "improve both numerical accuracy and speed by using optimized loops\nin reversed row order (i.e. from higher orders to lower orders) directly\non matrix data.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@789157 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "b5395fd8029116244913cda6158efc6af517458f",
+        "changes": {
+            "src/java/org/apache/commons/math/ode/sampling/NordsieckStepInterpolator.java": {
+                "old": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28
+                    ],
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolator', None)": [
+                        62,
+                        87,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        259,
+                        260,
+                        261,
+                        262
+                    ],
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolator', 'reinitialize(double,double,double,RealMatrix)')": [
+                        120
+                    ],
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolator', 'rescale(double)')": [
+                        141
+                    ],
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolator', 'computeInterpolatedStateAndDerivatives(double,double)')": [
+                        149
+                    ],
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolator', 'writeExternal(ObjectOutput)')": [
+                        235,
+                        236,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258
+                    ],
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolator', 'readExternal(ObjectInput)')": [
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolator', None)": [
+                        59,
+                        84,
+                        151,
+                        182,
+                        183
+                    ],
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolator', 'reinitialize(double,double,double,Array2DRowRealMatrix)')": [
+                        117
+                    ],
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolator', 'rescale(double)')": [
+                        134,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149
+                    ],
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolator', 'computeInterpolatedStateAndDerivatives(double,double)')": [
+                        157,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        178,
+                        179,
+                        180,
+                        181
+                    ],
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolator', 'readExternal(ObjectInput)')": [
+                        201
+                    ]
+                }
+            }
+        }
+    },
+    "b5395fd8029116244913cda6158efc6af517458f": {
+        "authored_data": "2009 Jun 28 21:48",
+        "commit.message": "be more precise on return type, we really return a Array2DRowRealMatrix,\nso tell it in case some callers can use this information for optimization\n(which is the case for Nordsieck transformers, they will be able to use\ncustomized loops on matrix data for the sake of numerical accuracy)\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@789156 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "e1f4ed50ad124bf24ac3c20c0c0889c70de1f1b0",
+        "changes": {
+            "src/java/org/apache/commons/math/linear/MatrixUtils.java": {
+                "old": {
+                    "('org.apache.commons.math.linear#MatrixUtils', 'fractionMatrixToRealMatrix(FieldMatrix)')": [
+                        663
+                    ],
+                    "('org.apache.commons.math.linear#MatrixUtils', None)": [
+                        696,
+                        740
+                    ],
+                    "('org.apache.commons.math.linear#MatrixUtils', 'bigFractionMatrixToRealMatrix(FieldMatrix)')": [
+                        707
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.linear#MatrixUtils', 'fractionMatrixToRealMatrix(FieldMatrix)')": [
+                        663
+                    ],
+                    "('org.apache.commons.math.linear#MatrixUtils', None)": [
+                        696,
+                        740
+                    ],
+                    "('org.apache.commons.math.linear#MatrixUtils', 'bigFractionMatrixToRealMatrix(FieldMatrix)')": [
+                        707
+                    ]
+                }
+            }
+        }
+    },
+    "e1f4ed50ad124bf24ac3c20c0c0889c70de1f1b0": {
+        "authored_data": "2009 Jun 28 21:43",
+        "commit.message": "moved test problems one package up, to prepare their reuse for stiff integrators\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@789155 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "e066e3898b1c22a36ad03680303c4e88565901d7",
+        "changes": {
+            "src/test/org/apache/commons/math/ode/ContinuousOutputModelTest.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/AdamsBashforthIntegratorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28,
+                        29
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/AdamsMoultonIntegratorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28,
+                        29
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/ClassicalRungeKuttaIntegratorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/ClassicalRungeKuttaStepInterpolatorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        32
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/DormandPrince54IntegratorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/DormandPrince54StepInterpolatorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        33
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/DormandPrince853IntegratorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/DormandPrince853StepInterpolatorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        33
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/EulerIntegratorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28,
+                        29,
+                        30
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/EulerStepInterpolatorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/GillIntegratorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/GillStepInterpolatorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        32
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/GraggBulirschStoerIntegratorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/GraggBulirschStoerStepInterpolatorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        33
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/HighamHall54IntegratorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        29,
+                        30,
+                        31,
+                        32,
+                        33
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/HighamHall54StepInterpolatorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        33
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/MidpointIntegratorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28,
+                        29,
+                        30
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/MidpointStepInterpolatorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/ThreeEighthesIntegratorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/nonstiff/ThreeEighthesStepInterpolatorTest.java": {
+                "new": {
+                    "(None, None)": [
+                        32
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/sampling/NordsieckStepInterpolatorTest.java": {
+                "old": {
+                    "(None, None)": [
+                        33,
+                        34
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/sampling/StepInterpolatorTestUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/ode/sampling/StepNormalizerTest.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ]
+                }
+            }
+        }
+    },
+    "8e473959fdbd257d7d32c2091e5b82bb1aa3c0d0": {
+        "authored_data": "2009 Jun 26 18:27",
+        "commit.message": "Added a getCovariance method to singular value decomposition\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@788805 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "c8a6ed4c40ae9deccf1722dd503418661998e937",
+        "changes": {
+            "src/java/org/apache/commons/math/MessagesResources_fr.java": {
+                "new": {
+                    "('org.apache.commons.math#MessagesResources_fr', None)": [
+                        385,
+                        386,
+                        387,
+                        388
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/math/linear/SingularValueDecomposition.java": {
+                "old": {
+                    "(None, None)": [
+                        42
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        42,
+                        43,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/math/linear/SingularValueDecompositionImpl.java": {
+                "new": {
+                    "('org.apache.commons.math.linear#SingularValueDecompositionImpl', 'getCovariance(double)')": [
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284
+                    ],
+                    "('org.apache.commons.math.linear#SingularValueDecompositionImpl', None)": [
+                        285,
+                        286,
+                        287,
+                        288
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/math/linear/SingularValueDecompositionImplTest.java": {
+                "new": {
+                    "('org.apache.commons.math.linear#SingularValueDecompositionImplTest', None)": [
+                        100,
+                        133,
+                        134,
+                        135
+                    ],
+                    "('org.apache.commons.math.linear#SingularValueDecompositionImplTest', 'testHadamard')": [
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132
+                    ]
+                }
+            }
+        }
+    },
+    "c8a6ed4c40ae9deccf1722dd503418661998e937": {
+        "authored_data": "2009 Jun 24 15:04",
+        "commit.message": "added a missing @Override\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@788047 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "fee5df4e6fdd693b2018c9b7de0f136b5320985d",
+        "changes": {
+            "src/test/org/apache/commons/math/complex/ComplexTest.java": {
+                "old": {
+                    "('org.apache.commons.math.complex#ComplexTest', None)": [
+                        943
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.complex#ComplexTest', None)": [
+                        943,
+                        944
+                    ]
+                }
+            }
+        }
+    },
+    "fee5df4e6fdd693b2018c9b7de0f136b5320985d": {
+        "authored_data": "2009 Jun 23 02:35",
+        "commit.message": "Add test cases for Serialization of subclasses of Complex\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@787521 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "William Barker",
+        "pcid": "0c9be1c546c70d8e48d3fc6f63a154e2843e9607",
+        "changes": {
+            "src/test/org/apache/commons/math/complex/ComplexTest.java": {
+                "new": {
+                    "('org.apache.commons.math.complex#ComplexTest', None)": [
+                        31,
+                        924,
+                        925,
+                        926,
+                        927,
+                        928,
+                        929,
+                        930,
+                        931,
+                        932,
+                        933,
+                        934,
+                        935,
+                        936,
+                        937,
+                        938,
+                        939,
+                        940,
+                        941,
+                        942,
+                        943,
+                        944,
+                        945
+                    ],
+                    "('org.apache.commons.math.complex#ComplexTest', 'testSerial')": [
+                        916,
+                        917,
+                        918,
+                        919,
+                        920,
+                        921,
+                        922,
+                        923
+                    ],
+                    "(None, None)": [
+                        946,
+                        947
+                    ]
+                }
+            }
+        }
+    },
+    "0c9be1c546c70d8e48d3fc6f63a154e2843e9607": {
+        "authored_data": "2009 Jun 22 18:42",
+        "commit.message": "fixed TWO_FIFTH value in both Fraction and BigFraction\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@787348 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "de64808c29448232c8eb5a4867c319928e6d9962",
+        "changes": {
+            "src/java/org/apache/commons/math/fraction/BigFraction.java": {
+                "old": {
+                    "('org.apache.commons.math.fraction#BigFraction', None)": [
+                        71,
+                        72
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.fraction#BigFraction', None)": [
+                        71,
+                        72
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/math/fraction/Fraction.java": {
+                "old": {
+                    "('org.apache.commons.math.fraction#Fraction', None)": [
+                        68,
+                        69
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.fraction#Fraction', None)": [
+                        68,
+                        69
+                    ]
+                }
+            }
+        }
+    },
+    "de64808c29448232c8eb5a4867c319928e6d9962": {
+        "authored_data": "2009 Jun 22 12:20",
+        "commit.message": "fixed a forgotten adjustment of integrator setting\nthe first integer parameter semantics have changed and the test\nwas not updated to reflect this, thus leading to test failure\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@787215 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "053b1c4908024750888b8f231ee08affed4f3c51",
+        "changes": {
+            "src/test/org/apache/commons/math/ode/sampling/NordsieckStepInterpolatorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolatorTest', 'derivativesConsistency')": [
+                        43
+                    ],
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolatorTest', 'serialization')": [
+                        53
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolatorTest', 'derivativesConsistency')": [
+                        43
+                    ],
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolatorTest', 'serialization')": [
+                        53
+                    ]
+                }
+            }
+        }
+    }
+}

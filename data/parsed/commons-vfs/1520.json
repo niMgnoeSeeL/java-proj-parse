@@ -1,0 +1,707 @@
+{
+    "4edd8c4a18ee1ac19791c63901a0917dc5224435": {
+        "authored_data": "2015 Dec 16 18:59",
+        "commit.message": "VFS-586:  Add several additional ways to specify an alternate HDFS configuration.\n\nMotivation:  the previous changes in this area allowed specifying the name of\none resource (in the CLASSPATH) for an alternate configuration.  Further use\nwith this feature showed the need for being able to specify more than one\nresource (possibly), and to be able to load configurations from local files\nas well as basically any way that HDFS configuration parameters can be\nspecified (according to the HDFS APIs).\n\nChanges:  therefore, the API in HdfsFileSystemConfigBuilder was greatly\nextended to allow:\na) Multiple resource names to be given;\nb) File system paths to be specified (one or many);\nc) URLs to be listed (multiple if desired) so configuration can be loaded\n   from a web application;\nd) Another HDFS Configuration object (one of these);\ne) Any miscellaneous InputStream (only one of these).\n\nAnd the configuration step in HdfsFileSystem was enhanced to check for\nall these possible sources of configuration information and add the\navailable ones to the HDFS \"Configuration\" object during initialization.\n\nOne of the existing APIs was changed:  getConfigName -> getConfigNames\n(with a corresponding change to the return type:  String -> String[]).\n\nNote: I have not been able to figure out a good unit test for this yet,\nbut it is working quite well in our application.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/vfs/trunk@1720416 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Roger Lee Whitcomb",
+        "pcid": "3a343a181a6e1e41beb77e7ab84cc44705519035",
+        "changes": {
+            "core/src/main/java/org/apache/commons/vfs2/provider/hdfs/HdfsFileSystem.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider.hdfs#HdfsFileSystem', 'resolveFile(FileName)')": [
+                        113,
+                        117,
+                        118,
+                        119,
+                        120
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        22
+                    ],
+                    "('org.apache.commons.vfs2.provider.hdfs#HdfsFileSystem', 'resolveFile(FileName)')": [
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159
+                    ]
+                }
+            },
+            "core/src/main/java/org/apache/commons/vfs2/provider/hdfs/HdfsFileSystemConfigBuilder.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider.hdfs#HdfsFileSystemConfigBuilder', None)": [
+                        31,
+                        56,
+                        57,
+                        58,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        77,
+                        78,
+                        79
+                    ],
+                    "('org.apache.commons.vfs2.provider.hdfs#HdfsFileSystemConfigBuilder', 'getConfigName(FileSystemOptions)')": [
+                        62,
+                        63,
+                        64
+                    ],
+                    "('org.apache.commons.vfs2.provider.hdfs#HdfsFileSystemConfigBuilder', 'setConfigName(FileSystemOptions,String)')": [
+                        83
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        21,
+                        25,
+                        26
+                    ],
+                    "('org.apache.commons.vfs2.provider.hdfs#HdfsFileSystemConfigBuilder', None)": [
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        65,
+                        66,
+                        67,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307
+                    ],
+                    "('org.apache.commons.vfs2.provider.hdfs#HdfsFileSystemConfigBuilder', 'getConfigNames(FileSystemOptions)')": [
+                        71,
+                        72,
+                        73,
+                        74
+                    ],
+                    "('org.apache.commons.vfs2.provider.hdfs#HdfsFileSystemConfigBuilder', 'setConfigName(FileSystemOptions,String)')": [
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114
+                    ],
+                    "('org.apache.commons.vfs2.provider.hdfs#HdfsFileSystemConfigBuilder', 'getConfigPaths(FileSystemOptions)')": [
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139
+                    ],
+                    "('org.apache.commons.vfs2.provider.hdfs#HdfsFileSystemConfigBuilder', 'setConfigPath(FileSystemOptions,Path)')": [
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175
+                    ],
+                    "('org.apache.commons.vfs2.provider.hdfs#HdfsFileSystemConfigBuilder', 'getConfigURLs(FileSystemOptions)')": [
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208
+                    ],
+                    "('org.apache.commons.vfs2.provider.hdfs#HdfsFileSystemConfigBuilder', 'setConfigURL(FileSystemOptions,URL)')": [
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244
+                    ],
+                    "('org.apache.commons.vfs2.provider.hdfs#HdfsFileSystemConfigBuilder', 'getConfigInputStream(FileSystemOptions)')": [
+                        256,
+                        257,
+                        258
+                    ],
+                    "('org.apache.commons.vfs2.provider.hdfs#HdfsFileSystemConfigBuilder', 'setConfigInputStream(FileSystemOptions,InputStream)')": [
+                        276,
+                        277,
+                        278
+                    ],
+                    "('org.apache.commons.vfs2.provider.hdfs#HdfsFileSystemConfigBuilder', 'getConfigConfiguration(FileSystemOptions)')": [
+                        288,
+                        289,
+                        290
+                    ],
+                    "('org.apache.commons.vfs2.provider.hdfs#HdfsFileSystemConfigBuilder', 'setConfigConfiguration(FileSystemOptions,Configuration)')": [
+                        308,
+                        309,
+                        310
+                    ]
+                }
+            }
+        }
+    },
+    "3a343a181a6e1e41beb77e7ab84cc44705519035": {
+        "authored_data": "2015 Dec 11 21:47",
+        "commit.message": "Fix some typos.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/vfs/trunk@1719572 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Thomas Neidhart",
+        "pcid": "d3ceeb3f365c688c2c6e2659544a3502645651b9",
+        "changes": {
+            "core/src/main/java/org/apache/commons/vfs2/provider/AbstractFileObject.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.provider#AbstractFileObject', 'createFolder')": [
+                        415
+                    ],
+                    "('org.apache.commons.vfs2.provider#AbstractFileObject', None)": [
+                        561,
+                        997,
+                        1362,
+                        1366,
+                        1983
+                    ],
+                    "('org.apache.commons.vfs2.provider#AbstractFileObject', 'moveTo(FileObject)')": [
+                        1884
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.provider#AbstractFileObject', 'createFolder')": [
+                        415
+                    ],
+                    "('org.apache.commons.vfs2.provider#AbstractFileObject', None)": [
+                        561,
+                        997,
+                        1362,
+                        1366,
+                        1983
+                    ],
+                    "('org.apache.commons.vfs2.provider#AbstractFileObject', 'moveTo(FileObject)')": [
+                        1884
+                    ]
+                }
+            }
+        }
+    },
+    "7af83ae82144e9f7223a24ff96e544ddd1700bd3": {
+        "authored_data": "2015 Oct 02 15:16",
+        "commit.message": "Remove debug output in VFSClassLoaderTests.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/vfs/trunk@1706430 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Bernd Eckenfels",
+        "pcid": "15aca89b0c1308137f66f4e1fa479a4673287335",
+        "changes": {
+            "core/src/test/java/org/apache/commons/vfs2/impl/test/VfsClassLoaderTests.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.impl.test#VfsClassLoaderTests', 'testGetResourcesJARs')": [
+                        122,
+                        135
+                    ],
+                    "('org.apache.commons.vfs2.impl.test#VfsClassLoaderTests', None)": [
+                        161
+                    ],
+                    "('org.apache.commons.vfs2.impl.test#VfsClassLoaderTests', 'testGetResourcesNoLayerLocal')": [
+                        173,
+                        180
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.impl.test#VfsClassLoaderTests', 'testGetResourcesJARs')": [
+                        122,
+                        135
+                    ],
+                    "('org.apache.commons.vfs2.impl.test#VfsClassLoaderTests', None)": [
+                        161
+                    ],
+                    "('org.apache.commons.vfs2.impl.test#VfsClassLoaderTests', 'testGetResourcesNoLayerLocal')": [
+                        173
+                    ]
+                }
+            }
+        }
+    },
+    "15aca89b0c1308137f66f4e1fa479a4673287335": {
+        "authored_data": "2015 Oct 02 15:13",
+        "commit.message": "[VFS-424] Fix StandardFileSystemManager class loading so it works in a OSGi environment.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/vfs/trunk@1706429 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Bernd Eckenfels",
+        "pcid": "f69ebbb0e8323cb635ded0d56bd5ff4b60f631c6",
+        "changes": {
+            "core/src/main/java/org/apache/commons/vfs2/impl/StandardFileSystemManager.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.impl#StandardFileSystemManager', 'configurePlugins')": [
+                        133,
+                        134,
+                        138
+                    ],
+                    "('org.apache.commons.vfs2.impl#StandardFileSystemManager', 'findClass(String)')": [
+                        410
+                    ],
+                    "('org.apache.commons.vfs2.impl#StandardFileSystemManager', 'createInstance(String)')": [
+                        483
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.impl#StandardFileSystemManager', 'configurePlugins')": [
+                        136
+                    ],
+                    "('org.apache.commons.vfs2.impl#StandardFileSystemManager', 'findClass(String)')": [
+                        408
+                    ],
+                    "('org.apache.commons.vfs2.impl#StandardFileSystemManager', 'createInstance(String)')": [
+                        481
+                    ],
+                    "('org.apache.commons.vfs2.impl#StandardFileSystemManager', None)": [
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        504,
+                        505,
+                        506,
+                        507,
+                        508,
+                        509,
+                        510,
+                        511
+                    ],
+                    "('org.apache.commons.vfs2.impl#StandardFileSystemManager', 'loadClass(String)')": [
+                        495,
+                        496,
+                        497,
+                        498,
+                        499,
+                        500,
+                        501,
+                        502,
+                        503
+                    ],
+                    "('org.apache.commons.vfs2.impl#StandardFileSystemManager', 'loadResources(String)')": [
+                        512,
+                        513,
+                        514,
+                        515,
+                        516,
+                        517,
+                        518,
+                        519
+                    ],
+                    "(None, None)": [
+                        520
+                    ]
+                }
+            }
+        }
+    },
+    "f69ebbb0e8323cb635ded0d56bd5ff4b60f631c6": {
+        "authored_data": "2015 Oct 01 14:27",
+        "commit.message": "[VFS-490] Do not layer folders with .jar extension, add tests. closes #2 on GitHub.\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/vfs/trunk@1706261 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Bernd Eckenfels",
+        "pcid": "422c4f5d6822a77679a2c70166d72adb7d426c98",
+        "changes": {
+            "core/src/main/java/org/apache/commons/vfs2/impl/FileTypeMap.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.impl#FileTypeMap', None)": [
+                        51
+                    ],
+                    "('org.apache.commons.vfs2.impl#FileTypeMap', 'getScheme(FileObject)')": [
+                        63
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.impl#FileTypeMap', None)": [
+                        51,
+                        52,
+                        53,
+                        54
+                    ],
+                    "('org.apache.commons.vfs2.impl#FileTypeMap', 'getScheme(FileObject)')": [
+                        66,
+                        67,
+                        68,
+                        69,
+                        70
+                    ]
+                }
+            },
+            "core/src/test/java/org/apache/commons/vfs2/impl/test/VfsClassLoaderTests.java": {
+                "old": {
+                    "('org.apache.commons.vfs2.impl.test#VfsClassLoaderTests', None)": [
+                        106
+                    ],
+                    "('org.apache.commons.vfs2.impl.test#VfsClassLoaderTests', 'testGetResourcesJARs')": [
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        136,
+                        137,
+                        149
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.vfs2.impl.test#VfsClassLoaderTests', None)": [
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162
+                    ],
+                    "('org.apache.commons.vfs2.impl.test#VfsClassLoaderTests', 'testGetResourcesJARs')": [
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        128,
+                        129,
+                        130,
+                        133,
+                        134,
+                        135,
+                        147
+                    ],
+                    "('org.apache.commons.vfs2.impl.test#VfsClassLoaderTests', 'testGetResourcesNoLayerLocal')": [
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193
+                    ]
+                }
+            },
+            "core/src/test/java/org/apache/commons/vfs2/test/ProviderReadTests.java": {
+                "new": {
+                    "('org.apache.commons.vfs2.test#ProviderReadTests', None)": [
+                        366,
+                        367,
+                        368,
+                        369,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380
+                    ],
+                    "('org.apache.commons.vfs2.test#ProviderReadTests', 'testDotJarFolderName')": [
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375
+                    ],
+                    "('org.apache.commons.vfs2.test#ProviderReadTests', 'testDotJarFolderNameLayer')": [
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393
+                    ],
+                    "(None, None)": [
+                        394,
+                        395
+                    ]
+                }
+            }
+        }
+    },
+    "422c4f5d6822a77679a2c70166d72adb7d426c98": {
+        "authored_data": "2015 Sep 30 18:41",
+        "commit.message": "Add new testdir, refresh test-data archives\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/vfs/trunk@1706124 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Bernd Eckenfels",
+        "pcid": "a3aa50c7c146a8792b7ff3517126a7da5abf4f62",
+        "changes": {
+            "core/src/test/java/org/apache/commons/vfs2/test/AbstractProviderTestCase.java": {
+                "new": {
+                    "('org.apache.commons.vfs2.test#AbstractProviderTestCase', 'buildExpectedStructure')": [
+                        376,
+                        377,
+                        378,
+                        379,
+                        380
+                    ]
+                }
+            }
+        }
+    }
+}

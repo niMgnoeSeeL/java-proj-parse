@@ -1,0 +1,809 @@
+{
+    "7ee877a4db8c6d6871444abab28e95e9dad7c932": {
+        "authored_data": "2001 Aug 04 23:46",
+        "commit.message": "Add a new standard Rule implementation that lets you specify a factory\nclass that uses the XML attributes of the matched element to create and\nconfigure the ultimate object that is then pushed onto the stack (at\nelement start) and then popped (at element end), similar to\nObjectCreateRule.\n\nI extended Robert's original implementation to allow for the case where\nyour ObjectCreationFactory class might itself have a zero-args\nconstructor, and where you might want to dynamically select the name of\nthe factory class in the XML document being parsed.  In addition, I added\nconvenience rule registration methods into Digester to match the available\nFactoryCreateRule constructors.\n\n\nSubmitted by:  Robert Burrell Donkin\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/digester/trunk@132254 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Craig R. McClanahan",
+        "pcid": "3e6117dacd54430e555a42a5fb8177f4553fdab6",
+        "changes": {
+            "src/java/org/apache/commons/digester/Digester.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        109
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        109
+                    ],
+                    "('org.apache.commons.digester#Digester', None)": [
+                        1122,
+                        1123,
+                        1124,
+                        1125,
+                        1126,
+                        1131,
+                        1132,
+                        1133,
+                        1134,
+                        1135,
+                        1136,
+                        1137,
+                        1138,
+                        1139,
+                        1140,
+                        1141,
+                        1142,
+                        1148,
+                        1149,
+                        1150,
+                        1151,
+                        1152,
+                        1153,
+                        1154,
+                        1155,
+                        1156,
+                        1157,
+                        1158,
+                        1164,
+                        1165,
+                        1166,
+                        1167,
+                        1168
+                    ],
+                    "('org.apache.commons.digester#Digester', 'addFactoryCreate(String,String)')": [
+                        1127,
+                        1128,
+                        1129,
+                        1130
+                    ],
+                    "('org.apache.commons.digester#Digester', 'addFactoryCreate(String,String,String)')": [
+                        1143,
+                        1144,
+                        1145,
+                        1146,
+                        1147
+                    ],
+                    "('org.apache.commons.digester#Digester', 'addFactoryCreate(String,ObjectCreationFactory)')": [
+                        1159,
+                        1160,
+                        1161,
+                        1162,
+                        1163
+                    ]
+                }
+            }
+        }
+    },
+    "3e6117dacd54430e555a42a5fb8177f4553fdab6": {
+        "authored_data": "2001 Aug 04 23:14",
+        "commit.message": "Refactor the collection of registered rules, and the associated policy\nfor picking the matching ones, into a Rules interface.  Provide a default\nimplementation that supports the previous standard functionality.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/digester/trunk@132253 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Craig R. McClanahan",
+        "pcid": "f79ba553c602c9cd1a673c30db79edb6b38f0db6",
+        "changes": {
+            "src/java/org/apache/commons/digester/Digester.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        109
+                    ],
+                    "('org.apache.commons.digester#Digester', None)": [
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230
+                    ],
+                    "('org.apache.commons.digester#Digester', 'endDocument')": [
+                        517,
+                        518,
+                        519,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528
+                    ],
+                    "('org.apache.commons.digester#Digester', 'endElement(String,String,String)')": [
+                        554
+                    ],
+                    "('org.apache.commons.digester#Digester', 'startElement(String,String,String,Attributes)')": [
+                        702
+                    ],
+                    "('org.apache.commons.digester#Digester', 'addRule(String,Rule)')": [
+                        994,
+                        995,
+                        996,
+                        997,
+                        998,
+                        999
+                    ],
+                    "('org.apache.commons.digester#Digester', 'getRules(String)')": [
+                        1328,
+                        1329,
+                        1330,
+                        1331,
+                        1332,
+                        1333,
+                        1334,
+                        1335,
+                        1336,
+                        1337,
+                        1338,
+                        1339,
+                        1340,
+                        1341,
+                        1342,
+                        1343,
+                        1344,
+                        1345
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        109
+                    ],
+                    "('org.apache.commons.digester#Digester', None)": [
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        406,
+                        407,
+                        408,
+                        409,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        1347,
+                        1348,
+                        1349
+                    ],
+                    "('org.apache.commons.digester#Digester', 'getRules')": [
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416
+                    ],
+                    "('org.apache.commons.digester#Digester', 'setRules(Rules)')": [
+                        427,
+                        428,
+                        429
+                    ],
+                    "('org.apache.commons.digester#Digester', 'endDocument')": [
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554
+                    ],
+                    "('org.apache.commons.digester#Digester', 'endElement(String,String,String)')": [
+                        580
+                    ],
+                    "('org.apache.commons.digester#Digester', 'startElement(String,String,String,Attributes)')": [
+                        728
+                    ],
+                    "('org.apache.commons.digester#Digester', 'addRule(String,Rule)')": [
+                        1020
+                    ],
+                    "('org.apache.commons.digester#Digester', 'clear')": [
+                        1257
+                    ],
+                    "('org.apache.commons.digester#Digester', 'getRules(String)')": [
+                        1353
+                    ]
+                }
+            }
+        }
+    },
+    "f79ba553c602c9cd1a673c30db79edb6b38f0db6": {
+        "authored_data": "2001 Aug 04 22:26",
+        "commit.message": "Make it possible to set the class loader to be used for instantiating\napplication objects.  If you call setClassLoader(), this will override\nthe default behavior that is based on the useContextClassLoader property.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/digester/trunk@132252 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Craig R. McClanahan",
+        "pcid": "ec3d2af993826b57cf47446d809db2c8b49c7a77",
+        "changes": {
+            "src/java/org/apache/commons/digester/CallMethodRule.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        80
+                    ],
+                    "('org.apache.commons.digester#CallMethodRule', None)": [
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        80
+                    ],
+                    "('org.apache.commons.digester#CallMethodRule', None)": [
+                        132,
+                        133
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/digester/Digester.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        109
+                    ],
+                    "('org.apache.commons.digester#Digester', None)": [
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        109
+                    ],
+                    "('org.apache.commons.digester#Digester', None)": [
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        297,
+                        298
+                    ],
+                    "('org.apache.commons.digester#Digester', 'getClassLoader')": [
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282
+                    ],
+                    "('org.apache.commons.digester#Digester', 'setClassLoader(ClassLoader)')": [
+                        294,
+                        295,
+                        296
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/digester/ObjectCreateRule.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        77
+                    ],
+                    "('org.apache.commons.digester#ObjectCreateRule', 'begin(Attributes)')": [
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        77
+                    ],
+                    "('org.apache.commons.digester#ObjectCreateRule', 'begin(Attributes)')": [
+                        154,
+                        155
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/digester/SetNextRule.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        78
+                    ],
+                    "('org.apache.commons.digester#SetNextRule', 'end')": [
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        170,
+                        171
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        78
+                    ],
+                    "('org.apache.commons.digester#SetNextRule', 'end')": [
+                        154,
+                        155,
+                        156,
+                        157
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/digester/SetTopRule.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        77
+                    ],
+                    "('org.apache.commons.digester#SetTopRule', 'end')": [
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        77
+                    ],
+                    "('org.apache.commons.digester#SetTopRule', 'end')": [
+                        153,
+                        154,
+                        155,
+                        156,
+                        157
+                    ]
+                }
+            }
+        }
+    },
+    "ec3d2af993826b57cf47446d809db2c8b49c7a77": {
+        "authored_data": "2001 Aug 04 22:04",
+        "commit.message": "Fix the anomaly that I reported a couple of weeks ago.  Rule matching was not\nworking with namespace awareness turned off, because the arguments to\nstartElement() contained the following values:\n\n- localName was a zero length string\n\n- qName is the \"local\" part of the name\n\nand, because we use localName to match rules, no rules were fired.  Now,\nDigester will use qName in this scenario.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/digester/trunk@132251 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Craig R. McClanahan",
+        "pcid": "defc228f51eb834ca85c17dc4dc7ffa1b433e1e3",
+        "changes": {
+            "src/java/org/apache/commons/digester/Digester.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        109
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        109
+                    ],
+                    "('org.apache.commons.digester#Digester', 'startElement(String,String,String,Attributes)')": [
+                        642,
+                        643,
+                        644
+                    ]
+                }
+            }
+        }
+    },
+    "3ec04d06cd96131c7d2a508e1526a07f33efb490": {
+        "authored_data": "2001 Jul 19 20:55",
+        "commit.message": "Update to be able to enable/disable use of the context classloader.\nPartial patch contributed by Immanuel, Gidado-Yisa <avm3@cdc.gov>\n\nShould we be setting the default to true(use) or false(do not use)?\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/digester/trunk@132249 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Scott Sanders",
+        "pcid": "df23105b45017d8ddcef78efa11cc7b4be9b258a",
+        "changes": {
+            "src/java/org/apache/commons/digester/CallMethodRule.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        80
+                    ],
+                    "('org.apache.commons.digester#CallMethodRule', None)": [
+                        132,
+                        133,
+                        134,
+                        135,
+                        137,
+                        139,
+                        140
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        80
+                    ],
+                    "('org.apache.commons.digester#CallMethodRule', None)": [
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        139,
+                        140,
+                        141,
+                        144
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/digester/Digester.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        108
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        108,
+                        109
+                    ],
+                    "('org.apache.commons.digester#Digester', None)": [
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        425,
+                        426
+                    ],
+                    "('org.apache.commons.digester#Digester', 'getUseContextClassLoader')": [
+                        406,
+                        407,
+                        408
+                    ],
+                    "('org.apache.commons.digester#Digester', 'setUseContextClassLoader(boolean)')": [
+                        422,
+                        423,
+                        424
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/digester/ObjectCreateRule.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        77
+                    ],
+                    "('org.apache.commons.digester#ObjectCreateRule', 'begin(Attributes)')": [
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        163,
+                        164
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        77
+                    ],
+                    "('org.apache.commons.digester#ObjectCreateRule', 'begin(Attributes)')": [
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/digester/SetNextRule.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        78
+                    ],
+                    "('org.apache.commons.digester#SetNextRule', 'end')": [
+                        156,
+                        157,
+                        158,
+                        159,
+                        161,
+                        163,
+                        164
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        78
+                    ],
+                    "('org.apache.commons.digester#SetNextRule', 'end')": [
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        162,
+                        163,
+                        164
+                    ]
+                }
+            },
+            "src/java/org/apache/commons/digester/SetTopRule.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        77
+                    ],
+                    "('org.apache.commons.digester#SetTopRule', 'end')": [
+                        155,
+                        156,
+                        157,
+                        158,
+                        160,
+                        162,
+                        163
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        77
+                    ],
+                    "('org.apache.commons.digester#SetTopRule', 'end')": [
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        161,
+                        162,
+                        163
+                    ]
+                }
+            }
+        }
+    },
+    "060cfeb90df4fda2d572fa63225c63e304c8615d": {
+        "authored_data": "2001 Jun 24 17:02",
+        "commit.message": "Added constructor to Digester to allow setting the SAXParser to use.\nThanks to James House (james@interobjective.com) for the suggestion.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/digester/trunk@132245 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Scott Sanders",
+        "pcid": "24c8eb250b9c7dace0efe91fd1f36c799b174606",
+        "changes": {
+            "src/java/org/apache/commons/digester/Digester.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        108
+                    ],
+                    "('org.apache.commons.digester#Digester', None)": [
+                        443,
+                        444,
+                        446,
+                        448,
+                        574,
+                        576,
+                        578,
+                        580
+                    ],
+                    "('org.apache.commons.digester#Digester', 'startElement(String,String,String,Attributes)')": [
+                        584
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        108
+                    ],
+                    "('org.apache.commons.digester#Digester', None)": [
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        458,
+                        459,
+                        461,
+                        463,
+                        589,
+                        591,
+                        593,
+                        595
+                    ],
+                    "('org.apache.commons.digester#Digester', 'startElement(String,String,String,Attributes)')": [
+                        599
+                    ]
+                }
+            }
+        }
+    }
+}

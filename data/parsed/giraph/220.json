@@ -1,0 +1,2711 @@
+{
+    "03ade425dd5a65d3a713d5e7d85aa7605956fbd2": {
+        "authored_data": "2015 Jul 27 18:59",
+        "commit.message": "[GIRAPH-1022] Adaptive out-of-core mechanism for input superstep and graph\n\nSummary: This code adds the ability to adaptively control the out-of-core mechanism for graph data structure at run-time during input/output superstep and computation superstep. Basically, the implemented mechanism monitors the amount of available free memory in a separate thread. If there is not enough memory, the code adjusts the number of partitions in memory, and spills a series of partitions/buffers to disk. Also, if the amount of free memory is more than expected, some of the on-disk partitions are brought back to memory. Additionally, if amount of free memory is marginal, the mechanism mocks the memory usage by gradually bringing partitions to memory.\n\nTest Plan:\nmvn clean verify\nUnit tests added to giraph-core\nEnd-to-end test added to giraph-example\nRunning the code on PageRank on a large graph and not getting OOM failures.\n\nReviewers: maja.kabiljo, sergey.edunov, avery.ching, dionysis.logothetis\n\nReviewed By: dionysis.logothetis\n\nDifferential Revision: https://reviews.facebook.net/D40563\n",
+        "commit.author.name": "Hassan Eslami",
+        "pcid": "1ca3222078064fe4bc1f92fc94a58cafa39f2643",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/bsp/CentralizedServiceWorker.java": {
+                "new": {
+                    "(None, None)": [
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/comm/ServerData.java": {
+                "old": {
+                    "(None, None)": [
+                        39,
+                        40,
+                        44
+                    ],
+                    "('org.apache.giraph.comm#ServerData', None)": [
+                        70,
+                        71,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        155,
+                        156
+                    ],
+                    "('org.apache.giraph.comm#ServerData', 'getEdgeStore')": [
+                        157,
+                        158
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        42
+                    ],
+                    "('org.apache.giraph.comm#ServerData', None)": [
+                        143,
+                        144
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/comm/messages/primitives/long_id/LongAbstractListMessageStore.java": {
+                "old": {
+                    "('org.apache.giraph.comm.messages.primitives.long_id#LongAbstractListMessageStore', 'populateMap')": [
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.comm.messages.primitives.long_id#LongAbstractListMessageStore', 'populateMap')": [
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/comm/requests/SendWorkerEdgesRequest.java": {
+                "old": {
+                    "('org.apache.giraph.comm.requests#SendWorkerEdgesRequest', 'doRequest(ServerData)')": [
+                        72,
+                        73
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.comm.requests#SendWorkerEdgesRequest', 'doRequest(ServerData)')": [
+                        72,
+                        73
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/comm/requests/SendWorkerVerticesRequest.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        29,
+                        30
+                    ],
+                    "('org.apache.giraph.comm.requests#SendWorkerVerticesRequest', 'doRequest(ServerData)')": [
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('org.apache.giraph.comm.requests#SendWorkerVerticesRequest', 'doRequest(ServerData)')": [
+                        106,
+                        107,
+                        108
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/conf/GiraphConfiguration.java": {
+                "new": {
+                    "('org.apache.giraph.conf#GiraphConfiguration', 'getNumOocThreads')": [
+                        939,
+                        940
+                    ],
+                    "('org.apache.giraph.conf#GiraphConfiguration', None)": [
+                        941,
+                        942
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/conf/GiraphConstants.java": {
+                "old": {
+                    "(None, None)": [
+                        974,
+                        975,
+                        976,
+                        977,
+                        978,
+                        979,
+                        980,
+                        981,
+                        982,
+                        983
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        74,
+                        75,
+                        94,
+                        95,
+                        974,
+                        975,
+                        976,
+                        977,
+                        978,
+                        979,
+                        980,
+                        981,
+                        982,
+                        983,
+                        984,
+                        985,
+                        986,
+                        987,
+                        988,
+                        989,
+                        990,
+                        991,
+                        992,
+                        993,
+                        994,
+                        995
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/edge/AbstractEdgeStore.java": {
+                "old": {
+                    "(None, None)": [
+                        39,
+                        40
+                    ],
+                    "('org.apache.giraph.edge#AbstractEdgeStore', 'moveEdgesToVertices')": [
+                        202,
+                        203,
+                        204,
+                        215,
+                        217,
+                        219
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37,
+                        38,
+                        39
+                    ],
+                    "('org.apache.giraph.edge#AbstractEdgeStore', None)": [
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        149,
+                        150,
+                        158,
+                        159,
+                        162,
+                        163,
+                        164,
+                        172,
+                        173,
+                        174,
+                        175,
+                        190,
+                        191
+                    ],
+                    "('org.apache.giraph.edge#AbstractEdgeStore', 'writeVertexKey(K,DataOutput)')": [
+                        139
+                    ],
+                    "('org.apache.giraph.edge#AbstractEdgeStore', 'readVertexKey(DataInput)')": [
+                        148
+                    ],
+                    "('org.apache.giraph.edge#AbstractEdgeStore', 'hasPartitionEdges(int)')": [
+                        160,
+                        161
+                    ],
+                    "('org.apache.giraph.edge#AbstractEdgeStore', 'writePartitionEdgeStore(int,DataOutput)')": [
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171
+                    ],
+                    "('org.apache.giraph.edge#AbstractEdgeStore', 'readPartitionEdgeStore(int,DataInput)')": [
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189
+                    ],
+                    "('org.apache.giraph.edge#AbstractEdgeStore', 'moveEdgesToVertices')": [
+                        254,
+                        265,
+                        267,
+                        268,
+                        269,
+                        270,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/edge/EdgeStore.java": {
+                "new": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27,
+                        28,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/edge/SimpleEdgeStore.java": {
+                "new": {
+                    "(None, None)": [
+                        30,
+                        31,
+                        32
+                    ],
+                    "('org.apache.giraph.edge#SimpleEdgeStore', 'writeVertexKey(I,DataOutput)')": [
+                        99,
+                        100
+                    ],
+                    "('org.apache.giraph.edge#SimpleEdgeStore', None)": [
+                        101,
+                        102,
+                        103,
+                        108,
+                        109,
+                        110
+                    ],
+                    "('org.apache.giraph.edge#SimpleEdgeStore', 'readVertexKey(DataInput)')": [
+                        104,
+                        105,
+                        106,
+                        107
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/edge/primitives/IntEdgeStore.java": {
+                "new": {
+                    "(None, None)": [
+                        34,
+                        35,
+                        36
+                    ],
+                    "('org.apache.giraph.edge.primitives#IntEdgeStore', None)": [
+                        84,
+                        85,
+                        86,
+                        90,
+                        91,
+                        92
+                    ],
+                    "('org.apache.giraph.edge.primitives#IntEdgeStore', 'writeVertexKey(Integer,DataOutput)')": [
+                        87,
+                        88,
+                        89
+                    ],
+                    "('org.apache.giraph.edge.primitives#IntEdgeStore', 'readVertexKey(DataInput)')": [
+                        93,
+                        94,
+                        95
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/edge/primitives/LongEdgeStore.java": {
+                "new": {
+                    "(None, None)": [
+                        34,
+                        35,
+                        36
+                    ],
+                    "('org.apache.giraph.edge.primitives#LongEdgeStore', 'writeVertexKey(Long,DataOutput)')": [
+                        88,
+                        89,
+                        90
+                    ],
+                    "('org.apache.giraph.edge.primitives#LongEdgeStore', None)": [
+                        91,
+                        92,
+                        93,
+                        96,
+                        97,
+                        98
+                    ],
+                    "('org.apache.giraph.edge.primitives#LongEdgeStore', 'readVertexKey(DataInput)')": [
+                        94,
+                        95
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/graph/ComputeCallable.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        64,
+                        65,
+                        66
+                    ],
+                    "('org.apache.giraph.graph#ComputeCallable', None)": [
+                        83,
+                        84,
+                        108,
+                        112,
+                        116,
+                        117,
+                        118,
+                        119,
+                        124
+                    ],
+                    "('org.apache.giraph.graph#ComputeCallable', 'call')": [
+                        158,
+                        159,
+                        160,
+                        163,
+                        164,
+                        165,
+                        166,
+                        182,
+                        191,
+                        192,
+                        193
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36,
+                        64,
+                        65,
+                        66
+                    ],
+                    "('org.apache.giraph.graph#ComputeCallable', None)": [
+                        112,
+                        113
+                    ],
+                    "('org.apache.giraph.graph#ComputeCallable', 'call')": [
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        173,
+                        182,
+                        183
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/graph/GraphTaskManager.java": {
+                "old": {
+                    "(None, None)": [
+                        28,
+                        29
+                    ],
+                    "('org.apache.giraph.graph#GraphTaskManager', 'execute')": [
+                        349
+                    ],
+                    "('org.apache.giraph.graph#GraphTaskManager', None)": [
+                        726
+                    ],
+                    "('org.apache.giraph.graph#GraphTaskManager', 'processGraphPartitions(Mapper,List,GraphState,MessageStore,int,int)')": [
+                        733,
+                        735,
+                        736,
+                        738,
+                        740,
+                        759
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.graph#GraphTaskManager', 'execute')": [
+                        347
+                    ],
+                    "('org.apache.giraph.graph#GraphTaskManager', 'processGraphPartitions(Mapper,List,GraphState,MessageStore,int)')": [
+                        731,
+                        739
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/partition/PartitionStore.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', None)": [
+                        34,
+                        35,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        58,
+                        59,
+                        60,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        122
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'addPartition(Partition)')": [
+                        39
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'getOrCreatePartition(Integer)')": [
+                        48
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'putPartition(Partition)')": [
+                        57
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'deletePartition(Integer)')": [
+                        74
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'getPartitionVertexCount(int)')": [
+                        103
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'getPartitionEdgeCount(int)')": [
+                        110
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        27,
+                        28,
+                        29
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', None)": [
+                        38,
+                        39,
+                        42,
+                        47,
+                        48,
+                        79,
+                        87,
+                        103,
+                        106,
+                        107,
+                        108,
+                        109,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'addPartition(Partition)')": [
+                        44
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'getPartitionVertexCount(Integer)')": [
+                        83
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'getPartitionEdgeCount(Integer)')": [
+                        91
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'initialize')": [
+                        110
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'startIteration')": [
+                        141
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'getNextPartition')": [
+                        151
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'putPartition(Partition)')": [
+                        160
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'addPartitionVertices(Integer,ExtendedDataOutput)')": [
+                        169,
+                        170
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'addPartitionEdges(Integer,VertexIdEdges)')": [
+                        179,
+                        180
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'moveEdgesToVertices')": [
+                        186
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/partition/SimplePartitionStore.java": {
+                "old": {
+                    "('org.apache.giraph.partition#SimplePartitionStore', None)": [
+                        49,
+                        53,
+                        54,
+                        55,
+                        71,
+                        72,
+                        73,
+                        90,
+                        91,
+                        92
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', 'addPartition(Partition)')": [
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', 'getOrCreatePartition(Integer)')": [
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', 'deletePartition(Integer)')": [
+                        93,
+                        94
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', 'getPartitionVertexCount(int)')": [
+                        113
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', 'getPartitionEdgeCount(int)')": [
+                        123
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        33,
+                        34,
+                        180
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', None)": [
+                        50,
+                        51,
+                        56,
+                        57,
+                        63,
+                        65,
+                        66,
+                        67,
+                        70,
+                        71,
+                        72,
+                        131,
+                        132,
+                        133,
+                        134,
+                        137,
+                        138,
+                        139,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        158,
+                        159,
+                        160,
+                        169,
+                        170,
+                        171,
+                        175,
+                        176,
+                        177
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', 'addPartition(Partition)')": [
+                        76,
+                        77
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', 'getPartitionVertexCount(Integer)')": [
+                        101
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', 'getPartitionEdgeCount(Integer)')": [
+                        111
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', 'startIteration')": [
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', 'getNextPartition')": [
+                        135,
+                        136
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', 'getOrCreatePartition(Integer)')": [
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', 'addPartitionVertices(Integer,ExtendedDataOutput)')": [
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', 'addPartitionEdges(Integer,VertexIdEdges)')": [
+                        172,
+                        173,
+                        174
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', 'moveEdgesToVertices')": [
+                        178,
+                        179
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/worker/BspServiceWorker.java": {
+                "old": {
+                    "(None, None)": [
+                        29,
+                        35,
+                        119
+                    ],
+                    "('org.apache.giraph.worker#BspServiceWorker', 'setup')": [
+                        700
+                    ],
+                    "('org.apache.giraph.worker#BspServiceWorker', 'saveVertices(long)')": [
+                        1114,
+                        1115,
+                        1116,
+                        1117,
+                        1145,
+                        1146,
+                        1147,
+                        1151,
+                        1152
+                    ],
+                    "('org.apache.giraph.worker#BspServiceWorker', 'saveEdges')": [
+                        1242,
+                        1243,
+                        1244,
+                        1245,
+                        1262,
+                        1263,
+                        1264,
+                        1268,
+                        1269
+                    ],
+                    "('org.apache.giraph.worker#BspServiceWorker', 'storeCheckpointVertices')": [
+                        1508,
+                        1509,
+                        1510,
+                        1511,
+                        1528,
+                        1529,
+                        1530,
+                        1534,
+                        1545,
+                        1546
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.worker#BspServiceWorker', 'setup')": [
+                        584,
+                        698
+                    ],
+                    "('org.apache.giraph.worker#BspServiceWorker', 'saveVertices(long)')": [
+                        1112,
+                        1140,
+                        1141,
+                        1142,
+                        1143
+                    ],
+                    "('org.apache.giraph.worker#BspServiceWorker', 'saveEdges')": [
+                        1236,
+                        1253,
+                        1254,
+                        1255,
+                        1256
+                    ],
+                    "('org.apache.giraph.worker#BspServiceWorker', 'storeCheckpointVertices')": [
+                        1498,
+                        1515,
+                        1516,
+                        1517,
+                        1518,
+                        1522
+                    ],
+                    "('org.apache.giraph.worker#BspServiceWorker', None)": [
+                        1955,
+                        1956
+                    ],
+                    "('org.apache.giraph.worker#BspServiceWorker', 'getNumPartitionsOwned')": [
+                        1957,
+                        1958,
+                        1959,
+                        1960,
+                        1961,
+                        1962,
+                        1963,
+                        1964
+                    ],
+                    "(None, None)": [
+                        1965
+                    ]
+                }
+            },
+            "giraph-core/src/test/java/org/apache/giraph/comm/RequestTest.java": {
+                "old": {
+                    "('org.apache.giraph.comm#RequestTest', 'sendVertexPartition')": [
+                        136
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.comm#RequestTest', 'sendVertexPartition')": [
+                        136
+                    ]
+                }
+            },
+            "giraph-core/src/test/java/org/apache/giraph/comm/messages/TestIntFloatPrimitiveMessageStores.java": {
+                "old": {
+                    "('org.apache.giraph.comm.messages#TestIntFloatPrimitiveMessageStores', 'prepare')": [
+                        78,
+                        79
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.comm.messages#TestIntFloatPrimitiveMessageStores', 'prepare')": [
+                        78,
+                        79
+                    ]
+                }
+            },
+            "giraph-core/src/test/java/org/apache/giraph/comm/messages/TestLongDoublePrimitiveMessageStores.java": {
+                "old": {
+                    "('org.apache.giraph.comm.messages#TestLongDoublePrimitiveMessageStores', 'prepare')": [
+                        75,
+                        76
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.comm.messages#TestLongDoublePrimitiveMessageStores', 'prepare')": [
+                        75,
+                        76
+                    ]
+                }
+            },
+            "giraph-core/src/test/java/org/apache/giraph/partition/TestPartitionStores.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        63,
+                        64
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', None)": [
+                        76,
+                        78,
+                        79,
+                        152,
+                        245,
+                        251,
+                        320,
+                        466,
+                        471,
+                        515,
+                        521,
+                        527,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        545,
+                        546,
+                        547
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testSimplePartitionStore')": [
+                        109,
+                        110
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testDiskBackedPartitionStoreWithByteArrayPartition')": [
+                        156,
+                        167
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testDiskBackedPartitionStore')": [
+                        189,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testDiskBackedPartitionStoreWithByteArrayComputation')": [
+                        208,
+                        221,
+                        222,
+                        223,
+                        226
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testMultiThreaded')": [
+                        263,
+                        269,
+                        277,
+                        279,
+                        294,
+                        295,
+                        300,
+                        305,
+                        306,
+                        316
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testDiskBackedPartitionStoreComputation')": [
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testReadWrite(PartitionStore,ImmutableClassesGiraphConfiguration)')": [
+                        379,
+                        380,
+                        381,
+                        383,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        401,
+                        402,
+                        403,
+                        407,
+                        417,
+                        418
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        34,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', None)": [
+                        74,
+                        76,
+                        77,
+                        78,
+                        153,
+                        198,
+                        199,
+                        200,
+                        271,
+                        278,
+                        279,
+                        283,
+                        477,
+                        482,
+                        526,
+                        532,
+                        538,
+                        543,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        559
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testSimplePartitionStore')": [
+                        107,
+                        108,
+                        110,
+                        111
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testDiskBackedPartitionStoreWithByteArrayPartition')": [
+                        167
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testDiskBackedPartitionStore')": [
+                        189,
+                        197
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testDiskBackedPartitionStoreComputation')": [
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testDiskBackedPartitionStoreWithByteArrayComputation')": [
+                        246,
+                        247,
+                        248,
+                        251
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testDiskBackedPartitionStoreMT')": [
+                        266
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testDiskBackedPartitionStoreMTStatic')": [
+                        274
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testDiskBackedPartitionStoreAdaptiveOOC')": [
+                        280,
+                        281,
+                        282
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testMultiThreaded')": [
+                        300,
+                        305,
+                        309,
+                        310,
+                        311,
+                        312,
+                        314,
+                        329,
+                        330,
+                        331,
+                        336,
+                        340,
+                        342,
+                        343,
+                        344,
+                        354
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'getPartition(PartitionStore,int)')": [
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testReadWrite(PartitionStore,ImmutableClassesGiraphConfiguration)')": [
+                        401,
+                        402,
+                        406,
+                        407,
+                        408,
+                        409,
+                        414,
+                        415,
+                        416,
+                        417
+                    ]
+                }
+            }
+        }
+    },
+    "1ca3222078064fe4bc1f92fc94a58cafa39f2643": {
+        "authored_data": "2015 Jul 16 22:48",
+        "commit.message": "GIRAPH-1021: Missing progress report for graph mutations\nFix progress report for graph mutations\n\nSummary: Progress report in the new implementation of graph mutation is missing. This can cause lack of progress errors at runtime for mutations on high degree vertices\n\nTest Plan: mvn clean verify\n\nReviewers: avery.ching, dionysis.logothetis, maja.kabiljo, sergey.edunov\n\nDifferential Revision: https://reviews.facebook.net/D42309\n",
+        "commit.author.name": "Hassan Eslami",
+        "pcid": "6cb6acb44a1cff4136125faf763e67525ea696b1",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/comm/ServerData.java": {
+                "new": {
+                    "('org.apache.giraph.comm#ServerData', None)": [
+                        121,
+                        122,
+                        123,
+                        154
+                    ],
+                    "('org.apache.giraph.comm#ServerData', 'resolvePartitionMutation(Partition)')": [
+                        360,
+                        385
+                    ]
+                }
+            }
+        }
+    },
+    "6cb6acb44a1cff4136125faf763e67525ea696b1": {
+        "authored_data": "2015 Jul 15 19:48",
+        "commit.message": "[GIRAPH-1020] TaskInfo equality condition bug fix\n\nSummary: Currently equality is checked based on the raw host-name of an object with lower-case host-name of another object. This is not the right semantic and can cause subsequent bugs in partition assignment and migration.\n\nTest Plan: mvn clean verify\n\nReviewers: maja.kabiljo, sergey.edunov, dionysis.logothetis, avery.ching\n\nReviewed By: dionysis.logothetis\n\nDifferential Revision: https://reviews.facebook.net/D42273\n",
+        "commit.author.name": "Hassan Eslami",
+        "pcid": "1a4756b66bbd219943dce80a95dd46f44f46cbeb",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/graph/TaskInfo.java": {
+                "old": {
+                    "('org.apache.giraph.graph#TaskInfo', 'equals(Object)')": [
+                        113
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.graph#TaskInfo', 'equals(Object)')": [
+                        113
+                    ]
+                }
+            }
+        }
+    },
+    "1a4756b66bbd219943dce80a95dd46f44f46cbeb": {
+        "authored_data": "2015 Jul 06 17:39",
+        "commit.message": "[GIRAPH-1019] Optimizing and debugging vertex mutation mechanism\n\nSummary:\nThe old implementation of vertex mutation mechanism was single-threaded and had some redundant computation. The single threaded behavior is causing a huge performance degradation for out-of-core case, since all the partitions are being read and written sequentially in one thread to apply mutations. Also, in case where a vertex is mutated and has messages at the same time, the current code fails to execute which does not seem to be the expected behavior.\n\nThis diff implements an optimized multi-threaded approach for vertex mutations. With this diff, vertex mutation happens at the beginning of processing each partition. Also, parts of partition migration code is modified to migrate mutations as well.\n\nTest Plan: mvn clean verify\n\nReviewers: avery.ching, maja.kabiljo, dionysis.logothetis\n\nReviewed By: dionysis.logothetis\n\nDifferential Revision: https://reviews.facebook.net/D40821\n",
+        "commit.author.name": "Hassan Eslami",
+        "pcid": "3b7c68e54a76d02ae721161b1b81c15c2e22e44a",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/comm/SendMutationsCache.java": {
+                "old": {
+                    "(None, None)": [
+                        31
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/comm/ServerData.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.giraph.comm#ServerData', None)": [
+                        75,
+                        76,
+                        77,
+                        78,
+                        79
+                    ],
+                    "('org.apache.giraph.comm#ServerData', 'getVertexMutations')": [
+                        220,
+                        221,
+                        222
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        41,
+                        43,
+                        45,
+                        51,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383
+                    ],
+                    "('org.apache.giraph.comm#ServerData', None)": [
+                        63,
+                        64,
+                        65,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        305,
+                        306,
+                        307,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317
+                    ],
+                    "('org.apache.giraph.comm#ServerData', 'getPartitionMutations')": [
+                        243,
+                        244,
+                        245
+                    ],
+                    "('org.apache.giraph.comm#ServerData', 'prepareResolveMutations')": [
+                        308,
+                        309,
+                        310
+                    ],
+                    "('org.apache.giraph.comm#ServerData', 'resolvePartitionMutation(Partition)')": [
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/comm/netty/NettyWorkerClientRequestProcessor.java": {
+                "old": {
+                    "('org.apache.giraph.comm.netty#NettyWorkerClientRequestProcessor', 'sendPartitionMessages(WorkerInfo,Partition)')": [
+                        223,
+                        226,
+                        227
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.giraph.comm.netty#NettyWorkerClientRequestProcessor', 'sendPartitionRequest(WorkerInfo,Partition)')": [
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199
+                    ],
+                    "('org.apache.giraph.comm.netty#NettyWorkerClientRequestProcessor', 'sendPartitionMessages(WorkerInfo,Partition)')": [
+                        230,
+                        233,
+                        234,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/comm/netty/NettyWorkerServer.java": {
+                "old": {
+                    "(None, None)": [
+                        28,
+                        29,
+                        30,
+                        31,
+                        38,
+                        39,
+                        40,
+                        41,
+                        43,
+                        44
+                    ],
+                    "('org.apache.giraph.comm.netty#NettyWorkerServer', 'prepareSuperstep')": [
+                        126
+                    ],
+                    "('org.apache.giraph.comm.netty#NettyWorkerServer', None)": [
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        210
+                    ],
+                    "('org.apache.giraph.comm.netty#NettyWorkerServer', 'resolveMutations')": [
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/comm/requests/SendPartitionMutationsRequest.java": {
+                "old": {
+                    "(None, None)": [
+                        40
+                    ],
+                    "('org.apache.giraph.comm.requests#SendPartitionMutationsRequest', 'readFieldsRequest(DataInput)')": [
+                        80
+                    ],
+                    "('org.apache.giraph.comm.requests#SendPartitionMutationsRequest', 'doRequest(ServerData)')": [
+                        113,
+                        114,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        128,
+                        129,
+                        130
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38,
+                        41,
+                        42,
+                        43,
+                        44
+                    ],
+                    "('org.apache.giraph.comm.requests#SendPartitionMutationsRequest', 'readFieldsRequest(DataInput)')": [
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89
+                    ],
+                    "('org.apache.giraph.comm.requests#SendPartitionMutationsRequest', 'doRequest(ServerData)')": [
+                        122,
+                        123,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152
+                    ],
+                    "('org.apache.giraph.comm.requests#SendPartitionMutationsRequest', None)": [
+                        153
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/graph/ComputeCallable.java": {
+                "old": {
+                    "('org.apache.giraph.graph#ComputeCallable', 'call')": [
+                        166
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.graph#ComputeCallable', 'call')": [
+                        164,
+                        169
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/graph/GraphTaskManager.java": {
+                "old": {
+                    "('org.apache.giraph.graph#GraphTaskManager', 'setup(Path)')": [
+                        241,
+                        242
+                    ],
+                    "('org.apache.giraph.graph#GraphTaskManager', 'processGraphPartitions(Mapper,List,GraphState,MessageStore,int,int)')": [
+                        763,
+                        764
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.graph#GraphTaskManager', 'setup(Path)')": [
+                        241,
+                        242
+                    ],
+                    "('org.apache.giraph.graph#GraphTaskManager', 'execute')": [
+                        332,
+                        333
+                    ],
+                    "('org.apache.giraph.graph#GraphTaskManager', 'processGraphPartitions(Mapper,List,GraphState,MessageStore,int,int)')": [
+                        765,
+                        766,
+                        767
+                    ]
+                }
+            },
+            "giraph-core/src/test/java/org/apache/giraph/comm/RequestTest.java": {
+                "old": {
+                    "(None, None)": [
+                        58
+                    ],
+                    "('org.apache.giraph.comm#RequestTest', 'sendPartitionMutationsRequest')": [
+                        275,
+                        285,
+                        286,
+                        287,
+                        289,
+                        290,
+                        291,
+                        295,
+                        296,
+                        302,
+                        303
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        58
+                    ],
+                    "('org.apache.giraph.comm#RequestTest', 'setUp')": [
+                        100
+                    ],
+                    "('org.apache.giraph.comm#RequestTest', 'sendPartitionMutationsRequest')": [
+                        276,
+                        277,
+                        287,
+                        288,
+                        289,
+                        290,
+                        292,
+                        293,
+                        294,
+                        295,
+                        299,
+                        300,
+                        306,
+                        307
+                    ]
+                }
+            },
+            "giraph-examples/src/main/java/org/apache/giraph/examples/SimpleMutateGraphComputation.java": {
+                "new": {
+                    "('org.apache.giraph.examples#SimpleMutateGraphComputation', 'compute(Vertex,Iterable)')": [
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159
+                    ]
+                }
+            },
+            "giraph-examples/src/test/java/org/apache/giraph/TestMutateGraph.java": {
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        27,
+                        28,
+                        29,
+                        31,
+                        32
+                    ],
+                    "('org.apache.giraph#TestMutateGraph', None)": [
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75
+                    ],
+                    "('org.apache.giraph#TestMutateGraph', 'testMutateGraph')": [
+                        94,
+                        95,
+                        96,
+                        99,
+                        100
+                    ]
+                }
+            }
+        }
+    },
+    "3b7c68e54a76d02ae721161b1b81c15c2e22e44a": {
+        "authored_data": "2015 Jun 30 06:20",
+        "commit.message": "[GIRAPH-1013] Adding more libraries, algos and examples\n\nSummary:\nAdding more libraries, algos and examples\n\nOnly changes from our internal state:\n\nNew classes:\nPairReduce\nMaxMessageCombiner\nPartitioningStats\nTestMessageChain\n\nChange to:\nPieces\nSendMessageChain\n\nTest Plan: mvn clean install -Phadoop_facebook\n\nReviewers: maja.kabiljo, dionysis.logothetis, sergey.edunov\n\nReviewed By: sergey.edunov\n\nDifferential Revision: https://reviews.facebook.net/D40935\n",
+        "commit.author.name": "Igor Kabiljo",
+        "pcid": "d7e4bde11fdbfdef13e9316702c914e749a7757f",
+        "changes": {
+            "giraph-block-app/src/main/java/org/apache/giraph/block_app/framework/api/local/LocalBlockRunner.java": {
+                "new": {
+                    "('org.apache.giraph.block_app.framework.api.local#LocalBlockRunner', 'runBlockWithVertexOutput(Block,Object,TestGraph,VertexSaver)')": [
+                        147,
+                        148
+                    ]
+                }
+            },
+            "giraph-block-app/src/main/java/org/apache/giraph/block_app/library/Pieces.java": {
+                "old": {
+                    "('org.apache.giraph.block_app.library#Pieces', 'reduce(String,ReduceOperation,SupplierFromVertex,Consumer)')": [
+                        176,
+                        200
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35
+                    ],
+                    "('org.apache.giraph.block_app.library#Pieces', 'reduce(String,ReduceOperation,SupplierFromVertex,Consumer)')": [
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183
+                    ],
+                    "('org.apache.giraph.block_app.library#Pieces', None)": [
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198
+                    ],
+                    "('org.apache.giraph.block_app.library#Pieces', 'reduceWithMaster(String,ReduceOperation,SupplierFromVertex,PairConsumer)')": [
+                        199,
+                        200,
+                        201,
+                        205,
+                        229
+                    ]
+                }
+            },
+            "giraph-block-app/src/main/java/org/apache/giraph/block_app/library/SendMessageChain.java": {
+                "old": {
+                    "('org.apache.giraph.block_app.library#SendMessageChain', 'endReduce(String,ReduceOperation,FunctionWithVertex,Consumer)')": [
+                        248,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        29
+                    ],
+                    "('org.apache.giraph.block_app.library#SendMessageChain', None)": [
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        305,
+                        306
+                    ],
+                    "('org.apache.giraph.block_app.library#SendMessageChain', 'startCustom(Function)')": [
+                        154,
+                        155,
+                        156,
+                        157,
+                        158
+                    ],
+                    "('org.apache.giraph.block_app.library#SendMessageChain', 'endReduce(String,ReduceOperation,FunctionWithVertex,Consumer)')": [
+                        262,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277
+                    ],
+                    "('org.apache.giraph.block_app.library#SendMessageChain', 'endReduceWithMaster(String,ReduceOperation,FunctionWithVertex,PairConsumer)')": [
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304
+                    ]
+                }
+            }
+        }
+    },
+    "d7e4bde11fdbfdef13e9316702c914e749a7757f": {
+        "authored_data": "2015 Jun 25 21:13",
+        "commit.message": "[GIRAPH-1013] Adding prepare graph library in Java8\n\nSummary:\nAdding simple graph preparation:\n- symmetric\n- removal of isolated edges\n- normalizing\n- connected components\n\nCreating a new module, only used for Phadoop_facebook, which is written in Java8.\n\nTests are new/modified from what is in our repo, the rest is identical.\n\nTest Plan: mvn clean install\n\nReviewers: maja.kabiljo, dionysis.logothetis, sergey.edunov\n\nReviewed By: sergey.edunov\n\nDifferential Revision: https://reviews.facebook.net/D40719\n",
+        "commit.author.name": "Igor Kabiljo",
+        "pcid": "f9dc6b59eeb9b80f1cea47f504b6c969e5c560a3",
+        "changes": {
+            "giraph-block-app/src/main/java/org/apache/giraph/block_app/reducers/array/HugeArrayUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        51,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        63
+                    ],
+                    "('org.apache.giraph.block_app.reducers.array#HugeArrayUtils', None)": [
+                        66,
+                        68
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        51,
+                        52,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        64
+                    ],
+                    "('org.apache.giraph.block_app.reducers.array#HugeArrayUtils', None)": [
+                        67,
+                        68,
+                        70
+                    ]
+                }
+            },
+            "giraph-block-app/src/main/java/org/apache/giraph/block_app/test_setup/NumericTestGraph.java": {
+                "old": {
+                    "('org.apache.giraph.block_app.test_setup#NumericTestGraph', 'addEdge(Number,Number,E)')": [
+                        183
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.block_app.test_setup#NumericTestGraph', 'addEdge(Number,Number,E)')": [
+                        183,
+                        184,
+                        185
+                    ],
+                    "('org.apache.giraph.block_app.test_setup#NumericTestGraph', 'edgeValueOrCreate(E)')": [
+                        315,
+                        316
+                    ],
+                    "('org.apache.giraph.block_app.test_setup#NumericTestGraph', None)": [
+                        317,
+                        318,
+                        319
+                    ]
+                }
+            },
+            "giraph-block-app/src/main/java/org/apache/giraph/block_app/test_setup/graphs/Small1GraphInit.java": {
+                "old": {
+                    "('org.apache.giraph.block_app.test_setup.graphs#Small1GraphInit', None)": [
+                        43,
+                        46,
+                        47,
+                        48
+                    ],
+                    "('org.apache.giraph.block_app.test_setup.graphs#Small1GraphInit', 'modifyGraph(NumericTestGraph)')": [
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.block_app.test_setup.graphs#Small1GraphInit', None)": [
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        64,
+                        65
+                    ],
+                    "('org.apache.giraph.block_app.test_setup.graphs#Small1GraphInit', 'modifyGraph(NumericTestGraph)')": [
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63
+                    ],
+                    "('org.apache.giraph.block_app.test_setup.graphs#Small1GraphInit', 'createEdgeValue')": [
+                        66,
+                        67
+                    ]
+                }
+            },
+            "giraph-block-app/src/main/java/org/apache/giraph/block_app/test_setup/graphs/Small2GraphInit.java": {
+                "old": {
+                    "('org.apache.giraph.block_app.test_setup.graphs#Small2GraphInit', None)": [
+                        42,
+                        43,
+                        46,
+                        47,
+                        48
+                    ],
+                    "('org.apache.giraph.block_app.test_setup.graphs#Small2GraphInit', 'modifyGraph(NumericTestGraph)')": [
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.block_app.test_setup.graphs#Small2GraphInit', None)": [
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        62,
+                        63
+                    ],
+                    "('org.apache.giraph.block_app.test_setup.graphs#Small2GraphInit', 'modifyGraph(NumericTestGraph)')": [
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61
+                    ],
+                    "('org.apache.giraph.block_app.test_setup.graphs#Small2GraphInit', 'createEdgeValue')": [
+                        64,
+                        65
+                    ]
+                }
+            },
+            "giraph-block-app/src/test/java/org/apache/giraph/block_app/framework/BlockExecutionTest.java": {
+                "old": {
+                    "('org.apache.giraph.block_app.framework#BlockExecutionTest', 'createTestGraph(GiraphConfiguration)')": [
+                        61,
+                        62,
+                        64
+                    ],
+                    "('org.apache.giraph.block_app.framework#BlockExecutionTest', 'testMessageSending')": [
+                        79,
+                        80
+                    ],
+                    "('org.apache.giraph.block_app.framework#BlockExecutionTest', 'testReducing')": [
+                        122,
+                        123
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.block_app.framework#BlockExecutionTest', 'createTestGraph')": [
+                        61,
+                        63
+                    ],
+                    "('org.apache.giraph.block_app.framework#BlockExecutionTest', 'testMessageSending')": [
+                        78
+                    ],
+                    "('org.apache.giraph.block_app.framework#BlockExecutionTest', 'testReducing')": [
+                        120
+                    ],
+                    "('org.apache.giraph.block_app.framework#BlockExecutionTest', None)": [
+                        153
+                    ],
+                    "('org.apache.giraph.block_app.framework#BlockExecutionTest', 'testVertexRemoval')": [
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176
+                    ],
+                    "(None, None)": [
+                        177
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/combiner/DoubleSumMessageCombiner.java": {
+                "old": {
+                    "('org.apache.giraph.combiner#DoubleSumMessageCombiner', None)": [
+                        28,
+                        29
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        29
+                    ],
+                    "('org.apache.giraph.combiner#DoubleSumMessageCombiner', None)": [
+                        31
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/combiner/FloatSumMessageCombiner.java": {
+                "old": {
+                    "('org.apache.giraph.combiner#FloatSumMessageCombiner', None)": [
+                        28,
+                        29
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        29
+                    ],
+                    "('org.apache.giraph.combiner#FloatSumMessageCombiner', None)": [
+                        31
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/combiner/MessageCombiner.java": {
+                "old": {
+                    "('org.apache.giraph.combiner#MessageCombiner', None)": [
+                        32
+                    ],
+                    "('org.apache.giraph.combiner#MessageCombiner', 'combine(I,M,M)')": [
+                        47
+                    ],
+                    "('org.apache.giraph.combiner#MessageCombiner', 'createInitialMessage')": [
+                        56
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        47,
+                        56
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/combiner/MinimumDoubleMessageCombiner.java": {
+                "old": {
+                    "('org.apache.giraph.combiner#MinimumDoubleMessageCombiner', None)": [
+                        28,
+                        29
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.combiner#MinimumDoubleMessageCombiner', None)": [
+                        28
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/combiner/MinimumIntMessageCombiner.java": {
+                "old": {
+                    "('org.apache.giraph.combiner#MinimumIntMessageCombiner', None)": [
+                        28
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.combiner#MinimumIntMessageCombiner', None)": [
+                        28
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/combiner/SimpleSumMessageCombiner.java": {
+                "old": {
+                    "('org.apache.giraph.combiner#SimpleSumMessageCombiner', None)": [
+                        28
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        29
+                    ],
+                    "('org.apache.giraph.combiner#SimpleSumMessageCombiner', None)": [
+                        31
+                    ]
+                }
+            },
+            "giraph-core/src/test/java/org/apache/giraph/master/TestComputationCombinerTypes.java": {
+                "old": {
+                    "('org.apache.giraph.master#TestComputationCombinerTypes', None)": [
+                        147
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.master#TestComputationCombinerTypes', None)": [
+                        147
+                    ]
+                }
+            },
+            "giraph-core/src/test/java/org/apache/giraph/master/TestSwitchClasses.java": {
+                "old": {
+                    "('org.apache.giraph.master#TestSwitchClasses', None)": [
+                        198,
+                        214
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.master#TestSwitchClasses', None)": [
+                        198,
+                        214
+                    ]
+                }
+            },
+            "giraph-examples/src/test/java/org/apache/giraph/vertex/TestComputationTypes.java": {
+                "old": {
+                    "('org.apache.giraph.vertex#TestComputationTypes', None)": [
+                        67,
+                        85
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.vertex#TestComputationTypes', None)": [
+                        67,
+                        85
+                    ]
+                }
+            }
+        }
+    },
+    "f9dc6b59eeb9b80f1cea47f504b6c969e5c560a3": {
+        "authored_data": "2015 Jun 29 22:47",
+        "commit.message": "GIRAPH-1018: Improving PartitionStore API to better match its expected behaviour\n(heslami via aching)\n\nSummary: Currently for statistics operations on each partition, entire partition is loaded using getOrCreatePartition method of PartitionStore. This diff improves the API of PartitionStore by adding required methods to only return the statistics.\n\nTest Plan: mvn clean verify\n\nReviewers: dionysis.logothetis, maja.kabiljo, avery.ching\n\nReviewed By: avery.ching\n\nDifferential Revision: https://reviews.facebook.net/D40731\n",
+        "commit.author.name": "Hassan Eslami",
+        "pcid": "acd532373072b69d0d802c4456943aa35388bdca",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/comm/messages/primitives/IdByteArrayMessageStore.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.giraph.comm.messages.primitives#IdByteArrayMessageStore', None)": [
+                        105,
+                        106,
+                        109,
+                        113
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.comm.messages.primitives#IdByteArrayMessageStore', None)": [
+                        106,
+                        107,
+                        108
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/comm/messages/primitives/IdOneMessagePerVertexStore.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('org.apache.giraph.comm.messages.primitives#IdOneMessagePerVertexStore', None)": [
+                        109,
+                        110,
+                        112,
+                        114
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.comm.messages.primitives#IdOneMessagePerVertexStore', None)": [
+                        109,
+                        110
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/comm/messages/primitives/IntByteArrayMessageStore.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.giraph.comm.messages.primitives#IntByteArrayMessageStore', None)": [
+                        87,
+                        88,
+                        91,
+                        93
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.comm.messages.primitives#IntByteArrayMessageStore', None)": [
+                        88,
+                        89
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/comm/messages/primitives/IntFloatMessageStore.java": {
+                "old": {
+                    "(None, None)": [
+                        36,
+                        37
+                    ],
+                    "('org.apache.giraph.comm.messages.primitives#IntFloatMessageStore', None)": [
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        84
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.comm.messages.primitives#IntFloatMessageStore', None)": [
+                        75,
+                        76,
+                        77
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/comm/messages/primitives/LongDoubleMessageStore.java": {
+                "old": {
+                    "(None, None)": [
+                        36
+                    ],
+                    "('org.apache.giraph.comm.messages.primitives#LongDoubleMessageStore', None)": [
+                        77,
+                        78,
+                        79,
+                        80,
+                        82
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.comm.messages.primitives#LongDoubleMessageStore', None)": [
+                        76,
+                        77,
+                        78
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/comm/messages/primitives/long_id/LongAbstractMessageStore.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('org.apache.giraph.comm.messages.primitives.long_id#LongAbstractMessageStore', None)": [
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        82
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.comm.messages.primitives.long_id#LongAbstractMessageStore', None)": [
+                        75,
+                        76,
+                        77
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/graph/GraphTaskManager.java": {
+                "old": {
+                    "(None, None)": [
+                        51
+                    ],
+                    "('org.apache.giraph.graph#GraphTaskManager', 'processGraphPartitions(Mapper,List,GraphState,MessageStore,int,int)')": [
+                        740,
+                        741,
+                        742,
+                        743,
+                        744,
+                        747,
+                        748
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.graph#GraphTaskManager', 'processGraphPartitions(Mapper,List,GraphState,MessageStore,int,int)')": [
+                        739,
+                        742
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/partition/DiskBackedPartitionStore.java": {
+                "new": {
+                    "('org.apache.giraph.partition#DiskBackedPartitionStore', 'getPartitionVertexCount(int)')": [
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234
+                    ],
+                    "('org.apache.giraph.partition#DiskBackedPartitionStore', None)": [
+                        235,
+                        236,
+                        237,
+                        238,
+                        245,
+                        246,
+                        247,
+                        248,
+                        1116,
+                        1117,
+                        1140,
+                        1169,
+                        1237,
+                        1238,
+                        1239,
+                        1240,
+                        1241,
+                        1242,
+                        1243,
+                        1293
+                    ],
+                    "('org.apache.giraph.partition#DiskBackedPartitionStore', 'getPartitionEdgeCount(int)')": [
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/partition/PartitionStore.java": {
+                "new": {
+                    "('org.apache.giraph.partition#PartitionStore', None)": [
+                        99,
+                        100,
+                        101,
+                        102,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        111,
+                        112
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'getPartitionVertexCount(int)')": [
+                        103
+                    ],
+                    "('org.apache.giraph.partition#PartitionStore', 'getPartitionEdgeCount(int)')": [
+                        110
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/partition/SimplePartitionStore.java": {
+                "new": {
+                    "('org.apache.giraph.partition#SimplePartitionStore', 'getPartitionVertexCount(int)')": [
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', None)": [
+                        119,
+                        120,
+                        121,
+                        122,
+                        129,
+                        130,
+                        131,
+                        132
+                    ],
+                    "('org.apache.giraph.partition#SimplePartitionStore', 'getPartitionEdgeCount(int)')": [
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/worker/BspServiceWorker.java": {
+                "old": {
+                    "('org.apache.giraph.worker#BspServiceWorker', 'setup')": [
+                        707,
+                        708,
+                        709,
+                        711,
+                        712,
+                        714,
+                        717
+                    ],
+                    "('org.apache.giraph.worker#BspServiceWorker', 'saveVertices(long)')": [
+                        1124,
+                        1125,
+                        1126,
+                        1127
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.worker#BspServiceWorker', 'setup')": [
+                        707,
+                        708,
+                        710,
+                        711,
+                        713
+                    ],
+                    "('org.apache.giraph.worker#BspServiceWorker', 'saveVertices(long)')": [
+                        1122
+                    ]
+                }
+            },
+            "giraph-core/src/test/java/org/apache/giraph/partition/TestPartitionStores.java": {
+                "old": {
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testMultiThreaded')": [
+                        291,
+                        292,
+                        293,
+                        294
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testReadWrite(PartitionStore,ImmutableClassesGiraphConfiguration)')": [
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testMultiThreaded')": [
+                        291,
+                        292
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testReadWrite(PartitionStore,ImmutableClassesGiraphConfiguration)')": [
+                        413,
+                        414,
+                        415,
+                        416
+                    ]
+                }
+            }
+        }
+    },
+    "acd532373072b69d0d802c4456943aa35388bdca": {
+        "authored_data": "2015 Jun 23 04:44",
+        "commit.message": "[GIRAPH 1013] Adding TestGraphUtils and NumericTestGraph\n\nSummary:\nAdding simplified framework for running application tests.\nCode for testing is going to be much shorter, especially\nwhen Java 8 is used.\n\nOnly difference compared to our codebase is addition of\nSendingMessagesTest to showcase these capabilities\n\nTest Plan: mvn clean install\n\nReviewers: dionysis.logothetis, sergey.edunov, maja.kabiljo\n\nReviewed By: maja.kabiljo\n\nDifferential Revision: https://reviews.facebook.net/D40533\n",
+        "commit.author.name": "Igor Kabiljo",
+        "pcid": "77f8a075ccc029cb608a382f5deb7cc0b27b02e5",
+        "changes": {
+            "giraph-block-app/src/test/java/org/apache/giraph/block_app/reducers/array/ObjectStripingTest.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,732 @@
+{
+    "0819356a9dafd2ca07c5eab68e2bffeddc3bd3d9": {
+        "authored_data": "2022 Jul 26 02:55",
+        "commit.message": "PARQUET-2167: Fix CLI serializing of footer with date fields (#980)\n\n",
+        "commit.author.name": "Bryan Keller",
+        "pcid": "0b5aaeaa4a10da487949d30d3d89e16c621a12c0",
+        "changes": {
+            "parquet-cli/src/main/java/org/apache/parquet/cli/commands/ShowFooterCommand.java": {
+                "new": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.parquet.cli.commands#ShowFooterCommand', 'createObjectMapper')": [
+                        90
+                    ]
+                }
+            },
+            "parquet-cli/src/test/java/org/apache/parquet/cli/commands/FileTest.java": {
+                "new": {
+                    "('org.apache.parquet.cli.commands#FileTest', None)": [
+                        38
+                    ]
+                }
+            },
+            "parquet-cli/src/test/java/org/apache/parquet/cli/commands/ParquetFileTest.java": {
+                "old": {
+                    "('org.apache.parquet.cli.commands#ParquetFileTest', 'createSchema')": [
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69
+                    ],
+                    "('org.apache.parquet.cli.commands#ParquetFileTest', None)": [
+                        70
+                    ],
+                    "('org.apache.parquet.cli.commands#ParquetFileTest', 'createTestParquetFile')": [
+                        105
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28,
+                        33,
+                        36
+                    ],
+                    "('org.apache.parquet.cli.commands#ParquetFileTest', 'createSchema')": [
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77
+                    ],
+                    "('org.apache.parquet.cli.commands#ParquetFileTest', 'createTestParquetFile')": [
+                        112,
+                        113
+                    ]
+                }
+            }
+        }
+    },
+    "3ed2dbb9ba40d93caaa5aa3149581f2108ac2bc0": {
+        "authored_data": "2022 Jul 24 19:48",
+        "commit.message": "PARQUET-2134: Fix type checking in HadoopStreams.wrap (#951)\n\nHadoopStreams.wrap produces a wrong H2SeekableInputStream if the\r\npassed-in FSDataInputStream wraps another FSDataInputStream.\r\n\r\nSince [HDFS-14111](https://issues.apache.org/jira/browse/HDFS-14111) all\r\ninput streams in the hadoop codebase which implement `ByteBufferReadable`\r\nreturn true on the StreamCapabilities probe\r\n`stream.hasCapability(\"in:readbytebuffer\")`;\r\nthose which don't are forbidden to do so.\r\n\r\nThis means that on Hadoop 3.3.0+ the preferred way to probe for the API\r\nis to ask the stream.\r\n\r\nThe StreamCapabilities probe was added in Hadoop 2.9. Along with\r\nmaking all use of `ByteBufferReadable` non-reflective, this makes\r\nthe checks fairly straightforward.\r\n\r\nTests verify that if a stream implements `ByteBufferReadable' then\r\nit will be bonded to H2SeekableInputStream, even if multiply wrapped\r\nby FSDataInputStreams, and that if it doesn't, it won't.\r\n\r\nCo-authored-by: Steve Loughran <stevel@cloudera.com>\r\n\r\nCo-authored-by: Steve Loughran <stevel@cloudera.com>",
+        "commit.author.name": "Todd Gao",
+        "pcid": "019361e0da0677360788f0ad96c520fb8c296d7d",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/util/H2SeekableInputStream.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop.util#H2SeekableInputStream', 'readFully(Reader,ByteBuffer)')": [
+                        87
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop.util#H2SeekableInputStream', 'readFully(Reader,ByteBuffer)')": [
+                        87
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/util/HadoopStreams.java": {
+                "old": {
+                    "(None, None)": [
+                        24,
+                        26,
+                        30,
+                        31
+                    ],
+                    "('org.apache.parquet.hadoop.util#HadoopStreams', None)": [
+                        40,
+                        41,
+                        42,
+                        77,
+                        84,
+                        85,
+                        86,
+                        97
+                    ],
+                    "('org.apache.parquet.hadoop.util#HadoopStreams', 'wrap(FSDataInputStream)')": [
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63
+                    ],
+                    "('org.apache.parquet.hadoop.util#HadoopStreams', 'getReadableClass')": [
+                        69,
+                        70,
+                        71,
+                        72,
+                        73
+                    ],
+                    "('org.apache.parquet.hadoop.util#HadoopStreams', 'getH2SeekableClass')": [
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83
+                    ],
+                    "('org.apache.parquet.hadoop.util#HadoopStreams', 'getH2SeekableConstructor')": [
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        25,
+                        30
+                    ],
+                    "('org.apache.parquet.hadoop.util#HadoopStreams', 'wrap(FSDataInputStream)')": [
+                        49,
+                        50
+                    ],
+                    "('org.apache.parquet.hadoop.util#HadoopStreams', None)": [
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72
+                    ],
+                    "('org.apache.parquet.hadoop.util#HadoopStreams', 'isWrappedStreamByteBufferReadable(FSDataInputStream)')": [
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/hadoop/util/TestHadoop2ByteBufferReads.java": {
+                "new": {
+                    "(None, None)": [
+                        22,
+                        25,
+                        33,
+                        444,
+                        445
+                    ],
+                    "('org.apache.parquet.hadoop.util#TestHadoop2ByteBufferReads', None)": [
+                        402,
+                        403,
+                        409,
+                        410,
+                        411,
+                        417,
+                        418,
+                        419,
+                        425,
+                        426,
+                        427,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443
+                    ],
+                    "('org.apache.parquet.hadoop.util#TestHadoop2ByteBufferReads', 'testCreateStreamNoByteBufferReadable')": [
+                        404,
+                        405,
+                        406,
+                        407,
+                        408
+                    ],
+                    "('org.apache.parquet.hadoop.util#TestHadoop2ByteBufferReads', 'testDoubleWrapNoByteBufferReadable')": [
+                        412,
+                        413,
+                        414,
+                        415,
+                        416
+                    ],
+                    "('org.apache.parquet.hadoop.util#TestHadoop2ByteBufferReads', 'testCreateStreamWithByteBufferReadable')": [
+                        420,
+                        421,
+                        422,
+                        423,
+                        424
+                    ],
+                    "('org.apache.parquet.hadoop.util#TestHadoop2ByteBufferReads', 'testDoubleWrapByteBufferReadable')": [
+                        428,
+                        429,
+                        430,
+                        431,
+                        432
+                    ]
+                }
+            }
+        }
+    },
+    "1e1c383bda874e1722e001afa6116dc337ec0452": {
+        "authored_data": "2022 Jul 19 15:24",
+        "commit.message": "PARQUET-2158: Upgrade Hadoop dependency to version 3.2.0 (#976)\n\n* PARQUET-2158: Upgrade Hadoop dependency to version 3.2.0\r\n\r\nThis updates Parquet's Hadoop dependency to 3.2.0.\r\nThis version adds compatibility with Java 11, as well\r\nas many other features and bug fixes.\r\n\r\n* PARQUET-2158. PathGlobPattern to compile/link with hadoop 3.2.0\r\n\r\nThe deprecated parquet-thrift class PathGlobPattern doesn't\r\ncompile against hadoop 3.x because in HADOOP-12436 the\r\nnominally private class org.apache.hadoop.fs.GlobPattern\r\nimplementation switched from using java.util.regex.Pattern\r\nto com.google.re2j.PatternSyntaxException.\r\n\r\nThe fact nobody has ever reported this problem implies that it\r\nis never used on any hadoop 3 release, ever.\r\n\r\nThis commit fixes the build by moving to the google classes.\r\nThe alternative strategy would actually be to fork the hadoop\r\nclass. This will work unless/until the hadoop project changes\r\nthe class again.\r\n\r\nIt may be time to consider removing entirely. Clearly nobody\r\nis actually using it.\r\n\r\n* PARQUET-2158. build auditing to cope with switch to google rej2j.\r\n\r\nDisables the API compatibility check and adds rej2j as a 'provided'\r\ndependency so that the relevant auditing checks do not fail.",
+        "commit.author.name": "Steve Loughran",
+        "pcid": "19300bfbb416ae38378891868b714daa50d8769d",
+        "changes": {
+            "parquet-hadoop/src/test/java/org/apache/parquet/hadoop/TestInputFormat.java": {
+                "old": {
+                    "(None, None)": [
+                        45
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/projection/deprecated/PathGlobPattern.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        9,
+                        11,
+                        23,
+                        24
+                    ],
+                    "('org.apache.parquet.thrift.projection.deprecated#PathGlobPattern', 'error(String,String,int)')": [
+                        59
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        9,
+                        11,
+                        23,
+                        24
+                    ],
+                    "('org.apache.parquet.thrift.projection.deprecated#PathGlobPattern', 'error(String,String,int)')": [
+                        59
+                    ]
+                }
+            }
+        }
+    },
+    "19300bfbb416ae38378891868b714daa50d8769d": {
+        "authored_data": "2022 Jul 13 14:28",
+        "commit.message": "PARQUET-1020 Add DynamicMessage writing support (#963)\n\n* PARQUET-1020 Add DynamicMessage writing support\r\n\r\n* PARQUET-1020 Remove useless set of Protobuf class name",
+        "commit.author.name": "guillaume-fetter",
+        "pcid": "e990eb3f14c39273e46a9fce07ec85d2edf7fccb",
+        "changes": {
+            "parquet-protobuf/src/main/java/org/apache/parquet/proto/ProtoSchemaConverter.java": {
+                "old": {
+                    "('org.apache.parquet.proto#ProtoSchemaConverter', 'convert(Class)')": [
+                        67,
+                        68,
+                        69
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.proto#ProtoSchemaConverter', 'convert(Descriptors)')": [
+                        67
+                    ],
+                    "('org.apache.parquet.proto#ProtoSchemaConverter', None)": [
+                        73,
+                        74
+                    ],
+                    "('org.apache.parquet.proto#ProtoSchemaConverter', 'convert(Class)')": [
+                        75,
+                        76,
+                        77,
+                        78
+                    ]
+                }
+            },
+            "parquet-protobuf/src/main/java/org/apache/parquet/proto/ProtoWriteSupport.java": {
+                "old": {
+                    "('org.apache.parquet.proto#ProtoWriteSupport', 'init(Configuration)')": [
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.proto#ProtoWriteSupport', None)": [
+                        61,
+                        72,
+                        73,
+                        74,
+                        75
+                    ],
+                    "('org.apache.parquet.proto#ProtoWriteSupport', 'init(Configuration)')": [
+                        122,
+                        123,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146
+                    ]
+                }
+            },
+            "parquet-protobuf/src/test/java/org/apache/parquet/proto/ProtoWriteSupportTest.java": {
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22
+                    ],
+                    "('org.apache.parquet.proto#ProtoWriteSupportTest', 'testProto3SimplestDynamicMessage')": [
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129
+                    ],
+                    "('org.apache.parquet.proto#ProtoWriteSupportTest', None)": [
+                        130,
+                        131,
+                        132
+                    ]
+                }
+            }
+        }
+    },
+    "e990eb3f14c39273e46a9fce07ec85d2edf7fccb": {
+        "authored_data": "2022 Jul 02 16:51",
+        "commit.message": "PARQUET-2138: Add ShowBloomFilterCommand to parquet-cli (#958)\n\n* PARQUET-2138: Add ShowBloomFilterCommand to parquet-cli\r\n\r\n* address comments",
+        "commit.author.name": "WangGuangxin",
+        "pcid": "5290bd5e0ee5dc30db0576e2bfc6eea335c465cf",
+        "changes": {
+            "parquet-cli/src/main/java/org/apache/parquet/cli/Main.java": {
+                "new": {
+                    "(None, None)": [
+                        38
+                    ],
+                    "('org.apache.parquet.cli#Main', None)": [
+                        103
+                    ]
+                }
+            }
+        }
+    },
+    "5290bd5e0ee5dc30db0576e2bfc6eea335c465cf": {
+        "authored_data": "2022 Jun 29 19:21",
+        "commit.message": "PARQUET-2161: Fix row index generation in combination with range filtering (#978)\n\n* PARQUET-2161: Fix row index generation\r\n\r\nThe row indexes introduced in PARQUET-2117 are not computed correctly\r\nwhen:\r\n(1) range or offset metadata filter is applied, and\r\n(2) the first row group was eliminated by the filter\r\n\r\nFor example, if a file has two row groups with 10 rows each, and we\r\nattempt to only read the 2nd row group, we are going to produce row\r\nindexes 0, 1, 2, ..., 9 instead of expected 10, 11, ..., 19.\r\n\r\nThis happens because functions `filterFileMetaDataByStart`\r\nand `filterFileMetaDataByMidpoint` modify their input `FileMetaData`.\r\nTo return correct result, `generateRowGroupOffsets` has to be computed\r\nbefore these filters are applied.\r\n\r\n* Adjust assert message",
+        "commit.author.name": "Ala Luszczak",
+        "pcid": "e06384455567c56d5906fc3a152ab00fd8dfdf33",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/format/converter/ParquetMetadataConverter.java": {
+                "old": {
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream,MetadataFilter,InternalFileDecryptor,boolean,int)')": [
+                        1454,
+                        1461
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream,MetadataFilter,InternalFileDecryptor,boolean,int)')": [
+                        1453,
+                        1454,
+                        1456,
+                        1462,
+                        1463,
+                        1465
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/filter2/recordlevel/PhoneBookWriter.java": {
+                "old": {
+                    "('org.apache.parquet.filter2.recordlevel#PhoneBookWriter', 'readUsers(ParquetReader,boolean)')": [
+                        362
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.filter2.recordlevel#PhoneBookWriter', 'readUsers(ParquetReader,boolean)')": [
+                        362
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/hadoop/TestParquetReader.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#TestParquetReader', None)": [
+                        63
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetReader', 'readUsers(FilterCompat,boolean,boolean)')": [
+                        135
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#TestParquetReader', None)": [
+                        54,
+                        64,
+                        66,
+                        133,
+                        134,
+                        175,
+                        176,
+                        177
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetReader', 'readUsers(FilterCompat,boolean,boolean)')": [
+                        132
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetReader', 'readUsers(FilterCompat,boolean,boolean,long,long)')": [
+                        135,
+                        136,
+                        142,
+                        143
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetReader', 'testRangeFiltering')": [
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174
+                    ]
+                }
+            }
+        }
+    },
+    "e06384455567c56d5906fc3a152ab00fd8dfdf33": {
+        "authored_data": "2022 Jun 18 03:09",
+        "commit.message": "PARQUET-2157: add bloom filter fpp config (#975)\n\n* add bloom filter fpp config\r\n\r\n* Trigger Build\r\n\r\n* add commons-lang dependecy in hadoop test\r\n\r\n* address comments\r\n\r\n* update doc\r\n\r\n* fix doc format\r\n\r\n* add one more space to break the line in md file\r\n\r\n* address comments\r\n\r\n* address comments\r\n\r\n* remove fpp 0.005 from the test",
+        "commit.author.name": "Huaxin Gao",
+        "pcid": "c797a85b37ced716efe36597344eb2f3fa06a1cf",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/column/ParquetProperties.java": {
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.parquet.column#ParquetProperties', None)": [
+                        61,
+                        105,
+                        128,
+                        263,
+                        264,
+                        318,
+                        329,
+                        345,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489
+                    ],
+                    "('org.apache.parquet.column#ParquetProperties', 'getBloomFilterFPP(ColumnDescriptor)')": [
+                        265,
+                        266,
+                        267
+                    ],
+                    "('org.apache.parquet.column#ParquetProperties', 'toString')": [
+                        300
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/impl/ColumnWriterBase.java": {
+                "old": {
+                    "('org.apache.parquet.column.impl#ColumnWriterBase', None)": [
+                        95
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.parquet.column.impl#ColumnWriterBase', None)": [
+                        94,
+                        97
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetOutputFormat.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'getRecordWriter(Configuration,Path,CompressionCodecName,Mode)')": [
+                        475,
+                        477
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', None)": [
+                        154,
+                        230
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'getRecordWriter(Configuration,Path,CompressionCodecName,Mode)')": [
+                        463,
+                        464,
+                        479,
+                        481
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetWriter.java": {
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetWriter', None)": [
+                        606,
+                        607,
+                        608,
+                        609,
+                        610
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/hadoop/TestParquetWriter.java": {
+                "new": {
+                    "(None, None)": [
+                        42,
+                        44,
+                        48,
+                        52
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetWriter', 'testParquetFileWithBloomFilterWithFpp')": [
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetWriter', None)": [
+                        343,
+                        344,
+                        345,
+                        346,
+                        347
+                    ]
+                }
+            }
+        }
+    },
+    "c797a85b37ced716efe36597344eb2f3fa06a1cf": {
+        "authored_data": "2022 Jun 10 07:21",
+        "commit.message": "PARQUET-2154: `ParquetFileReader` should close its input stream when `filterRowGroups` throw Exception in constructor (#972)\n\n* fix fd leak if filterRowGroups thrown IOE\r\n\r\nSigned-off-by: yangjie01 <yangjie01@baidu.com>\r\n\r\n* change to Exception",
+        "commit.author.name": "YangJie",
+        "pcid": "a2da156b251d13bce1fa81eb95b555da04880bc1",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileReader.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetFileReader', None)": [
+                        718,
+                        762,
+                        790
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetFileReader', None)": [
+                        718,
+                        719,
+                        720,
+                        721,
+                        722,
+                        723,
+                        724,
+                        725,
+                        769,
+                        770,
+                        771,
+                        772,
+                        773,
+                        774,
+                        775,
+                        776,
+                        804,
+                        805,
+                        806,
+                        807,
+                        808,
+                        809,
+                        810,
+                        811
+                    ]
+                }
+            }
+        }
+    }
+}

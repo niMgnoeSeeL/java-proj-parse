@@ -1,0 +1,473 @@
+{
+    "637d107d1b3d4952883333f27b101226c95e21ef": {
+        "authored_data": "2012 Mar 16 23:10",
+        "commit.message": "no needs to store system ids to a ThreadLocal, modules not invoked in lazy-loading way anymore\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/digester/trunk@1301817 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Simone Tripodi",
+        "pcid": "d98161380e273e6360c4a73ba9d4d41111c76422",
+        "changes": {
+            "core/src/main/java/org/apache/commons/digester3/xmlrules/FromXmlRulesModule.java": {
+                "old": {
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', None)": [
+                        55
+                    ],
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', 'configure')": [
+                        65,
+                        70,
+                        77
+                    ],
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', 'loadXMLRules(InputSource)')": [
+                        99
+                    ],
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', 'getSystemIds')": [
+                        257
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', None)": [
+                        55
+                    ],
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', 'configure')": [
+                        65,
+                        76
+                    ],
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', 'loadXMLRules(InputSource)')": [
+                        98
+                    ],
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', 'getSystemIds')": [
+                        256
+                    ]
+                }
+            }
+        }
+    },
+    "d98161380e273e6360c4a73ba9d4d41111c76422": {
+        "authored_data": "2012 Mar 16 23:01",
+        "commit.message": "[DIGESTER-163] no needs of RulesBinder lazy loading, no needs to store RulesBinder in ThreadLocal, attempt to resolve concurrent issues\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/digester/trunk@1301815 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Simone Tripodi",
+        "pcid": "b9a2cd846922536904c71eed878deb327e318f21",
+        "changes": {
+            "core/src/main/java/org/apache/commons/digester3/binder/AbstractRulesModule.java": {
+                "old": {
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', None)": [
+                        31
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'configure(RulesBinder)')": [
+                        38,
+                        43,
+                        50
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'addError(String,Object)')": [
+                        71
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'addError(Throwable)')": [
+                        83
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'install(RulesModule)')": [
+                        94
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'forPattern(String)')": [
+                        106
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'rulesBinder')": [
+                        116
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', None)": [
+                        31
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'configure(RulesBinder)')": [
+                        38,
+                        43,
+                        50
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'addError(String,Object)')": [
+                        71
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'addError(Throwable)')": [
+                        83
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'install(RulesModule)')": [
+                        94
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'forPattern(String)')": [
+                        106
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'rulesBinder')": [
+                        116
+                    ]
+                }
+            },
+            "core/src/main/java/org/apache/commons/digester3/binder/DigesterLoader.java": {
+                "old": {
+                    "('org.apache.commons.digester3.binder#DigesterLoader', 'createRuleSet')": [
+                        597,
+                        598,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604,
+                        605
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.digester3.binder#DigesterLoader', 'setClassLoader(ClassLoader)')": [
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208
+                    ]
+                }
+            }
+        }
+    },
+    "b9a2cd846922536904c71eed878deb327e318f21": {
+        "authored_data": "2012 Mar 16 13:29",
+        "commit.message": "check already bound rules per thread and not tracking them globally, otherwise threads are cheated\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/digester/trunk@1301493 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Simone Tripodi",
+        "pcid": "55c2ef2fe79d24677becaf2430c6015ffa0ba52c",
+        "changes": {
+            "core/src/main/java/org/apache/commons/digester3/xmlrules/FromXmlRulesModule.java": {
+                "old": {
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', None)": [
+                        55
+                    ],
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', 'configure')": [
+                        65,
+                        76
+                    ],
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', 'loadXMLRules(InputSource)')": [
+                        98
+                    ],
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', 'getSystemIds')": [
+                        256
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', None)": [
+                        55
+                    ],
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', 'configure')": [
+                        65,
+                        70,
+                        77
+                    ],
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', 'loadXMLRules(InputSource)')": [
+                        99
+                    ],
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', 'getSystemIds')": [
+                        257
+                    ]
+                }
+            }
+        }
+    },
+    "55c2ef2fe79d24677becaf2430c6015ffa0ba52c": {
+        "authored_data": "2012 Mar 15 21:41",
+        "commit.message": "less efficient, but that should fix [DIGESTER-163]\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/digester/trunk@1301217 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Simone Tripodi",
+        "pcid": "007901c19daead0f9b76fda63f4fa67518206d1f",
+        "changes": {
+            "core/src/main/java/org/apache/commons/digester3/xmlrules/FromXmlRulesModule.java": {
+                "old": {
+                    "(None, None)": [
+                        32,
+                        34
+                    ],
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', None)": [
+                        57,
+                        58
+                    ],
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', 'configure')": [
+                        69,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        101
+                    ],
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', 'loadXMLRules(InputSource)')": [
+                        121,
+                        122
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', 'configure')": [
+                        65,
+                        76
+                    ],
+                    "('org.apache.commons.digester3.xmlrules#FromXmlRulesModule', 'loadXMLRules(InputSource)')": [
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118
+                    ]
+                }
+            }
+        }
+    },
+    "007901c19daead0f9b76fda63f4fa67518206d1f": {
+        "authored_data": "2012 Mar 15 20:09",
+        "commit.message": "potential fix for [DIGESTER-163]\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/digester/trunk@1301177 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Simone Tripodi",
+        "pcid": "754f43703ab3e4c9b0541222b5df47fabe148e13",
+        "changes": {
+            "core/src/main/java/org/apache/commons/digester3/binder/AbstractRulesModule.java": {
+                "old": {
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', None)": [
+                        31
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'configure(RulesBinder)')": [
+                        38,
+                        43,
+                        50
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'addError(String,Object)')": [
+                        71
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'addError(Throwable)')": [
+                        83
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'install(RulesModule)')": [
+                        94
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'forPattern(String)')": [
+                        106
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'rulesBinder')": [
+                        116
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', None)": [
+                        31
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'configure(RulesBinder)')": [
+                        38,
+                        43,
+                        50
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'addError(String,Object)')": [
+                        71
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'addError(Throwable)')": [
+                        83
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'install(RulesModule)')": [
+                        94
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'forPattern(String)')": [
+                        106
+                    ],
+                    "('org.apache.commons.digester3.binder#AbstractRulesModule', 'rulesBinder')": [
+                        116
+                    ]
+                }
+            }
+        }
+    },
+    "754f43703ab3e4c9b0541222b5df47fabe148e13": {
+        "authored_data": "2012 Mar 15 20:04",
+        "commit.message": "added (occasionally) failing test related to [DIGESTER-163]\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/digester/trunk@1301174 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Simone Tripodi",
+        "pcid": "46641137d0d0925c07541a5af66ce9a29c42ab6b",
+        "changes": {
+            "core/src/test/java/org/apache/commons/digester3/binder/Digester163TestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        131
+                    ],
+                    "('org.apache.commons.digester3.binder#Digester163TestCase', 'before')": [
+                        52,
+                        56
+                    ],
+                    "('org.apache.commons.digester3.binder#Digester163TestCase', 'test')": [
+                        76,
+                        79,
+                        80,
+                        81,
+                        84,
+                        85,
+                        86,
+                        87,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        124,
+                        127,
+                        128
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        36,
+                        131
+                    ],
+                    "('org.apache.commons.digester3.binder#Digester163TestCase', 'before')": [
+                        51,
+                        57
+                    ],
+                    "('org.apache.commons.digester3.binder#Digester163TestCase', None)": [
+                        61,
+                        62,
+                        63
+                    ],
+                    "('org.apache.commons.digester3.binder#Digester163TestCase', 'testSingle')": [
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71
+                    ],
+                    "('org.apache.commons.digester3.binder#Digester163TestCase', 'test')": [
+                        83,
+                        93,
+                        94,
+                        95,
+                        117,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129
+                    ]
+                }
+            }
+        }
+    },
+    "46641137d0d0925c07541a5af66ce9a29c42ab6b": {
+        "authored_data": "2012 Mar 15 14:36",
+        "commit.message": "yet another attempt to make the loader failing\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/digester/trunk@1301007 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Simone Tripodi",
+        "pcid": "a7cae8ff1a6d3f406f2533b693cc574fa238ff27",
+        "changes": {
+            "core/src/test/java/org/apache/commons/digester3/binder/Digester163TestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        37,
+                        120
+                    ],
+                    "('org.apache.commons.digester3.binder#Digester163TestCase', None)": [
+                        46
+                    ],
+                    "('org.apache.commons.digester3.binder#Digester163TestCase', 'setUp')": [
+                        49
+                    ],
+                    "('org.apache.commons.digester3.binder#Digester163TestCase', 'test')": [
+                        67,
+                        78,
+                        82,
+                        88
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.digester3.binder#Digester163TestCase', None)": [
+                        45
+                    ],
+                    "('org.apache.commons.digester3.binder#Digester163TestCase', 'before')": [
+                        48
+                    ],
+                    "('org.apache.commons.digester3.binder#Digester163TestCase', 'test')": [
+                        66,
+                        67,
+                        71,
+                        79,
+                        80,
+                        84,
+                        85,
+                        91,
+                        107,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128
+                    ],
+                    "(None, None)": [
+                        129,
+                        130
+                    ]
+                }
+            }
+        }
+    },
+    "a7cae8ff1a6d3f406f2533b693cc574fa238ff27": {
+        "authored_data": "2012 Mar 15 10:46",
+        "commit.message": "added recommendations on using shortcut methods\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/digester/trunk@1300903 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Simone Tripodi",
+        "pcid": "4ced0921710d931f6157c9d6112ff02d25860406",
+        "changes": {
+            "core/src/main/java/org/apache/commons/digester3/binder/DigesterLoader.java": {
+                "new": {
+                    "('org.apache.commons.digester3.binder#DigesterLoader', None)": [
+                        528,
+                        529,
+                        530,
+                        542,
+                        543,
+                        544
+                    ]
+                }
+            }
+        }
+    }
+}

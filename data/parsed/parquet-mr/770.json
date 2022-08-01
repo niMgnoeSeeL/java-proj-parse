@@ -1,0 +1,333 @@
+{
+    "7b415faaed09eba1103ea30577ef1a32fba7048c": {
+        "authored_data": "2014 Aug 20 20:52",
+        "commit.message": "Parquet-70: Fixed storing pig schema to udfcontext for non projection case and moved...\n\n... column index access setting to udfcontext so as not to affect other loaders.\n\nI found an problem that affects both the Column name access and column index access due to the way the pig schema is stored by the loader.\n\n##Column Name Access:\nThe ParquetLoader was only storing the pig schema in the UDFContext when push projection is applied.  In the full load case, the schema was not stored which triggered a full reload of the schema during task execution.  You can see in initSchema references the UDFContext for the schema, but that is only set in push projection.  However, the schema needs to be set in both the job context (so the TupleReadSupport can access the schema) and the UDFContext (so the task side loader can access it), which is why it is set in both locations.  This also meant the requested schema was never set to the task side either, which could cause other problems as well.\n\n##Column Index Access:\nFor index based access, the problem was that the column index access setting and the requested schema were not stored in the udfcontext and sent to the task side (unless pushProjection was called).  The schema was stored in the job context, but this would be overwritten if another loader was executed first.  Also, the property to use column index access was only being set at the job context level, so subsequent loaders would use column index access even if they didn't request it.\n\nThis fix now ensures that both the schema and column index access are set in the udfcontext and loaded in the initSchema method.\n\nJIRA: https://issues.apache.org/jira/browse/PARQUET-70\n\n-Dan\n\nAuthor: Daniel Weeks <dweeks@netflix.com>\n\nCloses #36 from dcw-netflix/pig-schema-context and squashes the following commits:\n\nf896a25 [Daniel Weeks] Moved property loading into setInput\n8f3dc28 [Daniel Weeks] Changed to set job conf settings in both front and backend\nd758de0 [Daniel Weeks] Updated to use isFrontend() for setting context properties\nb7ef96a [Daniel Weeks] Fixed storing pig schema to udfcontext for non projection case and moved column index access setting to udfcontext so as not to affect other loaders.\n",
+        "commit.author.name": "Daniel Weeks",
+        "pcid": "7af955a0ac0182deca139e4a15352ce702691dd4",
+        "changes": {
+            "parquet-pig/src/main/java/parquet/pig/ParquetLoader.java": {
+                "old": {
+                    "('parquet.pig#ParquetLoader', 'setLocation(String,Job)')": [
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146
+                    ],
+                    "('parquet.pig#ParquetLoader', None)": [
+                        147
+                    ],
+                    "('parquet.pig#ParquetLoader', 'initSchema(Job)')": [
+                        242,
+                        243,
+                        244
+                    ]
+                },
+                "new": {
+                    "('parquet.pig#ParquetLoader', 'setLocation(String,Job)')": [
+                        138
+                    ],
+                    "('parquet.pig#ParquetLoader', 'setInput(String,Job)')": [
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168
+                    ]
+                }
+            }
+        }
+    },
+    "0d497c4547934485f2aa9e2e9ead46f26fab7bd2": {
+        "authored_data": "2014 Aug 18 17:38",
+        "commit.message": "PARQUET-73: Add support for FilterPredicates to cascading schemes\n\nAuthor: Alex Levenson <alexlevenson@twitter.com>\n\nCloses #34 from isnotinvain/alexlevenson/filter-cascading-scheme and squashes the following commits:\n\ncd69a8e [Alex Levenson] Add support for FilterPredicates to cascading schemes\n",
+        "commit.author.name": "Alex Levenson",
+        "pcid": "08a3c6a7dd41f02bb0c876829c01392e6f2d09a2",
+        "changes": {
+            "parquet-cascading/src/main/java/parquet/cascading/ParquetTBaseScheme.java": {
+                "old": {
+                    "(None, None)": [
+                        30,
+                        31
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25
+                    ],
+                    "('parquet.cascading#ParquetTBaseScheme', None)": [
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54
+                    ],
+                    "('parquet.cascading#ParquetTBaseScheme', 'sourceConfInit(FlowProcess,Tap,JobConf)')": [
+                        59,
+                        60
+                    ]
+                }
+            },
+            "parquet-cascading/src/main/java/parquet/cascading/ParquetTupleScheme.java": {
+                "old": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        44
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        21,
+                        22,
+                        23,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        45,
+                        46,
+                        47
+                    ],
+                    "('parquet.cascading#ParquetTupleScheme', None)": [
+                        63,
+                        67,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        96
+                    ],
+                    "('parquet.cascading#ParquetTupleScheme', 'sourceConfInit(FlowProcess,Tap,JobConf)')": [
+                        103,
+                        104,
+                        105,
+                        106,
+                        107
+                    ]
+                }
+            },
+            "parquet-cascading/src/main/java/parquet/cascading/ParquetValueScheme.java": {
+                "old": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31
+                    ],
+                    "('parquet.cascading#ParquetValueScheme', None)": [
+                        42
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        35
+                    ],
+                    "('parquet.cascading#ParquetValueScheme', None)": [
+                        45,
+                        46,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        60,
+                        61
+                    ],
+                    "('parquet.cascading#ParquetValueScheme', 'sourceConfInit(FlowProcess,Tap,JobConf)')": [
+                        57,
+                        58,
+                        59
+                    ]
+                }
+            },
+            "parquet-scrooge/src/main/java/parquet/scrooge/ParquetScroogeScheme.java": {
+                "old": {
+                    "(None, None)": [
+                        30,
+                        31,
+                        32,
+                        33,
+                        34
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        31
+                    ],
+                    "('parquet.scrooge#ParquetScroogeScheme', None)": [
+                        43,
+                        44,
+                        45,
+                        46,
+                        47
+                    ]
+                }
+            }
+        }
+    },
+    "3a396d3a4000bd2575e5314cdea0ba1e2367804c": {
+        "authored_data": "2014 Aug 05 02:04",
+        "commit.message": "PARQUET-59: Fix parquet-scrooge test on hadoop-2.\n\nAuthor: Ryan Blue <rblue@cloudera.com>\n\nCloses #27 from rdblue/PARQUET-59-fix-scrooge-test-on-hadoop-2 and squashes the following commits:\n\nac34369 [Ryan Blue] PARQUET-59: Fix parquet-scrooge test on hadoop-2.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "0148455170be07f89bd6b9230960a6cd510c7ca6",
+        "changes": {
+            "parquet-scrooge/src/test/java/parquet/scrooge/ParquetScroogeSchemeTest.java": {
+                "old": {
+                    "('parquet.scrooge#ParquetScroogeSchemeTest', 'verifyScroogeRead(TBase,Class,String,String)')": [
+                        100,
+                        103
+                    ]
+                },
+                "new": {
+                    "('parquet.scrooge#ParquetScroogeSchemeTest', 'verifyScroogeRead(TBase,Class,String,String)')": [
+                        100,
+                        103
+                    ]
+                }
+            }
+        }
+    },
+    "0148455170be07f89bd6b9230960a6cd510c7ca6": {
+        "authored_data": "2014 Aug 01 23:38",
+        "commit.message": "PARQUET-13: The `-d` option for `parquet-schema` shouldn't have optional argument\n\nAuthor: Cheng Lian <lian.cs.zju@gmail.com>\n\nCloses #11 from liancheng/fix-cli-arg and squashes the following commits:\n\n85a5453 [Cheng Lian] Reverted the dummy change\n47ce817 [Cheng Lian] Dummy change to trigger Travis\n1c0a244 [Cheng Lian] The `-d` option for `parquet-schema` shouldn't have optional argument\n",
+        "commit.author.name": "Cheng Lian",
+        "pcid": "0793e49b85d34135fee9f55030997d95f62af97b",
+        "changes": {
+            "parquet-tools/src/main/java/parquet/tools/command/ShowSchemaCommand.java": {
+                "old": {
+                    "('parquet.tools.command#ShowSchemaCommand', None)": [
+                        47
+                    ]
+                }
+            }
+        }
+    },
+    "21d871b54940ad8e552fac54808fe0b31872ade8": {
+        "authored_data": "2014 Jul 30 21:19",
+        "commit.message": "PARQUET-56: Added an accessor for the Long column type.\n\nI noticed there was a missing accessor for the Long column type in the example Group.\n\nAuthor: James Scott <jim.scott@urbanairship.com>\n\nCloses #25 from scottjab/getLong and squashes the following commits:\n\nf96bb83 [James Scott] Added support for getting Longs in the sample group object.\n",
+        "commit.author.name": "James Scott",
+        "pcid": "b0e26ee6f20a00a0d0769408575744c51a016018",
+        "changes": {
+            "parquet-column/src/main/java/parquet/example/data/GroupValueSource.java": {
+                "new": {
+                    "('parquet.example.data#GroupValueSource', 'getLong(String,int)')": [
+                        39,
+                        40
+                    ],
+                    "('parquet.example.data#GroupValueSource', None)": [
+                        41,
+                        42,
+                        64
+                    ],
+                    "('parquet.example.data#GroupValueSource', 'getLong(int,int)')": [
+                        63
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/example/data/simple/SimpleGroup.java": {
+                "new": {
+                    "('parquet.example.data.simple#SimpleGroup', 'getLong(int,int)')": [
+                        130,
+                        131
+                    ],
+                    "('parquet.example.data.simple#SimpleGroup', None)": [
+                        132,
+                        133,
+                        134
+                    ]
+                }
+            }
+        }
+    }
+}

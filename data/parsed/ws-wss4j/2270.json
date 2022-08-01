@@ -1,0 +1,538 @@
+{
+    "c96347e0d3f9fdb0926d52c06fdc7aeb78bc5c0b": {
+        "authored_data": "2006 Jul 21 19:52",
+        "commit.message": "Modifying the handlers to specify the crypto implementation dynamically\n\nRight now WSS4J allows users to specify the implementation of \norg.apache.ws.security.components.crypto.Crypto to be specified using a property \nfile. I'd like to propose a few changes to optionally load provide a reference \nto a java.util.Properties object with out specifying the .properties file.\n\nThis requires an extra method in the CryptoFactory class to create a Crypto \ninstance using a Properties object.\n\npublic static Crypto getInstance(Properties properties) \n\nAnd then changes to the following methods in WSHandler to look for the Properties \nobject in the MessageContext:\n\nloadSignatureCrypto(RequestData)\nloadEncryptionCrypto(RequestData)\nloadDecryptionCrypto(RequestData)\n\nIn the case where a client wants to use a Properties object rather than a \nproperty file, he/she should create that object and add that to the\nMessageContext under an id that he/she picks. This id MUST be specified in either\none of the handler parameters named (In axis2-rampart configuration these will \nbe child elements within the <action> element):\n\nSignaturePropRefId\nencryptionPropRefId\ndecryptionPropRefId\n\n\n",
+        "commit.author.name": "Ruchith Udayanga Fernando",
+        "pcid": "a515943b01de7c3419d6a760bd7305f1e330fcf5",
+        "changes": {
+            "src/org/apache/ws/security/components/crypto/CryptoFactory.java": {
+                "new": {
+                    "('org.apache.ws.security.components.crypto#CryptoFactory', None)": [
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78
+                    ],
+                    "('org.apache.ws.security.components.crypto#CryptoFactory', 'getInstance(Properties)')": [
+                        70,
+                        71,
+                        72
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/handler/WSHandler.java": {
+                "old": {
+                    "(None, None)": [
+                        31,
+                        46,
+                        47,
+                        48
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'loadSignatureCrypto(RequestData)')": [
+                        352
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30,
+                        37,
+                        38,
+                        39,
+                        48
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'loadSignatureCrypto(RequestData)')": [
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        374
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'loadEncryptionCrypto(RequestData)')": [
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'loadDecryptionCrypto(RequestData)')": [
+                        817,
+                        818,
+                        819,
+                        820,
+                        821,
+                        822,
+                        823,
+                        824,
+                        825,
+                        826,
+                        827,
+                        828,
+                        829,
+                        830,
+                        831,
+                        832,
+                        833,
+                        834,
+                        835,
+                        836,
+                        837
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/handler/WSHandlerConstants.java": {
+                "new": {
+                    "('org.apache.ws.security.handler#WSHandlerConstants', None)": [
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569,
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        575
+                    ]
+                }
+            }
+        }
+    },
+    "a515943b01de7c3419d6a760bd7305f1e330fcf5": {
+        "authored_data": "2006 Jul 06 13:47",
+        "commit.message": "Added the MessageContext parameter to getClassLoader() method\n\nAxis2 handlers will have to hold on to the RequestData  object as an attribute of the handler classes if they are to return the ServiceClass loader. This causes problems in multi threaded environments and simply breaks the stateless handler concept. Therefore we have to pass in the MessageContext object into the getClassloader() method to figure out the classloader.\n\n\n\n",
+        "commit.author.name": "Ruchith Udayanga Fernando",
+        "pcid": "cc6287e3f61415e3db7bfb380a27673a0c3d0071",
+        "changes": {
+            "src/org/apache/ws/security/handler/WSHandler.java": {
+                "old": {
+                    "('org.apache.ws.security.handler#WSHandler', 'loadSignatureCrypto(RequestData)')": [
+                        346
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'loadEncryptionCrypto(RequestData)')": [
+                        371
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'getPassword(String,int,String,String,RequestData)')": [
+                        580
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'readPwViaCallbackClass(String,String,int)')": [
+                        604,
+                        610
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'loadDecryptionCrypto(RequestData)')": [
+                        767
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'getPasswordCB(RequestData)')": [
+                        815
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', None)": [
+                        1073,
+                        1074,
+                        1075,
+                        1076,
+                        1077,
+                        1083,
+                        1084
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'getClassLoader')": [
+                        1078,
+                        1079,
+                        1080,
+                        1081,
+                        1082
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.handler#WSHandler', 'loadSignatureCrypto(RequestData)')": [
+                        346,
+                        347
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'loadEncryptionCrypto(RequestData)')": [
+                        372,
+                        373
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'getPassword(String,int,String,String,RequestData)')": [
+                        582
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'readPwViaCallbackClass(String,String,int,RequestData)')": [
+                        606,
+                        607,
+                        613,
+                        614
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'loadDecryptionCrypto(RequestData)')": [
+                        771,
+                        772
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'getPasswordCB(RequestData)')": [
+                        820,
+                        821
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', None)": [
+                        1079,
+                        1080,
+                        1081,
+                        1082,
+                        1083,
+                        1084,
+                        1085,
+                        1086,
+                        1087,
+                        1088,
+                        1089,
+                        1090,
+                        1091,
+                        1092,
+                        1093,
+                        1094,
+                        1095,
+                        1096,
+                        1102,
+                        1103
+                    ],
+                    "('org.apache.ws.security.handler#WSHandler', 'getClassLoader(Object)')": [
+                        1097,
+                        1098,
+                        1099,
+                        1100,
+                        1101
+                    ]
+                }
+            }
+        }
+    },
+    "cc6287e3f61415e3db7bfb380a27673a0c3d0071": {
+        "authored_data": "2006 Jul 05 17:14",
+        "commit.message": "Cleaning up a few method signatures - removing unwanted parameters\n\n\n",
+        "commit.author.name": "Ruchith Udayanga Fernando",
+        "pcid": "ec466f1c52f1dec0c928bfddb59ed1c9eb140eae",
+        "changes": {
+            "src/org/apache/ws/security/message/WSSecDKEncrypt.java": {
+                "old": {
+                    "('org.apache.ws.security.message#WSSecDKEncrypt', 'build(Document,Crypto,WSSecHeader)')": [
+                        50,
+                        56
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message#WSSecDKEncrypt', 'build(Document,WSSecHeader)')": [
+                        50,
+                        56
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/WSSecDKSign.java": {
+                "old": {
+                    "('org.apache.ws.security.message#WSSecDKSign', 'build(Document,Crypto,WSSecHeader)')": [
+                        83,
+                        84,
+                        85,
+                        86,
+                        87
+                    ],
+                    "('org.apache.ws.security.message#WSSecDKSign', 'prepare(Document,Crypto,WSSecHeader)')": [
+                        113,
+                        115,
+                        118
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message#WSSecDKSign', 'build(Document,WSSecHeader)')": [
+                        83,
+                        84,
+                        85
+                    ],
+                    "('org.apache.ws.security.message#WSSecDKSign', 'prepare(Document,WSSecHeader)')": [
+                        111,
+                        113
+                    ]
+                }
+            },
+            "src/org/apache/ws/security/message/WSSecDerivedKeyBase.java": {
+                "old": {
+                    "('org.apache.ws.security.message#WSSecDerivedKeyBase', None)": [
+                        144,
+                        145,
+                        146
+                    ],
+                    "('org.apache.ws.security.message#WSSecDerivedKeyBase', 'prepare(Document,Crypto)')": [
+                        149
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message#WSSecDerivedKeyBase', 'prepare(Document)')": [
+                        146
+                    ]
+                }
+            },
+            "test/wssec/TestWSSecurityNewDK.java": {
+                "old": {
+                    "('wssec#TestWSSecurityNewDK', 'testEncryptionDecryptionTRIPLEDES')": [
+                        149
+                    ],
+                    "('wssec#TestWSSecurityNewDK', 'testEncryptionDecryptionAES128')": [
+                        190
+                    ],
+                    "('wssec#TestWSSecurityNewDK', 'testSignature')": [
+                        226
+                    ],
+                    "('wssec#TestWSSecurityNewDK', 'testSignatureEncrypt')": [
+                        264,
+                        270,
+                        271
+                    ],
+                    "('wssec#TestWSSecurityNewDK', 'testEncryptSignature')": [
+                        310,
+                        317,
+                        318
+                    ]
+                },
+                "new": {
+                    "('wssec#TestWSSecurityNewDK', 'testEncryptionDecryptionTRIPLEDES')": [
+                        149
+                    ],
+                    "('wssec#TestWSSecurityNewDK', 'testEncryptionDecryptionAES128')": [
+                        190
+                    ],
+                    "('wssec#TestWSSecurityNewDK', 'testSignature')": [
+                        226
+                    ],
+                    "('wssec#TestWSSecurityNewDK', 'testSignatureEncrypt')": [
+                        264,
+                        270
+                    ],
+                    "('wssec#TestWSSecurityNewDK', 'testEncryptSignature')": [
+                        309,
+                        316
+                    ]
+                }
+            },
+            "test/wssec/TestWSSecurityNewSCT.java": {
+                "old": {
+                    "('wssec#TestWSSecurityNewSCT', 'testSCTDKTEncrypt')": [
+                        154
+                    ],
+                    "('wssec#TestWSSecurityNewSCT', 'testSCTKDKTSign')": [
+                        192
+                    ],
+                    "('wssec#TestWSSecurityNewSCT', 'testSCTKDKTSignEncrypt')": [
+                        230,
+                        236
+                    ],
+                    "('wssec#TestWSSecurityNewSCT', 'testSCTKDKTEncryptSign')": [
+                        275,
+                        281
+                    ]
+                },
+                "new": {
+                    "('wssec#TestWSSecurityNewSCT', 'testSCTDKTEncrypt')": [
+                        154
+                    ],
+                    "('wssec#TestWSSecurityNewSCT', 'testSCTKDKTSign')": [
+                        192
+                    ],
+                    "('wssec#TestWSSecurityNewSCT', 'testSCTKDKTSignEncrypt')": [
+                        230,
+                        236
+                    ],
+                    "('wssec#TestWSSecurityNewSCT', 'testSCTKDKTEncryptSign')": [
+                        275,
+                        281
+                    ]
+                }
+            }
+        }
+    },
+    "ec466f1c52f1dec0c928bfddb59ed1c9eb140eae": {
+        "authored_data": "2006 Jun 30 10:07",
+        "commit.message": "Added setter methods to WSSecEncryptedKey to set the size of the ephemeral key and the encryption algorithm\n\n\n",
+        "commit.author.name": "Ruchith Udayanga Fernando",
+        "pcid": "30137a01f4d5dda8067199d19777ceeb544775b9",
+        "changes": {
+            "src/org/apache/ws/security/message/WSSecEncryptedKey.java": {
+                "old": {
+                    "('org.apache.ws.security.message#WSSecEncryptedKey', 'generateEphemeralKey')": [
+                        289
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.message#WSSecEncryptedKey', None)": [
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        409,
+                        416,
+                        417
+                    ],
+                    "('org.apache.ws.security.message#WSSecEncryptedKey', 'generateEphemeralKey')": [
+                        295
+                    ],
+                    "('org.apache.ws.security.message#WSSecEncryptedKey', 'setKeySize(int)')": [
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415
+                    ],
+                    "('org.apache.ws.security.message#WSSecEncryptedKey', 'setKeyEncAlgo(String)')": [
+                        418,
+                        419
+                    ],
+                    "(None, None)": [
+                        420
+                    ]
+                }
+            }
+        }
+    },
+    "30137a01f4d5dda8067199d19777ceeb544775b9": {
+        "authored_data": "2006 Jun 06 08:25",
+        "commit.message": "fix for WSS-44: Handle sigConf of the response when there's no signature in the request\n",
+        "commit.author.name": "Ruchith Udayanga Fernando",
+        "pcid": "fbafdf0e11793d4714da14a10ea2db73b4f79b80",
+        "changes": {
+            "src/org/apache/ws/security/handler/WSHandler.java": {
+                "old": {
+                    "('org.apache.ws.security.handler#WSHandler', 'checkSignatureConfirmation(RequestData,Vector)')": [
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        304,
+                        305,
+                        306
+                    ]
+                },
+                "new": {
+                    "('org.apache.ws.security.handler#WSHandler', 'checkSignatureConfirmation(RequestData,Vector)')": [
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315
+                    ]
+                }
+            }
+        }
+    },
+    "fbafdf0e11793d4714da14a10ea2db73b4f79b80": {
+        "authored_data": "2006 May 23 13:21",
+        "commit.message": "Updating wss4j to the latest policy (now NEETHI) snapshot\n",
+        "commit.author.name": "Ruchith Udayanga Fernando",
+        "pcid": "c641f0fc7f059d52e336254907f4b2470e996427",
+        "changes": {
+            "src/org/apache/ws/security/policy/parser/WSSPolicyProcessor.java": {
+                "old": {
+                    "(None, None)": [
+                        28,
+                        32
+                    ],
+                    "('org.apache.ws.security.policy.parser#WSSPolicyProcessor', 'processPolicy(Policy)')": [
+                        205,
+                        213
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        30
+                    ],
+                    "('org.apache.ws.security.policy.parser#WSSPolicyProcessor', 'processPolicy(Policy)')": [
+                        205,
+                        213
+                    ]
+                }
+            }
+        }
+    }
+}

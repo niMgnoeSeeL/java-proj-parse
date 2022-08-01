@@ -1,0 +1,3238 @@
+{
+    "f637c4458a3b1dc4ecaa35957adf13ecfbe7d12d": {
+        "authored_data": "2014 Sep 10 17:37",
+        "commit.message": "PARQUET-87: Add API for projection pushdown on the cascading scheme level\n\nJIRA: https://issues.apache.org/jira/browse/PARQUET-87\nPreviously, the projection pushdown configuration is global, and not bind to a specific tap.\nAfter adding this API, projection pushdown can be done more \"naturally\", which may benefit scalding. The code that uses this API would look like:\n\n```\nScheme sourceScheme = new ParquetScroogeScheme(new Config().withProjection(projectionFilter));\n Tap source = new Hfs(sourceScheme, PARQUET_PATH);\n```\n\nAuthor: Tianshuo Deng <tdeng@twitter.com>\n\nCloses #51 from tsdeng/projection_from_scheme and squashes the following commits:\n\n2c72757 [Tianshuo Deng] make config class final\n813dc1a [Tianshuo Deng] erge branch 'master' into projection_from_scheme\nb587b79 [Tianshuo Deng] make constructor of Config private, fix format\n3aa7dd2 [Tianshuo Deng] remove builder\n9348266 [Tianshuo Deng] use builder()\n7c91869 [Tianshuo Deng] make fields of Config private, create builder method for Config\n5fdc881 [Tianshuo Deng] builder for setting projection pushdown and predicate pushdown\na47f271 [Tianshuo Deng] immutable\n3d514b1 [Tianshuo Deng] done\n",
+        "commit.author.name": "Tianshuo Deng",
+        "pcid": "24119cc8e41fa07f6ec0a1a33428419f5c99a829",
+        "changes": {
+            "parquet-cascading/src/main/java/parquet/cascading/ParquetTBaseScheme.java": {
+                "old": {
+                    "('parquet.cascading#ParquetTBaseScheme', None)": [
+                        36,
+                        37,
+                        43,
+                        47,
+                        51,
+                        52,
+                        67
+                    ],
+                    "('parquet.cascading#ParquetTBaseScheme', 'sourceConfInit(FlowProcess,Tap,JobConf)')": [
+                        59,
+                        64,
+                        65,
+                        66
+                    ],
+                    "('parquet.cascading#ParquetTBaseScheme', 'sinkConfInit(FlowProcess,Tap,JobConf)')": [
+                        75,
+                        81
+                    ]
+                },
+                "new": {
+                    "('parquet.cascading#ParquetTBaseScheme', None)": [
+                        38,
+                        42,
+                        46,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54
+                    ],
+                    "('parquet.cascading#ParquetTBaseScheme', 'sinkConfInit(FlowProcess,Tap,JobConf)')": [
+                        72,
+                        78
+                    ]
+                }
+            },
+            "parquet-cascading/src/main/java/parquet/cascading/ParquetValueScheme.java": {
+                "old": {
+                    "('parquet.cascading#ParquetValueScheme', None)": [
+                        46,
+                        49,
+                        53
+                    ],
+                    "('parquet.cascading#ParquetValueScheme', 'sourceConfInit(FlowProcess,Tap,JobConf)')": [
+                        58,
+                        59
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        35,
+                        36,
+                        37,
+                        38
+                    ],
+                    "('parquet.cascading#ParquetValueScheme', None)": [
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        93,
+                        96,
+                        100,
+                        103,
+                        104,
+                        105,
+                        106,
+                        110,
+                        111,
+                        112,
+                        116,
+                        117,
+                        123,
+                        124
+                    ],
+                    "('parquet.cascading#ParquetValueScheme', 'setProjectionPushdown(JobConf)')": [
+                        107,
+                        108,
+                        109
+                    ],
+                    "('parquet.cascading#ParquetValueScheme', 'setPredicatePushdown(JobConf)')": [
+                        113,
+                        114,
+                        115
+                    ],
+                    "('parquet.cascading#ParquetValueScheme', 'sourceConfInit(FlowProcess,Tap,JobConf)')": [
+                        120,
+                        121,
+                        122
+                    ],
+                    "('parquet.cascading#ParquetValueScheme', 'setRecordClass(JobConf)')": [
+                        125,
+                        126,
+                        127
+                    ]
+                }
+            },
+            "parquet-scrooge/src/main/java/parquet/scrooge/ParquetScroogeScheme.java": {
+                "old": {
+                    "('parquet.scrooge#ParquetScroogeScheme', None)": [
+                        40,
+                        43,
+                        47,
+                        48
+                    ],
+                    "('parquet.scrooge#ParquetScroogeScheme', 'sourceConfInit(FlowProcess,Tap,JobConf)')": [
+                        72
+                    ]
+                },
+                "new": {
+                    "('parquet.scrooge#ParquetScroogeScheme', None)": [
+                        42,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50
+                    ],
+                    "('parquet.scrooge#ParquetScroogeScheme', 'sourceConfInit(FlowProcess,Tap,JobConf)')": [
+                        71
+                    ]
+                }
+            },
+            "parquet-scrooge/src/test/java/parquet/scrooge/ParquetScroogeSchemeTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        29,
+                        30,
+                        31
+                    ],
+                    "('parquet.scrooge#ParquetScroogeSchemeTest', 'testWritePrimitveThriftReadScrooge')": [
+                        54,
+                        56
+                    ],
+                    "('parquet.scrooge#ParquetScroogeSchemeTest', 'testNestedReadingInScrooge')": [
+                        65,
+                        66,
+                        67,
+                        68
+                    ],
+                    "('parquet.scrooge#ParquetScroogeSchemeTest', 'verifyScroogeRead(TBase,Class,String,String)')": [
+                        71,
+                        73,
+                        74,
+                        75,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        86,
+                        90,
+                        91,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        37,
+                        44,
+                        53,
+                        54,
+                        55,
+                        154,
+                        155
+                    ],
+                    "('parquet.scrooge#ParquetScroogeSchemeTest', None)": [
+                        68,
+                        69,
+                        70,
+                        71,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        123,
+                        124,
+                        146,
+                        147
+                    ],
+                    "('parquet.scrooge#ParquetScroogeSchemeTest', 'testWritePrimitveThriftReadScrooge')": [
+                        74,
+                        76
+                    ],
+                    "('parquet.scrooge#ParquetScroogeSchemeTest', 'testNestedReadingInScrooge')": [
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90
+                    ],
+                    "('parquet.scrooge#ParquetScroogeSchemeTest', 'verifyScroogeRead(List,Class,String,String)')": [
+                        103,
+                        105,
+                        106,
+                        107,
+                        108,
+                        110,
+                        111,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122
+                    ],
+                    "('parquet.scrooge#ParquetScroogeSchemeTest', 'writeParquetFile(List,Configuration,Path)')": [
+                        125,
+                        129,
+                        133,
+                        134,
+                        135
+                    ],
+                    "('parquet.scrooge#ParquetScroogeSchemeTest', 'thriftRecords(TBase)')": [
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145
+                    ],
+                    "('parquet.scrooge#ParquetScroogeSchemeTest', 'deleteIfExist(String)')": [
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/parquet/hadoop/thrift/ThriftReadSupport.java": {
+                "new": {
+                    "('parquet.hadoop.thrift#ThriftReadSupport', None)": [
+                        173
+                    ],
+                    "('parquet.hadoop.thrift#ThriftReadSupport', 'setProjectionPushdown(JobConf,String)')": [
+                        174,
+                        175
+                    ],
+                    "(None, None)": [
+                        176
+                    ]
+                }
+            }
+        }
+    },
+    "5f39948b2414ea2582892f6447566d7fe4909b4f": {
+        "authored_data": "2014 Sep 08 21:12",
+        "commit.message": "update scala 2.10\n\nTry to upgrade to scala 2.10\n\nAuthor: Tianshuo Deng <tdeng@twitter.com>\n\nCloses #35 from tsdeng/update_scala_2_10 and squashes the following commits:\n\n1b7e55f [Tianshuo Deng] fix comment\nbed9de3 [Tianshuo Deng] remove twitter artifactory\n2bce643 [Tianshuo Deng] publish fix\n06b374e [Tianshuo Deng] define scala.binary.version\nfcf6965 [Tianshuo Deng] Merge branch 'master' into update_scala_2_10\ne91d9f7 [Tianshuo Deng] update version\n5d18b88 [Tianshuo Deng] version\n83df898 [Tianshuo Deng] update scala 2.10\n",
+        "commit.author.name": "Tianshuo Deng",
+        "pcid": "5dafd127f3de7c516ce9c1b7329087a01ab2fc57",
+        "changes": {
+            "parquet-scrooge/src/main/java/parquet/scrooge/ScroogeStructConverter.java": {
+                "old": {
+                    "('parquet.scrooge#ScroogeStructConverter', 'convertCompanionClassToStruct(Class)')": [
+                        78
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28
+                    ],
+                    "('parquet.scrooge#ScroogeStructConverter', 'convertCompanionClassToStruct(Class)')": [
+                        79
+                    ]
+                }
+            }
+        }
+    },
+    "5dafd127f3de7c516ce9c1b7329087a01ab2fc57": {
+        "authored_data": "2014 Sep 05 18:32",
+        "commit.message": "PARQUET-84: Avoid reading rowgroup metadata in memory on the client side.\n\nThis will improve reading big datasets with a large schema (thousands of columns)\nInstead rowgroup metadata can be read in the tasks where each tasks reads only the metadata of the file it's reading\n\nAuthor: julien <julien@twitter.com>\n\nCloses #45 from julienledem/skip_reading_row_groups and squashes the following commits:\n\nccdd08c [julien] fix parquet-hive\n24a2050 [julien] Merge branch 'master' into skip_reading_row_groups\n3d7e35a [julien] adress review feedback\n5b6bd1b [julien] more tests\n323d254 [julien] sdd unit tests\nf599259 [julien] review feedback\nfb11f02 [julien] fix backward compatibility check\n2c20b46 [julien] cleanup readFooters methods\n3da37d8 [julien] fix read summary\nab95a45 [julien] cleanup\n4d16df3 [julien] implement task side metadata\n9bb8059 [julien] first stab at integrating skipping row groups\n",
+        "commit.author.name": "julien",
+        "pcid": "647b8a70f9b7c94cabf9a7ec7bce2e7cbbb4c05b",
+        "changes": {
+            "parquet-hadoop/src/main/java/parquet/format/converter/ParquetMetadataConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        61
+                    ],
+                    "('parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream)')": [
+                        344
+                    ],
+                    "('parquet.format.converter#ParquetMetadataConverter', 'fromParquetMetadata(FileMetaData)')": [
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35,
+                        62
+                    ],
+                    "('parquet.format.converter#ParquetMetadataConverter', None)": [
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        415,
+                        416,
+                        433,
+                        434,
+                        437,
+                        445,
+                        446
+                    ],
+                    "('parquet.format.converter#ParquetMetadataConverter', 'range(long,long)')": [
+                        362,
+                        363
+                    ],
+                    "('parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream)')": [
+                        414
+                    ],
+                    "('parquet.format.converter#ParquetMetadataConverter', 'filterFileMetaData(FileMetaData,RangeMetadataFilter)')": [
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432
+                    ],
+                    "('parquet.format.converter#ParquetMetadataConverter', 'getOffset(RowGroup)')": [
+                        435,
+                        436
+                    ],
+                    "('parquet.format.converter#ParquetMetadataConverter', 'getOffset(ColumnChunk)')": [
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444
+                    ],
+                    "('parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream,MetadataFilter)')": [
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461
+                    ],
+                    "('parquet.format.converter#ParquetMetadataConverter', 'fromParquetMetadata(FileMetaData)')": [
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        499,
+                        500,
+                        501,
+                        502,
+                        503,
+                        504
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetFileReader.java": {
+                "old": {
+                    "(None, None)": [
+                        62,
+                        63,
+                        64,
+                        65,
+                        66
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readAllFootersInParallelUsingSummaryFiles(Configuration,List)')": [
+                        87,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        146
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readAllFootersInParallel(Configuration,List)')": [
+                        180
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readAllFootersInParallel(Configuration,FileStatus)')": [
+                        195,
+                        196,
+                        198,
+                        200,
+                        201,
+                        202,
+                        203
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', None)": [
+                        204,
+                        205,
+                        220,
+                        221,
+                        222,
+                        255,
+                        256,
+                        257,
+                        433
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readFooters(Configuration,FileStatus)')": [
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readSummaryFile(Configuration,FileStatus)')": [
+                        225
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readFooter(Configuration,Path)')": [
+                        254
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readFooters(Configuration,Path)')": [
+                        258,
+                        259,
+                        260
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readFooter(Configuration,FileStatus)')": [
+                        270,
+                        296
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        30,
+                        32,
+                        50,
+                        63
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', None)": [
+                        92,
+                        95,
+                        96,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        204,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        251,
+                        252,
+                        253,
+                        256,
+                        257,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        285,
+                        286,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        317,
+                        318,
+                        332,
+                        333,
+                        334,
+                        362,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        393,
+                        560
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readAllFootersInParallelUsingSummaryFiles(Configuration,List)')": [
+                        93,
+                        94
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'filter(boolean)')": [
+                        97,
+                        98
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readAllFootersInParallelUsingSummaryFiles(Configuration,Collection,boolean)')": [
+                        110,
+                        111,
+                        112,
+                        113,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        177
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readAllFootersInParallel(Configuration,List)')": [
+                        206
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readAllFootersInParallel(Configuration,List,boolean)')": [
+                        218,
+                        225
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readAllFootersInParallel(Configuration,FileStatus)')": [
+                        249,
+                        250
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readFooters(Configuration,Path)')": [
+                        254,
+                        255
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'status(Configuration,Path)')": [
+                        258,
+                        259
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readFooters(Configuration,FileStatus)')": [
+                        270,
+                        271
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readFooters(Configuration,FileStatus,boolean)')": [
+                        282,
+                        283,
+                        284
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'listFiles(Configuration,FileStatus)')": [
+                        287,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        302
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readSummaryFile(Configuration,FileStatus)')": [
+                        315,
+                        316
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readSummaryMetadata(Configuration,Path,boolean)')": [
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'footersFromSummaryFile(Path,ParquetMetadata)')": [
+                        335
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readFooter(Configuration,Path)')": [
+                        364
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readFooter(Configuration,Path,MetadataFilter)')": [
+                        376,
+                        378
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readFooter(Configuration,FileStatus)')": [
+                        385,
+                        386
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'readFooter(Configuration,FileStatus,MetadataFilter)')": [
+                        397,
+                        423
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetFileWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        52,
+                        53,
+                        54
+                    ],
+                    "('parquet.hadoop#ParquetFileWriter', None)": [
+                        86,
+                        390,
+                        442,
+                        446,
+                        467,
+                        508
+                    ],
+                    "('parquet.hadoop#ParquetFileWriter', 'writeMetadataFile(Configuration,Path,List)')": [
+                        397,
+                        402
+                    ],
+                    "('parquet.hadoop#ParquetFileWriter', 'mergeInto(MessageType,MessageType,boolean)')": [
+                        520
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        17,
+                        18,
+                        19
+                    ],
+                    "('parquet.hadoop#ParquetFileWriter', None)": [
+                        65,
+                        87,
+                        391,
+                        404,
+                        405,
+                        453,
+                        474,
+                        515
+                    ],
+                    "('parquet.hadoop#ParquetFileWriter', 'writeMetadataFile(Configuration,Path,List)')": [
+                        398,
+                        401,
+                        402,
+                        403
+                    ],
+                    "('parquet.hadoop#ParquetFileWriter', 'writeMetadataFile(Path,ParquetMetadata,FileSystem,String)')": [
+                        406,
+                        407,
+                        408
+                    ],
+                    "('parquet.hadoop#ParquetFileWriter', 'mergeInto(MessageType,MessageType,boolean)')": [
+                        527
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetInputFormat.java": {
+                "old": {
+                    "(None, None)": [
+                        65,
+                        66
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', None)": [
+                        92,
+                        105,
+                        106,
+                        107,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        399,
+                        400,
+                        407,
+                        408,
+                        409,
+                        410
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'createRecordReader(InputSplit,TaskAttemptContext)')": [
+                        205,
+                        206,
+                        207,
+                        209
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'generateSplits(List,BlockLocation,FileStatus,FileMetaData,String,Map,long,long)')": [
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'checkSorted(List)')": [
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'getSplits(JobContext)')": [
+                        416,
+                        417,
+                        418
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'getSplits(Configuration,List)')": [
+                        431,
+                        432,
+                        433,
+                        434,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'getFooters(JobContext)')": [
+                        542,
+                        578,
+                        579
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'getFooters(Configuration,List)')": [
+                        600,
+                        602
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        23,
+                        496,
+                        587,
+                        588,
+                        833,
+                        834,
+                        835,
+                        836
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', None)": [
+                        93,
+                        104,
+                        105,
+                        110,
+                        111,
+                        114,
+                        191,
+                        192,
+                        193,
+                        194,
+                        377,
+                        378
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'setTaskSideMetaData(Job,boolean)')": [
+                        108,
+                        109
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'isTaskSideMetaData(Configuration)')": [
+                        112,
+                        113
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'createRecordReader(InputSplit,TaskAttemptContext)')": [
+                        217
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'getReadSupport(Configuration)')": [
+                        228
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'getSplits(JobContext)')": [
+                        244,
+                        245
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'getSplits(Configuration,List)')": [
+                        255,
+                        256,
+                        260,
+                        261,
+                        262,
+                        268
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'getFooters(JobContext)')": [
+                        361
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'getFooters(Configuration,List)')": [
+                        375,
+                        376
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'getFooters(Configuration,Collection)')": [
+                        386,
+                        388,
+                        389
+                    ],
+                    "('parquet.hadoop#SplitStrategy', None)": [
+                        478,
+                        479,
+                        480,
+                        488,
+                        489,
+                        490
+                    ],
+                    "('parquet.hadoop#SplitStrategy', 'getSplitStrategy(boolean)')": [
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487
+                    ],
+                    "('parquet.hadoop#SplitStrategy', 'getSplits(Configuration,List,long,long,ReadContext)')": [
+                        491,
+                        492,
+                        493,
+                        494,
+                        495
+                    ],
+                    "('parquet.hadoop#TaskSideMetadataSplitStrategy', None)": [
+                        497,
+                        498,
+                        499,
+                        519,
+                        520,
+                        530,
+                        531
+                    ],
+                    "('parquet.hadoop#TaskSideMetadataSplitStrategy', 'getSplits(Configuration,List,long,long,ReadContext)')": [
+                        500,
+                        501,
+                        502,
+                        503,
+                        504,
+                        505,
+                        506,
+                        507,
+                        508,
+                        509,
+                        510,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516,
+                        517,
+                        518
+                    ],
+                    "('parquet.hadoop#TaskSideMetadataSplitStrategy', 'findBlockIndex(BlockLocation,long)')": [
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529
+                    ],
+                    "('parquet.hadoop#TaskSideMetadataSplitStrategy', 'generateTaskSideMDSplits(BlockLocation,FileStatus,String,Map,long,long)')": [
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569,
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        575,
+                        576,
+                        577,
+                        578,
+                        579,
+                        580,
+                        581,
+                        582,
+                        583,
+                        584,
+                        585,
+                        586
+                    ],
+                    "('parquet.hadoop#ClientSideMetadataSplitStrategy', None)": [
+                        589,
+                        590,
+                        591,
+                        592,
+                        593,
+                        594,
+                        595,
+                        596,
+                        597,
+                        598,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612,
+                        613,
+                        614,
+                        615,
+                        616,
+                        617,
+                        618,
+                        619,
+                        620,
+                        621,
+                        622,
+                        623,
+                        624,
+                        625,
+                        626,
+                        627,
+                        628,
+                        629,
+                        630,
+                        631,
+                        632,
+                        633,
+                        634,
+                        635,
+                        636,
+                        637,
+                        638,
+                        639,
+                        640,
+                        641,
+                        642,
+                        643,
+                        644,
+                        645,
+                        646,
+                        647,
+                        648,
+                        649,
+                        650,
+                        651,
+                        652,
+                        653,
+                        654,
+                        655,
+                        656,
+                        657,
+                        658,
+                        659,
+                        660,
+                        661,
+                        662,
+                        663,
+                        664,
+                        665,
+                        666,
+                        667,
+                        668,
+                        669,
+                        670,
+                        671,
+                        672,
+                        673,
+                        674,
+                        675,
+                        676,
+                        677,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682,
+                        683,
+                        684,
+                        685,
+                        686,
+                        687,
+                        688,
+                        689,
+                        690,
+                        691,
+                        692,
+                        693,
+                        694,
+                        695,
+                        696,
+                        697,
+                        698,
+                        699,
+                        700,
+                        701,
+                        702,
+                        703,
+                        704,
+                        705,
+                        706,
+                        707,
+                        708,
+                        709,
+                        710,
+                        758,
+                        759,
+                        760,
+                        761,
+                        762,
+                        763,
+                        764,
+                        765,
+                        766,
+                        767,
+                        768,
+                        769,
+                        770,
+                        771,
+                        772,
+                        790,
+                        791,
+                        825,
+                        826
+                    ],
+                    "('parquet.hadoop#ClientSideMetadataSplitStrategy', 'getSplits(Configuration,List,long,long,ReadContext)')": [
+                        711,
+                        712,
+                        713,
+                        714,
+                        715,
+                        716,
+                        717,
+                        718,
+                        719,
+                        720,
+                        721,
+                        722,
+                        723,
+                        724,
+                        725,
+                        726,
+                        727,
+                        728,
+                        729,
+                        730,
+                        731,
+                        732,
+                        733,
+                        734,
+                        735,
+                        736,
+                        737,
+                        738,
+                        739,
+                        740,
+                        741,
+                        742,
+                        743,
+                        744,
+                        745,
+                        746,
+                        747,
+                        748,
+                        749,
+                        750,
+                        751,
+                        752,
+                        753,
+                        754,
+                        755,
+                        756,
+                        757
+                    ],
+                    "('parquet.hadoop#ClientSideMetadataSplitStrategy', 'generateSplits(List,BlockLocation,FileStatus,String,Map,long,long)')": [
+                        773,
+                        774,
+                        775,
+                        776,
+                        777,
+                        778,
+                        779,
+                        780,
+                        781,
+                        782,
+                        783,
+                        784,
+                        785,
+                        786,
+                        787,
+                        788,
+                        789
+                    ],
+                    "('parquet.hadoop#ClientSideMetadataSplitStrategy', 'generateSplitInfo(List,BlockLocation,long,long)')": [
+                        792,
+                        793,
+                        794,
+                        795,
+                        796,
+                        797,
+                        798,
+                        799,
+                        800,
+                        801,
+                        802,
+                        803,
+                        804,
+                        805,
+                        806,
+                        807,
+                        808,
+                        809,
+                        810,
+                        811,
+                        812,
+                        813,
+                        814,
+                        815,
+                        816,
+                        817,
+                        818,
+                        819,
+                        820,
+                        821,
+                        822,
+                        823,
+                        824
+                    ],
+                    "('parquet.hadoop#ClientSideMetadataSplitStrategy', 'checkSorted(List)')": [
+                        827,
+                        828,
+                        829,
+                        830,
+                        831,
+                        832
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetInputSplit.java": {
+                "old": {
+                    "(None, None)": [
+                        18,
+                        24,
+                        25,
+                        28,
+                        32,
+                        40,
+                        41,
+                        42,
+                        43,
+                        45,
+                        46,
+                        47,
+                        343,
+                        344
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', None)": [
+                        57,
+                        58,
+                        59,
+                        61,
+                        62,
+                        64,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        97,
+                        98,
+                        100,
+                        101,
+                        106,
+                        107,
+                        110,
+                        111,
+                        112,
+                        120,
+                        121,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        175,
+                        176,
+                        190,
+                        191,
+                        197,
+                        198,
+                        228,
+                        229,
+                        242,
+                        243,
+                        255,
+                        256,
+                        257,
+                        276,
+                        277,
+                        324,
+                        325
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'getBlocks')": [
+                        108,
+                        109
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'getRequestedSchema')": [
+                        115
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'getFileSchema')": [
+                        122,
+                        123
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'getExtraMetadata')": [
+                        129,
+                        130
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'getReadSupportMetadata')": [
+                        136
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'readFields(DataInput)')": [
+                        144,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'write(DataOutput)')": [
+                        161,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'compressString(String)')": [
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'decompressString(DataInput)')": [
+                        192,
+                        196
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'decompressString(byte)')": [
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'readBlock(DataInput)')": [
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'writeBlock(DataOutput,BlockMetaData)')": [
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'readColumn(DataInput)')": [
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'writeColumn(DataOutput,ColumnChunkMetaData)')": [
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'readKeyValues(DataInput)')": [
+                        301,
+                        302
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'writeKeyValues(DataOutput,Map)')": [
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'toString')": [
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        23,
+                        33,
+                        38,
+                        45,
+                        46,
+                        47,
+                        50
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', None)": [
+                        53,
+                        54,
+                        55,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        100,
+                        101,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        140,
+                        141,
+                        154,
+                        155,
+                        158,
+                        159,
+                        160,
+                        180,
+                        181,
+                        182,
+                        222,
+                        223,
+                        227,
+                        228,
+                        232,
+                        233,
+                        237,
+                        238
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'end(List)')": [
+                        97,
+                        98,
+                        99
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'offsets(List)')": [
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'getRequestedSchema')": [
+                        135
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'getEnd')": [
+                        142,
+                        143
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'getReadSupportMetadata')": [
+                        149
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'getRowGroupOffsets')": [
+                        156,
+                        157
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'toString')": [
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'readFields(DataInput)')": [
+                        186,
+                        187,
+                        188,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        199
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'write(DataOutput)')": [
+                        206,
+                        207,
+                        208,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        220,
+                        221
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'writeUTF8(DataOutput,String)')": [
+                        224,
+                        225,
+                        226
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'readUTF8(DataInput)')": [
+                        229,
+                        230,
+                        231
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'writeArray(DataOutput,byte)')": [
+                        234,
+                        235,
+                        236
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'readArray(DataInput)')": [
+                        239,
+                        243
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'readKeyValues(DataInput)')": [
+                        250,
+                        251
+                    ],
+                    "('parquet.hadoop#ParquetInputSplit', 'writeKeyValues(DataOutput,Map)')": [
+                        263,
+                        264
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetOutputCommitter.java": {
+                "old": {
+                    "(None, None)": [
+                        20
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetOutputFormat.java": {
+                "old": {
+                    "(None, None)": [
+                        37
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetReader.java": {
+                "old": {
+                    "(None, None)": [
+                        41,
+                        42
+                    ],
+                    "('parquet.hadoop#ParquetReader', None)": [
+                        117
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        17,
+                        18
+                    ],
+                    "('parquet.hadoop#ParquetReader', None)": [
+                        117
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetRecordReader.java": {
+                "old": {
+                    "('parquet.hadoop#ParquetRecordReader', None)": [
+                        47
+                    ],
+                    "('parquet.hadoop#ParquetRecordReader', 'initialize(InputSplit,TaskAttemptContext)')": [
+                        116,
+                        118
+                    ],
+                    "('parquet.hadoop#ParquetRecordReader', 'initializeInternalReader(ParquetInputSplit,Configuration)')": [
+                        131,
+                        133,
+                        134,
+                        135,
+                        136
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        29,
+                        39,
+                        42,
+                        43,
+                        46
+                    ],
+                    "('parquet.hadoop#ParquetRecordReader', None)": [
+                        60
+                    ],
+                    "('parquet.hadoop#ParquetRecordReader', 'initialize(InputSplit,TaskAttemptContext)')": [
+                        129,
+                        131
+                    ],
+                    "('parquet.hadoop#ParquetRecordReader', 'initializeInternalReader(ParquetInputSplit,Configuration)')": [
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        187,
+                        188,
+                        189,
+                        190
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/PrintFooter.java": {
+                "old": {
+                    "('parquet.hadoop#PrintFooter', 'main(String)')": [
+                        102
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18
+                    ],
+                    "('parquet.hadoop#PrintFooter', 'main(String)')": [
+                        103
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/mapred/DeprecatedParquetInputFormat.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        34
+                    ],
+                    "('parquet.hadoop.mapred#DeprecatedParquetInputFormat', 'getSplits(JobConf,int)')": [
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60
+                    ],
+                    "('parquet.hadoop.mapred#DeprecatedParquetInputFormat', 'getFooters(JobConf)')": [
+                        64
+                    ],
+                    "('parquet.hadoop.mapred#DeprecatedParquetInputFormat', None)": [
+                        160,
+                        161,
+                        165
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19
+                    ],
+                    "('parquet.hadoop.mapred#DeprecatedParquetInputFormat', 'getSplits(JobConf,int)')": [
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57
+                    ],
+                    "('parquet.hadoop.mapred#DeprecatedParquetInputFormat', 'getFooters(JobConf)')": [
+                        61
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/mapred/DeprecatedParquetOutputFormat.java": {
+                "old": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        34
+                    ],
+                    "('parquet.hadoop.mapred#DeprecatedParquetOutputFormat', None)": [
+                        36,
+                        75
+                    ],
+                    "('parquet.hadoop.mapred#DeprecatedParquetOutputFormat', 'getRecordWriter(FileSystem,JobConf,String,Progressable)')": [
+                        72
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29,
+                        30,
+                        31,
+                        32
+                    ],
+                    "('parquet.hadoop.mapred#DeprecatedParquetOutputFormat', 'getRecordWriter(FileSystem,JobConf,String,Progressable)')": [
+                        69
+                    ],
+                    "('parquet.hadoop.mapred#DeprecatedParquetOutputFormat', None)": [
+                        72
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/parquet/format/converter/TestParquetMetadataConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        20,
+                        21,
+                        22,
+                        25,
+                        26,
+                        27,
+                        31,
+                        32,
+                        33,
+                        35,
+                        36,
+                        37,
+                        44,
+                        45,
+                        48,
+                        51,
+                        59,
+                        60,
+                        242,
+                        243,
+                        244,
+                        245
+                    ],
+                    "('parquet.format.converter#TestParquetMetadataConverter', 'metadata(long)')": [
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151
+                    ],
+                    "('parquet.format.converter#TestParquetMetadataConverter', None)": [
+                        152,
+                        153,
+                        156,
+                        157,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        190,
+                        191,
+                        192,
+                        199,
+                        200,
+                        201,
+                        225,
+                        226,
+                        227
+                    ],
+                    "('parquet.format.converter#TestParquetMetadataConverter', 'filter(FileMetaData,long,long)')": [
+                        154,
+                        155
+                    ],
+                    "('parquet.format.converter#TestParquetMetadataConverter', 'verifyMD(FileMetaData,long)')": [
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163
+                    ],
+                    "('parquet.format.converter#TestParquetMetadataConverter', 'verifyAllFilters(FileMetaData,long)')": [
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189
+                    ],
+                    "('parquet.format.converter#TestParquetMetadataConverter', 'fileSize(FileMetaData)')": [
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198
+                    ],
+                    "('parquet.format.converter#TestParquetMetadataConverter', 'testFilterMetaData')": [
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224
+                    ],
+                    "('parquet.format.converter#TestParquetMetadataConverter', 'randomTestFilterMetaData')": [
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/parquet/hadoop/DeprecatedInputFormatTest.java": {
+                "old": {
+                    "('parquet.hadoop#DeprecatedInputFormatTest', 'testReadWriteWithCounteDeprecated')": [
+                        113
+                    ]
+                },
+                "new": {
+                    "('parquet.hadoop#DeprecatedInputFormatTest', 'testReadWriteWithCountDeprecated')": [
+                        113
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/parquet/hadoop/TestInputFormat.java": {
+                "old": {
+                    "(None, None)": [
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'setUp')": [
+                        89
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'generateSplitByMinMaxSize(long,long)')": [
+                        383,
+                        384,
+                        385,
+                        386
+                    ],
+                    "('parquet.hadoop#TestInputFormat', None)": [
+                        387,
+                        402
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'shouldSplitBlockSizeBe(List,int)')": [
+                        391,
+                        393,
+                        394
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'shouldSplitLocationBe(List,int)')": [
+                        399,
+                        401
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'shouldSplitLengthBe(List,int)')": [
+                        406,
+                        408
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        35,
+                        39
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'testThrowExceptionWhenMaxSplitSizeIsSmallerThanMinSplitSizeTaskSide')": [
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114
+                    ],
+                    "('parquet.hadoop#TestInputFormat', None)": [
+                        115,
+                        116,
+                        117,
+                        118,
+                        126,
+                        127,
+                        128,
+                        129,
+                        189,
+                        190,
+                        191,
+                        192,
+                        221,
+                        245,
+                        246,
+                        273,
+                        292,
+                        293,
+                        294,
+                        327,
+                        352,
+                        353,
+                        365,
+                        366,
+                        367,
+                        409,
+                        410,
+                        411,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        550,
+                        551,
+                        559,
+                        560,
+                        565,
+                        582,
+                        583,
+                        584
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'testThrowExceptionWhenMaxSplitSizeIsNegative')": [
+                        122,
+                        123,
+                        124,
+                        125
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'testTSThrowExceptionWhenMaxSplitSizeIsNegative')": [
+                        130,
+                        131,
+                        132
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'testTSGenerateSplitsAlignedWithHDFSBlock')": [
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'testTSRowGroupNotAlignToHDFSBlock')": [
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'testTSGenerateSplitsNotAlignedWithHDFSBlock')": [
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'testTSGenerateSplitsSmallerThanMaxSizeAndAlignToHDFS')": [
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'testGenerateSplitsCrossHDFSBlockBoundaryToSatisfyMinSize')": [
+                        364
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'testTSGenerateSplitsCrossHDFSBlockBoundaryToSatisfyMinSize')": [
+                        368,
+                        369,
+                        370,
+                        371,
+                        372
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'testTSMultipleRowGroupsInABlockToAlignHDFSBlock')": [
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'generateSplitByMinMaxSize(long,long)')": [
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'generateTSSplitByMinMaxSize(long,long)')": [
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        558
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'shouldSplitStartBe(List,long)')": [
+                        561,
+                        562,
+                        563,
+                        564
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'shouldSplitBlockSizeBe(List,int)')": [
+                        569,
+                        571
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'shouldSplitLocationBe(List,int)')": [
+                        576,
+                        578,
+                        579,
+                        580,
+                        581
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'message(List)')": [
+                        585,
+                        586
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'shouldSplitLengthBe(List,int)')": [
+                        590,
+                        592
+                    ],
+                    "('parquet.hadoop#TestInputFormat', 'withHDFSBlockSize(long)')": [
+                        604
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/parquet/hadoop/TestParquetFileWriter.java": {
+                "old": {
+                    "('parquet.hadoop#TestParquetFileWriter', 'testMetaDataFile')": [
+                        281,
+                        285,
+                        287,
+                        300,
+                        304,
+                        305
+                    ],
+                    "('parquet.hadoop#TestParquetFileWriter', 'validateFooters(List)')": [
+                        312
+                    ]
+                },
+                "new": {
+                    "('parquet.hadoop#TestParquetFileWriter', 'testMetaDataFile')": [
+                        281,
+                        285,
+                        287,
+                        291,
+                        301,
+                        305,
+                        306,
+                        307
+                    ],
+                    "('parquet.hadoop#TestParquetFileWriter', 'validateFooters(List)')": [
+                        314
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/parquet/hadoop/example/TestInputOutputFormat.java": {
+                "old": {
+                    "('parquet.hadoop.example#TestInputOutputFormat', None)": [
+                        155
+                    ],
+                    "('parquet.hadoop.example#TestInputOutputFormat', 'runMapReduceJob(CompressionCodecName)')": [
+                        157
+                    ],
+                    "('parquet.hadoop.example#TestInputOutputFormat', 'testReadWrite(CompressionCodecName)')": [
+                        196,
+                        208
+                    ],
+                    "('parquet.hadoop.example#TestInputOutputFormat', 'testProjection')": [
+                        224
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('parquet.hadoop.example#TestInputOutputFormat', 'runMapReduceJob(CompressionCodecName)')": [
+                        157
+                    ],
+                    "('parquet.hadoop.example#TestInputOutputFormat', None)": [
+                        158,
+                        203,
+                        233,
+                        234,
+                        235
+                    ],
+                    "('parquet.hadoop.example#TestInputOutputFormat', 'runMapReduceJob(CompressionCodecName,Map)')": [
+                        159,
+                        160,
+                        161,
+                        162,
+                        163
+                    ],
+                    "('parquet.hadoop.example#TestInputOutputFormat', 'testReadWrite(CompressionCodecName)')": [
+                        202
+                    ],
+                    "('parquet.hadoop.example#TestInputOutputFormat', 'testReadWrite(CompressionCodecName,Map)')": [
+                        204,
+                        205,
+                        216
+                    ],
+                    "('parquet.hadoop.example#TestInputOutputFormat', 'testReadWriteTaskSideMD')": [
+                        231,
+                        232
+                    ],
+                    "('parquet.hadoop.example#TestInputOutputFormat', 'testProjection')": [
+                        238
+                    ]
+                }
+            },
+            "parquet-hive/parquet-hive-storage-handler/src/main/java/org/apache/hadoop/hive/ql/io/parquet/read/ParquetRecordReaderWrapper.java": {
+                "old": {
+                    "(None, None)": [
+                        17,
+                        18,
+                        38
+                    ],
+                    "('org.apache.hadoop.hive.ql.io.parquet.read#ParquetRecordReaderWrapper', 'getSplit(InputSplit,JobConf)')": [
+                        197,
+                        199,
+                        202,
+                        203,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        226,
+                        227,
+                        229,
+                        230,
+                        232,
+                        236
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        16,
+                        17
+                    ],
+                    "('org.apache.hadoop.hive.ql.io.parquet.read#ParquetRecordReaderWrapper', 'getSplit(InputSplit,JobConf)')": [
+                        197,
+                        198,
+                        199,
+                        200,
+                        203,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        215,
+                        217,
+                        218
+                    ]
+                }
+            },
+            "parquet-pig/src/main/java/parquet/pig/ParquetLoader.java": {
+                "old": {
+                    "('parquet.pig#ParquetLoader', None)": [
+                        101,
+                        103,
+                        107,
+                        108,
+                        111,
+                        114,
+                        121,
+                        124,
+                        126,
+                        128
+                    ],
+                    "('parquet.pig#ParquetLoader', 'setLocation(String,Job)')": [
+                        138
+                    ],
+                    "('parquet.pig#ParquetLoader', 'setInput(String,Job)')": [
+                        146,
+                        152,
+                        156,
+                        158,
+                        164
+                    ],
+                    "('parquet.pig#ParquetLoader', 'pushProjection(RequiredFieldList)')": [
+                        338,
+                        341,
+                        345
+                    ]
+                },
+                "new": {
+                    "('parquet.pig#ParquetLoader', None)": [
+                        101,
+                        103,
+                        107,
+                        108,
+                        111,
+                        114,
+                        121,
+                        124,
+                        126,
+                        128
+                    ],
+                    "('parquet.pig#ParquetLoader', 'setLocation(String,Job)')": [
+                        138
+                    ],
+                    "('parquet.pig#ParquetLoader', 'setInput(String,Job)')": [
+                        146,
+                        152,
+                        156,
+                        158,
+                        164
+                    ],
+                    "('parquet.pig#ParquetLoader', 'pushProjection(RequiredFieldList)')": [
+                        338,
+                        341,
+                        345
+                    ]
+                }
+            },
+            "parquet-pig/src/main/java/parquet/pig/TupleReadSupport.java": {
+                "old": {
+                    "('parquet.pig#TupleReadSupport', 'getRequiredFields(Configuration)')": [
+                        72,
+                        76
+                    ],
+                    "('parquet.pig#TupleReadSupport', None)": [
+                        83
+                    ],
+                    "('parquet.pig#TupleReadSupport', 'init(InitContext)')": [
+                        159,
+                        163,
+                        165
+                    ],
+                    "('parquet.pig#TupleReadSupport', 'prepareForRead(Configuration,Map,MessageType,ReadContext)')": [
+                        178
+                    ]
+                },
+                "new": {
+                    "('parquet.pig#TupleReadSupport', 'getRequiredFields(Configuration)')": [
+                        72,
+                        76
+                    ],
+                    "('parquet.pig#TupleReadSupport', None)": [
+                        83
+                    ],
+                    "('parquet.pig#TupleReadSupport', 'init(InitContext)')": [
+                        159,
+                        163,
+                        165
+                    ],
+                    "('parquet.pig#TupleReadSupport', 'prepareForRead(Configuration,Map,MessageType,ReadContext)')": [
+                        178
+                    ]
+                }
+            }
+        }
+    },
+    "647b8a70f9b7c94cabf9a7ec7bce2e7cbbb4c05b": {
+        "authored_data": "2014 Sep 04 18:28",
+        "commit.message": "PARQUET-63: Enable dictionary encoding for FIXED.\n\nThis uses the existing dictionary support introduced for int96. Encoding\nand ParquetProperties have been updated to use the dictionary supporting\nclasses, when requested for write or present during read. This also\nfixes a bug in the fixed dictionary values writer, where the length was\nhard-coded for int96, 12 bytes.\n\nAuthor: Ryan Blue <rblue@cloudera.com>\n\nCloses #30 from rdblue/PARQUET-63-add-fixed-dictionary-support and squashes the following commits:\n\nbc34a34 [Ryan Blue] PARQUET-63: Enable dictionary encoding for FIXED.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "f8b06df7a56f92f4bc7dd564ad7ec026e3b4f3da",
+        "changes": {
+            "parquet-column/src/main/java/parquet/column/Encoding.java": {
+                "new": {
+                    "(None, None)": [
+                        115,
+                        132,
+                        133
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/column/ParquetProperties.java": {
+                "old": {
+                    "('parquet.column#ParquetProperties', 'getValuesWriter(ColumnDescriptor,int)')": [
+                        122
+                    ]
+                },
+                "new": {
+                    "('parquet.column#ParquetProperties', 'getValuesWriter(ColumnDescriptor,int)')": [
+                        122,
+                        123,
+                        124,
+                        125,
+                        126
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/column/values/dictionary/DictionaryValuesWriter.java": {
+                "old": {
+                    "('parquet.column.values.dictionary#DictionaryValuesWriter', None)": [
+                        367
+                    ]
+                },
+                "new": {
+                    "('parquet.column.values.dictionary#DictionaryValuesWriter', None)": [
+                        367
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/example/data/simple/SimpleGroup.java": {
+                "new": {
+                    "('parquet.example.data.simple#SimpleGroup', 'add(int,Binary)')": [
+                        182
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/parquet/io/ValidatingRecordConsumer.java": {
+                "old": {
+                    "('parquet.io#ValidatingRecordConsumer', 'validate(PrimitiveTypeName)')": [
+                        144
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', None)": [
+                        145,
+                        146,
+                        147,
+                        170
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', 'validate(PrimitiveTypeName,PrimitiveTypeName)')": [
+                        148,
+                        152,
+                        165,
+                        166,
+                        167,
+                        169
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', 'addInteger(int)')": [
+                        177
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', 'addLong(long)')": [
+                        185
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', 'addBoolean(boolean)')": [
+                        193
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', 'addBinary(Binary)')": [
+                        201,
+                        202
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', 'addFloat(float)')": [
+                        210
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', 'addDouble(double)')": [
+                        218
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', 'validate(PrimitiveTypeName)')": [
+                        145,
+                        149,
+                        153,
+                        166,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', None)": [
+                        146,
+                        147,
+                        148
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', 'addInteger(int)')": [
+                        183
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', 'addLong(long)')": [
+                        191
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', 'addBoolean(boolean)')": [
+                        199
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', 'addBinary(Binary)')": [
+                        207
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', 'addFloat(float)')": [
+                        215
+                    ],
+                    "('parquet.io#ValidatingRecordConsumer', 'addDouble(double)')": [
+                        223
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/parquet/io/TestColumnIO.java": {
+                "old": {
+                    "('parquet.io#TestColumnIO', 'testOneOfEach')": [
+                        366
+                    ]
+                },
+                "new": {
+                    "('parquet.io#TestColumnIO', None)": [
+                        83
+                    ],
+                    "('parquet.io#TestColumnIO', 'testOneOfEach')": [
+                        367,
+                        368
+                    ]
+                }
+            }
+        }
+    },
+    "f8b06df7a56f92f4bc7dd564ad7ec026e3b4f3da": {
+        "authored_data": "2014 Sep 03 22:37",
+        "commit.message": "do ProtocolEvents fixing only when there is required fields missing in the requested schema\n\nhttps://issues.apache.org/jira/browse/PARQUET-61\nThis PR is trying to redo the https://github.com/apache/incubator-parquet-mr/pull/7\n\nIn this PR, it fixes the protocol event in a more precise condition:\nOnly when the requested schema missing some required fields that are present in the full schema\n\nSo even if there a projection, as long as the projection is not getting rid of the required field, the protocol events amender will not be called.\n\nCould you take a look at this ? @dvryaboy @yan-qi\n\nAuthor: Tianshuo Deng <tdeng@twitter.com>\n\nCloses #28 from tsdeng/fix_protocol_when_required_field_missing and squashes the following commits:\n\nba778b9 [Tianshuo Deng] add continue for readability\nd5639df [Tianshuo Deng] fix unused import\n090e894 [Tianshuo Deng] format\n13a609d [Tianshuo Deng] comment format\nef1fe58 [Tianshuo Deng] little refactor, remove the hasMissingRequiredFieldFromProjection method\n7c2c158 [Tianshuo Deng] format\n83a5655 [Tianshuo Deng] do ProtocolEvents fixing only when there is required fields missing in the requested schema\n",
+        "commit.author.name": "Tianshuo Deng",
+        "pcid": "7a105068e60b7dd6e9f28dd0ccdb9b696a9bc941",
+        "changes": {
+            "parquet-thrift/src/main/java/parquet/thrift/ThriftRecordConverter.java": {
+                "old": {
+                    "('parquet.thrift#ThriftRecordConverter', 'getCurrentRecord')": [
+                        805,
+                        806
+                    ]
+                },
+                "new": {
+                    "('parquet.thrift#ThriftRecordConverter', None)": [
+                        781,
+                        795,
+                        796,
+                        798,
+                        799
+                    ],
+                    "('parquet.thrift#ThriftRecordConverter', 'hasMissingRequiredFieldInGroupType(GroupType,GroupType)')": [
+                        800,
+                        801,
+                        802,
+                        803,
+                        804,
+                        805,
+                        806,
+                        807,
+                        808,
+                        809,
+                        810,
+                        811,
+                        812,
+                        813,
+                        814,
+                        815,
+                        816,
+                        817,
+                        818,
+                        819,
+                        820,
+                        821,
+                        822
+                    ],
+                    "('parquet.thrift#ThriftRecordConverter', 'getCurrentRecord')": [
+                        833,
+                        834,
+                        835,
+                        836,
+                        837,
+                        838,
+                        839
+                    ]
+                }
+            }
+        }
+    }
+}

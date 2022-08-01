@@ -1,0 +1,3530 @@
+{
+    "a747456bfe077da467ff036172968a37f3b1e893": {
+        "authored_data": "2015 Jul 01 23:53",
+        "commit.message": "PARQUET-308: Add ParquetWriter#getDataSize accessor.\n\nThis returns the current file position plus the amount of data buffered\nin the current row group as an estimate of final data size.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #212 from rdblue/PARQUET-308-add-data-size-accessor and squashes the following commits:\n\n1c0d798 [Ryan Blue] PARQUET-308: Add ParquetWriter#getDataSize accessor.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "c7720ca4c232d317cfc800a04eda4a1d5a44a944",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordWriter.java": {
+                "new": {
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', None)": [
+                        62,
+                        126,
+                        127,
+                        128,
+                        131,
+                        132
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', 'getDataSize')": [
+                        129,
+                        130
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', 'checkBlockSizeReached')": [
+                        144
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetWriter.java": {
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetWriter', None)": [
+                        304,
+                        305,
+                        308,
+                        309,
+                        310
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetWriter', 'getDataSize')": [
+                        306,
+                        307
+                    ]
+                }
+            }
+        }
+    },
+    "c7720ca4c232d317cfc800a04eda4a1d5a44a944": {
+        "authored_data": "2015 Jul 01 23:46",
+        "commit.message": "PARQUET-325: Always use row group size when padding is 0.\n\nFor block file systems, if the size left in the block is greater than\nthe max padding, a row group will be targeted at the remaining size.\nHowever, when using 0 to turn padding off, the remaining bytes will\nalways be greater than padding and row groups can be targeted at very\ntiny spaces. When padding is off, the next row group's size should\nalways be the default size.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #234 from rdblue/PARQUET-325-padding-0-fix and squashes the following commits:\n\nf4b3c2b [Ryan Blue] PARQUET-325: Always use row group size when padding is 0.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "9fde65345e677256975bcecdc027649f31450a57",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileWriter.java": {
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', None)": [
+                        690,
+                        691,
+                        692,
+                        693
+                    ]
+                }
+            }
+        }
+    },
+    "9fde65345e677256975bcecdc027649f31450a57": {
+        "authored_data": "2015 Jul 01 23:33",
+        "commit.message": "PARQUET-320: Fix semver problems for parquet-hadoop.\n\nRe-enables semver checks for Parquet packages by removing the parquet/** exclusion that was matching unexpected classes. This also fixes all of the semver problems that have been committed since the check started excluding all Parquet classes.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #230 from rdblue/PARQUET-320-fix-semver-issues and squashes the following commits:\n\na0e730d [Ryan Blue] PARQUET-320: Fix Thrift incompatibilities from ded56ffd.\nba71f3f [Ryan Blue] PARQUET-320: Fix semver problems for parquet-hadoop.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "e3b95020f777eb5e0651977f654c1662e3ea1f29",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/format/converter/ParquetMetadataConverter.java": {
+                "old": {
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', None)": [
+                        75
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toParquetMetadata(int,ParquetMetadata)')": [
+                        90
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toParquetSchema(MessageType)')": [
+                        114
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'addToList(List,org)')": [
+                        120
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'addRowGroup(ParquetMetadata,List,BlockMetaData)')": [
+                        167
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toFormatEncodings(Set)')": [
+                        196
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromFormatEncodings(List)')": [
+                        205
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getEncoding(Encoding)')": [
+                        228
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getEncoding(org)')": [
+                        232
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getPrimitive(Type)')": [
+                        273
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getType(PrimitiveTypeName)')": [
+                        297
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getOriginalType(ConvertedType)')": [
+                        321
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getConvertedType(OriginalType)')": [
+                        369
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream)')": [
+                        490
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream,MetadataFilter)')": [
+                        527
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetMetadata(FileMetaData)')": [
+                        550
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetSchema(List)')": [
+                        609
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'buildChildren(Types,Iterator,int)')": [
+                        617
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toParquetRepetition(Repetition)')": [
+                        657
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetRepetition(FieldRepetitionType)')": [
+                        662
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDataPageHeader(int,int,int,org,org,org,OutputStream)')": [
+                        667
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDataPageHeader(int,int,int,org,org,org,org,OutputStream)')": [
+                        684
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'newDataPageHeader(int,int,int,org,org,org,org)')": [
+                        699
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDataPageV2Header(int,int,int,int,int,org,org,int,int,OutputStream)')": [
+                        720
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'newDataPageV2Header(int,int,int,int,int,org,org,int,int)')": [
+                        736
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDictionaryPageHeader(int,int,int,org,OutputStream)')": [
+                        756
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toParquetMetadata(int,ParquetMetadata)')": [
+                        89
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toParquetSchema(MessageType)')": [
+                        113
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'addToList(List,org)')": [
+                        119
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'addRowGroup(ParquetMetadata,List,BlockMetaData)')": [
+                        166
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toFormatEncodings(Set)')": [
+                        195
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromFormatEncodings(List)')": [
+                        204
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getEncoding(Encoding)')": [
+                        227
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getEncoding(org)')": [
+                        231
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getPrimitive(Type)')": [
+                        272
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getType(PrimitiveTypeName)')": [
+                        296
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getOriginalType(ConvertedType)')": [
+                        320
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getConvertedType(OriginalType)')": [
+                        368
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream)')": [
+                        489
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream,MetadataFilter)')": [
+                        526
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetMetadata(FileMetaData)')": [
+                        549
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetSchema(List)')": [
+                        608
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'buildChildren(Types,Iterator,int)')": [
+                        616
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toParquetRepetition(Repetition)')": [
+                        656
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetRepetition(FieldRepetitionType)')": [
+                        661
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDataPageHeader(int,int,int,org,org,org,OutputStream)')": [
+                        666
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDataPageHeader(int,int,int,org,org,org,org,OutputStream)')": [
+                        683
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'newDataPageHeader(int,int,int,org,org,org,org)')": [
+                        698
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDataPageV2Header(int,int,int,int,int,org,org,int,int,OutputStream)')": [
+                        719
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'newDataPageV2Header(int,int,int,int,int,org,org,int,int)')": [
+                        735
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDictionaryPageHeader(int,int,int,org,OutputStream)')": [
+                        755
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ColumnChunkPageWriteStore.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ColumnChunkPageWriteStore', None)": [
+                        95,
+                        134
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ColumnChunkPageWriteStore', None)": [
+                        49,
+                        50,
+                        97,
+                        136
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileReader.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetFileReader', None)": [
+                        92,
+                        576,
+                        590,
+                        591,
+                        592,
+                        606
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readFooter(Configuration,FileStatus,MetadataFilter)')": [
+                        429
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetFileReader', None)": [
+                        92,
+                        93,
+                        94,
+                        578,
+                        592,
+                        593,
+                        594,
+                        608
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readFooter(Configuration,FileStatus,MetadataFilter)')": [
+                        431
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileWriter.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDictionaryPage(DictionaryPage)')": [
+                        305
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Encoding,Encoding,Encoding)')": [
+                        340
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Statistics,Encoding,Encoding,Encoding)')": [
+                        377
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'serializeFooter(ParquetMetadata,FSDataOutputStream)')": [
+                        470
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', None)": [
+                        70,
+                        71
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDictionaryPage(DictionaryPage)')": [
+                        307
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Encoding,Encoding,Encoding)')": [
+                        342
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Statistics,Encoding,Encoding,Encoding)')": [
+                        379
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'serializeFooter(ParquetMetadata,FSDataOutputStream)')": [
+                        472
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/format/converter/TestParquetMetadataConverter.java": {
+                "old": {
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testSchemaConverter')": [
+                        90,
+                        91
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testSchemaConverterDecimal')": [
+                        97
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testEnumEquivalence')": [
+                        127,
+                        130,
+                        133,
+                        136,
+                        139,
+                        142,
+                        145,
+                        148
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testEncodingsCache')": [
+                        301,
+                        302,
+                        303
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testSchemaConverter')": [
+                        90,
+                        91,
+                        92
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testSchemaConverterDecimal')": [
+                        98,
+                        99
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testEnumEquivalence')": [
+                        128,
+                        130,
+                        133,
+                        136,
+                        139,
+                        142,
+                        145,
+                        148,
+                        151
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testEncodingsCache')": [
+                        289,
+                        290,
+                        306,
+                        307,
+                        308
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/ThriftSchemaConvertVisitor.java": {
+                "old": {
+                    "('org.apache.parquet.thrift#ThriftSchemaConvertVisitor', None)": [
+                        76
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.thrift#ThriftSchemaConvertVisitor', None)": [
+                        76
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/projection/amend/DefaultEventsVisitor.java": {
+                "old": {
+                    "('org.apache.parquet.thrift.projection.amend#DefaultEventsVisitor', None)": [
+                        37
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.thrift.projection.amend#DefaultEventsVisitor', None)": [
+                        37
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/struct/CompatibilityChecker.java": {
+                "old": {
+                    "('org.apache.parquet.thrift.struct#CompatibilityChecker', 'checkCompatibility(ThriftType,ThriftType)')": [
+                        47
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', None)": [
+                        71,
+                        97,
+                        98,
+                        99,
+                        107,
+                        108,
+                        109,
+                        191,
+                        192,
+                        193,
+                        196,
+                        197,
+                        198,
+                        201,
+                        202,
+                        203,
+                        206,
+                        207,
+                        208,
+                        211,
+                        212,
+                        213,
+                        216,
+                        217,
+                        218,
+                        221,
+                        222,
+                        223,
+                        226,
+                        227,
+                        228
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(ThriftType,Void)')": [
+                        84,
+                        96,
+                        100,
+                        106,
+                        110,
+                        116,
+                        154,
+                        165,
+                        179,
+                        183,
+                        190
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'checkField(ThriftField,ThriftField)')": [
+                        141
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(EnumType,Void)')": [
+                        194,
+                        195
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(BoolType,Void)')": [
+                        199,
+                        200
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(ByteType,Void)')": [
+                        204,
+                        205
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(DoubleType,Void)')": [
+                        209,
+                        210
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(I16Type,Void)')": [
+                        214,
+                        215
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(I32Type,Void)')": [
+                        219,
+                        220
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(I64Type,Void)')": [
+                        224,
+                        225
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(StringType,Void)')": [
+                        229,
+                        230
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.thrift.struct#CompatibilityChecker', 'checkCompatibility(ThriftType,ThriftType)')": [
+                        47
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', None)": [
+                        71,
+                        96,
+                        97,
+                        98,
+                        105,
+                        106,
+                        107,
+                        187,
+                        188,
+                        189,
+                        191,
+                        192,
+                        193,
+                        195,
+                        196,
+                        197,
+                        199,
+                        200,
+                        201,
+                        203,
+                        204,
+                        205,
+                        207,
+                        208,
+                        209,
+                        211,
+                        212,
+                        213,
+                        215,
+                        216,
+                        217
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(ThriftType)')": [
+                        84,
+                        99,
+                        108,
+                        151,
+                        162,
+                        176,
+                        180
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'checkField(ThriftField,ThriftField)')": [
+                        138
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(EnumType)')": [
+                        190
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(BoolType)')": [
+                        194
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(ByteType)')": [
+                        198
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(DoubleType)')": [
+                        202
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(I16Type)')": [
+                        206
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(I32Type)')": [
+                        210
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(I64Type)')": [
+                        214
+                    ],
+                    "('org.apache.parquet.thrift.struct#CompatibleCheckerVisitor', 'visit(StringType)')": [
+                        218
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/struct/ThriftType.java": {
+                "old": {
+                    "('org.apache.parquet.thrift.struct#ThriftType', None)": [
+                        101,
+                        192,
+                        193,
+                        235,
+                        236,
+                        276,
+                        277,
+                        315,
+                        316,
+                        411,
+                        412,
+                        443,
+                        444,
+                        455,
+                        456,
+                        467,
+                        468,
+                        479,
+                        480,
+                        491,
+                        492,
+                        503,
+                        504,
+                        505,
+                        506,
+                        516,
+                        517
+                    ],
+                    "('org.apache.parquet.thrift.struct#ThriftType', 'accept(TypeVisitor,S)')": [
+                        528
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.thrift.struct#ThriftType', None)": [
+                        101,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        510,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569,
+                        570,
+                        581,
+                        582,
+                        583,
+                        584,
+                        585,
+                        586,
+                        587,
+                        598,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604,
+                        615,
+                        616,
+                        617,
+                        618,
+                        619,
+                        620,
+                        621,
+                        632,
+                        633,
+                        634,
+                        635,
+                        636,
+                        637,
+                        638,
+                        639,
+                        640,
+                        650,
+                        651,
+                        652,
+                        653,
+                        654,
+                        655,
+                        656,
+                        668
+                    ],
+                    "('org.apache.parquet.thrift.struct#ThriftType', 'accept(TypeVisitor)')": [
+                        667
+                    ],
+                    "('org.apache.parquet.thrift.struct#ThriftType', 'accept(StateVisitor,S)')": [
+                        669
+                    ]
+                }
+            },
+            "parquet-thrift/src/test/java/org/apache/parquet/thrift/projection/TestFieldsPath.java": {
+                "old": {
+                    "('org.apache.parquet.thrift.projection#TestFieldsPath', None)": [
+                        72
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.thrift.projection#TestFieldsPath', None)": [
+                        72
+                    ]
+                }
+            }
+        }
+    },
+    "e3b95020f777eb5e0651977f654c1662e3ea1f29": {
+        "authored_data": "2015 Jul 01 01:34",
+        "commit.message": "PARQUET-251: Binary column statistics error when reuse byte[] among rows\n\nAuthor: asingh <asingh@cloudera.com>\nAuthor: Alex Levenson <alexlevenson@twitter.com>\nAuthor: Ashish Singh <asingh@cloudera.com>\n\nCloses #197 from SinghAsDev/PARQUET-251 and squashes the following commits:\n\n68e0eae [asingh] Remove deprecated constructors from private classes\n67e4e5f [asingh] Add removed public methods in Binary and deprecate them\n0e71728 [asingh] Add comment for BinaryStatistics.setMinMaxFromBytes\nfbe873f [Ashish Singh] Merge pull request #4 from isnotinvain/PR-197-3\n9826ee6 [Alex Levenson] Some minor cleanup\n7570035 [asingh] Remove test for stats getting ingnored for version 160 when type is int64\naf43d28 [Alex Levenson] Address PR feedback\n89ab4ee [Alex Levenson] put the headers in the right location\n2838cc9 [Alex Levenson] Split out version checks to separate files, add some tests\n5af9142 [Alex Levenson] Generalize tests, make Binary.fromString reused=false\ne00d9b7 [asingh] Rename isReused => isBackingBytesReused\nd2ad939 [asingh] Rebase over latest trunk\n857141a [asingh] Remove redundant junit dependency\n32b88ed [asingh] Remove semver from hadoop-common\n7a0e99e [asingh] Revert to fromConstantByteArray for ByteString\nc820ec9 [asingh] Add unit tests for Binary and to check if stats are ignored for version 160\n9bbd1e5 [asingh] Improve version parsing\n84a1d8b [asingh] Remove ignoring stats on write side and ignore it on read side\n903f8e3 [asingh] Address some review comments. * Ignore stats for writer's version < 1.8.0 * Refactor shoudlIgnoreStatistics method a bit * Assume implementations other than parquet-mr were writing binary   statistics correctly * Add toParquetStatistics method's original method signature to maintain   backwards compatibility and mark it as deprecated\n64c2617 [asingh] Revert changes for ignoring stats at RowGroupFilter level\ne861b18 [asingh] Ignore max min stats while reading\n3a8cb8d [asingh] Fix typo\n8e12618 [asingh] Fix usage of fromConstant versions of Binary constructors\n860adf7 [asingh] Rename unmodified to constant and isReused instead of isUnmodifiable\n0d127a7 [asingh] Add unmodfied and Reused versions for creating a Binary. Add copy() to Binary.\nb4e2950 [asingh] Skip filtering based on stats when file was written with version older than 1.6.1\n6fcee8c [asingh] Add getBytesUnsafe() to Binary that returns backing byte[] if possible, else returns result of getBytes()\n30b07dd [asingh] PARQUET-251: Binary column statistics error when reuse byte[] among rows\n",
+        "commit.author.name": "asingh",
+        "pcid": "e6ee42e9bca274b59c42f134f4c71d14ab6ed8a6",
+        "changes": {
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroWriteSupport.java": {
+                "old": {
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeValue(Type,Schema,Object)')": [
+                        255,
+                        257,
+                        272
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'fromAvroString(Object)')": [
+                        279
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeValue(Type,Schema,Object)')": [
+                        255,
+                        257,
+                        272
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'fromAvroString(Object)')": [
+                        279
+                    ]
+                }
+            },
+            "parquet-avro/src/test/java/org/apache/parquet/avro/TestReadWrite.java": {
+                "old": {
+                    "('org.apache.parquet.avro#TestReadWrite', 'testAllUsingDefaultAvroSchema')": [
+                        365,
+                        460
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.avro#TestReadWrite', 'testAllUsingDefaultAvroSchema')": [
+                        365,
+                        366,
+                        461
+                    ]
+                }
+            },
+            "parquet-avro/src/test/java/org/apache/parquet/avro/TestReadWriteOldListBehavior.java": {
+                "old": {
+                    "('org.apache.parquet.avro#TestReadWriteOldListBehavior', 'testAllUsingDefaultAvroSchema')": [
+                        407,
+                        502
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.avro#TestReadWriteOldListBehavior', 'testAllUsingDefaultAvroSchema')": [
+                        407,
+                        502
+                    ]
+                }
+            },
+            "parquet-benchmarks/src/main/java/org/apache/parquet/benchmarks/DataGenerator.java": {
+                "old": {
+                    "('org.apache.parquet.benchmarks#DataGenerator', 'generateData(Path,Configuration,ParquetProperties,int,int,int,CompressionCodecName,int)')": [
+                        110
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.benchmarks#DataGenerator', 'generateData(Path,Configuration,ParquetProperties,int,int,int,CompressionCodecName,int)')": [
+                        110
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/statistics/BinaryStatistics.java": {
+                "old": {
+                    "('org.apache.parquet.column.statistics#BinaryStatistics', 'setMinMaxFromBytes(byte,byte)')": [
+                        49,
+                        50
+                    ],
+                    "('org.apache.parquet.column.statistics#BinaryStatistics', 'updateStats(Binary,Binary)')": [
+                        75,
+                        76
+                    ],
+                    "('org.apache.parquet.column.statistics#BinaryStatistics', 'initializeStats(Binary,Binary)')": [
+                        80,
+                        81
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.column.statistics#BinaryStatistics', None)": [
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52
+                    ],
+                    "('org.apache.parquet.column.statistics#BinaryStatistics', 'setMinMaxFromBytes(byte,byte)')": [
+                        55,
+                        56
+                    ],
+                    "('org.apache.parquet.column.statistics#BinaryStatistics', 'updateStats(Binary,Binary)')": [
+                        81,
+                        82
+                    ],
+                    "('org.apache.parquet.column.statistics#BinaryStatistics', 'initializeStats(Binary,Binary)')": [
+                        86,
+                        87
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/deltalengthbytearray/DeltaLengthByteArrayValuesReader.java": {
+                "old": {
+                    "('org.apache.parquet.column.values.deltalengthbytearray#DeltaLengthByteArrayValuesReader', 'readBytes')": [
+                        62
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.column.values.deltalengthbytearray#DeltaLengthByteArrayValuesReader', 'readBytes')": [
+                        62
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/deltalengthbytearray/DeltaLengthByteArrayValuesWriter.java": {
+                "old": {
+                    "('org.apache.parquet.column.values.deltalengthbytearray#DeltaLengthByteArrayValuesWriter', 'writeBytes(Binary)')": [
+                        64
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.column.values.deltalengthbytearray#DeltaLengthByteArrayValuesWriter', 'writeBytes(Binary)')": [
+                        64
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/deltastrings/DeltaByteArrayReader.java": {
+                "old": {
+                    "('org.apache.parquet.column.values.deltastrings#DeltaByteArrayReader', None)": [
+                        43
+                    ],
+                    "('org.apache.parquet.column.values.deltastrings#DeltaByteArrayReader', 'readBytes')": [
+                        70,
+                        71,
+                        72
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.column.values.deltastrings#DeltaByteArrayReader', None)": [
+                        43
+                    ],
+                    "('org.apache.parquet.column.values.deltastrings#DeltaByteArrayReader', 'readBytes')": [
+                        70,
+                        71,
+                        72
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/deltastrings/DeltaByteArrayWriter.java": {
+                "old": {
+                    "('org.apache.parquet.column.values.deltastrings#DeltaByteArrayWriter', 'writeBytes(Binary)')": [
+                        90
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.column.values.deltastrings#DeltaByteArrayWriter', 'writeBytes(Binary)')": [
+                        90
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/dictionary/DictionaryValuesWriter.java": {
+                "old": {
+                    "('org.apache.parquet.column.values.dictionary#DictionaryValuesWriter', None)": [
+                        238,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        314
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.column.values.dictionary#DictionaryValuesWriter', None)": [
+                        238,
+                        309
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/dictionary/PlainValuesDictionary.java": {
+                "old": {
+                    "('org.apache.parquet.column.values.dictionary#PlainValuesDictionary', None)": [
+                        99,
+                        109
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.column.values.dictionary#PlainValuesDictionary', None)": [
+                        99,
+                        109
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/plain/BinaryPlainValuesReader.java": {
+                "old": {
+                    "('org.apache.parquet.column.values.plain#BinaryPlainValuesReader', 'readBytes')": [
+                        42
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.column.values.plain#BinaryPlainValuesReader', 'readBytes')": [
+                        42
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/column/values/plain/FixedLenByteArrayPlainValuesReader.java": {
+                "old": {
+                    "('org.apache.parquet.column.values.plain#FixedLenByteArrayPlainValuesReader', 'readBytes')": [
+                        49
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.column.values.plain#FixedLenByteArrayPlainValuesReader', 'readBytes')": [
+                        49
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/example/data/simple/NanoTime.java": {
+                "old": {
+                    "('org.apache.parquet.example.data.simple#NanoTime', 'toBinary')": [
+                        64
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.example.data.simple#NanoTime', 'toBinary')": [
+                        64
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/io/RecordConsumerLoggingWrapper.java": {
+                "old": {
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'addBinary(Binary)')": [
+                        115
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.io#RecordConsumerLoggingWrapper', 'addBinary(Binary)')": [
+                        115
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/io/api/Binary.java": {
+                "old": {
+                    "('org.apache.parquet.io.api#Binary', None)": [
+                        39,
+                        82,
+                        150,
+                        151,
+                        167,
+                        234,
+                        235,
+                        252,
+                        270,
+                        280,
+                        290,
+                        300,
+                        310,
+                        322,
+                        326,
+                        353
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'toString')": [
+                        74
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromByteArray(byte,int,int)')": [
+                        161
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromByteArray(byte)')": [
+                        229
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromByteBuffer(ByteBuffer)')": [
+                        345
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromString(String)')": [
+                        349,
+                        350,
+                        351,
+                        352
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.io.api#Binary', None)": [
+                        36,
+                        37,
+                        41,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        60,
+                        92,
+                        93,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        115,
+                        119,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        222,
+                        223,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        240,
+                        242,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        318,
+                        319,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        334,
+                        335,
+                        336,
+                        338,
+                        354,
+                        363,
+                        364,
+                        365,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        385,
+                        395,
+                        405,
+                        415,
+                        425,
+                        437,
+                        441,
+                        461,
+                        462,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'getBytesUnsafe')": [
+                        59
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'slice(int,int)')": [
+                        61
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'toString')": [
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'copy')": [
+                        94,
+                        95,
+                        96,
+                        97,
+                        98
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'isBackingBytesReused')": [
+                        106,
+                        107
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromReusedByteArray(byte,int,int)')": [
+                        220,
+                        221
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromConstantByteArray(byte,int,int)')": [
+                        224,
+                        225,
+                        226
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromByteArray(byte,int,int)')": [
+                        234
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromReusedByteArray(byte)')": [
+                        316,
+                        317
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromConstantByteArray(byte)')": [
+                        320,
+                        321
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromByteArray(byte)')": [
+                        329
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromReusedByteBuffer(ByteBuffer)')": [
+                        459,
+                        460
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromConstantByteBuffer(ByteBuffer)')": [
+                        463,
+                        464
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromByteBuffer(ByteBuffer)')": [
+                        472
+                    ],
+                    "('org.apache.parquet.io.api#Binary', 'fromString(String)')": [
+                        476
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/schema/PrimitiveType.java": {
+                "old": {
+                    "('org.apache.parquet.schema#PrimitiveType', None)": [
+                        207
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.schema#PrimitiveType', None)": [
+                        207
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/column/statistics/TestStatistics.java": {
+                "new": {
+                    "('org.apache.parquet.column.statistics#TestStatistics', 'testBinaryMinMaxForReusedBackingByteArray')": [
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401
+                    ],
+                    "('org.apache.parquet.column.statistics#TestStatistics', None)": [
+                        402,
+                        403,
+                        404
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/column/values/dictionary/TestDictionary.java": {
+                "old": {
+                    "('org.apache.parquet.column.values.dictionary#TestDictionary', 'writeRepeatedWithReuse(int,ValuesWriter,String)')": [
+                        515,
+                        516,
+                        519
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.parquet.column.values.dictionary#TestDictionary', 'writeRepeatedWithReuse(int,ValuesWriter,String)')": [
+                        516,
+                        517,
+                        518,
+                        521
+                    ]
+                }
+            },
+            "parquet-common/src/test/java/org/apache/parquet/VersionTest.java": {
+                "old": {
+                    "('org.apache.parquet#VersionTest', 'testFullVersion')": [
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        31
+                    ],
+                    "('org.apache.parquet#VersionTest', 'testFullVersion')": [
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60
+                    ],
+                    "('org.apache.parquet#VersionTest', None)": [
+                        61,
+                        62,
+                        63
+                    ],
+                    "('org.apache.parquet#VersionTest', 'testVersionParser')": [
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/format/converter/ParquetMetadataConverter.java": {
+                "old": {
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toParquetStatistics(org)')": [
+                        235,
+                        239,
+                        242
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', None)": [
+                        246
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetStatistics(Statistics,PrimitiveTypeName)')": [
+                        251
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetMetadata(FileMetaData)')": [
+                        558
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDataPageHeader(int,int,int,org,org,org,org,OutputStream)')": [
+                        675
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'newDataPageHeader(int,int,int,org,org,org,org)')": [
+                        693
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'newDataPageV2Header(int,int,int,int,int,org,org,int,int)')": [
+                        726
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        39
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toParquetStatistics(org)')": [
+                        236,
+                        237,
+                        241,
+                        244
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', None)": [
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        255,
+                        256
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetStatistics(Statistics,PrimitiveTypeName)')": [
+                        254
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetStatistics(String,Statistics,PrimitiveTypeName)')": [
+                        257,
+                        258,
+                        262,
+                        263,
+                        264
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream,MetadataFilter)')": [
+                        533,
+                        538
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetMetadata(FileMetaData)')": [
+                        573,
+                        574,
+                        575,
+                        576
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDataPageHeader(int,int,int,org,org,org,org,OutputStream)')": [
+                        693,
+                        694,
+                        695,
+                        696
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'newDataPageHeader(int,int,int,org,org,org,org)')": [
+                        714,
+                        715
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'newDataPageV2Header(int,int,int,int,int,org,org,int,int)')": [
+                        748,
+                        749
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordReader.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'initialize(MessageType,Map,Path,List,Configuration)')": [
+                        166,
+                        180
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        41
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordReader', 'initialize(MessageType,FileMetaData,Path,List,Configuration)')": [
+                        167,
+                        171,
+                        182
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileReader.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetFileReader', None)": [
+                        439,
+                        440,
+                        441,
+                        442,
+                        444,
+                        445,
+                        448,
+                        569,
+                        589
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        76
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', None)": [
+                        439,
+                        440,
+                        441,
+                        442,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        457,
+                        460,
+                        461,
+                        462,
+                        464,
+                        465,
+                        474,
+                        586,
+                        587,
+                        588,
+                        589,
+                        609,
+                        610,
+                        611,
+                        612
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetReader.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetReader', 'initReader')": [
+                        152
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetReader', 'initReader')": [
+                        152
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetRecordReader.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetRecordReader', 'initializeInternalReader(ParquetInputSplit,Configuration)')": [
+                        191,
+                        193
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetRecordReader', 'initializeInternalReader(ParquetInputSplit,Configuration)')": [
+                        192
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/hadoop/TestColumnChunkPageWriteStore.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#TestColumnChunkPageWriteStore', 'test')": [
+                        119
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#TestColumnChunkPageWriteStore', 'test')": [
+                        119,
+                        120
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/hadoop/TestParquetFileWriter.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testWriteRead')": [
+                        175,
+                        185
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testAlignmentWithPadding')": [
+                        278,
+                        288
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testAlignmentWithNoPaddingNeeded')": [
+                        381,
+                        391
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testConvertToThriftStatistics')": [
+                        420,
+                        421
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testWriteRead')": [
+                        175,
+                        176,
+                        186,
+                        187
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testAlignmentWithPadding')": [
+                        280,
+                        281,
+                        291,
+                        292
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testAlignmentWithNoPaddingNeeded')": [
+                        385,
+                        386,
+                        396,
+                        397
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testConvertToThriftStatistics')": [
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/hadoop/TestParquetWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        40
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetWriter', 'test')": [
+                        98,
+                        111
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#TestParquetWriter', 'test')": [
+                        97,
+                        110,
+                        111
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/hadoop/TestParquetWriterNewPage.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#TestParquetWriterNewPage', 'test')": [
+                        102,
+                        116
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#TestParquetWriterNewPage', 'test')": [
+                        102,
+                        116,
+                        117
+                    ]
+                }
+            },
+            "parquet-hive/parquet-hive-storage-handler/src/main/java/org/apache/hadoop/hive/ql/io/parquet/writable/BinaryWritable.java": {
+                "old": {
+                    "('org.apache.hadoop.hive.ql.io.parquet.writable#BinaryWritable', 'readFields(DataInput)')": [
+                        60
+                    ]
+                },
+                "new": {
+                    "('org.apache.hadoop.hive.ql.io.parquet.writable#BinaryWritable', 'readFields(DataInput)')": [
+                        60
+                    ]
+                }
+            },
+            "parquet-hive/parquet-hive-storage-handler/src/main/java/org/apache/hadoop/hive/serde2/objectinspector/primitive/ParquetStringInspector.java": {
+                "old": {
+                    "('org.apache.hadoop.hive.serde2.objectinspector.primitive#ParquetStringInspector', 'set(Object,Text)')": [
+                        80
+                    ]
+                },
+                "new": {
+                    "('org.apache.hadoop.hive.serde2.objectinspector.primitive#ParquetStringInspector', 'set(Object,Text)')": [
+                        80
+                    ],
+                    "('org.apache.hadoop.hive.serde2.objectinspector.primitive#ParquetStringInspector', None)": [
+                        81
+                    ]
+                }
+            },
+            "parquet-pig/src/main/java/org/apache/parquet/pig/TupleWriteSupport.java": {
+                "old": {
+                    "('org.apache.parquet.pig#TupleWriteSupport', 'writeValue(Type,FieldSchema,Tuple,int)')": [
+                        175
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.pig#TupleWriteSupport', 'writeValue(Type,FieldSchema,Tuple,int)')": [
+                        175
+                    ]
+                }
+            },
+            "parquet-protobuf/src/main/java/org/apache/parquet/proto/ProtoWriteSupport.java": {
+                "old": {
+                    "('org.apache.parquet.proto#ProtoWriteSupport', None)": [
+                        321
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.proto#ProtoWriteSupport', None)": [
+                        321
+                    ]
+                }
+            },
+            "parquet-protobuf/src/test/java/org/apache/parquet/proto/ProtoWriteSupportTest.java": {
+                "old": {
+                    "('org.apache.parquet.proto#ProtoWriteSupportTest', 'testSimplestMessage')": [
+                        53
+                    ],
+                    "('org.apache.parquet.proto#ProtoWriteSupportTest', 'testRepeatedInnerMessageMessage_message')": [
+                        98,
+                        101
+                    ],
+                    "('org.apache.parquet.proto#ProtoWriteSupportTest', 'testRepeatedInnerMessageMessage_scalar')": [
+                        127,
+                        134
+                    ],
+                    "('org.apache.parquet.proto#ProtoWriteSupportTest', 'testOptionalInnerMessage')": [
+                        160
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.proto#ProtoWriteSupportTest', 'testSimplestMessage')": [
+                        53
+                    ],
+                    "('org.apache.parquet.proto#ProtoWriteSupportTest', 'testRepeatedInnerMessageMessage_message')": [
+                        98,
+                        101
+                    ],
+                    "('org.apache.parquet.proto#ProtoWriteSupportTest', 'testRepeatedInnerMessageMessage_scalar')": [
+                        127,
+                        134
+                    ],
+                    "('org.apache.parquet.proto#ProtoWriteSupportTest', 'testOptionalInnerMessage')": [
+                        160
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/ParquetWriteProtocol.java": {
+                "old": {
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeBinaryToRecordConsumer(ByteBuffer)')": [
+                        648
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.thrift#ParquetWriteProtocol', 'writeBinaryToRecordConsumer(ByteBuffer)')": [
+                        648,
+                        649
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/org/apache/parquet/tools/command/DumpCommand.java": {
+                "old": {
+                    "('org.apache.parquet.tools.command#DumpCommand', 'dump(PrettyPrintWriter,ParquetMetadata,MessageType,Path,boolean,boolean,Set)')": [
+                        181,
+                        214
+                    ],
+                    "('org.apache.parquet.tools.command#DumpCommand', 'binaryToString(Binary)')": [
+                        310
+                    ],
+                    "('org.apache.parquet.tools.command#DumpCommand', 'binaryToBigInteger(Binary)')": [
+                        323
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.tools.command#DumpCommand', 'dump(PrettyPrintWriter,ParquetMetadata,MessageType,Path,boolean,boolean,Set)')": [
+                        181,
+                        182,
+                        215,
+                        216
+                    ],
+                    "('org.apache.parquet.tools.command#DumpCommand', 'binaryToString(Binary)')": [
+                        312
+                    ],
+                    "('org.apache.parquet.tools.command#DumpCommand', 'binaryToBigInteger(Binary)')": [
+                        325
+                    ]
+                }
+            }
+        }
+    },
+    "1f3e72fa069536ae20f37b29575288ff65e66803": {
+        "authored_data": "2015 Jun 26 04:48",
+        "commit.message": "PARQUET-317: Fix writeMetadataFile crash when a relative root path is used\n\nThis commit ensures the fully-qualified path is used prior to calling mergeFooters(..).\n\nAuthor: Steven She <steven@canopylabs.com>\n\nCloses #228 from stevencanopy/relative-metadata-path and squashes the following commits:\n\n988772b [Steven She] use outputPath.getFileSystem(...) to get the FS for the path\n1cea508 [Steven She] PARQUET-317: Fix writeMetadataFile crash when a relative root path is used\n",
+        "commit.author.name": "Steven She",
+        "pcid": "cb04562742688f8a444a52c90b2183c4be528be6",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileWriter.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeMetadataFile(Configuration,Path,List)')": [
+                        485
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeMetadataFile(Configuration,Path,List)')": [
+                        487
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/hadoop/TestParquetFileWriter.java": {
+                "new": {
+                    "(None, None)": [
+                        66,
+                        741,
+                        742
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', None)": [
+                        717,
+                        718,
+                        719,
+                        720,
+                        721
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testWriteMetadataFileWithRelativeOutputPath')": [
+                        722,
+                        723,
+                        724,
+                        725,
+                        726,
+                        727,
+                        728,
+                        729,
+                        730,
+                        731,
+                        732,
+                        733,
+                        734,
+                        735,
+                        736,
+                        737,
+                        738,
+                        739,
+                        740
+                    ]
+                }
+            }
+        }
+    },
+    "cb04562742688f8a444a52c90b2183c4be528be6": {
+        "authored_data": "2015 Jun 25 16:40",
+        "commit.message": "PARQUET-248: Add ParquetWriter.Builder.\n\nThis refactors the builder recently added to parquet-avro so that it can\nbe used by all object models. The Builder class is abstract and\nimplementations should extend it.\n\nThis changes the API slightly from AvroParquetWriter, renaming\nwithBlockSize to withRowGroupSize. The Avro builder has not been\nreleased so this isn't a breaking change.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #199 from rdblue/PARQUET-248-add-parquet-writer-builder and squashes the following commits:\n\na1a25ee [Ryan Blue] PARQUET-248: Add write mode and max padding to writer builder.\n622af4c [Ryan Blue] PARQUET-248: Add ParquetWriter.Builder.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "5c2ba72f9b4897d4441eff34ff0591e74a1d94bb",
+        "changes": {
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroParquetWriter.java": {
+                "old": {
+                    "('org.apache.parquet.avro#AvroParquetWriter', None)": [
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        221,
+                        222,
+                        225,
+                        226,
+                        227,
+                        228
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.avro#AvroParquetWriter', None)": [
+                        148,
+                        153,
+                        166,
+                        167,
+                        168,
+                        171,
+                        172,
+                        173
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetWriter.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetWriter', None)": [
+                        214,
+                        215,
+                        216,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetWriter', None)": [
+                        64,
+                        83,
+                        109,
+                        142,
+                        171,
+                        187,
+                        204,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        266,
+                        267,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484
+                    ],
+                    "(None, None)": [
+                        485,
+                        486
+                    ]
+                }
+            }
+        }
+    },
+    "5c2ba72f9b4897d4441eff34ff0591e74a1d94bb": {
+        "authored_data": "2015 Jun 24 23:02",
+        "commit.message": "PARQUET-284: Clean up ParquetMetadataConverter\n\nmakes all method static, removes unused thread-unsafe cache, etc.\n\nTurns out the \"cache\" was only read from *after* rebuilding what needed to be cached... so no performance gain there (and no loss by getting rid of it)\n\nHowever, I don't know if this will fix the issue mentioned in PARQUET-284, I don't think concurrent access to a HashMap will cause deadlock, it would just cause undefined behavior in reads or maybe ConcurrentModificationException\n\nUPDATE: I'm wrong, it can cause an infinite loop so this should fix the issue https://gist.github.com/rednaxelafx/1081908\n\nUPDATE2: Put the cache back in, made it static + thread safe\n\nAuthor: Alex Levenson <alexlevenson@twitter.com>\n\nCloses #220 from isnotinvain/alexlevenson/PARQUET-284 and squashes the following commits:\n\n4797b48 [Alex Levenson] Fix merge conflict issue\n8ff5775 [Alex Levenson] Merge branch 'master' into alexlevenson/PARQUET-284\nccd4776 [Alex Levenson] add encoding cache back in\n9ea5a5f [Alex Levenson] Clean up ParquetMetadataConverter: make all method static, remove unused thread-unsafe cache\n",
+        "commit.author.name": "Alex Levenson",
+        "pcid": "46448e934250705b6ebd6f21caa09698d611dbfd",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/format/converter/ParquetMetadataConverter.java": {
+                "old": {
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toParquetMetadata(int,ParquetMetadata)')": [
+                        73
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toParquetSchema(MessageType)')": [
+                        96
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'addToList(List,org)')": [
+                        102
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'addRowGroup(ParquetMetadata,List,BlockMetaData)')": [
+                        149
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toFormatEncodings(Set)')": [
+                        178
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', None)": [
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        418,
+                        419
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromFormatEncodings(List)')": [
+                        214,
+                        220,
+                        221,
+                        224,
+                        225
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getEncoding(Encoding)')": [
+                        229
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getEncoding(org)')": [
+                        233
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getPrimitive(Type)')": [
+                        262
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getType(PrimitiveTypeName)')": [
+                        285
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getOriginalType(ConvertedType)')": [
+                        308
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getConvertedType(OriginalType)')": [
+                        355
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'addKeyValue(FileMetaData,String,String)')": [
+                        402
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'range(long,long)')": [
+                        426
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream)')": [
+                        477
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream,MetadataFilter)')": [
+                        511
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetMetadata(FileMetaData)')": [
+                        532
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getPath(ColumnMetaData)')": [
+                        582
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetSchema(List)')": [
+                        587
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'buildChildren(Types,Iterator,int)')": [
+                        595
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toParquetRepetition(Repetition)')": [
+                        634
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetRepetition(FieldRepetitionType)')": [
+                        638
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDataPageHeader(int,int,int,org,org,org,OutputStream)')": [
+                        643
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDataPageHeader(int,int,int,org,org,org,org,OutputStream)')": [
+                        660
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'newDataPageHeader(int,int,int,org,org,org,org)')": [
+                        672
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDataPageV2Header(int,int,int,int,int,org,org,int,int,OutputStream)')": [
+                        692
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'newDataPageV2Header(int,int,int,int,int,org,org,int,int)')": [
+                        708
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDictionaryPageHeader(int,int,int,org,OutputStream)')": [
+                        727
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37,
+                        71,
+                        72
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', None)": [
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        112,
+                        203,
+                        283,
+                        307,
+                        355,
+                        454,
+                        481,
+                        500,
+                        504,
+                        590,
+                        638,
+                        643
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toParquetMetadata(int,ParquetMetadata)')": [
+                        89
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toParquetSchema(MessageType)')": [
+                        113
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'addToList(List,org)')": [
+                        119
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'addRowGroup(ParquetMetadata,List,BlockMetaData)')": [
+                        166
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toFormatEncodings(Set)')": [
+                        195
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromFormatEncodings(List)')": [
+                        204,
+                        206,
+                        210,
+                        211,
+                        213,
+                        214,
+                        215,
+                        216,
+                        218,
+                        219,
+                        220,
+                        222,
+                        223
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getEncoding(Encoding)')": [
+                        227
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getEncoding(org)')": [
+                        231
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getPrimitive(Type)')": [
+                        260
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getType(PrimitiveTypeName)')": [
+                        284
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getOriginalType(ConvertedType)')": [
+                        308
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getConvertedType(OriginalType)')": [
+                        356
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'addKeyValue(FileMetaData,String,String)')": [
+                        403
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'range(long,long)')": [
+                        425
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream)')": [
+                        477
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'readParquetMetadata(InputStream,MetadataFilter)')": [
+                        514
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetMetadata(FileMetaData)')": [
+                        535
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'getPath(ColumnMetaData)')": [
+                        585
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetSchema(List)')": [
+                        591
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'buildChildren(Types,Iterator,int)')": [
+                        599
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'toParquetRepetition(Repetition)')": [
+                        639
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'fromParquetRepetition(FieldRepetitionType)')": [
+                        644
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDataPageHeader(int,int,int,org,org,org,OutputStream)')": [
+                        649
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDataPageHeader(int,int,int,org,org,org,org,OutputStream)')": [
+                        666
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'newDataPageHeader(int,int,int,org,org,org,org)')": [
+                        678
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDataPageV2Header(int,int,int,int,int,org,org,int,int,OutputStream)')": [
+                        698
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'newDataPageV2Header(int,int,int,int,int,org,org,int,int)')": [
+                        714
+                    ],
+                    "('org.apache.parquet.format.converter#ParquetMetadataConverter', 'writeDictionaryPageHeader(int,int,int,org,OutputStream)')": [
+                        733
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ColumnChunkPageWriteStore.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ColumnChunkPageWriteStore', None)": [
+                        49,
+                        50,
+                        97,
+                        136
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ColumnChunkPageWriteStore', None)": [
+                        95,
+                        134
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileReader.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetFileReader', None)": [
+                        91,
+                        92,
+                        93,
+                        561,
+                        572,
+                        573,
+                        574,
+                        588
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readFooter(Configuration,FileStatus,MetadataFilter)')": [
+                        430
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetFileReader', None)": [
+                        91,
+                        559,
+                        570,
+                        571,
+                        572,
+                        586
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileReader', 'readFooter(Configuration,FileStatus,MetadataFilter)')": [
+                        428
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileWriter.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', None)": [
+                        97,
+                        98
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDictionaryPage(DictionaryPage)')": [
+                        307
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Encoding,Encoding,Encoding)')": [
+                        342
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Statistics,Encoding,Encoding,Encoding)')": [
+                        379
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'serializeFooter(ParquetMetadata,FSDataOutputStream)')": [
+                        472
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDictionaryPage(DictionaryPage)')": [
+                        305
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Encoding,Encoding,Encoding)')": [
+                        340
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Statistics,Encoding,Encoding,Encoding)')": [
+                        377
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'serializeFooter(ParquetMetadata,FSDataOutputStream)')": [
+                        470
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/format/converter/TestParquetMetadataConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        54
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testSchemaConverter')": [
+                        90,
+                        91,
+                        92
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testSchemaConverterDecimal')": [
+                        98,
+                        99
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testEnumEquivalence')": [
+                        128,
+                        129,
+                        130,
+                        133,
+                        136,
+                        139,
+                        142,
+                        145,
+                        148,
+                        151
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'createColumnChunkMetaData')": [
+                        277
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        318
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testSchemaConverter')": [
+                        90,
+                        91
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testSchemaConverterDecimal')": [
+                        97
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testEnumEquivalence')": [
+                        126,
+                        127,
+                        130,
+                        133,
+                        136,
+                        139,
+                        142,
+                        145,
+                        148
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'createColumnChunkMetaData')": [
+                        274
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', None)": [
+                        283,
+                        284
+                    ],
+                    "('org.apache.parquet.format.converter#TestParquetMetadataConverter', 'testEncodingsCache')": [
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317
+                    ]
+                }
+            }
+        }
+    },
+    "46448e934250705b6ebd6f21caa09698d611dbfd": {
+        "authored_data": "2015 Jun 24 20:58",
+        "commit.message": "PARQUET-201: Fix ValidTypeMap being overly strict with respect to OriginalTypes\n\nAuthor: Alex Levenson <alexlevenson@twitter.com>\n\nCloses #219 from isnotinvain/alexlevenson/PARQUET-201 and squashes the following commits:\n\n1cd8b58 [Alex Levenson] Merge branch 'master' into alexlevenson/PARQUET-201\n1d83e13 [Alex Levenson] Fix ValidTypeMap being overly strict with respect to OriginalTypes\n",
+        "commit.author.name": "Alex Levenson",
+        "pcid": "412ab9669810921d04f9feabfbeafa906d4de506",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/filter2/predicate/SchemaCompatibilityValidator.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        40
+                    ],
+                    "('org.apache.parquet.filter2.predicate#SchemaCompatibilityValidator', None)": [
+                        76,
+                        77,
+                        78,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88
+                    ],
+                    "('org.apache.parquet.filter2.predicate#SchemaCompatibilityValidator', 'validateColumn(Column)')": [
+                        185
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38
+                    ],
+                    "('org.apache.parquet.filter2.predicate#SchemaCompatibilityValidator', 'validateColumn(Column)')": [
+                        176
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/filter2/predicate/ValidTypeMap.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        28,
+                        176,
+                        177
+                    ],
+                    "('org.apache.parquet.filter2.predicate#ValidTypeMap', None)": [
+                        46,
+                        47,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        74,
+                        75,
+                        76,
+                        78,
+                        79,
+                        90,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175
+                    ],
+                    "('org.apache.parquet.filter2.predicate#ValidTypeMap', 'add(Class,FullTypeDescriptor)')": [
+                        50,
+                        51,
+                        53,
+                        56,
+                        58,
+                        61
+                    ],
+                    "('org.apache.parquet.filter2.predicate#ValidTypeMap', 'assertTypeValid(Column,PrimitiveTypeName,OriginalType)')": [
+                        92,
+                        96,
+                        97,
+                        108,
+                        114,
+                        119,
+                        129,
+                        131
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.parquet.filter2.predicate#ValidTypeMap', None)": [
+                        45,
+                        46,
+                        66,
+                        67,
+                        69,
+                        70,
+                        71,
+                        73,
+                        74
+                    ],
+                    "('org.apache.parquet.filter2.predicate#ValidTypeMap', 'add(Class,PrimitiveTypeName)')": [
+                        49,
+                        50,
+                        52,
+                        55,
+                        57,
+                        60
+                    ],
+                    "('org.apache.parquet.filter2.predicate#ValidTypeMap', 'assertTypeValid(Column,PrimitiveTypeName)')": [
+                        86,
+                        90,
+                        101,
+                        107,
+                        112,
+                        122,
+                        124
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/filter2/predicate/TestSchemaCompatibilityValidator.java": {
+                "old": {
+                    "('org.apache.parquet.filter2.predicate#TestSchemaCompatibilityValidator', 'testFindsInvalidTypes')": [
+                        115
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.filter2.predicate#TestSchemaCompatibilityValidator', 'testFindsInvalidTypes')": [
+                        115
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/filter2/predicate/TestValidTypeMap.java": {
+                "old": {
+                    "('org.apache.parquet.filter2.predicate#TestValidTypeMap', 'testValidTypes')": [
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72
+                    ],
+                    "('org.apache.parquet.filter2.predicate#TestValidTypeMap', 'testMismatchedTypes')": [
+                        78,
+                        83
+                    ],
+                    "('org.apache.parquet.filter2.predicate#TestValidTypeMap', 'testUnsupportedType')": [
+                        91,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106
+                    ],
+                    "(None, None)": [
+                        107,
+                        108
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.filter2.predicate#TestValidTypeMap', 'testValidTypes')": [
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71
+                    ],
+                    "('org.apache.parquet.filter2.predicate#TestValidTypeMap', 'testMismatchedTypes')": [
+                        77,
+                        82
+                    ],
+                    "('org.apache.parquet.filter2.predicate#TestValidTypeMap', 'testUnsupportedType')": [
+                        90
+                    ]
+                }
+            }
+        }
+    },
+    "412ab9669810921d04f9feabfbeafa906d4de506": {
+        "authored_data": "2015 Jun 23 00:11",
+        "commit.message": "PARQUET-306: Add row group alignment\n\nThis adds `AlignmentStrategy` to the `ParquetFileWriter` that can alter the position of row groups and recommend a target size for the next row group. There are two strategies: `NoAlignment` and `PaddingAlignment`. Padding alignment is used for HDFS and no alignment is used for all other file systems. When HDFS-3689 is available, we can add a strategy to use that.\n\nThe amount of padding is controlled by a threshold between 0 and 1 that controls the fraction of the row group size that can be padded. This is interpreted as the maximum amount of padding that is acceptable, in terms of the row group size. For example, setting this to 5% will write padding when the bytes left in a HDFS block are less than 5% of the row group size. This defaults to 0%, which prevents padding from being added and matches the current behavior. The threshold is controlled by a new OutputFormat configuration property, `parquet.writer.padding-thresh`.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #211 from rdblue/PARQUET-306-row-group-alignment and squashes the following commits:\n\n0137ddf [Ryan Blue] PARQUET-306: Add MR test with padding.\n6ce3f08 [Ryan Blue] PARQUET-306: Add parquet.writer.max-padding setting.\nf1dc659 [Ryan Blue] PARQUET-306: Base next row group size on bytes remaining.\nc6a3e97 [Ryan Blue] PARQUET-306: Add AlignmentStrategy to ParquetFileWriter.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "89321a2dee438328e75a11954e972175c78f0a2a",
+        "changes": {
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        31,
+                        36,
+                        37
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', 'checkBlockSizeReached')": [
+                        129,
+                        130,
+                        135,
+                        137
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', 'flushRowGroupToStore')": [
+                        148
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', None)": [
+                        54,
+                        93
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', 'checkBlockSizeReached')": [
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        138
+                    ],
+                    "('org.apache.parquet.hadoop#InternalParquetRecordWriter', 'flushRowGroupToStore')": [
+                        149,
+                        159,
+                        160,
+                        161
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetFileWriter.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', None)": [
+                        83,
+                        88,
+                        160,
+                        171,
+                        172,
+                        176,
+                        206
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'startColumn(ColumnDescriptor,long,CompressionCodecName)')": [
+                        214,
+                        215
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,org,org,org)')": [
+                        266,
+                        267,
+                        268
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Statistics,org,org,org)')": [
+                        303,
+                        304,
+                        305
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPages(BytesInput,long,long,Statistics,List)')": [
+                        340
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'endColumn')": [
+                        370,
+                        371
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        46,
+                        701,
+                        702
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', None)": [
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        89,
+                        90,
+                        101,
+                        107,
+                        179,
+                        180,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        532,
+                        533,
+                        624,
+                        625,
+                        626,
+                        627,
+                        628,
+                        629,
+                        630,
+                        631,
+                        632,
+                        633,
+                        634,
+                        635,
+                        636,
+                        637,
+                        638,
+                        639,
+                        640,
+                        641,
+                        642,
+                        643,
+                        644,
+                        645,
+                        646,
+                        647,
+                        648,
+                        649,
+                        650,
+                        651,
+                        652,
+                        653,
+                        654,
+                        655,
+                        656,
+                        657,
+                        658,
+                        659,
+                        660,
+                        661,
+                        662,
+                        663,
+                        664,
+                        665,
+                        666,
+                        667,
+                        668,
+                        669,
+                        670,
+                        671,
+                        672,
+                        673,
+                        674,
+                        675,
+                        676,
+                        677,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682,
+                        683,
+                        684,
+                        685,
+                        686,
+                        687,
+                        688,
+                        689,
+                        690,
+                        691,
+                        692,
+                        693,
+                        694,
+                        695,
+                        696,
+                        697,
+                        698,
+                        699,
+                        700
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'supportsBlockSize(FileSystem)')": [
+                        87,
+                        88
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'startBlock(long)')": [
+                        266,
+                        267,
+                        268
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'startColumn(ColumnDescriptor,long,CompressionCodecName)')": [
+                        284
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Encoding,Encoding,Encoding)')": [
+                        335,
+                        336,
+                        337
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPage(int,int,BytesInput,Statistics,Encoding,Encoding,Encoding)')": [
+                        372,
+                        373,
+                        374
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'writeDataPages(BytesInput,long,long,Statistics,List)')": [
+                        409
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetFileWriter', 'getNextRowGroupSize')": [
+                        534,
+                        535
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetOutputFormat.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'getRecordWriter(Configuration,Path,CompressionCodecName)')": [
+                        289
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        41,
+                        84,
+                        85,
+                        86,
+                        87
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', None)": [
+                        117,
+                        118,
+                        119,
+                        120,
+                        239,
+                        240,
+                        243,
+                        244,
+                        248
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'setMaxPaddingSize(JobContext,int)')": [
+                        237,
+                        238
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'setMaxPaddingSize(Configuration,int)')": [
+                        241,
+                        242
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'getMaxPaddingSize(Configuration)')": [
+                        245,
+                        246,
+                        247
+                    ],
+                    "('org.apache.parquet.hadoop#ParquetOutputFormat', 'getRecordWriter(Configuration,Path,CompressionCodecName)')": [
+                        308,
+                        309,
+                        312,
+                        313
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/org/apache/parquet/hadoop/ParquetWriter.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#ParquetWriter', None)": [
+                        212
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.hadoop#ParquetWriter', None)": [
+                        47,
+                        48,
+                        49,
+                        214,
+                        216
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/org/apache/parquet/hadoop/TestParquetFileWriter.java": {
+                "old": {
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testWriteMode')": [
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        91
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testWriteRead')": [
+                        101,
+                        102,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        126,
+                        128,
+                        129,
+                        132,
+                        134,
+                        135,
+                        136,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        161,
+                        164,
+                        165,
+                        171,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        184,
+                        185
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testWriteReadStatistics')": [
+                        210,
+                        211
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testMetaDataFile')": [
+                        299
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testWriteReadStatisticsAllNulls')": [
+                        341,
+                        342
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        27,
+                        28,
+                        53,
+                        65
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', None)": [
+                        68,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        96,
+                        97,
+                        98,
+                        203,
+                        204,
+                        205,
+                        306,
+                        307,
+                        308
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testWriteMode')": [
+                        101,
+                        120
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testWriteRead')": [
+                        130,
+                        136,
+                        139,
+                        141,
+                        142,
+                        145,
+                        147,
+                        148,
+                        149,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        174,
+                        177,
+                        178,
+                        184,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testAlignmentWithPadding')": [
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testAlignmentWithNoPaddingNeeded')": [
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testWriteReadStatistics')": [
+                        429
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testMetaDataFile')": [
+                        517
+                    ],
+                    "('org.apache.parquet.hadoop#TestParquetFileWriter', 'testWriteReadStatisticsAllNulls')": [
+                        559
+                    ]
+                }
+            }
+        }
+    }
+}

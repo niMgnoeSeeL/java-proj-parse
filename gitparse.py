@@ -24,6 +24,126 @@ os.chdir("/Users/bohrok/Documents/replication-kit-2020-line-validation")
 pp = pprint.PrettyPrinter(indent=4)
 
 
+REPODICT = {
+    "ivy": {
+        "repo_path": "data/repos/ant-ivy",
+        "data_dir": "data/parsed/ant-ivy",
+    },
+    "math": {
+        "repo_path": "data/repos/commons-math",
+        "data_dir": "data/parsed/commons-math",
+    },
+    "opennlp": {
+        "repo_path": "data/repos/opennlp",
+        "data_dir": "data/parsed/opennlp",
+    },
+    "parquet": {
+        "repo_path": "data/repos/parquet-mr",
+        "data_dir": "data/parsed/parquet-mr",
+    },
+    "wss4j": {
+        "repo_path": "data/repos/ws-wss4j",
+        "data_dir": "data/parsed/ws-wss4j",
+    },
+    "archiva": {
+        "repo_path": "data/repos/archiva",
+        "data_dir": "data/parsed/archiva",
+    },
+    "deltaspike": {
+        "repo_path": "data/repos/deltaspike",
+        "data_dir": "data/parsed/deltaspike",
+    },
+    "systemds": {
+        "repo_path": "data/repos/systemml",
+        "data_dir": "data/parsed/systemml",
+    },
+    "lang": {
+        "repo_path": "data/repos/commons-lang",
+        "data_dir": "data/parsed/commons-lang",
+    },
+    "net": {
+        "repo_path": "data/repos/commons-net",
+        "data_dir": "data/parsed/commons-net",
+    },
+    "collections": {
+        "repo_path": "data/repos/commons-collections",
+        "data_dir": "data/parsed/commons-collections",
+    },
+    "beanutils": {
+        "repo_path": "data/repos/commons-beanutils",
+        "data_dir": "data/parsed/commons-beanutils",
+    },
+    "codec": {
+        "repo_path": "data/repos/commons-codec",
+        "data_dir": "data/parsed/commons-codec",
+    },
+    "compress": {
+        "repo_path": "data/repos/commons-compress",
+        "data_dir": "data/parsed/commons-compress",
+    },
+    "configuration": {
+        "repo_path": "data/repos/commons-configuration",
+        "data_dir": "data/parsed/commons-configuration",
+    },
+    "digester": {
+        "repo_path": "data/repos/commons-digester",
+        "data_dir": "data/parsed/commons-digester",
+    },
+    "jcs": {
+        "repo_path": "data/repos/commons-jcs",
+        "data_dir": "data/parsed/commons-jcs",
+    },
+    "imaging": {
+        "repo_path": "data/repos/commons-imaging",
+        "data_dir": "data/parsed/commons-imaging",
+    },
+    "io": {
+        "repo_path": "data/repos/commons-io",
+        "data_dir": "data/parsed/commons-io",
+    },
+    "scxml": {
+        "repo_path": "data/repos/commons-scxml",
+        "data_dir": "data/parsed/commons-scxml",
+    },
+    "validator": {
+        "repo_path": "data/repos/commons-validator",
+        "data_dir": "data/parsed/commons-validator",
+    },
+    "vfs": {
+        "repo_path": "data/repos/commons-vfs",
+        "data_dir": "data/parsed/commons-vfs",
+    },
+    "giraph": {
+        "repo_path": "data/repos/giraph",
+        "data_dir": "data/parsed/giraph",
+    },
+    "jspwiki": {
+        "repo_path": "data/repos/jspwiki",
+        "data_dir": "data/parsed/jspwiki",
+    },
+    "eagle": {
+        "repo_path": "data/repos/eagle",
+        "data_dir": "data/parsed/eagle",
+    },
+    "bcel": {
+        "repo_path": "data/repos/commons-bcel",
+        "data_dir": "data/parsed/commons-bcel",
+    },
+    "dbcp": {
+        "repo_path": "data/repos/commons-dbcp",
+        "data_dir": "data/parsed/commons-dbcp",
+    },
+    "gora": {
+        "repo_path": "data/repos/gora",
+        "data_dir": "data/parsed/gora",
+    },
+    "santuario": {
+        "repo_path": "data/repos/santuario-java",
+        "data_dir": "data/parsed/santuario-java",
+    },
+}
+
+
 def get_parents(commit: git.Commit) -> Sequence[git.Commit]:
     return commit.parents
 
@@ -191,7 +311,7 @@ def get_final_line(node: javalang.tree.Node) -> int:
 
 
 def build_position_dict(tree: javalang.tree.CompilationUnit) -> Dict:
-    package_name = tree.package.name
+    package_name = None if tree.package is None else tree.package.name
     ret = {"package": package_name, "classes": []}
     for path, node in tree.filter(javalang.tree.ClassDeclaration):
         classDeclNode: javalang.tree.ClassDeclaration = node
@@ -271,16 +391,19 @@ def get_change_dict(
 
 
 if __name__ == "__main__":
-    repo_path = "data/repos/ant-ivy"
+    assert len(sys.argv) == 2
+    repo_name = sys.argv[1]
+    repo_path = REPODICT[repo_name]["repo_path"]
+    data_dir = REPODICT[repo_name]["data_dir"]
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir)
     repo = git.Repo(repo_path)
     parsed_data = OrderedDict()
     size = len(list(repo.iter_commits()))
     print(f"{size} commits")
     for idx, commit in enumerate(repo.iter_commits(), 1):
         group_idx = ((idx - 1) // 10 + 1) * 10
-        if os.path.exists(
-            os.path.join("data/parsed/ant-ivy", f"{str(group_idx)}.json")
-        ):
+        if os.path.exists(os.path.join(data_dir, f"{str(group_idx)}.json")):
             print(
                 "Skip group", group_idx, f"because it already exists ({idx=})"
             )
@@ -288,7 +411,7 @@ if __name__ == "__main__":
         # flush currently parsed data
         if (idx - 1) % 10 == 0 and idx != 1:
             print(f"{idx}/{size}")
-            with open(f"data/parsed/ant-ivy/{idx - 1}.json", "w") as f:
+            with open(os.path.join(data_dir, f"{idx - 1}.json"), "w") as f:
                 json.dump(parsed_data, f, indent=4)
                 parsed_data = OrderedDict()
         parsed_commit_data = OrderedDict()
@@ -348,5 +471,6 @@ if __name__ == "__main__":
             continue
         parsed_commit_data["changes"] = change_dict
         parsed_data[commit.hexsha] = parsed_commit_data
-    with open(f"data/parsed/ant-ivy/{idx}.json", "w") as f:
-        json.dump(parsed_data, f, indent=4)
+    if len(parsed_data):
+        with open(os.path.join(data_dir, f"{idx}.json"), "w") as f:
+            json.dump(parsed_data, f, indent=4)

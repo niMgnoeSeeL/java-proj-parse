@@ -1,0 +1,1969 @@
+{
+    "a458e1a2f3cd1ccd692f1530b64d3143c9beda51": {
+        "authored_data": "2015 May 18 17:08",
+        "commit.message": "PARQUET-243: Add Avro reflect support\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #165 from rdblue/PARQUET-243-add-avro-reflect and squashes the following commits:\n\na1a17b4 [Ryan Blue] PARQUET-243: Update for Tom's review comments.\n16584d1 [Ryan Blue] PARQUET-243: Fix AvroWriteSupport bug.\nfa4a9ec [Ryan Blue] PARQUET-243: Add reflect tests.\n4c50cd1 [Ryan Blue] PARQUET-243: Update write support for reflected objects.\nb50c482 [Ryan Blue] PARQUET-243: Update tests to run with new converters.\n0b7a333 [Ryan Blue] PARQUET-243: Use common AvroConverters where possible.\n2f6825d [Ryan Blue] PARQUET-243: Add reflect converters that behave more like Avro.\n98f10df [Ryan Blue] PARQUET-243: Add Avro compatible record materializer.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "60edcf9df1bbe271b1414b04e914641937395d8a",
+        "changes": {
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroIndexedRecordConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        31,
+                        39
+                    ],
+                    "('org.apache.parquet.avro#AvroIndexedRecordConverter', None)": [
+                        74,
+                        75,
+                        91,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        451,
+                        452,
+                        454,
+                        459,
+                        474,
+                        475,
+                        491,
+                        542,
+                        550,
+                        551,
+                        552,
+                        576,
+                        595,
+                        671
+                    ],
+                    "('org.apache.parquet.avro#AvroIndexedRecordConverter', 'newConverter(Schema,Type,GenericData,ParentValueContainer)')": [
+                        126,
+                        128,
+                        130,
+                        132,
+                        134,
+                        136,
+                        138
+                    ],
+                    "('org.apache.parquet.avro#AvroIndexedRecordConverter', 'start')": [
+                        170
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45
+                    ],
+                    "('org.apache.parquet.avro#AvroIndexedRecordConverter', None)": [
+                        78,
+                        94,
+                        112,
+                        118,
+                        119,
+                        177,
+                        300,
+                        305,
+                        320,
+                        321,
+                        337,
+                        388,
+                        396,
+                        397,
+                        421,
+                        440,
+                        516
+                    ],
+                    "('org.apache.parquet.avro#AvroIndexedRecordConverter', 'getDatumClass(GenericData,Schema)')": [
+                        113,
+                        114,
+                        115,
+                        116,
+                        117
+                    ],
+                    "('org.apache.parquet.avro#AvroIndexedRecordConverter', 'newConverter(Schema,Type,GenericData,ParentValueContainer)')": [
+                        137,
+                        139,
+                        141,
+                        143,
+                        145,
+                        147,
+                        149
+                    ],
+                    "('org.apache.parquet.avro#AvroIndexedRecordConverter', 'start')": [
+                        182
+                    ]
+                }
+            },
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroParquetOutputFormat.java": {
+                "old": {
+                    "('org.apache.parquet.avro#AvroParquetOutputFormat', None)": [
+                        31,
+                        47
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.avro#AvroParquetOutputFormat', None)": [
+                        31,
+                        47,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57
+                    ],
+                    "('org.apache.parquet.avro#AvroParquetOutputFormat', 'setAvroDataSupplier(Job,Class)')": [
+                        58,
+                        59,
+                        60,
+                        61
+                    ],
+                    "(None, None)": [
+                        62
+                    ]
+                }
+            },
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroParquetReader.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.parquet.avro#AvroParquetReader', None)": [
+                        33
+                    ],
+                    "('org.apache.parquet.avro#AvroParquetReader', 'builder(Path)')": [
+                        35
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.avro#AvroParquetReader', None)": [
+                        32
+                    ],
+                    "('org.apache.parquet.avro#AvroParquetReader', 'builder(Path)')": [
+                        34
+                    ]
+                }
+            },
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroParquetWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.parquet.avro#AvroParquetWriter', None)": [
+                        33,
+                        47,
+                        64,
+                        78,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101
+                    ],
+                    "('org.apache.parquet.avro#AvroParquetWriter', 'writeSupport(Schema)')": [
+                        102,
+                        103,
+                        104
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        27,
+                        221
+                    ],
+                    "('org.apache.parquet.avro#AvroParquetWriter', None)": [
+                        35,
+                        36,
+                        39,
+                        50,
+                        54,
+                        68,
+                        72,
+                        84,
+                        87,
+                        101,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220
+                    ],
+                    "('org.apache.parquet.avro#AvroParquetWriter', 'builder(Path)')": [
+                        37,
+                        38
+                    ],
+                    "('org.apache.parquet.avro#AvroParquetWriter', 'writeSupport(Schema,GenericData)')": [
+                        134,
+                        135,
+                        136,
+                        137
+                    ]
+                }
+            },
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroReadSupport.java": {
+                "old": {
+                    "(None, None)": [
+                        24,
+                        32,
+                        33,
+                        34
+                    ],
+                    "('org.apache.parquet.avro#AvroReadSupport', None)": [
+                        36,
+                        46
+                    ],
+                    "('org.apache.parquet.avro#AvroReadSupport', 'init(Configuration,Map,MessageType)')": [
+                        72,
+                        81
+                    ],
+                    "('org.apache.parquet.avro#AvroReadSupport', 'prepareForRead(Configuration,Map,MessageType,ReadContext)')": [
+                        93,
+                        94,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        32,
+                        33,
+                        34
+                    ],
+                    "('org.apache.parquet.avro#AvroReadSupport', None)": [
+                        36,
+                        46,
+                        47,
+                        48,
+                        49,
+                        123,
+                        124,
+                        125,
+                        130,
+                        131
+                    ],
+                    "('org.apache.parquet.avro#AvroReadSupport', 'init(Configuration,Map,MessageType)')": [
+                        75,
+                        82,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91
+                    ],
+                    "('org.apache.parquet.avro#AvroReadSupport', 'prepareForRead(Configuration,Map,MessageType,ReadContext)')": [
+                        99,
+                        102,
+                        103,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122
+                    ],
+                    "('org.apache.parquet.avro#AvroReadSupport', 'newCompatMaterializer(MessageType,Schema,GenericData)')": [
+                        126,
+                        127,
+                        128,
+                        129
+                    ],
+                    "('org.apache.parquet.avro#AvroReadSupport', 'getDataModel(Configuration)')": [
+                        132,
+                        133,
+                        134,
+                        135
+                    ]
+                }
+            },
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroRecordMaterializer.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.parquet.avro#AvroRecordMaterializer', None)": [
+                        28,
+                        30,
+                        34
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.avro#AvroRecordMaterializer', None)": [
+                        27,
+                        29,
+                        33
+                    ]
+                }
+            },
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroWriteSupport.java": {
+                "old": {
+                    "(None, None)": [
+                        40,
+                        41,
+                        42
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', None)": [
+                        44,
+                        84
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'init(Configuration)')": [
+                        71,
+                        72
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeRecord(GroupType,Schema,IndexedRecord)')": [
+                        92
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeRecordFields(GroupType,Schema,IndexedRecord)')": [
+                        99,
+                        109
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeArray(GroupType,Schema,Collection)')": [
+                        121,
+                        122,
+                        126,
+                        131
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeUnion(GroupType,Schema,Object)')": [
+                        171
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeValue(Type,Schema,Object)')": [
+                        200,
+                        208,
+                        212,
+                        216,
+                        218,
+                        220
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38,
+                        39,
+                        42,
+                        43,
+                        44,
+                        427
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', None)": [
+                        46,
+                        47,
+                        48,
+                        49,
+                        53,
+                        61,
+                        66,
+                        67,
+                        68,
+                        69,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        109,
+                        110,
+                        117,
+                        122,
+                        123,
+                        165,
+                        166,
+                        221,
+                        222,
+                        223,
+                        233,
+                        234,
+                        242,
+                        243,
+                        244,
+                        252,
+                        253,
+                        254,
+                        262,
+                        263,
+                        264,
+                        272,
+                        273,
+                        274,
+                        282,
+                        283,
+                        284,
+                        292,
+                        293,
+                        294,
+                        302,
+                        303,
+                        304,
+                        312
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'setAvroDataSupplier(Configuration,Class)')": [
+                        50,
+                        51,
+                        52
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'init(Configuration)')": [
+                        93,
+                        94,
+                        95,
+                        96,
+                        97
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'write(T)')": [
+                        118,
+                        119,
+                        120,
+                        121
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeRecord(GroupType,Schema,Object)')": [
+                        125
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeRecordFields(GroupType,Schema,Object)')": [
+                        132,
+                        142
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeArray(GroupType,Schema,Object)')": [
+                        154,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeJavaArray(GroupType,Schema,Class,Object)')": [
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeCollection(GroupType,Schema,Collection)')": [
+                        224,
+                        225,
+                        228
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeBooleanArray(boolean)')": [
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeByteArray(byte)')": [
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeShortArray(short)')": [
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeCharArray(char)')": [
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeIntArray(int)')": [
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeLongArray(long)')": [
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeFloatArray(float)')": [
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeDoubleArray(double)')": [
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeUnion(GroupType,Schema,Object)')": [
+                        352
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'writeValue(Type,Schema,Object)')": [
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        401,
+                        405,
+                        407,
+                        409
+                    ],
+                    "('org.apache.parquet.avro#AvroWriteSupport', 'getDataModel(Configuration)')": [
+                        423,
+                        424,
+                        425,
+                        426
+                    ]
+                }
+            },
+            "parquet-avro/src/test/java/org/apache/parquet/avro/TestBackwardCompatibility.java": {
+                "old": {
+                    "('org.apache.parquet.avro#TestBackwardCompatibility', 'testStringCompatibility')": [
+                        33
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.avro#TestBackwardCompatibility', 'testCompatStringCompatibility')": [
+                        33
+                    ],
+                    "('org.apache.parquet.avro#TestBackwardCompatibility', None)": [
+                        51
+                    ],
+                    "('org.apache.parquet.avro#TestBackwardCompatibility', 'testStringCompatibility')": [
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63
+                    ],
+                    "(None, None)": [
+                        64,
+                        65,
+                        66
+                    ]
+                }
+            },
+            "parquet-avro/src/test/java/org/apache/parquet/avro/TestReadWrite.java": {
+                "old": {
+                    "(None, None)": [
+                        31,
+                        38,
+                        47
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', 'testEmptyArray')": [
+                        62,
+                        72
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', 'testEmptyMap')": [
+                        99
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', 'testMapWithNulls')": [
+                        130
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', 'testMapWithUtf8Key')": [
+                        182
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', 'testAll')": [
+                        238,
+                        239,
+                        250
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', 'testAllUsingDefaultAvroSchema')": [
+                        440
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        43,
+                        44,
+                        49
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', None)": [
+                        51,
+                        52,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', 'data')": [
+                        53,
+                        54,
+                        55,
+                        56,
+                        57
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', 'testEmptyArray')": [
+                        78,
+                        88
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', 'testEmptyMap')": [
+                        115
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', 'testMapWithNulls')": [
+                        146
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', 'testMapWithUtf8Key')": [
+                        198
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', 'testAll')": [
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        269
+                    ],
+                    "('org.apache.parquet.avro#TestReadWrite', 'testAllUsingDefaultAvroSchema')": [
+                        459
+                    ]
+                }
+            },
+            "parquet-avro/src/test/java/org/apache/parquet/avro/TestSpecificReadWrite.java": {
+                "old": {
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', None)": [
+                        47
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testReadWriteSpecific')": [
+                        48,
+                        50
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testReadWriteSpecificWithDictionary')": [
+                        62
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testFilterMatchesMultiple')": [
+                        74
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testFilterMatchesMultipleBlocks')": [
+                        85
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testFilterMatchesNoBlocks')": [
+                        96
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testFilterMatchesFinalBlockOnly')": [
+                        122
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testFilterWithDictionary')": [
+                        131
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testFilterOnSubAttribute')": [
+                        141,
+                        145,
+                        149
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testProjection')": [
+                        157
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testAvroReadSchema')": [
+                        196
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33,
+                        42,
+                        43,
+                        49
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', None)": [
+                        52,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'data')": [
+                        53,
+                        54,
+                        55,
+                        56,
+                        57
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testCompatReadWriteSpecific')": [
+                        67,
+                        69
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testReadWriteSpecificWithDictionary')": [
+                        81
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testFilterMatchesMultiple')": [
+                        93
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testFilterMatchesMultipleBlocks')": [
+                        104
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testFilterMatchesNoBlocks')": [
+                        115
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testFilterMatchesFinalBlockOnly')": [
+                        141
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testFilterWithDictionary')": [
+                        150
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testFilterOnSubAttribute')": [
+                        160,
+                        164,
+                        168
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testProjection')": [
+                        176
+                    ],
+                    "('org.apache.parquet.avro#TestSpecificReadWrite', 'testAvroReadSchema')": [
+                        215
+                    ]
+                }
+            }
+        }
+    },
+    "60edcf9df1bbe271b1414b04e914641937395d8a": {
+        "authored_data": "2015 May 15 20:07",
+        "commit.message": "PARQUET-278 : enforce non empty group on MessageType level\n\nAs columnar format, parquet currently does not support empty struct/group without leaves. We should throw when constructing an empty GroupType to give a clear message.\n\nAuthor: Tianshuo Deng <tdeng@twitter.com>\n\nCloses #195 from tsdeng/message_type_enforce_non_empty_group and squashes the following commits:\n\na286c58 [Tianshuo Deng] revert change to merge_parquet_pr\na09f6ba [Tianshuo Deng] fix test\nac63567 [Tianshuo Deng] fix tests\naa2633c [Tianshuo Deng] enforce non empty group on MessageType level\n",
+        "commit.author.name": "Tianshuo Deng",
+        "pcid": "1dbcdf2e36043706957ed514f0f6e47452f3f841",
+        "changes": {
+            "parquet-column/src/main/java/org/apache/parquet/schema/GroupType.java": {
+                "new": {
+                    "('org.apache.parquet.schema#GroupType', None)": [
+                        91,
+                        92,
+                        93
+                    ]
+                }
+            },
+            "parquet-column/src/main/java/org/apache/parquet/schema/IncompatibleSchemaModificationException.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        9,
+                        11
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        9,
+                        11
+                    ]
+                }
+            },
+            "parquet-column/src/test/java/org/apache/parquet/schema/TestMessageType.java": {
+                "new": {
+                    "('org.apache.parquet.schema#TestMessageType', None)": [
+                        148,
+                        149
+                    ],
+                    "('org.apache.parquet.schema#TestMessageType', 'testEmptyGroup')": [
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158
+                    ],
+                    "(None, None)": [
+                        159,
+                        160,
+                        161
+                    ]
+                }
+            },
+            "parquet-pig/src/test/java/org/apache/parquet/pig/TestPigSchemaConverter.java": {
+                "old": {
+                    "('org.apache.parquet.pig#TestPigSchemaConverter', 'testSchemaEvolution')": [
+                        224
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        33,
+                        34,
+                        35
+                    ],
+                    "('org.apache.parquet.pig#TestPigSchemaConverter', 'testSchemaEvolution')": [
+                        229
+                    ]
+                }
+            },
+            "parquet-thrift/src/main/java/org/apache/parquet/thrift/ThriftSchemaConverter.java": {
+                "old": {
+                    "('org.apache.parquet.thrift#ThriftSchemaConverter', 'convert(StructType)')": [
+                        63
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.thrift#ThriftSchemaConverter', 'convert(StructType)')": [
+                        62
+                    ]
+                }
+            }
+        }
+    },
+    "136c5ffe80e558a87cde01baebf823b06e3cbe75": {
+        "authored_data": "2015 May 15 19:41",
+        "commit.message": "PARQUET-253: Fixes Javadoc of AvroSchemaConverter\n\nGot confused by the original Javadoc at first and didn't realize `AvroSchemaConverter` is also capable to convert a Parquet schema to an Avro schema.\n\n<!-- Reviewable:start -->\n[<img src=\"https://reviewable.io/review_button.png\" height=40 alt=\"Review on Reviewable\"/>](https://reviewable.io/reviews/apache/incubator-parquet-mr/173)\n<!-- Reviewable:end -->\n\nAuthor: Cheng Lian <lian@databricks.com>\n\nCloses #173 from liancheng/avro-schema-converter-comment-fix and squashes the following commits:\n\n47b11ce [Cheng Lian] Fixes Javadoc of AvroSchemaConverter\n",
+        "commit.author.name": "Cheng Lian",
+        "pcid": "7680fae14c9f544d0585a7b150004a1e48fff53a",
+        "changes": {
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroSchemaConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        9,
+                        11,
+                        40,
+                        41
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', None)": [
+                        64
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'primitive(String,PrimitiveType,Type,int,OriginalType)')": [
+                        179
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'primitive(String,PrimitiveType,Type,OriginalType)')": [
+                        187
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'primitive(String,PrimitiveType,Type)')": [
+                        192
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        9,
+                        11,
+                        40,
+                        41
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', None)": [
+                        64
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'primitive(String,PrimitiveType,Type,int,OriginalType)')": [
+                        179
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'primitive(String,PrimitiveType,Type,OriginalType)')": [
+                        187
+                    ],
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'primitive(String,PrimitiveType,Type)')": [
+                        192
+                    ]
+                }
+            }
+        }
+    },
+    "7680fae14c9f544d0585a7b150004a1e48fff53a": {
+        "authored_data": "2015 May 15 19:40",
+        "commit.message": "PARQUET-254: Fixes exception message\n\n<!-- Reviewable:start -->\n[<img src=\"https://reviewable.io/review_button.png\" height=40 alt=\"Review on Reviewable\"/>](https://reviewable.io/reviews/apache/incubator-parquet-mr/174)\n<!-- Reviewable:end -->\n\nAuthor: Cheng Lian <lian@databricks.com>\n\nCloses #174 from liancheng/fix-exception-message and squashes the following commits:\n\ndb816c2 [Cheng Lian] Fixes exception message\n",
+        "commit.author.name": "Cheng Lian",
+        "pcid": "e5d9c6c7982b16840eb9ea95f8e087a2abfd1027",
+        "changes": {
+            "parquet-avro/src/main/java/org/apache/parquet/avro/AvroSchemaConverter.java": {
+                "old": {
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'convertField(Type)')": [
+                        240
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.avro#AvroSchemaConverter', 'convertField(Type)')": [
+                        240
+                    ]
+                }
+            }
+        }
+    },
+    "c7d56cffbb4668d0955ef00196e08f42f2efe363": {
+        "authored_data": "2015 May 12 18:15",
+        "commit.message": "PARQUET-273 : remove usage of ReflectiveOperationException to support JAVA6\n\nas commented here: https://github.com/apache/parquet-mr/commit/52f3240d90f2397cd1850ab11674ba08a0ecb2a0#commitcomment-11065301\n\nAuthor: Tianshuo Deng <tdeng@twitter.com>\n\nCloses #191 from tsdeng/remove_usage_of_reflective_operation_exception and squashes the following commits:\n\nadbe37a [Tianshuo Deng] remove usage of ReflectiveOperationException to support JAVA6\n",
+        "commit.author.name": "Tianshuo Deng",
+        "pcid": "9500c773ed121c963cdfc57fb239410a81458147",
+        "changes": {
+            "parquet-scrooge/src/main/java/org/apache/parquet/scrooge/ScroogeStructConverter.java": {
+                "old": {
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertCompanionClassToStruct(Class)')": [
+                        94
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'getFieldInfosForUnion(Class)')": [
+                        144,
+                        145
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertEnumTypeField(Class,String)')": [
+                        327,
+                        328
+                    ]
+                },
+                "new": {
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertCompanionClassToStruct(Class)')": [
+                        94,
+                        95,
+                        96
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'getFieldInfosForUnion(Class)')": [
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertEnumTypeField(Class,String)')": [
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345
+                    ]
+                }
+            }
+        }
+    },
+    "890b387d713d04c22406db6d5a5fc9b51bec2df5": {
+        "authored_data": "2015 May 04 19:08",
+        "commit.message": "PARQUET-252 : support nested container type for parquet-scrooge\n\nresubmit\n\nAuthor: Tianshuo Deng <tdeng@twitter.com>\n\nCloses #185 from tsdeng/scrooge_nested_container and squashes the following commits:\n\nb29465f [Tianshuo Deng] retrigger jenkins\n4542c1a [Tianshuo Deng] support nested container type for parquet-scrooge\n",
+        "commit.author.name": "Tianshuo Deng",
+        "pcid": "7fc7998398373a14b4cdc0ce18abdeb221b1ccf9",
+        "changes": {
+            "parquet-scrooge/src/main/java/org/apache/parquet/scrooge/ScroogeStructConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        38
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', None)": [
+                        50,
+                        51,
+                        52,
+                        53,
+                        134,
+                        135,
+                        136,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        257,
+                        258,
+                        259,
+                        260,
+                        311,
+                        312,
+                        317,
+                        320,
+                        323,
+                        326,
+                        327,
+                        328
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'getCompanionClass(Class)')": [
+                        61
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertCompanionClassToStruct(Class)')": [
+                        72,
+                        74
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'getFieldInfos(ThriftStructCodec)')": [
+                        91,
+                        93,
+                        101,
+                        102,
+                        103
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'getFieldInfosForUnion(Class)')": [
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'isUnion(Class)')": [
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'getRequirementType(ThriftStructFieldInfo)')": [
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'toThriftField(ThriftStructFieldInfo)')": [
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertSetTypeField(ThriftStructFieldInfo,Requirement)')": [
+                        217,
+                        220
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertListTypeField(ThriftStructFieldInfo,Requirement)')": [
+                        225,
+                        226
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertMapTypeField(ThriftStructFieldInfo,Requirement)')": [
+                        231,
+                        232,
+                        233,
+                        234,
+                        235
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'generateFieldWithoutId(String,Requirement,ThriftType)')": [
+                        250
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertClassToThriftType(Class)')": [
+                        261,
+                        262
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'getEnumList(String)')": [
+                        294
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertEnumTypeField(ThriftStructFieldInfo)')": [
+                        299,
+                        300,
+                        304,
+                        305,
+                        310
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        36,
+                        42,
+                        43,
+                        44,
+                        45
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'mapKeyName(String)')": [
+                        62,
+                        63
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', None)": [
+                        64,
+                        65,
+                        68,
+                        69,
+                        72,
+                        73,
+                        76,
+                        77,
+                        152,
+                        153,
+                        154,
+                        210,
+                        211,
+                        223,
+                        224,
+                        234,
+                        235,
+                        261,
+                        262,
+                        315,
+                        316,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        342,
+                        343,
+                        344,
+                        355,
+                        362,
+                        367,
+                        368
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'mapValueName(String)')": [
+                        66,
+                        67
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'listElemName(String)')": [
+                        70,
+                        71
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'setElemName(String)')": [
+                        74,
+                        75
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'getCompanionClass(Class)')": [
+                        80
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertCompanionClassToStruct(Class)')": [
+                        91,
+                        93
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'getFieldInfos(ThriftStructCodec)')": [
+                        110,
+                        112,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'getFieldInfosForUnion(Class)')": [
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'toThriftField(ThriftStructFieldInfo)')": [
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertSetTypeField(ThriftStructFieldInfo,Requirement)')": [
+                        209
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertSetTypeField(String,Manifest,Requirement)')": [
+                        212,
+                        213,
+                        214,
+                        217
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertListTypeField(ThriftStructFieldInfo,Requirement)')": [
+                        222
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertListTypeField(String,Manifest,Requirement)')": [
+                        225,
+                        226,
+                        227,
+                        228
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertMapTypeField(ThriftStructFieldInfo,Requirement)')": [
+                        233
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertMapTypeField(String,Manifest,Manifest,Requirement)')": [
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'generateFieldWithoutId(String,Requirement,ThriftType)')": [
+                        254
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertClassToThriftType(String,Requirement,Manifest)')": [
+                        263,
+                        264,
+                        265,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'getEnumList(String)')": [
+                        310
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertEnumTypeField(ThriftStructFieldInfo)')": [
+                        314
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'convertEnumTypeField(Class,String)')": [
+                        317,
+                        319,
+                        323,
+                        328,
+                        329,
+                        330
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'isUnion(Class)')": [
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverter', 'getRequirementType(ThriftStructFieldInfo)')": [
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354
+                    ]
+                }
+            },
+            "parquet-scrooge/src/test/java/org/apache/parquet/scrooge/ScroogeStructConverterTest.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertPrimitiveMapKey')": [
+                        43,
+                        44,
+                        45,
+                        46
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testBinary')": [
+                        51,
+                        52,
+                        53
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testUnion')": [
+                        58,
+                        59,
+                        60
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertPrimitiveMapValue')": [
+                        64,
+                        65,
+                        66,
+                        67
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertPrimitiveList')": [
+                        71,
+                        72,
+                        73,
+                        74
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertPrimitiveSet')": [
+                        78,
+                        79,
+                        80,
+                        81
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertEnum')": [
+                        85,
+                        86,
+                        87,
+                        88
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testMapComplex')": [
+                        92,
+                        93,
+                        94,
+                        95
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertStruct')": [
+                        99,
+                        100,
+                        101,
+                        102
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', None)": [
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testDefaultFields')": [
+                        111,
+                        112,
+                        113,
+                        114
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertOptionalPrimitiveMap')": [
+                        118,
+                        119,
+                        120,
+                        121
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        24,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        48,
+                        177,
+                        178
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', None)": [
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        67,
+                        68,
+                        72,
+                        73,
+                        123,
+                        124,
+                        127,
+                        128,
+                        129,
+                        132,
+                        133,
+                        134,
+                        137,
+                        138,
+                        139,
+                        142,
+                        143,
+                        144,
+                        147,
+                        148,
+                        149,
+                        152,
+                        153,
+                        154,
+                        157,
+                        158,
+                        159,
+                        162,
+                        163,
+                        164,
+                        167,
+                        168,
+                        169,
+                        172,
+                        173,
+                        174
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'shouldConvertConsistentlyWithThriftStructConverter(Class)')": [
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'toParquetSchema(ThriftType)')": [
+                        69,
+                        70,
+                        71
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertPrimitiveMapKey')": [
+                        75,
+                        76
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testBinary')": [
+                        81
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testUnion')": [
+                        86
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertPrimitiveMapValue')": [
+                        90,
+                        91
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertPrimitiveList')": [
+                        95,
+                        96
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertPrimitiveSet')": [
+                        100,
+                        101
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertEnum')": [
+                        105,
+                        106
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testMapComplex')": [
+                        110,
+                        111
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertStruct')": [
+                        115,
+                        116
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testDefaultFields')": [
+                        120,
+                        121
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertOptionalPrimitiveMap')": [
+                        125,
+                        126
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertNestedList')": [
+                        130,
+                        131
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertListNestMap')": [
+                        135,
+                        136
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertListNestEnum')": [
+                        140,
+                        141
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertMapNestList')": [
+                        145,
+                        146
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertMapNestMap')": [
+                        150,
+                        151
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertMapNestSet')": [
+                        155,
+                        156
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertListNestSet')": [
+                        160,
+                        161
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertSetNestSet')": [
+                        165,
+                        166
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertSetNestList')": [
+                        170,
+                        171
+                    ],
+                    "('org.apache.parquet.scrooge#ScroogeStructConverterTest', 'testConvertSetNestMap')": [
+                        175,
+                        176
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,1579 @@
+{
+    "faf339206c5611651d4dfb38af0bf638caba6c74": {
+        "authored_data": "2016 Jun 28 20:14",
+        "commit.message": "GIRAPH-1080: Add FacebookConfiguration\n\nSummary: Just copied from internal\n\nTest Plan: verify\n\nDifferential Revision: https://reviews.facebook.net/D60135\n",
+        "commit.author.name": "Maja Kabiljo",
+        "pcid": "23184e15023157312d7a8afe0adfe30b5d7864a8",
+        "changes": {
+            "giraph-block-app/src/main/java/org/apache/giraph/block_app/framework/AbstractBlockFactory.java": {
+                "new": {
+                    "(None, None)": [
+                        23
+                    ]
+                }
+            },
+            "giraph-block-app/src/main/java/org/apache/giraph/block_app/test_setup/TestGraphUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        21
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21
+                    ]
+                }
+            },
+            "giraph-block-app/src/test/java/org/apache/giraph/block_app/framework/MultipleSimultanousMutationsTest.java": {
+                "new": {
+                    "(None, None)": [
+                        11
+                    ]
+                }
+            },
+            "giraph-block-app/src/test/java/org/apache/giraph/block_app/framework/SendingMessagesTest.java": {
+                "new": {
+                    "(None, None)": [
+                        28
+                    ]
+                }
+            },
+            "giraph-block-app/src/test/java/org/apache/giraph/block_app/framework/TestWorkerMessages.java": {
+                "new": {
+                    "(None, None)": [
+                        32
+                    ]
+                }
+            }
+        }
+    },
+    "23184e15023157312d7a8afe0adfe30b5d7864a8": {
+        "authored_data": "2016 Jun 29 01:43",
+        "commit.message": "GIRAPH-1081: Fix a bug in internal out-of-core infra: multithreaded accesses to buffers\n\nSummary: The multi-threaded accesses to raw data buffers in `DiskBackedDataStore` is overlooked, violating assumption on properly partitioning data to different IO threads.\n\nTest Plan: mvn clean verify\n\nReviewers: dionysis.logothetis, sergey.edunov, maja.kabiljo\n\nReviewed By: maja.kabiljo\n\nDifferential Revision: https://reviews.facebook.net/D60147\n",
+        "commit.author.name": "Hassan Eslami",
+        "pcid": "77a24a9fcd3b01961f881143e485b4be0826c139",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/ooc/data/DiskBackedDataStore.java": {
+                "old": {
+                    "('org.apache.giraph.ooc.data#DiskBackedDataStore', 'getCandidateBuffersToOffload')": [
+                        361,
+                        365,
+                        366
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.ooc.data#DiskBackedDataStore', None)": [
+                        357
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedDataStore', 'getCandidateBuffersToOffload(int)')": [
+                        362,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/ooc/data/MetaPartitionManager.java": {
+                "old": {
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'getOffloadPartitionBufferId(int)')": [
+                        335,
+                        340
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'getOffloadMessageBufferId(int)')": [
+                        364
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'getOffloadPartitionBufferId(int)')": [
+                        335,
+                        340
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'getOffloadMessageBufferId(int)')": [
+                        364
+                    ]
+                }
+            }
+        }
+    },
+    "3793c9ef69993bf4b180b6f6b15bb2a5edde5530": {
+        "authored_data": "2016 Jun 27 21:13",
+        "commit.message": "Decouple out-of-core persistence infrastructure from out-of-core computation\n\nSummary:\nThis diff proposes the following:\n  - The persistence layer is decoupled from out-of-core infrastructure. This way one can simply implement different data accessors for various persistence resources. The persistence layer for reading/writing from/to local file system is implemented in this diff.\n  - Previously, out-of-core data were indexed by string literals. This has changed for more flexibility. Now, data are accessible by a more flexible data indexing mechanism, in which a chain of indices are used to address a particular data.\n  - With different implementations of data accessor, now there may be more emphasis on having more IO threads. It is important that these IO threads are load-balanced. In this diff, the mechanism to assign partitions to IO threads has changed.\n  - All the coolness of Kryo's (de)serialization and RandomAccessFile (in D59277) is included in this diff, all at one place.\n\nTest Plan:\nmvn clean verify\nout-of-core snapshot test passes\n\nReviewers: dionysis.logothetis, maja.kabiljo, sergey.edunov\n\nDifferential Revision: https://reviews.facebook.net/D59691\n",
+        "commit.author.name": "Hassan Eslami",
+        "pcid": "8eb1f763d0cb0f98de1f12e3d48d9c516f5ac7a8",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/bsp/BspService.java": {
+                "old": {
+                    "('org.apache.giraph.bsp#BspService', None)": [
+                        244
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.bsp#BspService', None)": [
+                        244
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/comm/ServerData.java": {
+                "old": {
+                    "('org.apache.giraph.comm#ServerData', None)": [
+                        153
+                    ],
+                    "('org.apache.giraph.comm#ServerData', 'prepareSuperstep')": [
+                        271,
+                        283
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.comm#ServerData', None)": [
+                        153
+                    ],
+                    "('org.apache.giraph.comm#ServerData', 'prepareSuperstep')": [
+                        271,
+                        283
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/conf/GiraphConfiguration.java": {
+                "old": {
+                    "('org.apache.giraph.conf#GiraphConfiguration', None)": [
+                        1149,
+                        1150,
+                        1151,
+                        1152,
+                        1155,
+                        1156,
+                        1157
+                    ],
+                    "('org.apache.giraph.conf#GiraphConfiguration', 'isStaticGraph')": [
+                        1153,
+                        1154
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/conf/GiraphConstants.java": {
+                "old": {
+                    "(None, None)": [
+                        74,
+                        75
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        74,
+                        75,
+                        76,
+                        77,
+                        954,
+                        955,
+                        956,
+                        957,
+                        958,
+                        959,
+                        960,
+                        961,
+                        962,
+                        963,
+                        964,
+                        965,
+                        966,
+                        967,
+                        972,
+                        973,
+                        974,
+                        975,
+                        976,
+                        977,
+                        978
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/conf/ImmutableClassesGiraphConfiguration.java": {
+                "new": {
+                    "('org.apache.giraph.conf#ImmutableClassesGiraphConfiguration', None)": [
+                        131,
+                        132,
+                        149,
+                        1332,
+                        1333,
+                        1334,
+                        1335,
+                        1336,
+                        1337,
+                        1340,
+                        1341,
+                        1342,
+                        1343,
+                        1344
+                    ],
+                    "('org.apache.giraph.conf#ImmutableClassesGiraphConfiguration', 'isStaticGraph')": [
+                        1338,
+                        1339
+                    ],
+                    "('org.apache.giraph.conf#ImmutableClassesGiraphConfiguration', 'getJobId')": [
+                        1345,
+                        1346
+                    ],
+                    "(None, None)": [
+                        1347
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/graph/GraphTaskManager.java": {
+                "old": {
+                    "('org.apache.giraph.graph#GraphTaskManager', 'getSuperstepGCTime')": [
+                        1057
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.graph#GraphTaskManager', 'getSuperstepGCTime')": [
+                        1057
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/ooc/OutOfCoreEngine.java": {
+                "old": {
+                    "(None, None)": [
+                        33,
+                        34
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreEngine', None)": [
+                        152,
+                        153,
+                        154
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        524
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreEngine', None)": [
+                        93,
+                        94,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        521
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreEngine', 'initialize')": [
+                        207
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreEngine', 'shutdown')": [
+                        221
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreEngine', 'getDataAccessor')": [
+                        522,
+                        523
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/ooc/OutOfCoreIOCallable.java": {
+                "old": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreIOCallable', None)": [
+                        50,
+                        51,
+                        67,
+                        70,
+                        71,
+                        73
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreIOCallable', 'call')": [
+                        102,
+                        109
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreIOCallable', None)": [
+                        67
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreIOCallable', 'call')": [
+                        96,
+                        97,
+                        99,
+                        101,
+                        102,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/ooc/OutOfCoreIOCallableFactory.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        27,
+                        37,
+                        38,
+                        39,
+                        182
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreIOCallableFactory', None)": [
+                        52,
+                        53,
+                        54,
+                        55,
+                        61,
+                        64,
+                        65,
+                        66,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreIOCallableFactory', 'createCallable')": [
+                        93,
+                        94,
+                        97,
+                        123
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreIOCallableFactory', 'getNumDisks')": [
+                        138,
+                        139
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreIOCallableFactory', 'shutdown')": [
+                        159,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.ooc#OutOfCoreIOCallableFactory', None)": [
+                        47,
+                        48,
+                        51,
+                        56,
+                        58,
+                        59,
+                        61,
+                        62
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreIOCallableFactory', 'createCallable')": [
+                        73,
+                        76,
+                        102
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreIOCallableFactory', 'shutdown')": [
+                        129
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/ooc/OutOfCoreIOScheduler.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreIOScheduler', None)": [
+                        60,
+                        61,
+                        80,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreIOScheduler', 'getOwnerThreadId(int)')": [
+                        96,
+                        97,
+                        98
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreIOScheduler', 'addIOCommand(IOCommand)')": [
+                        257
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreIOScheduler', 'addIOCommand(IOCommand)')": [
+                        244,
+                        245
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/ooc/OutOfCoreIOStatistics.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/ooc/data/DiskBackedEdgeStore.java": {
+                "old": {
+                    "(None, None)": [
+                        30,
+                        31,
+                        33,
+                        35,
+                        36,
+                        37,
+                        38,
+                        40,
+                        41
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedEdgeStore', None)": [
+                        52,
+                        60,
+                        61,
+                        75,
+                        78,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        137,
+                        138,
+                        139
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedEdgeStore', 'getPath(String)')": [
+                        123,
+                        124
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedEdgeStore', 'loadPartitionData(int,String)')": [
+                        128,
+                        130
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedEdgeStore', 'offloadPartitionData(int,String)')": [
+                        134,
+                        136
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedEdgeStore', 'offloadBuffers(int,String)')": [
+                        140,
+                        141,
+                        142
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedEdgeStore', 'loadInMemoryPartitionData(int,String)')": [
+                        160,
+                        161,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedEdgeStore', 'offloadInMemoryPartitionData(int,String)')": [
+                        182,
+                        183,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedEdgeStore', 'addEntryToImMemoryPartitionData(int,VertexIdEdges)')": [
+                        208
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedEdgeStore', None)": [
+                        45,
+                        66,
+                        107
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedEdgeStore', 'loadPartitionData(int)')": [
+                        108,
+                        109,
+                        110,
+                        111
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedEdgeStore', 'offloadPartitionData(int)')": [
+                        115,
+                        117,
+                        118
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedEdgeStore', 'offloadBuffers(int)')": [
+                        122,
+                        124,
+                        125
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedEdgeStore', 'loadInMemoryPartitionData(int,int,DataIndex)')": [
+                        143,
+                        144,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedEdgeStore', 'offloadInMemoryPartitionData(int,int,DataIndex)')": [
+                        157,
+                        158,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedEdgeStore', 'addEntryToInMemoryPartitionData(int,VertexIdEdges)')": [
+                        178
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/ooc/data/DiskBackedMessageStore.java": {
+                "old": {
+                    "(None, None)": [
+                        31,
+                        32,
+                        34,
+                        36,
+                        37,
+                        38,
+                        39,
+                        41,
+                        42
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedMessageStore', None)": [
+                        51,
+                        95,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        152,
+                        153,
+                        154
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedMessageStore', 'getPath(String,long)')": [
+                        150,
+                        151
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedMessageStore', 'loadPartitionData(int,String)')": [
+                        155,
+                        158
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedMessageStore', 'offloadPartitionData(int,String)')": [
+                        165,
+                        168,
+                        169
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedMessageStore', 'offloadBuffers(int,String)')": [
+                        176,
+                        179
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedMessageStore', 'loadInMemoryPartitionData(int,String)')": [
+                        253,
+                        254,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedMessageStore', 'offloadInMemoryPartitionData(int,String)')": [
+                        275,
+                        276,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        290,
+                        291
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedMessageStore', 'addEntryToImMemoryPartitionData(int,VertexIdMessages)')": [
+                        302
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        26,
+                        27
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedMessageStore', None)": [
+                        46,
+                        80,
+                        89,
+                        92,
+                        140,
+                        141
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedMessageStore', 'loadPartitionData(int)')": [
+                        142,
+                        145,
+                        146,
+                        147
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedMessageStore', 'offloadPartitionData(int)')": [
+                        154,
+                        157,
+                        158,
+                        159
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedMessageStore', 'offloadBuffers(int)')": [
+                        166,
+                        169,
+                        170,
+                        171
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedMessageStore', 'loadInMemoryPartitionData(int,int,DataIndex)')": [
+                        245,
+                        246,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedMessageStore', 'offloadInMemoryPartitionData(int,int,DataIndex)')": [
+                        259,
+                        260,
+                        263,
+                        264,
+                        265,
+                        266,
+                        268,
+                        269
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedMessageStore', 'addEntryToInMemoryPartitionData(int,VertexIdMessages)')": [
+                        280
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/ooc/data/DiskBackedPartitionStore.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        38,
+                        39,
+                        41,
+                        43,
+                        44,
+                        45,
+                        46,
+                        51,
+                        56
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', None)": [
+                        65,
+                        74,
+                        75,
+                        76,
+                        77,
+                        102,
+                        109,
+                        111,
+                        115,
+                        116,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        252,
+                        253,
+                        254,
+                        369,
+                        370,
+                        371
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', 'getPath(String)')": [
+                        230,
+                        231
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', 'getVerticesPath(String)')": [
+                        240,
+                        241
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', 'getEdgesPath(String)')": [
+                        250,
+                        251
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', 'loadInMemoryPartitionData(int,String)')": [
+                        298,
+                        299,
+                        302,
+                        303,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        316,
+                        319,
+                        320,
+                        321,
+                        322,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        335,
+                        336,
+                        337,
+                        338,
+                        343,
+                        344,
+                        345
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', 'addEntryToImMemoryPartitionData(int,ExtendedDataOutput)')": [
+                        357
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', 'loadPartitionData(int,String)')": [
+                        366,
+                        367,
+                        368
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', 'offloadPartitionData(int,String)')": [
+                        372,
+                        373,
+                        374
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', 'offloadInMemoryPartitionData(int,String)')": [
+                        412,
+                        413,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        447,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', 'offloadBuffers(int,String)')": [
+                        478,
+                        479,
+                        480
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        28,
+                        49
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', None)": [
+                        58,
+                        98,
+                        313,
+                        314,
+                        315
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', 'loadInMemoryPartitionData(int,int,DataIndex)')": [
+                        253,
+                        254,
+                        257,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        267,
+                        270,
+                        273,
+                        274,
+                        275,
+                        276,
+                        278,
+                        279,
+                        282,
+                        285,
+                        286,
+                        287,
+                        288
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', 'addEntryToInMemoryPartitionData(int,ExtendedDataOutput)')": [
+                        300
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', 'loadPartitionData(int)')": [
+                        309,
+                        310,
+                        311,
+                        312
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', 'offloadPartitionData(int)')": [
+                        316,
+                        317,
+                        318,
+                        319
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', 'offloadInMemoryPartitionData(int,int,DataIndex)')": [
+                        357,
+                        358,
+                        361,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        374,
+                        375,
+                        376,
+                        377,
+                        382,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        391,
+                        392,
+                        393,
+                        394
+                    ],
+                    "('org.apache.giraph.ooc.data#DiskBackedPartitionStore', 'offloadBuffers(int)')": [
+                        406,
+                        407,
+                        408,
+                        409
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/ooc/data/MetaPartitionManager.java": {
+                "old": {
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', None)": [
+                        134
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'addPartition(int)')": [
+                        187,
+                        188
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'removePartition(Integer)')": [
+                        202
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'markPartitionAsInProcess(int)')": [
+                        427
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'setPartitionIsProcessed(int)')": [
+                        471
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'doneLoadingPartition(int,long)')": [
+                        511
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'startOffloadingMessages(int)')": [
+                        538,
+                        539
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'doneOffloadingMessages(int)')": [
+                        561,
+                        562
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'startOffloadingPartition(int)')": [
+                        601
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'doneOffloadingPartition(int)')": [
+                        627
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'resetPartitions')": [
+                        642,
+                        643
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'resetMessages')": [
+                        662,
+                        663
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', None)": [
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        135,
+                        150,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        203,
+                        204,
+                        205
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'getOwnerThreadId(int)')": [
+                        199,
+                        200,
+                        201,
+                        202
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'addPartition(int)')": [
+                        215,
+                        216,
+                        217
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'removePartition(Integer)')": [
+                        231
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'markPartitionAsInProcess(int)')": [
+                        456
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'setPartitionIsProcessed(int)')": [
+                        500
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'doneLoadingPartition(int,long)')": [
+                        540
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'startOffloadingMessages(int)')": [
+                        567
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'doneOffloadingMessages(int)')": [
+                        589
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'startOffloadingPartition(int)')": [
+                        628
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'doneOffloadingPartition(int)')": [
+                        654
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'resetPartitions')": [
+                        669
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'resetMessages')": [
+                        688
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/zk/ZooKeeperManager.java": {
+                "old": {
+                    "('org.apache.giraph.zk#ZooKeeperManager', None)": [
+                        126
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.zk#ZooKeeperManager', None)": [
+                        126
+                    ]
+                }
+            },
+            "giraph-core/src/test/java/org/apache/giraph/partition/TestPartitionStores.java": {
+                "new": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testDiskBackedPartitionStoreWithByteArrayPartition')": [
+                        170,
+                        171,
+                        172
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testDiskBackedPartitionStore')": [
+                        199,
+                        200,
+                        201
+                    ],
+                    "('org.apache.giraph.partition#TestPartitionStores', 'testMultiThreaded')": [
+                        317,
+                        318,
+                        319
+                    ]
+                }
+            },
+            "giraph-rexster/giraph-rexster-io/src/main/java/org/apache/giraph/rexster/io/RexsterVertexOutputFormat.java": {
+                "old": {
+                    "('org.apache.giraph.rexster.io#RexsterVertexOutputFormat', None)": [
+                        189
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.rexster.io#RexsterVertexOutputFormat', None)": [
+                        189
+                    ]
+                }
+            }
+        }
+    },
+    "8eb1f763d0cb0f98de1f12e3d48d9c516f5ac7a8": {
+        "authored_data": "2016 Jun 24 17:15",
+        "commit.message": "GIRAPH-1078 createZooKeeperServerList should use task instead of port number\n\nSummary: createZooKeeperServerList doesn't have a port yet, as we haven't started zookeeper. What we actually have is the task number. Port will be later set by the master.\n\nTest Plan: run a few jobs.\n\nReviewers: maja.kabiljo, majakabiljo, heslami, dionysis.logothetis\n\nReviewed By: dionysis.logothetis\n\nDifferential Revision: https://reviews.facebook.net/D59961\n",
+        "commit.author.name": "Sergey Edunov",
+        "pcid": "cf6abc09a3b4077646c0ec03ec3d1046acecc57a",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/zk/ZooKeeperManager.java": {
+                "old": {
+                    "('org.apache.giraph.zk#ZooKeeperManager', 'createZooKeeperServerList')": [
+                        307,
+                        308,
+                        309,
+                        312,
+                        313,
+                        314,
+                        323,
+                        324,
+                        325,
+                        329,
+                        330
+                    ],
+                    "('org.apache.giraph.zk#ZooKeeperManager', 'onlineZooKeeperServer')": [
+                        576
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.zk#ZooKeeperManager', 'createZooKeeperServerList')": [
+                        307,
+                        308,
+                        309,
+                        320,
+                        321,
+                        322,
+                        323,
+                        327
+                    ],
+                    "('org.apache.giraph.zk#ZooKeeperManager', 'onlineZooKeeperServer')": [
+                        573
+                    ]
+                }
+            }
+        }
+    },
+    "51f09376456ed8dadc2e801afaa495863fd7ee3b": {
+        "authored_data": "2016 Jun 21 18:54",
+        "commit.message": "GIRAPH-1077: Jobs getting stuck after channel failure\n\nSummary: When a channel fails currently we just log the failure. Since we don't wait on open requests from every place, checking requests doesn't get called always, and we've seen issues with jobs staying stuck, for example during the input stage when request for split to read from worker to master fails. When we know that channel failed, we should try to resend the requests from that channel.\n\nTest Plan: Ran a job multiple times until I got failure of channel between master and worker to happen, without this change job would get stuck but with it it ran successfully.\n\nDifferential Revision: https://reviews.facebook.net/D59895\n",
+        "commit.author.name": "Maja Kabiljo",
+        "pcid": "2185f5946edfddcca8a5bcb76160212bfe2ef797",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/comm/netty/NettyClient.java": {
+                "old": {
+                    "('org.apache.giraph.comm.netty#NettyClient', 'checkRequestsForProblems')": [
+                        946,
+                        947,
+                        948,
+                        949,
+                        950
+                    ],
+                    "('org.apache.giraph.comm.netty#NettyClient', None)": [
+                        1050
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        41
+                    ],
+                    "('org.apache.giraph.comm.netty#NettyClient', 'checkRequestsForProblems')": [
+                        934,
+                        935,
+                        936,
+                        937,
+                        938,
+                        939,
+                        940,
+                        941,
+                        942
+                    ],
+                    "('org.apache.giraph.comm.netty#NettyClient', None)": [
+                        943,
+                        944,
+                        945,
+                        946,
+                        947,
+                        948,
+                        949,
+                        950,
+                        951,
+                        952,
+                        1066,
+                        1067,
+                        1068,
+                        1069,
+                        1075,
+                        1076,
+                        1077,
+                        1078,
+                        1079,
+                        1083,
+                        1090
+                    ],
+                    "('org.apache.giraph.comm.netty#NettyClient', 'resendRequestsWhenNeeded(Predicate)')": [
+                        953,
+                        954,
+                        968,
+                        969
+                    ],
+                    "('org.apache.giraph.comm.netty#NettyClient', 'checkRequestsAfterChannelFailure(ChannelFuture)')": [
+                        1070,
+                        1071,
+                        1072,
+                        1073,
+                        1074
+                    ]
+                }
+            }
+        }
+    },
+    "2185f5946edfddcca8a5bcb76160212bfe2ef797": {
+        "authored_data": "2016 Jun 21 17:14",
+        "commit.message": "GIRAPH-1076 Race condition in FileTxnSnapLog\n\nSummary:\norg.apache.zookeeper.server.persistence.FileTxnSnapLog has a potential for race condition:\n\n    if (!this.dataDir.exists()) {\n        if (!this.dataDir.mkdirs()) {\n               throw new IOException(\"Unable to create data directory \" + this.dataDir);\n        }\n    }\n\nIf two threads try to create FileTxnSnapLog simultaneously it can trigger IOException.\nWe saw this happening in Giraph where FileTxnSnapLog is being created by PurgeTask created by DatadirCleanupManager and by InProcessZooKeeperRunner#runFromConfig.\nUntil and if ever, the zookeeper code is fixed, we need to make sure zookeeper starts first and only then starts PurgeTask.\n\nTest Plan: run a few jobs and mvn clean verify\n\nReviewers: majakabiljo, dionysis.logothetis, heslami, maja.kabiljo\n\nReviewed By: maja.kabiljo\n\nDifferential Revision: https://reviews.facebook.net/D59883\n",
+        "commit.author.name": "Sergey Edunov",
+        "pcid": "d827c97fc244dd89ccee46e686eaf008889550ed",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/zk/InProcessZooKeeperRunner.java": {
+                "old": {
+                    "('org.apache.giraph.zk#InProcessZooKeeperRunner', None)": [
+                        94,
+                        99,
+                        100
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.zk#InProcessZooKeeperRunner', None)": [
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        101,
+                        106
+                    ]
+                }
+            }
+        }
+    },
+    "d827c97fc244dd89ccee46e686eaf008889550ed": {
+        "authored_data": "2016 Jun 20 19:23",
+        "commit.message": "Improve out-of-core metrics\n\nSummary: For the metric showing the percentage of the graph in memory it makes more sense to show the lowest fraction of the graph that was in memory during a superstep. Basically, a user is more interested to see how bad was the out-of-core execution, and how many more machines he/she needs to use to run the job entirely in memory.\n\nTest Plan:\nmvn clean verify\nvisual, looking at Hadoop metric and per-worker metric\n\nReviewers: sergey.edunov, dionysis.logothetis, maja.kabiljo\n\nReviewed By: dionysis.logothetis, maja.kabiljo\n\nDifferential Revision: https://reviews.facebook.net/D59451\n",
+        "commit.author.name": "Hassan Eslami",
+        "pcid": "24664b9397a6dc153251ffd7a4d3c01515988748",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/counters/GiraphStats.java": {
+                "old": {
+                    "('org.apache.giraph.counters#GiraphStats', None)": [
+                        96
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.counters#GiraphStats', None)": [
+                        65,
+                        66,
+                        67,
+                        98,
+                        99,
+                        101,
+                        131,
+                        132,
+                        133,
+                        269,
+                        270
+                    ],
+                    "('org.apache.giraph.counters#GiraphStats', 'getLowestGraphPercentageInMemory')": [
+                        271,
+                        272
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/graph/GlobalStats.java": {
+                "new": {
+                    "('org.apache.giraph.graph#GlobalStats', None)": [
+                        49,
+                        50,
+                        111,
+                        112,
+                        115,
+                        116
+                    ],
+                    "('org.apache.giraph.graph#GlobalStats', 'getLowestGraphPercentageInMemory')": [
+                        113,
+                        114
+                    ],
+                    "('org.apache.giraph.graph#GlobalStats', 'setLowestGraphPercentageInMemory(int)')": [
+                        117,
+                        118,
+                        119
+                    ],
+                    "('org.apache.giraph.graph#GlobalStats', 'readFields(DataInput)')": [
+                        165,
+                        166,
+                        167
+                    ],
+                    "('org.apache.giraph.graph#GlobalStats', 'write(DataOutput)')": [
+                        183,
+                        184,
+                        185
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/job/CombinedWorkerProgress.java": {
+                "new": {
+                    "('org.apache.giraph.job#CombinedWorkerProgress', None)": [
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130
+                    ],
+                    "('org.apache.giraph.job#CombinedWorkerProgress', 'toString')": [
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/master/BspServiceMaster.java": {
+                "new": {
+                    "('org.apache.giraph.master#BspServiceMaster', 'aggregateWorkerStats(long)')": [
+                        949,
+                        950,
+                        951,
+                        952,
+                        953,
+                        954
+                    ],
+                    "('org.apache.giraph.master#BspServiceMaster', 'updateCounters(GlobalStats)')": [
+                        2067,
+                        2068,
+                        2069,
+                        2070,
+                        2071
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/metrics/WorkerSuperstepMetrics.java": {
+                "old": {
+                    "('org.apache.giraph.metrics#WorkerSuperstepMetrics', None)": [
+                        71
+                    ],
+                    "('org.apache.giraph.metrics#WorkerSuperstepMetrics', 'readFromRegistry')": [
+                        96,
+                        97
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.metrics#WorkerSuperstepMetrics', None)": [
+                        71
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/ooc/OutOfCoreEngine.java": {
+                "old": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreEngine', 'newSuperstep(SuperstepMetricsRegistry)')": [
+                        488,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.giraph.ooc#OutOfCoreEngine', 'newSuperstep(SuperstepMetricsRegistry)')": [
+                        488,
+                        490,
+                        491
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/ooc/data/MetaPartitionManager.java": {
+                "new": {
+                    "(None, None)": [
+                        23,
+                        27
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', None)": [
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        138,
+                        139,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        155
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'getLowestGraphFractionInMemory')": [
+                        140,
+                        141
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'updateGraphFractionInMemory')": [
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'doneOffloadingPartition(int)')": [
+                        625
+                    ],
+                    "('org.apache.giraph.ooc.data#MetaPartitionManager', 'resetPartitions')": [
+                        652,
+                        653
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/worker/WorkerProgress.java": {
+                "new": {
+                    "('org.apache.giraph.worker#WorkerProgress', None)": [
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        193,
+                        194,
+                        295,
+                        298,
+                        299,
+                        411,
+                        412
+                    ],
+                    "('org.apache.giraph.worker#WorkerProgress', 'updateLowestGraphPercentageInMemory(int)')": [
+                        190,
+                        191,
+                        192
+                    ],
+                    "('org.apache.giraph.worker#WorkerProgress', 'getLowestGraphPercentageInMemory')": [
+                        296,
+                        297
+                    ],
+                    "('org.apache.giraph.worker#WorkerProgress', 'setLowestGraphPercentageInMemory(int)')": [
+                        413,
+                        414,
+                        415
+                    ],
+                    "(None, None)": [
+                        416
+                    ]
+                }
+            },
+            "giraph-core/src/main/java/org/apache/giraph/worker/WorkerProgressStats.java": {
+                "new": {
+                    "('org.apache.giraph.worker#WorkerProgressStats', None)": [
+                        75,
+                        76,
+                        77
+                    ]
+                }
+            }
+        }
+    },
+    "24664b9397a6dc153251ffd7a4d3c01515988748": {
+        "authored_data": "2016 Jun 20 17:24",
+        "commit.message": "GIRAPH-1075 checkstyle\n\nSummary:\n\nTest Plan:\n\nReviewers:\n\nCC:\n\nTask ID: #\n\nBlame Rev:\n",
+        "commit.author.name": "Maja Kabiljo",
+        "pcid": "b5a63d8162d8756e4ae73b80ff125439a1b47613",
+        "changes": {
+            "giraph-core/src/main/java/org/apache/giraph/utils/UnsafeByteArrayOutputStream.java": {
+                "old": {
+                    "('org.apache.giraph.utils#UnsafeByteArrayOutputStream', 'writeUTF(String)')": [
+                        293
+                    ]
+                },
+                "new": {
+                    "('org.apache.giraph.utils#UnsafeByteArrayOutputStream', 'writeUTF(String)')": [
+                        293,
+                        296
+                    ]
+                }
+            }
+        }
+    }
+}

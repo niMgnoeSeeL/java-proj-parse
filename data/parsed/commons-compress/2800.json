@@ -1,0 +1,919 @@
+{
+    "afd202f8d400b373f03be9500534228c8c80a5b3": {
+        "authored_data": "2011 Aug 06 13:00",
+        "commit.message": "use Unicode escapes\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1154511 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "1eaaaefb29e2dfd5f78f135a077c9e1887452e69",
+        "changes": {
+            "src/test/java/org/apache/commons/compress/archivers/TarTestCase.java": {
+                "old": [
+                    "LexerError",
+                    "src/test/java/org/apache/commons/compress/archivers/TarTestCase.java",
+                    [
+                        122,
+                        124
+                    ]
+                ],
+                "new": {
+                    "('org.apache.commons.compress.archivers#TarTestCase', 'testCOMPRESS114')": [
+                        122,
+                        124
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/archivers/tar/TarUtilsTest.java": {
+                "old": [
+                    "LexerError",
+                    "src/test/java/org/apache/commons/compress/archivers/tar/TarUtilsTest.java",
+                    [
+                        168
+                    ]
+                ],
+                "new": {
+                    "('org.apache.commons.compress.archivers.tar#TarUtilsTest', 'testRoundTripNames')": [
+                        168
+                    ]
+                }
+            }
+        }
+    },
+    "1eaaaefb29e2dfd5f78f135a077c9e1887452e69": {
+        "authored_data": "2011 Aug 06 02:52",
+        "commit.message": "After reading up what the InfoZIP people do I changed the data descriptor\nlogic.  What seems to be the correct way is:\n\nIf you use a data descriptor and don't use ZIP64:\n\n* set \"version needed to extract\" < 4.5\n\n* set CRC and sizes in LFH to 0\n\n* don't add any ZIP64 extended information extra field\n\n* use four byte sizes in data descriptor\n\nIf you use a data descriptor and use ZIP64:\n\n* set \"version needed to extract\" >= 4.5\n\n* set CRC in LFH 0\n\n* set sizes in LFH to 0xFFFFFFFF\n\n* add a ZIP64 extended information extra field with sizes set to 0\n\n* use eight byte sizes in data descriptor\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1154435 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "46701aad76232fb93c31a69b4e02ef598bfd51f1",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveOutputStream.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'writeLocalFileHeader(ZipArchiveEntry)')": [
+                        774,
+                        775
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'writeLocalFileHeader(ZipArchiveEntry)')": [
+                        774,
+                        775,
+                        776,
+                        777,
+                        778,
+                        779,
+                        780,
+                        781,
+                        782,
+                        783
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/archivers/zip/Zip64SupportTest.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', None)": [
+                        569,
+                        886,
+                        894
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'writeBigDeflatedEntryKnownSizeToStream')": [
+                        708,
+                        710
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', None)": [
+                        99
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'writeBigDeflatedEntryKnownSizeToStream')": [
+                        708,
+                        709,
+                        711,
+                        712
+                    ]
+                }
+            }
+        }
+    },
+    "46701aad76232fb93c31a69b4e02ef598bfd51f1": {
+        "authored_data": "2011 Aug 04 11:26",
+        "commit.message": "if the central directory header holds only one of the size values, the other one must still be set so the internal logic for handling of extra fields doesn't throw an exception creating the local file header data.  COMPRESS-149\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1153850 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "1aea86ebaeabc30f303e22b2621a2fbb6009974e",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/Zip64ExtendedInformationExtraField.java": {
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#Zip64ExtendedInformationExtraField', 'parseFromLocalFileData(byte,int,int)')": [
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipFile.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', 'populateFromCentralDirectory')": [
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        491,
+                        493,
+                        494,
+                        497,
+                        498
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', 'populateFromCentralDirectory')": [
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        499,
+                        501,
+                        502,
+                        503,
+                        504,
+                        505,
+                        508,
+                        509,
+                        510,
+                        511,
+                        512
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/archivers/zip/Zip64SupportTest.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', None)": [
+                        99
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', None)": [
+                        225
+                    ]
+                }
+            }
+        }
+    },
+    "1aea86ebaeabc30f303e22b2621a2fbb6009974e": {
+        "authored_data": "2011 Aug 04 10:28",
+        "commit.message": "ensure the CRC is correct for empty entries, with this 7ZIP likes the 100K files written to stream archive as well\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1153835 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "d89c37383183d32b8c20587ba2bf362a1e9f0569",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveOutputStream.java": {
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'closeArchiveEntry')": [
+                        378,
+                        379,
+                        380,
+                        381
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', 'write(byte,int,int)')": [
+                        607
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipArchiveOutputStream', None)": [
+                        1236,
+                        1237,
+                        1238,
+                        1239,
+                        1240,
+                        1241,
+                        1242,
+                        1243,
+                        1244
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/archivers/zip/Zip64SupportTest.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', None)": [
+                        224
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', None)": [
+                        87,
+                        92,
+                        230,
+                        339,
+                        346
+                    ]
+                }
+            }
+        }
+    },
+    "d89c37383183d32b8c20587ba2bf362a1e9f0569": {
+        "authored_data": "2011 Aug 04 09:07",
+        "commit.message": "On second, third and forth thought, this already is all that is needed to make ZipFile work.  The Java7 JAR interop test fails, looking into it.  COMPRESS-149\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1153795 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "2629802a495f335bfb3407f593ba5d11087da4e5",
+        "changes": {
+            "src/test/java/org/apache/commons/compress/archivers/zip/Zip64SupportTest.java": {
+                "new": {
+                    "(None, None)": [
+                        37,
+                        40
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'read5GBOfZerosUsingZipFile')": [
+                        87,
+                        88
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', None)": [
+                        89,
+                        90,
+                        95,
+                        96,
+                        97,
+                        102,
+                        103,
+                        104,
+                        1485,
+                        1486,
+                        1487
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'read5GBOfZerosGeneratedBy7ZIPUsingZipFile')": [
+                        91,
+                        92,
+                        93,
+                        94
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'read5GBOfZerosGeneratedByJava7JarUsingZipFile')": [
+                        98,
+                        99,
+                        100,
+                        101
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'read5GBOfZerosUsingZipFileImpl(File,String)')": [
+                        1452,
+                        1453,
+                        1454,
+                        1455,
+                        1456,
+                        1457,
+                        1458,
+                        1459,
+                        1460,
+                        1461,
+                        1462,
+                        1463,
+                        1464,
+                        1465,
+                        1466,
+                        1467,
+                        1468,
+                        1469,
+                        1470,
+                        1471,
+                        1472,
+                        1473,
+                        1474,
+                        1475,
+                        1476,
+                        1477,
+                        1478,
+                        1479,
+                        1480,
+                        1481,
+                        1482,
+                        1483,
+                        1484
+                    ]
+                }
+            }
+        }
+    },
+    "2629802a495f335bfb3407f593ba5d11087da4e5": {
+        "authored_data": "2011 Aug 04 06:55",
+        "commit.message": "parse ZIP64 extra data from central directory header in ZipFile.  COMPRESS-149\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1153765 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "80447398e04dee000215c458b88e467ac41d8c16",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipFile.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', 'populateFromCentralDirectory')": [
+                        455
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', 'populateFromCentralDirectory')": [
+                        455,
+                        456,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        499,
+                        500,
+                        501,
+                        502
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/archivers/zip/Zip64SupportTest.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', None)": [
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        274,
+                        324
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'withTemporaryArchive(String,ZipOutputTest,boolean)')": [
+                        1316
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        37,
+                        1539
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', None)": [
+                        48,
+                        53,
+                        59,
+                        65,
+                        70,
+                        75,
+                        80,
+                        89,
+                        94,
+                        99,
+                        199,
+                        204,
+                        234,
+                        267,
+                        321,
+                        322,
+                        545,
+                        1513
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'read3EntriesCreatingBigArchiveFileUsingZipFile')": [
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'withTemporaryArchive(String,ZipOutputTest,boolean)')": [
+                        1352
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'write3EntriesCreatingBigArchiveToStream(ZipArchiveOutputStream)')": [
+                        1514,
+                        1515,
+                        1516,
+                        1517,
+                        1518,
+                        1519,
+                        1520,
+                        1521,
+                        1522,
+                        1523,
+                        1524,
+                        1525,
+                        1526,
+                        1527,
+                        1528,
+                        1529,
+                        1530,
+                        1531,
+                        1532,
+                        1533,
+                        1534,
+                        1535,
+                        1536,
+                        1537,
+                        1538
+                    ]
+                }
+            }
+        }
+    },
+    "80447398e04dee000215c458b88e467ac41d8c16": {
+        "authored_data": "2011 Aug 04 05:25",
+        "commit.message": "infrastructure that is going to be needed by ZipFile in order to correctly parse ZIP64 data from the central directory.  COMPRESS-149\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1153755 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "45b3f7cc0dcebde4bc2e733e02fd73cb008ad5ef",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/Zip64ExtendedInformationExtraField.java": {
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#Zip64ExtendedInformationExtraField', None)": [
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64ExtendedInformationExtraField', 'parseFromCentralDirectoryData(byte,int,int)')": [
+                        209,
+                        210,
+                        211,
+                        212
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64ExtendedInformationExtraField', 'reparseCentralDirectoryData(boolean,boolean,boolean,boolean)')": [
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/archivers/zip/Zip64ExtendedInformationExtraFieldTest.java": {
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#Zip64ExtendedInformationExtraFieldTest', 'testReparseCDSingleEightByteData')": [
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64ExtendedInformationExtraFieldTest', None)": [
+                        201,
+                        202
+                    ]
+                }
+            }
+        }
+    },
+    "45b3f7cc0dcebde4bc2e733e02fd73cb008ad5ef": {
+        "authored_data": "2011 Aug 04 03:33",
+        "commit.message": "Use the ZIP64 structures to locate the central directory in ZipFile if the archive is a ZIP64 archive, fallback to 'the old way' if it is not a ZIP64 archive.  COMPRESS-149\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1153738 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "ff615cb9580ce99d48ec5da88be3b37213185076",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipFile.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', 'positionAtCentralDirectory')": [
+                        522
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', None)": [
+                        358,
+                        359,
+                        360,
+                        361,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497,
+                        513,
+                        514,
+                        515,
+                        516,
+                        520,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        563,
+                        564,
+                        565,
+                        566,
+                        567,
+                        568,
+                        569,
+                        570,
+                        571,
+                        572,
+                        573,
+                        574,
+                        575,
+                        576,
+                        577,
+                        578,
+                        579,
+                        580,
+                        581,
+                        582,
+                        583,
+                        584,
+                        585,
+                        586,
+                        587,
+                        588,
+                        589,
+                        590,
+                        620,
+                        621,
+                        622,
+                        623
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', 'positionAtCentralDirectory')": [
+                        591,
+                        592,
+                        593,
+                        594,
+                        595,
+                        596,
+                        597,
+                        598,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612,
+                        613,
+                        614,
+                        615,
+                        616,
+                        617,
+                        618,
+                        619
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', 'positionAtCentralDirectory32')": [
+                        628
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/compress/archivers/zip/Zip64SupportTest.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', None)": [
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        1475
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'read100KFilesUsingZipFile')": [
+                        76,
+                        77
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', None)": [
+                        78,
+                        79,
+                        82,
+                        83,
+                        86,
+                        87,
+                        90,
+                        91,
+                        96,
+                        193,
+                        194,
+                        1433,
+                        1434,
+                        1435,
+                        1465
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'read100KFilesGeneratedBy7ZIPUsingZipFile')": [
+                        80,
+                        81
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'read100KFilesGeneratedByWinCFUsingZipFile')": [
+                        84,
+                        85
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'read100KFilesGeneratedByJava7JarUsingZipFile')": [
+                        88,
+                        89
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'readSelfGenerated100KFilesUsingZipFile')": [
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'read100KFilesUsingZipFileImpl(File)')": [
+                        1417,
+                        1418,
+                        1419,
+                        1420,
+                        1421,
+                        1422,
+                        1423,
+                        1424,
+                        1425,
+                        1426,
+                        1427,
+                        1428,
+                        1429,
+                        1430,
+                        1431,
+                        1432
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#Zip64SupportTest', 'write100KFilesToStream(ZipArchiveOutputStream)')": [
+                        1466,
+                        1467,
+                        1468,
+                        1469,
+                        1470,
+                        1471,
+                        1472,
+                        1473,
+                        1474
+                    ]
+                }
+            }
+        }
+    },
+    "ff615cb9580ce99d48ec5da88be3b37213185076": {
+        "authored_data": "2011 Aug 04 02:58",
+        "commit.message": "the loop searching for the signature could be reading beyond the start of the archive\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1153735 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "d8703230cc23d7c44c8ab694922ebc453144045f",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipFile.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', 'tryToLocateSignature(long,long,byte)')": [
+                        545,
+                        547,
+                        548,
+                        549,
+                        563,
+                        564
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', 'tryToLocateSignature(long,long,byte)')": [
+                        545,
+                        546,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553
+                    ]
+                }
+            }
+        }
+    },
+    "d8703230cc23d7c44c8ab694922ebc453144045f": {
+        "authored_data": "2011 Aug 03 15:16",
+        "commit.message": "Extract the 'search the archive backwards for a signature' logic so it can be reused to serach for the ZIP64 end of central directory locator\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1153535 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Stefan Bodewig",
+        "pcid": "d3aea33fd702ecc6f37fac348dea6b1625d4210c",
+        "changes": {
+            "src/main/java/org/apache/commons/compress/archivers/zip/ZipFile.java": {
+                "old": {
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', None)": [
+                        502
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', 'positionAtCentralDirectory')": [
+                        523,
+                        524,
+                        527,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37,
+                        38
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', None)": [
+                        504,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', 'positionAtCentralDirectory')": [
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532
+                    ],
+                    "('org.apache.commons.compress.archivers.zip#ZipFile', 'tryToLocateSignature(long,long,byte)')": [
+                        540,
+                        541,
+                        542,
+                        544,
+                        545,
+                        567,
+                        568,
+                        569,
+                        570
+                    ]
+                }
+            }
+        }
+    }
+}

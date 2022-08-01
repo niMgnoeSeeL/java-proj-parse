@@ -1,0 +1,1899 @@
+{
+    "85eac97fbf8673f6e6346aca023372bbfedc8cce": {
+        "authored_data": "2009 Aug 12 21:41",
+        "commit.message": "Added a rough sketch of a partitioned cache access.  I changed the get multiple to return a Map and not a HashMap.  Unfortunately, this may break some client.  I hate to do this, but it's a trivial fix.\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@803719 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Aaron Smuts",
+        "pcid": "9dadd36064c8cb6d7621750ad7e62a9550f8344a",
+        "changes": {
+            "src/java/org/apache/jcs/access/CacheAccess.java": {
+                "old": {
+                    "('org.apache.jcs.access#CacheAccess', 'getMatching(String)')": [
+                        203
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.access#CacheAccess', 'getMatching(String)')": [
+                        203
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/access/behavior/ICacheAccess.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        48,
+                        49,
+                        50,
+                        51,
+                        115,
+                        134,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        202,
+                        203,
+                        204,
+                        205,
+                        233,
+                        234,
+                        239,
+                        240,
+                        241,
+                        242,
+                        245,
+                        246
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        47,
+                        48,
+                        49,
+                        50,
+                        114,
+                        115,
+                        134,
+                        135,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        181,
+                        182,
+                        183,
+                        184,
+                        212,
+                        217,
+                        218,
+                        219,
+                        222,
+                        223
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/access/exception/CacheException.java": {
+                "old": {
+                    "(None, None)": [
+                        60
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/match/KeyMatcherPatternImpl.java": {
+                "new": {
+                    "('org.apache.jcs.engine.match#KeyMatcherPatternImpl', 'getMatchingKeysFromArray(String,Object)')": [
+                        31
+                    ]
+                }
+            }
+        }
+    },
+    "f055009ddb930d7e1906780f6ba23546a2141bef": {
+        "authored_data": "2009 Aug 12 14:31",
+        "commit.message": "Fixed JCS-67:  The partial key removal was adding dupes to the recyule bin.  This lead to different keys pointing to the same spot on disk.\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@803533 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Aaron Smuts",
+        "pcid": "25c2f3dca510f58a42a581beab9f7110cfdc7c45",
+        "changes": {
+            "src/java/org/apache/jcs/auxiliary/disk/indexed/IndexedDiskCache.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', 'performPartialKeyRemoval(String)')": [
+                        865,
+                        866
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', 'performGroupRemoval(GroupId)')": [
+                        909,
+                        910
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', 'readElement(Serializable)')": [
+                        717
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', 'performPartialKeyRemoval(String)')": [
+                        866,
+                        867
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', 'performGroupRemoval(GroupId)')": [
+                        910,
+                        911
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.indexed#IndexedDiskCache', None)": [
+                        1149,
+                        1150,
+                        1151,
+                        1152,
+                        1153,
+                        1154,
+                        1155
+                    ]
+                }
+            },
+            "src/test/org/apache/jcs/auxiliary/disk/indexed/IndexDiskCacheUnitTest.java": {
+                "old": [
+                    "LexerError",
+                    "src/test/org/apache/jcs/auxiliary/disk/indexed/IndexDiskCacheUnitTest.java",
+                    [
+                        921,
+                        926,
+                        934,
+                        959,
+                        964,
+                        972,
+                        973,
+                        998,
+                        1003
+                    ]
+                ],
+                "new": [
+                    "LexerError",
+                    "src/test/org/apache/jcs/auxiliary/disk/indexed/IndexDiskCacheUnitTest.java",
+                    [
+                        465,
+                        503,
+                        504,
+                        505,
+                        925,
+                        930,
+                        938,
+                        963,
+                        968,
+                        976,
+                        1001,
+                        1006
+                    ]
+                ]
+            }
+        }
+    },
+    "0b360cf01caa48abc802f8b1092ffd4698f03e7d": {
+        "authored_data": "2009 Aug 11 17:15",
+        "commit.message": "Fixed bug in block disk cache.  It couldn't handle items with more than 127 blocks.  Now it can.  (Note:  for performance reasons, you should try to fit your items in as few blocks as possible.)\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@803209 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Aaron Smuts",
+        "pcid": "585531e3d5658cfa7affe8aec0db279a6f0a74e9",
+        "changes": {
+            "src/java/org/apache/jcs/auxiliary/disk/block/BlockDisk.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDisk', 'write(Serializable)')": [
+                        180,
+                        197
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDisk', 'write(Serializable)')": [
+                        180,
+                        197
+                    ]
+                }
+            },
+            "src/test/org/apache/jcs/auxiliary/disk/block/BlockDiskUnitTest.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDiskUnitTest', 'testWriteSingleBlockElement')": [
+                        54,
+                        55,
+                        56,
+                        57,
+                        58
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDiskUnitTest', 'testWriteAndReadSingleBlockElement')": [
+                        79,
+                        80,
+                        81,
+                        82,
+                        83
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDiskUnitTest', 'testWriteTwoSingleBlockElements')": [
+                        103,
+                        104,
+                        105,
+                        106,
+                        107
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDiskUnitTest', 'testWriteDoubleBlockElement')": [
+                        152
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDiskUnitTest', 'testWriteAndRead_BigString')": [
+                        262,
+                        280
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDiskUnitTest', None)": [
+                        283
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDiskUnitTest', 'testWriteAndRead_BigString2')": [
+                        297,
+                        303
+                    ],
+                    "(None, None)": [
+                        310
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDiskUnitTest', None)": [
+                        50,
+                        51,
+                        52,
+                        53,
+                        71,
+                        72,
+                        73,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        334
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDiskUnitTest', 'testWrite_NullBlockElement')": [
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDiskUnitTest', 'testWrite_SingleBlockElement')": [
+                        78,
+                        79,
+                        80,
+                        81,
+                        82
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDiskUnitTest', 'testWriteAndRead_SingleBlockElement')": [
+                        103,
+                        104,
+                        105,
+                        106,
+                        107
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDiskUnitTest', 'testWrite_TwoSingleBlockElements')": [
+                        127,
+                        128,
+                        129,
+                        130,
+                        131
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDiskUnitTest', 'testWrite_DoubleBlockElement')": [
+                        176,
+                        193
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDiskUnitTest', 'testWrite_128BlockElement')": [
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDiskUnitTest', 'testWriteAndRead_BigString')": [
+                        313,
+                        331
+                    ],
+                    "('org.apache.jcs.auxiliary.disk.block#BlockDiskUnitTest', 'testWriteAndRead_BigString2')": [
+                        348
+                    ],
+                    "(None, None)": [
+                        360
+                    ]
+                }
+            }
+        }
+    },
+    "09fd8cd01cc5274fd83fe14988e0271a68cd95c1": {
+        "authored_data": "2009 Jul 23 19:19",
+        "commit.message": "fixing JCS-53: default properties should now work.  updating change log\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@797196 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Aaron Smuts",
+        "pcid": "a7a654c4e0d982bbfa2cd638e0ab91ad94f5fb9d",
+        "changes": {
+            "src/java/org/apache/jcs/utils/config/PropertySetter.java": {
+                "old": {
+                    "('org.apache.jcs.utils.config#PropertySetter', 'setProperties(Properties,String)')": [
+                        115
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.utils.config#PropertySetter', 'setProperties(Properties,String)')": [
+                        115
+                    ]
+                }
+            }
+        }
+    },
+    "a7a654c4e0d982bbfa2cd638e0ab91ad94f5fb9d": {
+        "authored_data": "2009 Jul 23 18:55",
+        "commit.message": "formatting\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@797188 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Aaron Smuts",
+        "pcid": "5a6efacf81e46243b95411449c38b672f59a1b92",
+        "changes": {
+            "src/java/org/apache/jcs/auxiliary/AbstractAuxiliaryCache.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary#AbstractAuxiliaryCache', None)": [
+                        186
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary#AbstractAuxiliaryCache', None)": [
+                        186
+                    ]
+                }
+            }
+        }
+    },
+    "5a6efacf81e46243b95411449c38b672f59a1b92": {
+        "authored_data": "2009 Jul 23 18:27",
+        "commit.message": "Made a reusable queuing zombie service from the one in the remote cache.  Made the lateral cache use it.  Finished, for now, the UDP discovery move into a reusable spot.  Lateral TCP is now fully functional with the new discovery service.\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@797178 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Aaron Smuts",
+        "pcid": "acb46f44c4e3cee6e77bf44c0ca8b0d450c3f232",
+        "changes": {
+            "src/java/org/apache/jcs/auxiliary/lateral/LateralCache.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', None)": [
+                        56,
+                        62,
+                        77,
+                        78,
+                        87,
+                        90,
+                        361,
+                        362
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'processUpdate(ICacheElement)')": [
+                        106,
+                        109,
+                        113,
+                        114,
+                        119
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'processGet(Serializable)')": [
+                        135,
+                        141,
+                        146
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'processGetMatching(String)')": [
+                        162,
+                        168,
+                        173
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'getGroupKeys(String)')": [
+                        216,
+                        217
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'processRemove(Serializable)')": [
+                        238,
+                        242
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'processRemoveAll')": [
+                        258,
+                        262
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'processDispose')": [
+                        282,
+                        288
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'getStatus')": [
+                        299
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'handleException(Exception,String)')": [
+                        344
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'fixCache(ILateralCacheService)')": [
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        371
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'getAuxiliaryCacheAttributes')": [
+                        391
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'toString')": [
+                        401,
+                        402
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', None)": [
+                        56,
+                        62,
+                        77,
+                        78,
+                        87,
+                        90,
+                        214,
+                        372,
+                        373
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'processUpdate(ICacheElement)')": [
+                        106,
+                        109,
+                        113,
+                        114,
+                        119
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'processGet(Serializable)')": [
+                        135,
+                        141,
+                        146
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'processGetMatching(String)')": [
+                        162,
+                        168,
+                        173
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'getGroupKeys(String)')": [
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'processRemove(Serializable)')": [
+                        249,
+                        253
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'processRemoveAll')": [
+                        269,
+                        273
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'processDispose')": [
+                        293,
+                        299
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'getStatus')": [
+                        310
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'handleException(Exception,String)')": [
+                        355
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'fixCache(ILateralCacheService)')": [
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        398
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'getAuxiliaryCacheAttributes')": [
+                        418
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCache', 'toString')": [
+                        428,
+                        429
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/LateralCacheAttributes.java": {
+                "new": {
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheAttributes', None)": [
+                        71,
+                        72,
+                        73,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        305,
+                        306
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheAttributes', 'setZombieQueueMaxSize(int)')": [
+                        291,
+                        292,
+                        293
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheAttributes', 'getZombieQueueMaxSize')": [
+                        302,
+                        303,
+                        304
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/LateralCacheNoWait.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', 'getGroupKeys(String)')": [
+                        237
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheNoWait', 'getGroupKeys(String)')": [
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/LateralCacheRestore.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.lateral#LateralCacheRestore', 'fix')": [
+                        95
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/ZombieLateralCacheService.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        28,
+                        29
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#ZombieLateralCacheService', None)": [
+                        37,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        47,
+                        48,
+                        49,
+                        52,
+                        54,
+                        55,
+                        56,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#ZombieLateralCacheService', 'update(ICacheElement,long)')": [
+                        46
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#ZombieLateralCacheService', 'remove(String,Serializable,long)')": [
+                        58
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#ZombieLateralCacheService', 'removeAll(String,long)')": [
+                        69
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#ZombieLateralCacheService', 'getGroupKeys(String,String)')": [
+                        81,
+                        82,
+                        83
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#ZombieLateralCacheService', 'getMatching(String,String)')": [
+                        93,
+                        94,
+                        95
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        29,
+                        30
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral#ZombieLateralCacheService', None)": [
+                        33,
+                        36,
+                        39,
+                        41,
+                        43,
+                        45
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/behavior/ILateralCacheAttributes.java": {
+                "old": {
+                    "(None, None)": [
+                        174
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        180,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/behavior/ILateralCacheService.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        32,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        26,
+                        28
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/socket/tcp/LateralTCPCacheManager.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPCacheManager', None)": [
+                        73,
+                        163,
+                        170,
+                        178,
+                        179,
+                        180,
+                        198,
+                        338
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPCacheManager', 'getCache(String)')": [
+                        245,
+                        265
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPCacheManager', 'addListenerIfNeeded(String)')": [
+                        285,
+                        289
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPCacheManager', 'fixService')": [
+                        327
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPCacheManager', None)": [
+                        73,
+                        163,
+                        170,
+                        178,
+                        179,
+                        180,
+                        198,
+                        338,
+                        339
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPCacheManager', 'getCache(String)')": [
+                        245,
+                        265
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPCacheManager', 'addListenerIfNeeded(String)')": [
+                        285,
+                        289
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPCacheManager', 'fixService')": [
+                        327
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/socket/tcp/LateralTCPDiscoveryListener.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPDiscoveryListener', None)": [
+                        70,
+                        92,
+                        115,
+                        124,
+                        147,
+                        158
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPDiscoveryListener', 'addNoWaitFacade(String,LateralCacheNoWaitFacade)')": [
+                        75
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPDiscoveryListener', 'addNoWait(LateralCacheNoWait)')": [
+                        93,
+                        98,
+                        111,
+                        112,
+                        113,
+                        114
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPDiscoveryListener', 'removeNoWait(LateralCacheNoWait)')": [
+                        125,
+                        130,
+                        143,
+                        144,
+                        145,
+                        146
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        6,
+                        9,
+                        25
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPDiscoveryListener', None)": [
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        77,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        130,
+                        131,
+                        132,
+                        170,
+                        171,
+                        211
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPDiscoveryListener', 'addNoWaitFacade(String,LateralCacheNoWaitFacade)')": [
+                        83,
+                        87
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPDiscoveryListener', 'containsNoWaitFacade(String)')": [
+                        98,
+                        99,
+                        100
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPDiscoveryListener', 'containsNoWait(String,LateralCacheNoWait)')": [
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPDiscoveryListener', 'addNoWait(LateralCacheNoWait)')": [
+                        133,
+                        138,
+                        148,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPDiscoveryListener', 'removeNoWait(LateralCacheNoWait)')": [
+                        172,
+                        177,
+                        187,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/socket/tcp/LateralTCPDiscoveryListenerManager.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPDiscoveryListenerManager', 'getDiscoveryListener(ITCPLateralCacheAttributes,ICompositeCacheManager,ICacheEventLogger,IElementSerializer)')": [
+                        60,
+                        62,
+                        64
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPDiscoveryListenerManager', 'getDiscoveryListener(ITCPLateralCacheAttributes,ICompositeCacheManager,ICacheEventLogger,IElementSerializer)')": [
+                        60,
+                        62,
+                        64
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/socket/tcp/LateralTCPService.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPService', None)": [
+                        179,
+                        251,
+                        283
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPService', 'getMatching(String,String)')": [
+                        269
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPService', 'getMultiple(String,Set)')": [
+                        314
+                    ],
+                    "(None, None)": [
+                        466
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPService', None)": [
+                        179,
+                        180,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        267,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        315,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPService', 'get(String,Serializable)')": [
+                        228,
+                        229,
+                        230
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPService', 'get(String,Serializable,long)')": [
+                        242
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPService', 'getMatching(String,String)')": [
+                        276,
+                        277,
+                        278
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPService', 'getMatching(String,String,long)')": [
+                        291,
+                        301
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPService', 'getMultiple(String,Set)')": [
+                        326,
+                        327,
+                        328
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPService', 'getMultiple(String,Set,long)')": [
+                        343
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/lateral/socket/tcp/behavior/ITCPLateralCacheAttributes.java": {
+                "old": {
+                    "(None, None)": [
+                        217
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        217
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/ZombieRemoteCacheService.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        32,
+                        33,
+                        34,
+                        35,
+                        44,
+                        45,
+                        46,
+                        308
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#ZombieRemoteCacheService', None)": [
+                        49,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        62,
+                        66,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#ZombieRemoteCacheService', 'getQueueSize')": [
+                        85,
+                        86,
+                        87
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#ZombieRemoteCacheService', 'update(ICacheElement,long)')": [
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#ZombieRemoteCacheService', 'remove(String,Serializable,long)')": [
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#ZombieRemoteCacheService', 'removeAll(String,long)')": [
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#ZombieRemoteCacheService', 'get(String,Serializable,long)')": [
+                        151,
+                        152,
+                        153,
+                        154,
+                        155
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#ZombieRemoteCacheService', 'getMatching(String,String,long)')": [
+                        166,
+                        167,
+                        168,
+                        169
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#ZombieRemoteCacheService', 'getMultiple(String,Set,long)')": [
+                        178,
+                        179,
+                        180
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#ZombieRemoteCacheService', 'getGroupKeys(String,String)')": [
+                        190,
+                        191,
+                        192
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#ZombieRemoteCacheService', 'propagateEvents(IRemoteCacheService)')": [
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        32
+                    ],
+                    "('org.apache.jcs.auxiliary.remote#ZombieRemoteCacheService', None)": [
+                        35,
+                        38,
+                        41,
+                        45,
+                        55
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/behavior/IRemoteCacheService.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        36,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        26,
+                        27,
+                        30,
+                        32
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/engine/behavior/ICacheService.java": {
+                "old": {
+                    "(None, None)": [
+                        31,
+                        32,
+                        63,
+                        65,
+                        66,
+                        67,
+                        83
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31,
+                        32,
+                        63,
+                        65,
+                        66,
+                        67,
+                        68,
+                        84
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/utils/discovery/DiscoveredService.java": {
+                "old": {
+                    "('org.apache.jcs.utils.discovery#DiscoveredService', None)": [
+                        116,
+                        130
+                    ],
+                    "('org.apache.jcs.utils.discovery#DiscoveredService', 'hashCode')": [
+                        122
+                    ],
+                    "('org.apache.jcs.utils.discovery#DiscoveredService', 'equals(Object)')": [
+                        140
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.utils.discovery#DiscoveredService', None)": [
+                        116,
+                        129,
+                        130,
+                        131,
+                        132,
+                        134
+                    ],
+                    "('org.apache.jcs.utils.discovery#DiscoveredService', 'hashCode')": [
+                        122
+                    ],
+                    "('org.apache.jcs.utils.discovery#DiscoveredService', 'equals(Object)')": [
+                        144
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/utils/discovery/UDPDiscoverySenderThread.java": {
+                "old": {
+                    "('org.apache.jcs.utils.discovery#UDPDiscoverySenderThread', 'setCacheNames(ArrayList)')": [
+                        49,
+                        51
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.utils.discovery#UDPDiscoverySenderThread', 'setCacheNames(ArrayList)')": [
+                        49,
+                        51
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/utils/discovery/UDPDiscoveryService.java": {
+                "old": {
+                    "('org.apache.jcs.utils.discovery#UDPDiscoveryService', None)": [
+                        127,
+                        273,
+                        274,
+                        275
+                    ],
+                    "('org.apache.jcs.utils.discovery#UDPDiscoveryService', 'removeDiscoveredService(DiscoveredService)')": [
+                        209,
+                        217
+                    ],
+                    "('org.apache.jcs.utils.discovery#UDPDiscoveryService', 'addOrUpdateService(DiscoveredService)')": [
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.utils.discovery#UDPDiscoveryService', None)": [
+                        127,
+                        297,
+                        298
+                    ],
+                    "('org.apache.jcs.utils.discovery#UDPDiscoveryService', 'removeDiscoveredService(DiscoveredService)')": [
+                        209,
+                        217
+                    ],
+                    "('org.apache.jcs.utils.discovery#UDPDiscoveryService', 'addOrUpdateService(DiscoveredService)')": [
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/utils/discovery/behavior/IDiscoveryListener.java": {
+                "old": {
+                    "(None, None)": [
+                        32
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32
+                    ]
+                }
+            },
+            "src/test/org/apache/jcs/auxiliary/lateral/socket/tcp/LateralTCPFilterRemoveHashCodeUnitTest.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPFilterRemoveHashCodeUnitTest', None)": [
+                        41
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPFilterRemoveHashCodeUnitTest', 'setUp')": [
+                        59
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPFilterRemoveHashCodeUnitTest', 'runTestForRegion(String,int,int)')": [
+                        88,
+                        89,
+                        90,
+                        98
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPFilterRemoveHashCodeUnitTest', None)": [
+                        41
+                    ],
+                    "('org.apache.jcs.auxiliary.lateral.socket.tcp#LateralTCPFilterRemoveHashCodeUnitTest', 'runTestForRegion(String,int,int)')": [
+                        94
+                    ]
+                }
+            },
+            "src/test/org/apache/jcs/utils/discovery/UDPDiscoveryServiceUnitTest.java": {
+                "old": {
+                    "('org.apache.jcs.utils.discovery#UDPDiscoveryServiceUnitTest', 'testAddOrUpdateService_InList')": [
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        93,
+                        108
+                    ],
+                    "('org.apache.jcs.utils.discovery#UDPDiscoveryServiceUnitTest', None)": [
+                        119
+                    ],
+                    "(None, None)": [
+                        156
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.utils.discovery#UDPDiscoveryServiceUnitTest', 'testAddOrUpdateService_InList_NamesDoNotChange')": [
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        97,
+                        112,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128
+                    ],
+                    "('org.apache.jcs.utils.discovery#UDPDiscoveryServiceUnitTest', None)": [
+                        129,
+                        130,
+                        131
+                    ],
+                    "('org.apache.jcs.utils.discovery#UDPDiscoveryServiceUnitTest', 'testAddOrUpdateService_InList_NamesChange')": [
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191
+                    ],
+                    "(None, None)": [
+                        228
+                    ]
+                }
+            }
+        }
+    }
+}

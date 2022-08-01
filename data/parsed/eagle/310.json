@@ -1,0 +1,1124 @@
+{
+    "10572c296f58532897cdea4f80132d1420890679": {
+        "authored_data": "2016 Nov 30 01:38",
+        "commit.message": "[EAGLE-806] Integrate Metric Process and Persistence with Application Framework\n\nIntegrate Stream Source and Metric Persistence with Application Framework\n\n- Provide API to easily ingest, process, aggregate and persist metric\n- Integrate stream source\n- Integrate metric definition and metric persistence.\n- Implement basic plug-able aggregation abstraction for later usage.\n- Provide `CEPFunction` as default `TransformFunction` based on `SiddhiCEP`\n\nAuthor: Hao Chen <hao@apache.org>\n\nCloses #692 from haoch/streamSourceAndPersist.\n",
+        "commit.author.name": "Hao Chen",
+        "pcid": "ff2253754c265ffb81727a52b3e0f2f196697184",
+        "changes": {
+            "eagle-core/eagle-app/eagle-app-base/src/main/java/org/apache/eagle/app/environment/AbstractEnvironment.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        20
+                    ],
+                    "('org.apache.eagle.app.environment#AbstractEnvironment', None)": [
+                        29,
+                        30,
+                        31,
+                        36
+                    ],
+                    "('org.apache.eagle.app.environment#AbstractEnvironment', 'loadStreamSinkProvider')": [
+                        39,
+                        40,
+                        41,
+                        44,
+                        45,
+                        47
+                    ],
+                    "('org.apache.eagle.app.environment#AbstractEnvironment', 'streamSink')": [
+                        63,
+                        64
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19
+                    ],
+                    "('org.apache.eagle.app.environment#AbstractEnvironment', None)": [
+                        28,
+                        29,
+                        30,
+                        35,
+                        65
+                    ],
+                    "('org.apache.eagle.app.environment#AbstractEnvironment', 'loadStreamProvider')": [
+                        38,
+                        39,
+                        40,
+                        43,
+                        44,
+                        46
+                    ],
+                    "('org.apache.eagle.app.environment#AbstractEnvironment', 'stream')": [
+                        62,
+                        63
+                    ]
+                }
+            },
+            "eagle-core/eagle-app/eagle-app-base/src/main/java/org/apache/eagle/app/environment/Environment.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        34,
+                        36
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        34,
+                        36
+                    ]
+                }
+            },
+            "eagle-core/eagle-app/eagle-app-base/src/main/java/org/apache/eagle/app/environment/impl/StormEnvironment.java": {
+                "old": {
+                    "(None, None)": [
+                        20
+                    ],
+                    "('org.apache.eagle.app.environment.impl#StormEnvironment', 'getStreamSink(String,Config)')": [
+                        32
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        26
+                    ],
+                    "('org.apache.eagle.app.environment.impl#StormEnvironment', None)": [
+                        36,
+                        37,
+                        38,
+                        41,
+                        42,
+                        45,
+                        46,
+                        49,
+                        50,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58
+                    ],
+                    "('org.apache.eagle.app.environment.impl#StormEnvironment', 'getStreamSink(String,Config)')": [
+                        40
+                    ],
+                    "('org.apache.eagle.app.environment.impl#StormEnvironment', 'getStreamSource(String,Config)')": [
+                        43,
+                        44
+                    ],
+                    "('org.apache.eagle.app.environment.impl#StormEnvironment', 'getMetricPersist(MetricDefinition,Config)')": [
+                        47,
+                        48
+                    ],
+                    "('org.apache.eagle.app.environment.impl#StormEnvironment', 'getTransformer(TransformFunction)')": [
+                        51,
+                        52
+                    ],
+                    "('org.apache.eagle.app.environment.impl#StormEnvironment', 'newApp(Config)')": [
+                        59,
+                        60
+                    ]
+                }
+            },
+            "eagle-core/eagle-app/eagle-app-base/src/main/java/org/apache/eagle/app/service/ApplicationAction.java": {
+                "old": {
+                    "(None, None)": [
+                        32
+                    ],
+                    "('org.apache.eagle.app.service#ApplicationAction', 'processStreams')": [
+                        104,
+                        107,
+                        113,
+                        117,
+                        118
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        34
+                    ],
+                    "('org.apache.eagle.app.service#ApplicationAction', 'processStreams')": [
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        118,
+                        119,
+                        121,
+                        129,
+                        130
+                    ]
+                }
+            },
+            "eagle-core/eagle-app/eagle-app-base/src/main/java/org/apache/eagle/app/service/impl/ApplicationProviderSPILoader.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34
+                    ]
+                }
+            },
+            "eagle-core/eagle-app/eagle-app-base/src/main/java/org/apache/eagle/app/spi/ApplicationProvider.java": {
+                "old": {
+                    "(None, None)": [
+                        31
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ]
+                }
+            },
+            "eagle-core/eagle-app/eagle-app-base/src/test/java/org/apache/eagle/app/TestStormApplication.java": {
+                "old": {
+                    "(None, None)": [
+                        26,
+                        30,
+                        32
+                    ],
+                    "('org.apache.eagle.app#TestStormApplication', None)": [
+                        64
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.app#TestStormApplication', None)": [
+                        61
+                    ]
+                }
+            },
+            "eagle-core/eagle-app/eagle-app-base/src/test/java/org/apache/eagle/app/environment/StaticEnvironmentTest.java": {
+                "old": {
+                    "('org.apache.eagle.app.environment#StaticEnvironmentTest', 'testStreamSinkSupport')": [
+                        37
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.app.environment#StaticEnvironmentTest', 'testStreamSinkSupport')": [
+                        37
+                    ]
+                }
+            },
+            "eagle-core/eagle-app/eagle-app-base/src/test/java/org/apache/eagle/app/storm/MockStormApplication.java": {
+                "old": {
+                    "('org.apache.eagle.app.storm#MockStormApplication', None)": [
+                        57
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.app.storm#MockStormApplication', None)": [
+                        57
+                    ]
+                }
+            },
+            "eagle-core/eagle-metadata/eagle-metadata-base/src/main/java/org/apache/eagle/metadata/model/StreamDesc.java": {
+                "old": {
+                    "('org.apache.eagle.metadata.model#StreamDesc', None)": [
+                        25
+                    ],
+                    "('org.apache.eagle.metadata.model#StreamDesc', 'getSink')": [
+                        43,
+                        44
+                    ],
+                    "('org.apache.eagle.metadata.model#StreamDesc', 'setSink(StreamSinkConfig)')": [
+                        47,
+                        48
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23
+                    ],
+                    "('org.apache.eagle.metadata.model#StreamDesc', None)": [
+                        27,
+                        28,
+                        52,
+                        53,
+                        56,
+                        57
+                    ],
+                    "('org.apache.eagle.metadata.model#StreamDesc', 'getSinkConfig')": [
+                        46,
+                        47
+                    ],
+                    "('org.apache.eagle.metadata.model#StreamDesc', 'setSinkConfig(StreamSinkConfig)')": [
+                        50,
+                        51
+                    ],
+                    "('org.apache.eagle.metadata.model#StreamDesc', 'getSourceConfig')": [
+                        54,
+                        55
+                    ],
+                    "('org.apache.eagle.metadata.model#StreamDesc', 'setSourceConfig(StreamSourceConfig)')": [
+                        58,
+                        59
+                    ]
+                }
+            },
+            "eagle-core/eagle-metadata/eagle-metadata-jdbc/src/main/java/org/apache/eagle/metadata/store/jdbc/provider/JDBCDataSourceProvider.java": {
+                "old": {
+                    "('org.apache.eagle.metadata.store.jdbc.provider#JDBCDataSourceProvider', 'get')": [
+                        48
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.metadata.store.jdbc.provider#JDBCDataSourceProvider', 'get')": [
+                        48
+                    ]
+                }
+            },
+            "eagle-core/eagle-metadata/eagle-metadata-jdbc/src/main/java/org/apache/eagle/metadata/store/jdbc/service/ApplicationEntityServiceJDBCImpl.java": {
+                "old": {
+                    "('org.apache.eagle.metadata.store.jdbc.service#ApplicationEntityServiceJDBCImpl', 'fillApplicationDesc(List)')": [
+                        213,
+                        216
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.metadata.store.jdbc.service#ApplicationEntityServiceJDBCImpl', 'fillApplicationDesc(List)')": [
+                        213,
+                        216
+                    ]
+                }
+            },
+            "eagle-core/eagle-query/eagle-client-base/src/main/java/org/apache/eagle/service/client/EagleServiceConnector.java": {
+                "old": {
+                    "('org.apache.eagle.service.client#EagleServiceConnector', None)": [
+                        28
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28
+                    ],
+                    "('org.apache.eagle.service.client#EagleServiceConnector', None)": [
+                        29
+                    ]
+                }
+            },
+            "eagle-core/eagle-query/eagle-client-base/src/main/java/org/apache/eagle/service/client/impl/EagleServiceClientImpl.java": {
+                "old": {
+                    "('org.apache.eagle.service.client.impl#EagleServiceClientImpl', None)": [
+                        36,
+                        40
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19
+                    ],
+                    "('org.apache.eagle.service.client.impl#EagleServiceClientImpl', None)": [
+                        37,
+                        41,
+                        42,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52
+                    ]
+                }
+            },
+            "eagle-examples/eagle-app-example/src/main/java/org/apache/eagle/app/example/ExampleStormApplication.java": {
+                "old": {
+                    "('org.apache.eagle.app.example#ExampleStormApplication', None)": [
+                        60
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.app.example#ExampleStormApplication', None)": [
+                        60
+                    ]
+                }
+            },
+            "eagle-gc/src/main/java/org/apache/eagle/gc/GCLogApplication.java": {
+                "old": {
+                    "(None, None)": [
+                        32
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32
+                    ]
+                }
+            },
+            "eagle-hadoop-metric/src/main/java/org/apache/eagle/metric/HadoopMetricMonitorAppProdiver.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        22
+                    ],
+                    "('org.apache.eagle.metric#HadoopMetricMonitorAppProdiver', None)": [
+                        21
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        21,
+                        22,
+                        23,
+                        28
+                    ],
+                    "('org.apache.eagle.metric#HadoopMetricMonitorAppProdiver', None)": [
+                        24,
+                        25
+                    ],
+                    "('org.apache.eagle.metric#HadoopMetricMonitorAppProdiver', 'getApplication')": [
+                        26,
+                        27
+                    ]
+                }
+            },
+            "eagle-jpm/eagle-jpm-aggregation/src/main/java/org/apache/eagle/jpm/aggregation/storm/AggregationSpout.java": {
+                "old": {
+                    "('org.apache.eagle.jpm.aggregation.storm#AggregationSpout', 'nextTuple')": [
+                        79
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.jpm.aggregation.storm#AggregationSpout', 'nextTuple')": [
+                        79
+                    ]
+                }
+            },
+            "eagle-jpm/eagle-jpm-mr-history/src/main/java/org/apache/eagle/jpm/mr/history/MRHistoryJobApplication.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        23
+                    ],
+                    "('org.apache.eagle.jpm.mr.history#MRHistoryJobApplication', 'execute(Config,StormEnvironment)')": [
+                        40,
+                        44,
+                        63
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.eagle.jpm.mr.history#MRHistoryJobApplication', 'execute(Config,StormEnvironment)')": [
+                        39,
+                        43,
+                        62
+                    ]
+                }
+            },
+            "eagle-jpm/eagle-jpm-mr-running/src/main/java/org/apache/eagle/jpm/mr/running/MRRunningJobApplication.java": {
+                "old": {
+                    "('org.apache.eagle.jpm.mr.running#MRRunningJobApplication', 'execute(Config,StormEnvironment)')": [
+                        35,
+                        49
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.jpm.mr.running#MRRunningJobApplication', 'execute(Config,StormEnvironment)')": [
+                        35,
+                        49
+                    ]
+                }
+            },
+            "eagle-jpm/eagle-jpm-spark-running/src/main/java/org/apache/eagle/jpm/spark/running/SparkRunningJobApp.java": {
+                "old": {
+                    "('org.apache.eagle.jpm.spark.running#SparkRunningJobApp', 'execute(Config,StormEnvironment)')": [
+                        32,
+                        35
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.jpm.spark.running#SparkRunningJobApp', 'execute(Config,StormEnvironment)')": [
+                        32,
+                        35
+                    ]
+                }
+            },
+            "eagle-security/eagle-security-hbase-auditlog/src/main/java/org/apache/eagle/security/hbase/HBaseAuditLogApplication.java": {
+                "old": {
+                    "(None, None)": [
+                        28
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28
+                    ]
+                }
+            },
+            "eagle-security/eagle-security-hdfs-auditlog/src/main/java/org/apache/eagle/security/auditlog/AbstractHdfsAuditLogApplication.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        32,
+                        38
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ]
+                }
+            },
+            "eagle-security/eagle-security-hive/src/main/java/org/apache/eagle/security/hive/HiveQueryMonitoringApplication.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29
+                    ]
+                }
+            },
+            "eagle-security/eagle-security-oozie-auditlog/src/main/java/org/apache/eagle/security/oozie/parse/OozieAuditLogApplication.java": {
+                "old": {
+                    "(None, None)": [
+                        22
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ]
+                }
+            },
+            "eagle-topology-check/eagle-topology-app/src/main/java/org/apache/eagle/topology/TopologyCheckApp.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ]
+                }
+            },
+            "eagle-topology-check/eagle-topology-app/src/main/java/org/apache/eagle/topology/extractor/hdfs/HdfsTopologyEntityParser.java": {
+                "old": {
+                    "(None, None)": [
+                        38
+                    ]
+                }
+            }
+        }
+    },
+    "ff2253754c265ffb81727a52b3e0f2f196697184": {
+        "authored_data": "2016 Nov 29 10:32",
+        "commit.message": "[EAGLE-814] fix alertId is null in AlertStreamEvent bug\n\nAuthor: wujinhu <wujinhu920@126.com>\n\nCloses #698 from wujinhu/EAGLE-814.\n",
+        "commit.author.name": "wujinhu",
+        "pcid": "285524efb7e898c1ace70c70a62933d8370b1f63",
+        "changes": {
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/publisher/impl/AlertPublisherImpl.java": {
+                "new": {
+                    "('org.apache.eagle.alert.engine.publisher.impl#AlertPublisherImpl', 'notifyAlert(PublishPartition,AlertStreamEvent)')": [
+                        85
+                    ]
+                }
+            }
+        }
+    },
+    "021c2bddddd98892442f43d0425c67effa192273": {
+        "authored_data": "2016 Nov 29 07:14",
+        "commit.message": "add ScheduleStateCleaner.java\n\nhttps://issues.apache.org/jira/browse/EAGLE-803\n\nAuthor: Zhao, Qingwen <qingwzhao@apache.org>\n\nCloses #694 from qingwen220/EAGLE-803.\n",
+        "commit.author.name": "Zhao, Qingwen",
+        "pcid": "c69f94eff767a7c1cef3b66f23be21aae0d2ec71",
+        "changes": {
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-common/src/main/java/org/apache/eagle/alert/engine/coordinator/PublishmentType.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.coordinator#PublishmentType', None)": [
+                        32
+                    ],
+                    "('org.apache.eagle.alert.engine.coordinator#PublishmentType', 'getFields')": [
+                        58
+                    ],
+                    "('org.apache.eagle.alert.engine.coordinator#PublishmentType', 'setFields(String)')": [
+                        62
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25
+                    ],
+                    "('org.apache.eagle.alert.engine.coordinator#PublishmentType', None)": [
+                        34,
+                        35
+                    ],
+                    "('org.apache.eagle.alert.engine.coordinator#PublishmentType', 'getFields')": [
+                        61
+                    ],
+                    "('org.apache.eagle.alert.engine.coordinator#PublishmentType', 'setFields(List)')": [
+                        65
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-common/src/main/java/org/apache/eagle/alert/service/IMetadataServiceClient.java": {
+                "new": {
+                    "(None, None)": [
+                        89,
+                        90
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-common/src/main/java/org/apache/eagle/alert/service/MetadataServiceClientImpl.java": {
+                "new": {
+                    "('org.apache.eagle.alert.service#MetadataServiceClientImpl', None)": [
+                        72,
+                        286,
+                        287,
+                        288
+                    ],
+                    "('org.apache.eagle.alert.service#MetadataServiceClientImpl', 'clearScheduleState(int)')": [
+                        283,
+                        284,
+                        285
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-common/src/test/java/org/apache/eagle/alert/engine/coordinator/PublishmentTypeTest.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.coordinator#PublishmentTypeTest', 'testPublishmentType')": [
+                        29,
+                        35
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.engine.coordinator#PublishmentTypeTest', None)": [
+                        23
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-coordinator/src/main/java/org/apache/eagle/alert/coordinator/Coordinator.java": {
+                "new": {
+                    "(None, None)": [
+                        32
+                    ],
+                    "('org.apache.eagle.alert.coordinator#Coordinator', None)": [
+                        77,
+                        78,
+                        79,
+                        80
+                    ],
+                    "('org.apache.eagle.alert.coordinator#Coordinator', 'startSchedule')": [
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-coordinator/src/test/java/org/apache/alert/coordinator/mock/InMemMetadataServiceClient.java": {
+                "new": {
+                    "('org.apache.alert.coordinator.mock#InMemMetadataServiceClient', 'clearScheduleState(int)')": [
+                        187
+                    ],
+                    "('org.apache.alert.coordinator.mock#InMemMetadataServiceClient', None)": [
+                        188,
+                        189,
+                        190,
+                        191
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/test/java/org/apache/eagle/alert/engine/integration/MockMetadataServiceClient.java": {
+                "new": {
+                    "('org.apache.eagle.alert.engine.integration#MockMetadataServiceClient', 'clearScheduleState(int)')": [
+                        157
+                    ],
+                    "('org.apache.eagle.alert.engine.integration#MockMetadataServiceClient', None)": [
+                        158,
+                        159,
+                        160,
+                        161
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata-service/src/main/java/org/apache/eagle/service/metadata/resource/MetadataResource.java": {
+                "old": {
+                    "('org.apache.eagle.service.metadata.resource#MetadataResource', 'addPublishmentsToPolicy(String,List)')": [
+                        294
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        545
+                    ],
+                    "('org.apache.eagle.service.metadata.resource#MetadataResource', None)": [
+                        75,
+                        76,
+                        77,
+                        78
+                    ],
+                    "('org.apache.eagle.service.metadata.resource#MetadataResource', 'clearScheduleStates(int)')": [
+                        79,
+                        80
+                    ],
+                    "('org.apache.eagle.service.metadata.resource#MetadataResource', 'addPublishmentsToPolicy(String,List)')": [
+                        301
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/main/java/org/apache/eagle/alert/metadata/IMetadataDao.java": {
+                "old": {
+                    "(None, None)": [
+                        32,
+                        34
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        92,
+                        93,
+                        95,
+                        96
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/main/java/org/apache/eagle/alert/metadata/impl/InMemMetadataDaoImpl.java": {
+                "new": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#InMemMetadataDaoImpl', 'listScheduleStates')": [
+                        271,
+                        272
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#InMemMetadataDaoImpl', None)": [
+                        273,
+                        274,
+                        275,
+                        278,
+                        279,
+                        280
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#InMemMetadataDaoImpl', 'clearScheduleState(int)')": [
+                        276,
+                        277
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/main/java/org/apache/eagle/alert/metadata/impl/JdbcDatabaseHandler.java": {
+                "old": {
+                    "('org.apache.eagle.alert.metadata.impl#JdbcDatabaseHandler', None)": [
+                        53,
+                        64,
+                        65,
+                        66,
+                        204
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcDatabaseHandler', 'addOrReplace(String,T)')": [
+                        118
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcDatabaseHandler', 'listTop(Class,String)')": [
+                        196,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcDatabaseHandler', 'remove(String,String)')": [
+                        290
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        30,
+                        35,
+                        398
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcDatabaseHandler', None)": [
+                        58,
+                        62,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        88,
+                        89,
+                        90,
+                        372,
+                        373
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcDatabaseHandler', 'registerTableName(String,String)')": [
+                        82,
+                        83
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcDatabaseHandler', 'addOrReplace(String,T)')": [
+                        142
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcDatabaseHandler', 'listOrderBy(Class,String)')": [
+                        220,
+                        223
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcDatabaseHandler', 'remove(String,String)')": [
+                        309
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcDatabaseHandler', 'removeBatch(String,List)')": [
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcDatabaseHandler', 'removeScheduleStates(int)')": [
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/main/java/org/apache/eagle/alert/metadata/impl/JdbcMetadataDaoImpl.java": {
+                "old": {
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', None)": [
+                        104
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'getScheduleState')": [
+                        109
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        32,
+                        33,
+                        36
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', None)": [
+                        44,
+                        119,
+                        120,
+                        121,
+                        122,
+                        175,
+                        176,
+                        177
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'getScheduleState')": [
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'listScheduleStates')": [
+                        123,
+                        124
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcMetadataDaoImpl', 'clearScheduleState(int)')": [
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/main/java/org/apache/eagle/alert/metadata/impl/JdbcSchemaManager.java": {
+                "new": {
+                    "(None, None)": [
+                        44
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/main/java/org/apache/eagle/alert/metadata/impl/MongoMetadataDaoImpl.java": {
+                "new": {
+                    "(None, None)": [
+                        46
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#MongoMetadataDaoImpl', None)": [
+                        503,
+                        504,
+                        505,
+                        508,
+                        509,
+                        510
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#MongoMetadataDaoImpl', 'listScheduleStates')": [
+                        506,
+                        507
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#MongoMetadataDaoImpl', 'clearScheduleState(int)')": [
+                        511,
+                        512
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/test/java/org/apache/eagle/alert/metadata/impl/InMemoryTest.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        31,
+                        32
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-metadata-parent/alert-metadata/src/test/java/org/apache/eagle/alert/metadata/impl/JdbcImplTest.java": {
+                "old": {
+                    "(None, None)": [
+                        32,
+                        39,
+                        40
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', 'setup')": [
+                        48,
+                        50,
+                        51
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', None)": [
+                        67,
+                        154
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', 'test_apis')": [
+                        138,
+                        139
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        33,
+                        40,
+                        194
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', 'setup')": [
+                        49,
+                        50
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', 'test_apis')": [
+                        110,
+                        111,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        147,
+                        148,
+                        149
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', None)": [
+                        173,
+                        174
+                    ],
+                    "('org.apache.eagle.alert.metadata.impl#JdbcImplTest', 'test_clearScheduleState')": [
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193
+                    ]
+                }
+            }
+        }
+    },
+    "c69f94eff767a7c1cef3b66f23be21aae0d2ec71": {
+        "authored_data": "2016 Nov 29 07:10",
+        "commit.message": "[EAGLE-796] MRJobEntityCreationHandler flush need N times\n\nEAGLE-796 MRJobEntityCreationHandler flush need N times\n- It will retry until flushing has succeeded or tried more than 3 times.\n\nhttps://issues.apache.org/jira/browse/EAGLE-796\n\nAuthor: chitin <chitin1027@gmail.com>\n\nCloses #691 from chitin/EAGLE-796.\n",
+        "commit.author.name": "chitin",
+        "pcid": "dcefa206835542c187059878d2ffbae50c1df1a3",
+        "changes": {
+            "eagle-jpm/eagle-jpm-mr-running/src/main/java/org/apache/eagle/jpm/mr/running/parser/MRJobEntityCreationHandler.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('org.apache.eagle.jpm.mr.running.parser#MRJobEntityCreationHandler', 'flush')": [
+                        82,
+                        83,
+                        84,
+                        85,
+                        88,
+                        99
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.jpm.mr.running.parser#MRJobEntityCreationHandler', None)": [
+                        43,
+                        94
+                    ],
+                    "('org.apache.eagle.jpm.mr.running.parser#MRJobEntityCreationHandler', 'flush')": [
+                        82
+                    ],
+                    "('org.apache.eagle.jpm.mr.running.parser#MRJobEntityCreationHandler', 'createEntities(IEagleServiceClient)')": [
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119
+                    ]
+                }
+            },
+            "eagle-jpm/eagle-jpm-mr-running/src/test/java/org/apache/eagle/jpm/mr/running/parser/MRJobParserTest.java": {
+                "old": {
+                    "('org.apache.eagle.jpm.mr.running.parser#MRJobParserTest', 'testMRJobParserFetchJobCountFailButRMalive')": [
+                        349,
+                        393
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.jpm.mr.running.parser#MRJobParserTest', 'testMRJobParserFetchJobCountFailButRMaliveRetry')": [
+                        349,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        403,
+                        404,
+                        405
+                    ]
+                }
+            }
+        }
+    }
+}

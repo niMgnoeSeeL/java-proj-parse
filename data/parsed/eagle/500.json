@@ -1,0 +1,337 @@
+{
+    "649adb1ae400e026a8e932d53bd813f03fecb2d1": {
+        "authored_data": "2016 Oct 14 04:13",
+        "commit.message": "[EAGLE-582] add simple Basic Authentication registration to server appl\u2026\n\nThis is one of the sub-tasks of ticket EAGLE-433, to successfully register a simple Basic Authentication authenticator to the server application.\n\nWith this check-in, when the server is up, any access to rest api method that has a Auth annotation on it's User field will require correct credentials.\n\nAuthor: anyway1021 <mw@apache.org>\n\nCloses #468 from anyway1021/EAGLE-582.\n",
+        "commit.author.name": "anyway1021",
+        "pcid": "7bd5d1d2adb909eef7f59424f758fc0818fb683b",
+        "changes": {
+            "eagle-server/src/main/java/org/apache/eagle/server/ServerApplication.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        38
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        38
+                    ],
+                    "('org.apache.eagle.server#ServerApplication', 'run(ServerConfig,Environment)')": [
+                        83,
+                        84,
+                        85
+                    ]
+                }
+            },
+            "eagle-server/src/main/java/org/apache/eagle/server/ServerConfig.java": {
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23
+                    ],
+                    "('org.apache.eagle.server#ServerConfig', None)": [
+                        34,
+                        35,
+                        38,
+                        39,
+                        40,
+                        43,
+                        44,
+                        45
+                    ],
+                    "('org.apache.eagle.server#ServerConfig', 'getAuth')": [
+                        41,
+                        42
+                    ],
+                    "('org.apache.eagle.server#ServerConfig', 'setAuth(AuthenticationSettings)')": [
+                        46,
+                        47
+                    ]
+                }
+            }
+        }
+    },
+    "7bd5d1d2adb909eef7f59424f758fc0818fb683b": {
+        "authored_data": "2016 Oct 14 03:56",
+        "commit.message": "[EAGLE-618] migration eagle-jpm-aggregation to application framework\n\nAuthor: wujinhu <wujinhu920@126.com>\n\nCloses #504 from wujinhu/EAGLE-618.\n",
+        "commit.author.name": "wujinhu",
+        "pcid": "0bca234ff8d6b747a62853ff1f3028fc9ab1e4f9",
+        "changes": {
+            "eagle-jpm/eagle-jpm-aggregation/src/main/java/org/apache/eagle/jpm/aggregation/AggregationApplication.java": {
+                "old": {
+                    "('org.apache.eagle.jpm.aggregation#AggregationApplication', 'execute(Config,StormEnvironment)')": [
+                        34,
+                        36,
+                        37,
+                        38,
+                        43
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.jpm.aggregation#AggregationApplication', 'execute(Config,StormEnvironment)')": [
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        50,
+                        57
+                    ]
+                }
+            },
+            "eagle-jpm/eagle-jpm-aggregation/src/main/java/org/apache/eagle/jpm/aggregation/AggregationConfig.java": {
+                "old": {
+                    "('org.apache.eagle.jpm.aggregation#AggregationConfig', None)": [
+                        28,
+                        31,
+                        32,
+                        33,
+                        70
+                    ],
+                    "('org.apache.eagle.jpm.aggregation#AggregationConfig', 'getEnv')": [
+                        29,
+                        30
+                    ],
+                    "('org.apache.eagle.jpm.aggregation#AggregationConfig', 'init(Config)')": [
+                        107,
+                        110,
+                        129
+                    ]
+                }
+            }
+        }
+    },
+    "806a29c15ad20fed8457ac39c52ac62f4c26641d": {
+        "authored_data": "2016 Oct 14 00:24",
+        "commit.message": "[MINOR] Simply reorg maven repositories\n\nSimply reorg maven repositories\n\nAuthor: Hao Chen <hao@apache.org>\n\nCloses #497 from haoch/FixRepo.\n",
+        "commit.author.name": "Hao Chen",
+        "pcid": "a3df074379b3952c366e1d9d876d0223ca24ffed",
+        "changes": {
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/test/java/org/apache/eagle/alert/engine/router/TestAlertBolt.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.router#TestAlertBolt', None)": [
+                        438
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        45
+                    ],
+                    "('org.apache.eagle.alert.engine.router#TestAlertBolt', None)": [
+                        439
+                    ]
+                }
+            },
+            "eagle-security/eagle-security-hbase-auditlog/src/main/java/org/apache/eagle/security/hbase/HBaseAuditLogAppProvider.java": {
+                "old": {
+                    "('org.apache.eagle.security.hbase#HBaseAuditLogAppProvider', None)": [
+                        34,
+                        35,
+                        36,
+                        37
+                    ],
+                    "(None, None)": [
+                        38,
+                        39,
+                        40
+                    ]
+                }
+            }
+        }
+    },
+    "a3df074379b3952c366e1d9d876d0223ca24ffed": {
+        "authored_data": "2016 Oct 09 02:37",
+        "commit.message": "EAGLE-594: Remove raw alert from kafka publisher\n\nWe are leveraging configured deduplicator to dedup the duplicated alerts before\npublish to kafka, email, slack, etc. However, sometimes we may still want to\nkeep the raw alerts in kafka. Here we have defined rawAlertNamespaceLabel and\nrawAlertNamespaceValue custom fields to emit the raw alerts into kafka.\nHowever, these configured namespace concept is ebay/sherlock specific, we\nshould remove it from eagle and use it ebay/sherlock extended kafka publisher.\n\nAuthor: Li, Garrett\nReviewer: ralphsu\n\nThis closes #478\n",
+        "commit.author.name": "Xiancheng Li",
+        "pcid": "1d0f9f5b03acefbfb9af97a83ca19ad3d02d638a",
+        "changes": {
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/publisher/PublishConstants.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.publisher#PublishConstants', None)": [
+                        54,
+                        55
+                    ],
+                    "(None, None)": [
+                        56
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/publisher/impl/AlertKafkaPublisher.java": {
+                "old": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.impl#AlertKafkaPublisher', None)": [
+                        48,
+                        49,
+                        66
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.impl#AlertKafkaPublisher', 'init(Config,Publishment,Map)')": [
+                        61,
+                        62
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.impl#AlertKafkaPublisher', 'onAlert(AlertStreamEvent)')": [
+                        73,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.engine.publisher.impl#AlertKafkaPublisher', 'onAlert(AlertStreamEvent)')": [
+                        68
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.impl#AlertKafkaPublisher', None)": [
+                        96,
+                        135,
+                        136,
+                        139,
+                        140
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.impl#AlertKafkaPublisher', 'emit(String,List)')": [
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134
+                    ],
+                    "('org.apache.eagle.alert.engine.publisher.impl#AlertKafkaPublisher', 'getTopic')": [
+                        137,
+                        138
+                    ]
+                }
+            }
+        }
+    },
+    "4dfb528c4bf2d8935bac78b10a82b6bc15f0be59": {
+        "authored_data": "2016 Oct 13 01:41",
+        "commit.message": "[EAGLE-614]: NPE in DynamicPolicyLoader\n\nAuthor: Zeng, Bryant\nReviewer: ralphsu\n\nThis closes #498\n",
+        "commit.author.name": "mizeng",
+        "pcid": "74c3cbb5b1653974870e805b717987eb75e5113d",
+        "changes": {
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-common/src/main/java/org/apache/eagle/alert/engine/coordinator/PolicyDefinition.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.coordinator#PolicyDefinition', 'equals(Object)')": [
+                        150
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.engine.coordinator#PolicyDefinition', 'equals(Object)')": [
+                        142,
+                        146,
+                        148,
+                        153
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-coordinator/src/main/java/org/apache/eagle/alert/coordinator/trigger/DynamicPolicyLoader.java": {
+                "old": {
+                    "('org.apache.eagle.alert.coordinator.trigger#DynamicPolicyLoader', 'run')": [
+                        69
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.coordinator.trigger#DynamicPolicyLoader', 'run')": [
+                        69,
+                        70
+                    ]
+                }
+            }
+        }
+    }
+}

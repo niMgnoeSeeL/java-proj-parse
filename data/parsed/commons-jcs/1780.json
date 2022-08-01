@@ -1,0 +1,419 @@
+{
+    "57526c3fd1d4d23b9ef3b555456ed3c3d3c9dcbf": {
+        "authored_data": "2003 Feb 14 13:25",
+        "commit.message": "Removing all the 'throws IOException' mistakes of the last couple days.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@224040 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "James Taylor",
+        "pcid": "438bd56cc57dd3e8af7bca97bc4891b1bc142e11",
+        "changes": {
+            "src/java/org/apache/jcs/auxiliary/AuxiliaryCache.java": {
+                "old": {
+                    "(None, None)": [
+                        50
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        50
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/RemoteCache.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'getGroupKeys(String)')": [
+                        166
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/RemoteCacheNoWait.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', 'getGroupKeys(String)')": [
+                        96
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/behavior/IRemoteCacheService.java": {
+                "old": {
+                    "(None, None)": [
+                        37,
+                        38
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/server/RemoteCacheServer.java": {
+                "old": {
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'getGroupKeys(String,String)')": [
+                        425
+                    ]
+                }
+            }
+        }
+    },
+    "438bd56cc57dd3e8af7bca97bc4891b1bc142e11": {
+        "authored_data": "2003 Feb 12 18:20",
+        "commit.message": "Since RemoteCahceNoWait.getGroups() throws IOException, the exception\nmust be declared in the interface as well.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@224039 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Quinton McCombs",
+        "pcid": "4a545553e4f22ad8343d5109f50b0602cc87b305",
+        "changes": {
+            "src/java/org/apache/jcs/auxiliary/AuxiliaryCache.java": {
+                "old": {
+                    "(None, None)": [
+                        50
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        50
+                    ]
+                }
+            }
+        }
+    },
+    "4a545553e4f22ad8343d5109f50b0602cc87b305": {
+        "authored_data": "2003 Feb 12 17:45",
+        "commit.message": "* src/java/org/apache/jcs/auxiliary/remote/RemoteCacheNoWait.java\n  getGroupKeys(String): Propogate exception thrown by RemoteCache's\n  version of this method (which this impl delegates to).\n\n  http://cvs.apache.org/builds/gump/2003-02-11/jakarta-turbine-jcs.html\n  http://cvs.apache.org/builds/gump/2003-02-12/jakarta-turbine-jcs.html\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@224038 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Daniel Rall",
+        "pcid": "2037a81f6efb87b20f93728346bf98e21df9bbbc",
+        "changes": {
+            "src/java/org/apache/jcs/auxiliary/remote/RemoteCacheNoWait.java": {
+                "new": {
+                    "('org.apache.jcs.auxiliary.remote#RemoteCacheNoWait', 'getGroupKeys(String)')": [
+                        96
+                    ]
+                }
+            }
+        }
+    },
+    "2037a81f6efb87b20f93728346bf98e21df9bbbc": {
+        "authored_data": "2003 Feb 11 21:16",
+        "commit.message": "* src/java/org/apache/jcs/engine/memory/lru/LRUMemoryCache.java\n  Added import of java.util.NoSuchElementException made necessary in\n  CVS revision 1.18.\n\nSubmitted by: Todd Enersen <tenersen@collab.net>\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@224037 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Daniel Rall",
+        "pcid": "d968b59c22aeeadb4e5a12eb68b83acd2232ba2c",
+        "changes": {
+            "src/java/org/apache/jcs/engine/memory/lru/LRUMemoryCache.java": {
+                "new": {
+                    "(None, None)": [
+                        9
+                    ]
+                }
+            }
+        }
+    },
+    "d968b59c22aeeadb4e5a12eb68b83acd2232ba2c": {
+        "authored_data": "2003 Feb 11 21:11",
+        "commit.message": "* src/java/org/apache/jcs/engine/memory/lru/LRUMemoryCache.java\n  update(): Clarified map.put() operation to be a bit clearer.\n            Removed reference to unused MemoryElementDescriptor object.\n            Added null checks to last and last.ce to avoid NPEs\n            when underlying objects have bugs in their .equals() and\n            .hashCode() implementations.\n            Added debugging messages when items from underlying map\n            cannot be found or removed when a full cache is being purged.\n            Adding more debugging messages after method is complete\n            to verify integrity of the cache.\n\n\n  removeAll(): Added implementation that overrides base class. This fixes\n               issue where underlying map was being reallocated but the\n               linked list still contained data.\n\n  get(): Synchronizing method to prevent possible issues.\n         Adding debug code to verify cache after method completion.\n\n\n  removeNode(): Adding debug code to display cache name in output.\n\n  addLast(): Removing unnecessary return statement.\n             Adding debug code to verify cache after method completion.\n\n  dumpCacheSize(): Adding method to compute number of elements in the\n                   linked list.\n\n  verifyCache(): Adding method to verify the integrity of the cache. This\n                 is done three ways; first by walking the linked list\n                 and verifying that they keys exist in the map, secondly\n                 by walking the list and verifying that the values exist\n                 in the map, and lastly by walking the map and verifying\n                 that the keys exist in the linked list. None of this\n                 verification is done if the Log level is not turned up\n                 to 'DEBUG' level.\n\n  verifyCache(key): Adding method to ensure that an individual key exists\n                    in both the linked list and the map.\n\nSubmitted by: Todd Enersen <tenersen@collab.net>\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@224036 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Daniel Rall",
+        "pcid": "88ca20dfa787810cfed8a32f811be7a42bbdd8bd",
+        "changes": {
+            "src/java/org/apache/jcs/engine/memory/lru/LRUMemoryCache.java": {
+                "old": {
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'update(ICacheElement)')": [
+                        75,
+                        110,
+                        111,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        126
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', None)": [
+                        127,
+                        128,
+                        129,
+                        130
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'get(Serializable)')": [
+                        171,
+                        178
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'remove(Serializable)')": [
+                        213
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'removeNode(MemoryElementDescriptor)')": [
+                        385
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'addLast(CacheElement)')": [
+                        446
+                    ]
+                },
+                "new": {
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'update(ICacheElement)')": [
+                        75,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', None)": [
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        175,
+                        337,
+                        339,
+                        590,
+                        591,
+                        592,
+                        601,
+                        602,
+                        683,
+                        684,
+                        685,
+                        686,
+                        687
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'removeAll')": [
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'get(Serializable)')": [
+                        216,
+                        223,
+                        224,
+                        246
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'remove(Serializable)')": [
+                        260
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'removeNode(MemoryElementDescriptor)')": [
+                        434,
+                        435
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'addLast(CacheElement)')": [
+                        496
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'dumpCacheSize')": [
+                        593,
+                        594,
+                        595,
+                        596,
+                        597,
+                        598,
+                        599,
+                        600
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'verifyCache')": [
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612,
+                        613,
+                        614,
+                        615,
+                        616,
+                        617,
+                        618,
+                        619,
+                        620,
+                        621,
+                        622,
+                        623,
+                        624,
+                        625,
+                        626,
+                        627,
+                        628,
+                        629,
+                        630,
+                        631,
+                        632,
+                        633,
+                        634,
+                        635,
+                        636,
+                        637,
+                        638,
+                        639,
+                        640,
+                        641,
+                        642,
+                        643,
+                        644,
+                        645,
+                        646,
+                        647,
+                        648,
+                        649,
+                        650,
+                        651,
+                        652,
+                        653,
+                        654,
+                        655,
+                        656,
+                        657,
+                        658,
+                        659,
+                        660,
+                        661,
+                        662,
+                        663,
+                        664,
+                        665,
+                        666,
+                        667,
+                        668,
+                        669,
+                        670,
+                        671,
+                        672,
+                        673,
+                        674,
+                        675,
+                        676,
+                        677,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682
+                    ],
+                    "('org.apache.jcs.engine.memory.lru#LRUMemoryCache', 'verifyCache(Serializable)')": [
+                        688,
+                        689,
+                        690,
+                        691,
+                        692,
+                        693,
+                        694,
+                        695,
+                        696,
+                        697,
+                        698,
+                        699,
+                        700,
+                        701,
+                        702,
+                        703,
+                        704,
+                        705,
+                        706,
+                        707
+                    ]
+                }
+            }
+        }
+    },
+    "88ca20dfa787810cfed8a32f811be7a42bbdd8bd": {
+        "authored_data": "2003 Feb 11 11:06",
+        "commit.message": "* src/java/org/apache/jcs/auxiliary/remote/RemoteCache.java\n  getGroupKeys(String): Declare possibility of IOException.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@224035 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Daniel Rall",
+        "pcid": "ff742e5f8cae8e70f4d11b5f21f8a20742e30ae1",
+        "changes": {
+            "src/java/org/apache/jcs/auxiliary/remote/RemoteCache.java": {
+                "new": {
+                    "('org.apache.jcs.auxiliary.remote#RemoteCache', 'getGroupKeys(String)')": [
+                        166
+                    ]
+                }
+            }
+        }
+    },
+    "ff742e5f8cae8e70f4d11b5f21f8a20742e30ae1": {
+        "authored_data": "2003 Feb 10 20:51",
+        "commit.message": "Style fix (my fault, not the patch contributor)\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@224034 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "James Taylor",
+        "pcid": "7fa2ee5ca521a2c976e6c845c684f08317931e9a",
+        "changes": {
+            "src/java/org/apache/jcs/auxiliary/remote/behavior/IRemoteCacheService.java": {
+                "old": {
+                    "(None, None)": [
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37,
+                        38
+                    ]
+                }
+            }
+        }
+    },
+    "7fa2ee5ca521a2c976e6c845c684f08317931e9a": {
+        "authored_data": "2003 Feb 10 20:44",
+        "commit.message": "Some fixes for remote cache from Wayne Young.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/jcs/trunk@224033 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "James Taylor",
+        "pcid": "1539d161dd15447d2e7f2cf14ad81db9b1e1ad50",
+        "changes": {
+            "src/java/org/apache/jcs/auxiliary/remote/behavior/IRemoteCacheService.java": {
+                "old": {
+                    "(None, None)": [
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37
+                    ]
+                }
+            },
+            "src/java/org/apache/jcs/auxiliary/remote/server/RemoteCacheServer.java": {
+                "new": {
+                    "('org.apache.jcs.auxiliary.remote.server#RemoteCacheServer', 'getGroupKeys(String,String)')": [
+                        425
+                    ]
+                }
+            }
+        }
+    }
+}

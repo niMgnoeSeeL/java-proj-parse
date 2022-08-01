@@ -1,0 +1,2175 @@
+{
+    "73a8e5d165e7f61b936322b0717f894dd823d855": {
+        "authored_data": "2011 Jan 20 20:57",
+        "commit.message": "separate discrete event detection from adaptive step size handling in ODE solvers,\nthus improving robustness, maintainability and speed\nJIRA: MATH-484\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1061508 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "168139c1615b9ceb1f5ac84ddb5cbdae702283ec",
+        "changes": {
+            "src/main/java/org/apache/commons/math/ode/AbstractIntegrator.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        27,
+                        271,
+                        272,
+                        273,
+                        274
+                    ],
+                    "('org.apache.commons.math.ode#AbstractIntegrator', None)": [
+                        49,
+                        50,
+                        72,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270
+                    ],
+                    "('org.apache.commons.math.ode#AbstractIntegrator', 'addEventHandler(EventHandler,double,double,int)')": [
+                        104,
+                        108,
+                        109
+                    ],
+                    "('org.apache.commons.math.ode#AbstractIntegrator', 'getEventHandlers')": [
+                        114
+                    ],
+                    "('org.apache.commons.math.ode#AbstractIntegrator', 'clearEventHandlers')": [
+                        119
+                    ],
+                    "('org.apache.commons.math.ode#AbstractIntegrator', 'addEndTimeChecker(double,double,CombinedEventsManager)')": [
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        31,
+                        34,
+                        37
+                    ],
+                    "('org.apache.commons.math.ode#AbstractIntegrator', None)": [
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        87,
+                        88,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        306,
+                        307
+                    ],
+                    "('org.apache.commons.math.ode#AbstractIntegrator', 'addEventHandler(EventHandler,double,double,int)')": [
+                        120,
+                        124
+                    ],
+                    "('org.apache.commons.math.ode#AbstractIntegrator', 'getEventHandlers')": [
+                        129,
+                        130,
+                        131,
+                        132,
+                        133
+                    ],
+                    "('org.apache.commons.math.ode#AbstractIntegrator', 'clearEventHandlers')": [
+                        138
+                    ],
+                    "('org.apache.commons.math.ode#AbstractIntegrator', 'acceptStep(AbstractStepInterpolator,Collection,double,double,double)')": [
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math/ode/ODEIntegrator.java": {
+                "old": {
+                    "(None, None)": [
+                        76,
+                        77,
+                        78,
+                        79
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        76,
+                        77
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math/ode/events/EventState.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        36,
+                        37
+                    ],
+                    "('org.apache.commons.math.ode.events#EventState', None)": [
+                        42,
+                        190,
+                        191
+                    ],
+                    "('org.apache.commons.math.ode.events#EventState', 'evaluateStep(StepInterpolator)')": [
+                        205,
+                        206,
+                        210,
+                        214,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        257,
+                        258,
+                        259,
+                        260,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275
+                    ],
+                    "('org.apache.commons.math.ode.events#EventState', 'stepAccepted(double,double)')": [
+                        326
+                    ],
+                    "('org.apache.commons.math.ode.events#EventState', 'reset(double,double)')": [
+                        357
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        36,
+                        387,
+                        388
+                    ],
+                    "('org.apache.commons.math.ode.events#EventState', None)": [
+                        41,
+                        189,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382
+                    ],
+                    "('org.apache.commons.math.ode.events#EventState', 'evaluateStep(StepInterpolator)')": [
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        217,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        274,
+                        275,
+                        276,
+                        277
+                    ],
+                    "('org.apache.commons.math.ode.events#EventState', 'stepAccepted(double,double)')": [
+                        326
+                    ],
+                    "('org.apache.commons.math.ode.events#EventState', 'reset(double,double)')": [
+                        357
+                    ],
+                    "('org.apache.commons.math.ode.events#EventState', 'compareTo(EventState)')": [
+                        383,
+                        384,
+                        385,
+                        386
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math/ode/nonstiff/AdamsBashforthIntegrator.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#AdamsBashforthIntegrator', 'integrate(FirstOrderDifferentialEquations,double,double,double,double)')": [
+                        205,
+                        210,
+                        211,
+                        217,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        252,
+                        253,
+                        254,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        307,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#AdamsBashforthIntegrator', 'integrate(FirstOrderDifferentialEquations,double,double,double,double)')": [
+                        213,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        246,
+                        251,
+                        255,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        306,
+                        309,
+                        310,
+                        311,
+                        312
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math/ode/nonstiff/AdamsMoultonIntegrator.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#AdamsMoultonIntegrator', 'integrate(FirstOrderDifferentialEquations,double,double,double,double)')": [
+                        227,
+                        228,
+                        234,
+                        235,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        265,
+                        269,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        324,
+                        327,
+                        328,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        365
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#AdamsMoultonIntegrator', 'integrate(FirstOrderDifferentialEquations,double,double,double,double)')": [
+                        222,
+                        223,
+                        233,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        263,
+                        269,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        327
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math/ode/nonstiff/DormandPrince853StepInterpolator.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#DormandPrince853StepInterpolator', 'doFinalize')": [
+                        407,
+                        417,
+                        427
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#DormandPrince853StepInterpolator', 'writeExternal(ObjectOutput)')": [
+                        440
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#DormandPrince853StepInterpolator', 'doFinalize')": [
+                        398,
+                        407,
+                        417,
+                        427
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#DormandPrince853StepInterpolator', 'writeExternal(ObjectOutput)')": [
+                        440,
+                        441,
+                        442
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math/ode/nonstiff/EmbeddedRungeKuttaIntegrator.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#EmbeddedRungeKuttaIntegrator', 'integrate(FirstOrderDifferentialEquations,double,double,double,double)')": [
+                        209,
+                        213,
+                        229,
+                        230,
+                        233,
+                        237,
+                        238,
+                        251,
+                        255,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        319,
+                        325,
+                        326,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#EmbeddedRungeKuttaIntegrator', 'integrate(FirstOrderDifferentialEquations,double,double,double,double)')": [
+                        208,
+                        209,
+                        213,
+                        229,
+                        232,
+                        233,
+                        237,
+                        238,
+                        239,
+                        252,
+                        256,
+                        290,
+                        294,
+                        300,
+                        301,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        331,
+                        332
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math/ode/nonstiff/GraggBulirschStoerIntegrator.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#GraggBulirschStoerIntegrator', None)": [
+                        173,
+                        196
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#GraggBulirschStoerIntegrator', 'addStepHandler(StepHandler)')": [
+                        342
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#GraggBulirschStoerIntegrator', 'addEventHandler(EventHandler,double,double,int)')": [
+                        356
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#GraggBulirschStoerIntegrator', 'integrate(FirstOrderDifferentialEquations,double,double,double,double)')": [
+                        559,
+                        597,
+                        600,
+                        617,
+                        623,
+                        638,
+                        644,
+                        659,
+                        663,
+                        664,
+                        665,
+                        666,
+                        667,
+                        682,
+                        807,
+                        827,
+                        828,
+                        829,
+                        883,
+                        884,
+                        885,
+                        886,
+                        887,
+                        888,
+                        889,
+                        890,
+                        891,
+                        892,
+                        893,
+                        894,
+                        895,
+                        896,
+                        897,
+                        898,
+                        899,
+                        900,
+                        901,
+                        908,
+                        909,
+                        911,
+                        912,
+                        913,
+                        914,
+                        915,
+                        916,
+                        917,
+                        918,
+                        919,
+                        920,
+                        921,
+                        922,
+                        923,
+                        924,
+                        925,
+                        926,
+                        927,
+                        928,
+                        990,
+                        996,
+                        997,
+                        998
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#GraggBulirschStoerIntegrator', None)": [
+                        173,
+                        196
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#GraggBulirschStoerIntegrator', 'addStepHandler(StepHandler)')": [
+                        342
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#GraggBulirschStoerIntegrator', 'addEventHandler(EventHandler,double,double,int)')": [
+                        356
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#GraggBulirschStoerIntegrator', 'integrate(FirstOrderDifferentialEquations,double,double,double,double)')": [
+                        559,
+                        597,
+                        616,
+                        622,
+                        641,
+                        643,
+                        644,
+                        676,
+                        801,
+                        813,
+                        814,
+                        815,
+                        816,
+                        817,
+                        885,
+                        886,
+                        887,
+                        888,
+                        889,
+                        890,
+                        892,
+                        893,
+                        955,
+                        961,
+                        962,
+                        963,
+                        964,
+                        965
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math/ode/nonstiff/GraggBulirschStoerStepInterpolator.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#GraggBulirschStoerStepInterpolator', 'computeInterpolatedStateAndDerivatives(double,double)')": [
+                        313,
+                        314
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#GraggBulirschStoerStepInterpolator', 'computeInterpolatedStateAndDerivatives(double,double)')": [
+                        312
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math/ode/nonstiff/RungeKuttaIntegrator.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#RungeKuttaIntegrator', 'integrate(FirstOrderDifferentialEquations,double,double,double,double)')": [
+                        115,
+                        119,
+                        134,
+                        135,
+                        138,
+                        142,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        160,
+                        162,
+                        163,
+                        166,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        195,
+                        196,
+                        198,
+                        199,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        208,
+                        209,
+                        210,
+                        211,
+                        214,
+                        215,
+                        216,
+                        217
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#RungeKuttaIntegrator', 'integrate(FirstOrderDifferentialEquations,double,double,double,double)')": [
+                        114,
+                        115,
+                        119,
+                        134,
+                        137,
+                        138,
+                        142,
+                        143,
+                        145,
+                        146,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        158,
+                        160,
+                        161,
+                        164,
+                        169,
+                        170,
+                        172,
+                        173,
+                        175,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        188
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math/ode/sampling/AbstractStepInterpolator.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', None)": [
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        90,
+                        91,
+                        109,
+                        110,
+                        111,
+                        112,
+                        143,
+                        144,
+                        145,
+                        146,
+                        228,
+                        231,
+                        232,
+                        233
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'reinitialize(double,boolean)')": [
+                        171,
+                        172,
+                        173,
+                        174
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'shift')": [
+                        211
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'storeTime(double)')": [
+                        219,
+                        220
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'getPreviousTime')": [
+                        230
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'getCurrentTime')": [
+                        235
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'getInterpolatedState')": [
+                        273
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'getInterpolatedDerivatives')": [
+                        288
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'writeBaseExternal(ObjectOutput)')": [
+                        379,
+                        380,
+                        399
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'readBaseExternal(ObjectInput)')": [
+                        417,
+                        418,
+                        419,
+                        420,
+                        421
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', None)": [
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        95,
+                        96,
+                        97,
+                        98,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        262,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'reinitialize(double,boolean)')": [
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'shift')": [
+                        224,
+                        225,
+                        226
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'storeTime(double)')": [
+                        234,
+                        235,
+                        236
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'setSoftBounds(double,double)')": [
+                        254,
+                        255,
+                        256
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'getGlobalPreviousTime')": [
+                        263,
+                        264
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'getGlobalCurrentTime')": [
+                        271,
+                        272
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'getPreviousTime')": [
+                        281
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'getCurrentTime')": [
+                        290
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'getInterpolatedState')": [
+                        328
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'getInterpolatedDerivatives')": [
+                        343
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'writeBaseExternal(ObjectOutput)')": [
+                        434,
+                        435,
+                        436,
+                        437,
+                        456,
+                        457,
+                        458
+                    ],
+                    "('org.apache.commons.math.ode.sampling#AbstractStepInterpolator', 'readBaseExternal(ObjectInput)')": [
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/TestProblem4.java": {
+                "new": {
+                    "('org.apache.commons.math.ode#TestProblem4', None)": [
+                        83,
+                        84,
+                        85,
+                        86,
+                        94,
+                        95,
+                        96
+                    ],
+                    "('org.apache.commons.math.ode#TestProblem4', 'getTheoreticalEventsTimes')": [
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/TestProblemAbstract.java": {
+                "new": {
+                    "('org.apache.commons.math.ode#TestProblemAbstract', None)": [
+                        162,
+                        163,
+                        164,
+                        167,
+                        168,
+                        169
+                    ],
+                    "('org.apache.commons.math.ode#TestProblemAbstract', 'getTheoreticalEventsTimes')": [
+                        165,
+                        166
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/TestProblemHandler.java": {
+                "old": {
+                    "('org.apache.commons.math.ode#TestProblemHandler', 'handleStep(StepInterpolator,boolean)')": [
+                        83
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode#TestProblemHandler', 'handleStep(StepInterpolator,boolean)')": [
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/AdamsBashforthIntegratorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#AdamsBashforthIntegratorTest', 'polynomial')": [
+                        149,
+                        151
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#AdamsBashforthIntegratorTest', 'polynomial')": [
+                        149,
+                        151
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/ClassicalRungeKuttaIntegratorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#ClassicalRungeKuttaIntegratorTest', 'testDecreasingSteps')": [
+                        137,
+                        160,
+                        162,
+                        163
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#ClassicalRungeKuttaIntegratorTest', 'testDecreasingSteps')": [
+                        137,
+                        138,
+                        161,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/ClassicalRungeKuttaStepInterpolatorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#ClassicalRungeKuttaStepInterpolatorTest', 'serialization')": [
+                        67,
+                        68
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#ClassicalRungeKuttaStepInterpolatorTest', 'serialization')": [
+                        67,
+                        68
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/DormandPrince54IntegratorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#DormandPrince54IntegratorTest', 'testEvents')": [
+                        222,
+                        230,
+                        231
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#DormandPrince54IntegratorTest', 'testEvents')": [
+                        220,
+                        223,
+                        231,
+                        232
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/DormandPrince54StepInterpolatorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#DormandPrince54StepInterpolatorTest', 'serialization')": [
+                        80,
+                        81
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#DormandPrince54StepInterpolatorTest', 'serialization')": [
+                        80,
+                        81
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/DormandPrince853IntegratorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#DormandPrince853IntegratorTest', 'testBackward')": [
+                        208
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#DormandPrince853IntegratorTest', 'testEvents')": [
+                        231,
+                        239,
+                        240
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#DormandPrince853IntegratorTest', 'testBackward')": [
+                        208
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#DormandPrince853IntegratorTest', 'testEvents')": [
+                        229,
+                        232,
+                        240,
+                        241
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/DormandPrince853StepInterpolatorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#DormandPrince853StepInterpolatorTest', 'serialization')": [
+                        80,
+                        81
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#DormandPrince853StepInterpolatorTest', 'serialization')": [
+                        80,
+                        81
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/EulerIntegratorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#EulerIntegratorTest', 'testDecreasingSteps')": [
+                        63,
+                        64,
+                        67,
+                        68,
+                        84,
+                        86,
+                        88,
+                        89
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#EulerIntegratorTest', 'testDecreasingSteps')": [
+                        63,
+                        64,
+                        65,
+                        68,
+                        84,
+                        86,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/GillIntegratorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#GillIntegratorTest', 'testDecreasingSteps')": [
+                        64,
+                        68,
+                        69,
+                        85,
+                        87,
+                        88,
+                        89,
+                        90
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#GillIntegratorTest', 'testDecreasingSteps')": [
+                        64,
+                        65,
+                        69,
+                        85,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/GillStepInterpolatorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#GillStepInterpolatorTest', 'serialization')": [
+                        68,
+                        69
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#GillStepInterpolatorTest', 'serialization')": [
+                        68,
+                        69
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/GraggBulirschStoerIntegratorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#GraggBulirschStoerIntegratorTest', 'testBackward')": [
+                        116,
+                        117
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#GraggBulirschStoerIntegratorTest', 'testEvents')": [
+                        214,
+                        215,
+                        223,
+                        224
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#GraggBulirschStoerIntegratorTest', 'testBackward')": [
+                        116,
+                        117
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#GraggBulirschStoerIntegratorTest', 'testEvents')": [
+                        213,
+                        215,
+                        223,
+                        224
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/GraggBulirschStoerStepInterpolatorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#GraggBulirschStoerStepInterpolatorTest', 'serialization')": [
+                        82,
+                        83
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#GraggBulirschStoerStepInterpolatorTest', 'serialization')": [
+                        82,
+                        83
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/HighamHall54IntegratorTest.java": {
+                "old": {
+                    "(None, None)": [
+                        35,
+                        36,
+                        386,
+                        387
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#HighamHall54IntegratorTest', 'testEvents')": [
+                        181,
+                        189,
+                        190
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#HighamHall54IntegratorTest', 'testKepler')": [
+                        346
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#HighamHall54IntegratorTest', None)": [
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366,
+                        367,
+                        368,
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375,
+                        376,
+                        377,
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#HighamHall54IntegratorTest', 'testEvents')": [
+                        177,
+                        180,
+                        188,
+                        189
+                    ],
+                    "('org.apache.commons.math.ode.nonstiff#HighamHall54IntegratorTest', 'testKepler')": [
+                        345,
+                        346,
+                        350
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/HighamHall54StepInterpolatorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#HighamHall54StepInterpolatorTest', 'serialization')": [
+                        80,
+                        81
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#HighamHall54StepInterpolatorTest', 'serialization')": [
+                        80,
+                        81
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/MidpointIntegratorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#MidpointIntegratorTest', 'testDecreasingSteps')": [
+                        63,
+                        67,
+                        68,
+                        84,
+                        86,
+                        88,
+                        89
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#MidpointIntegratorTest', 'testDecreasingSteps')": [
+                        63,
+                        64,
+                        68,
+                        84,
+                        86,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/MidpointStepInterpolatorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#MidpointStepInterpolatorTest', 'serialization')": [
+                        68,
+                        69
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#MidpointStepInterpolatorTest', 'serialization')": [
+                        68,
+                        69
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/ThreeEighthesIntegratorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#ThreeEighthesIntegratorTest', 'testDecreasingSteps')": [
+                        64,
+                        68,
+                        69,
+                        87,
+                        88,
+                        89,
+                        90
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#ThreeEighthesIntegratorTest', 'testDecreasingSteps')": [
+                        64,
+                        65,
+                        69,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/nonstiff/ThreeEighthesStepInterpolatorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.nonstiff#ThreeEighthesStepInterpolatorTest', 'serialization')": [
+                        67,
+                        68
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.nonstiff#ThreeEighthesStepInterpolatorTest', 'serialization')": [
+                        67,
+                        68
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/sampling/DummyStepInterpolatorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.sampling#DummyStepInterpolatorTest', 'testSerialization')": [
+                        94,
+                        95
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.sampling#DummyStepInterpolatorTest', 'testSerialization')": [
+                        94,
+                        95
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/math/ode/sampling/NordsieckStepInterpolatorTest.java": {
+                "old": {
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolatorTest', 'derivativesConsistency')": [
+                        44
+                    ],
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolatorTest', 'serialization')": [
+                        65,
+                        66
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolatorTest', 'derivativesConsistency')": [
+                        44
+                    ],
+                    "('org.apache.commons.math.ode.sampling#NordsieckStepInterpolatorTest', 'serialization')": [
+                        65,
+                        66
+                    ]
+                }
+            }
+        }
+    },
+    "168139c1615b9ceb1f5ac84ddb5cbdae702283ec": {
+        "authored_data": "2011 Jan 20 20:32",
+        "commit.message": "added MathInternalError\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1061498 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Luc Maisonobe",
+        "pcid": "05d16ea5e03ca7f0908aba0c087e66b5a5eee21b",
+        "changes": {
+            "src/main/java/org/apache/commons/math/exception/MathIllegalStateException.java": {
+                "old": {
+                    "('org.apache.commons.math.exception#MathIllegalStateException', None)": [
+                        42,
+                        50
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.exception#MathIllegalStateException', None)": [
+                        34,
+                        43,
+                        45,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        68,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math/random/RandomDataImpl.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        28,
+                        29,
+                        30,
+                        31,
+                        46
+                    ],
+                    "('org.apache.commons.math.random#RandomDataImpl', 'nextSecureHexString(int)')": [
+                        261
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45
+                    ],
+                    "('org.apache.commons.math.random#RandomDataImpl', 'nextSecureHexString(int)')": [
+                        261
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/math/stat/ranking/NaturalRanking.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.commons.math.stat.ranking#NaturalRanking', 'rank(double)')": [
+                        214
+                    ],
+                    "('org.apache.commons.math.stat.ranking#NaturalRanking', 'resolveTie(double,List)')": [
+                        362
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.commons.math.stat.ranking#NaturalRanking', 'rank(double)')": [
+                        214
+                    ],
+                    "('org.apache.commons.math.stat.ranking#NaturalRanking', 'resolveTie(double,List)')": [
+                        362
+                    ]
+                }
+            }
+        }
+    },
+    "05d16ea5e03ca7f0908aba0c087e66b5a5eee21b": {
+        "authored_data": "2011 Jan 20 14:45",
+        "commit.message": "Rearrange DOUBLE_SPECIAL_VALUES in decreasing absolute value to help catch first failure\nAdd MathUtils.EPSILON and SAFE_MIN as other likely break points\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1061322 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "a0c8e5c701f18782bc8b8f4604ea01a8e8d8cd4d",
+        "changes": {
+            "src/test/java/org/apache/commons/math/util/FastMathTest.java": {
+                "old": {
+                    "('org.apache.commons.math.util#FastMathTest', None)": [
+                        42,
+                        43
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.util#FastMathTest', None)": [
+                        42,
+                        43,
+                        44,
+                        45,
+                        46
+                    ]
+                }
+            }
+        }
+    },
+    "a0c8e5c701f18782bc8b8f4604ea01a8e8d8cd4d": {
+        "authored_data": "2011 Jan 20 01:28",
+        "commit.message": "Javadoc clarification for signum\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1061096 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "0a9d609f98ff156ab7ba417abeddbe6c870de626",
+        "changes": {
+            "src/main/java/org/apache/commons/math/util/FastMath.java": {
+                "old": {
+                    "('org.apache.commons.math.util#FastMath', None)": [
+                        579,
+                        588
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'signum(double)')": [
+                        582
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'signum(float)')": [
+                        591
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.util#FastMath', None)": [
+                        579,
+                        588
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'signum(double)')": [
+                        582
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'signum(float)')": [
+                        591
+                    ]
+                }
+            }
+        }
+    },
+    "c1d889840c0ca3caf107c0c23c97848be4ee783f": {
+        "authored_data": "2011 Jan 19 20:26",
+        "commit.message": "MATH-486 FastMath toRadian and toDegree don't handle large double numbers well\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1060967 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "0900d78b9a6df09bfb354c4002e51450b4788238",
+        "changes": {
+            "src/main/java/org/apache/commons/math/util/FastMath.java": {
+                "old": {
+                    "('org.apache.commons.math.util#FastMath', 'toRadians(double)')": [
+                        3242
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'toDegrees(double)')": [
+                        3267
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.util#FastMath', 'toRadians(double)')": [
+                        3242,
+                        3243,
+                        3244,
+                        3245
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'toDegrees(double)')": [
+                        3270,
+                        3271,
+                        3272,
+                        3273
+                    ]
+                }
+            }
+        }
+    },
+    "0900d78b9a6df09bfb354c4002e51450b4788238": {
+        "authored_data": "2011 Jan 19 20:12",
+        "commit.message": "Ensure correct sign when toRadians() returns zero\n[Not needed for toDegrees() as the calculation does not underflow]\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1060959 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "bd77d3cff258538d4847b1a29cf09bbdc1b1d861",
+        "changes": {
+            "src/main/java/org/apache/commons/math/util/FastMath.java": {
+                "old": {
+                    "('org.apache.commons.math.util#FastMath', 'toRadians(double)')": [
+                        3246
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.util#FastMath', 'toRadians(double)')": [
+                        3246,
+                        3247,
+                        3248,
+                        3249,
+                        3250
+                    ]
+                }
+            }
+        }
+    },
+    "bd77d3cff258538d4847b1a29cf09bbdc1b1d861": {
+        "authored_data": "2011 Jan 19 19:49",
+        "commit.message": "MATH-483 FastMath does not handle all special cases correctly\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1060936 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "d6c0ad9a2c47408922f53d09d64af735f5f318f0",
+        "changes": {
+            "src/main/java/org/apache/commons/math/util/FastMath.java": {
+                "old": {
+                    "('org.apache.commons.math.util#FastMath', 'log1p(double)')": [
+                        1411
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'log10(double)')": [
+                        1438
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'pow(double,double)')": [
+                        1587
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'abs(float)')": [
+                        3265
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'abs(double)')": [
+                        3274
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.util#FastMath', 'log(double,double)')": [
+                        1174,
+                        1175,
+                        1176
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'log1p(double)')": [
+                        1414,
+                        1415,
+                        1416,
+                        1417
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'log10(double)')": [
+                        1444,
+                        1445,
+                        1446,
+                        1447
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'pow(double,double)')": [
+                        1596,
+                        1597,
+                        1598,
+                        1599,
+                        1600
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'atan(double,double,boolean)')": [
+                        2729,
+                        2730,
+                        2731,
+                        2732
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'asin(double)')": [
+                        3012,
+                        3013,
+                        3014,
+                        3015
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'toRadians(double)')": [
+                        3235,
+                        3236,
+                        3237,
+                        3238
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'toDegrees(double)')": [
+                        3256,
+                        3257,
+                        3258,
+                        3259
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'abs(float)')": [
+                        3294
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'abs(double)')": [
+                        3303
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'rint(double)')": [
+                        3447,
+                        3448,
+                        3449
+                    ]
+                }
+            }
+        }
+    },
+    "d6c0ad9a2c47408922f53d09d64af735f5f318f0": {
+        "authored_data": "2011 Jan 19 19:26",
+        "commit.message": "MATH-478 FastMath is not an exact replacement for StrictMath\nAdd signum(float)\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1060918 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "0089ff79b81e25af35613832543475e16db10050",
+        "changes": {
+            "src/main/java/org/apache/commons/math/util/FastMath.java": {
+                "old": {
+                    "('org.apache.commons.math.util#FastMath', 'signum(double)')": [
+                        582
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.util#FastMath', 'signum(double)')": [
+                        582
+                    ],
+                    "('org.apache.commons.math.util#FastMath', None)": [
+                        583,
+                        584,
+                        585,
+                        586,
+                        587,
+                        588,
+                        589
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'signum(float)')": [
+                        590,
+                        591
+                    ]
+                }
+            }
+        }
+    },
+    "0089ff79b81e25af35613832543475e16db10050": {
+        "authored_data": "2011 Jan 19 19:17",
+        "commit.message": "MATH-480 - Fix ulp(Infinity) to return Infinity rather than NaN\nMATH-478 - Adds ulp(float)\n\ngit-svn-id: https://svn.apache.org/repos/asf/commons/proper/math/trunk@1060910 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Sebastian Bazley",
+        "pcid": "a507a4eca62847efbb9c13c3b73e7bc58791858a",
+        "changes": {
+            "src/main/java/org/apache/commons/math/util/FastMath.java": {
+                "old": {
+                    "('org.apache.commons.math.util#FastMath', None)": [
+                        3273
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.math.util#FastMath', 'ulp(double)')": [
+                        3274,
+                        3275,
+                        3276
+                    ],
+                    "('org.apache.commons.math.util#FastMath', None)": [
+                        3278,
+                        3279,
+                        3280,
+                        3281,
+                        3282,
+                        3283,
+                        3284
+                    ],
+                    "('org.apache.commons.math.util#FastMath', 'ulp(float)')": [
+                        3285,
+                        3286,
+                        3287,
+                        3288,
+                        3289
+                    ]
+                }
+            }
+        }
+    }
+}

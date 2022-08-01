@@ -1,0 +1,447 @@
+{
+    "bfb314505469afcd5ea7b5bd15121acd50425318": {
+        "authored_data": "2015 Apr 06 21:39",
+        "commit.message": "PARQUET-220: Remove unnecessary warnings initializing ParquetRecordReader\n\nRefactored to replace TaskInputOutputContext with TaskAttemptContext.\n\nParquetRecordReader used to check that the passed context is instance of\nTaskInputOutputContext however the functionality it uses doesn't rely on this\nfact.\n\nThis closes #152 when committed. It fixes the review feedback on that issue to include it in 1.6.0.\n\nAuthor: Konstantin Shaposhnikov <Konstantin.Shaposhnikov@sc.com>\n\nCloses #162 from rdblue/PARQUET-152-remove-counter-warning and squashes the following commits:\n\n0a7780f [Konstantin Shaposhnikov] PARQUET-220: do not log unnecessary warnings on initializing ParquetRecordReader\n",
+        "commit.author.name": "Konstantin Shaposhnikov",
+        "pcid": "27ba68133faf92d92b395829a6b6dff97e53e2c6",
+        "changes": {
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetRecordReader.java": {
+                "old": {
+                    "(None, None)": [
+                        41,
+                        44
+                    ],
+                    "('parquet.hadoop#ParquetRecordReader', None)": [
+                        66
+                    ],
+                    "('parquet.hadoop#ParquetRecordReader', 'initialize(InputSplit,TaskAttemptContext)')": [
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138
+                    ]
+                },
+                "new": {
+                    "('parquet.hadoop#ParquetRecordReader', 'initialize(InputSplit,TaskAttemptContext)')": [
+                        130
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/util/ContextUtil.java": {
+                "old": {
+                    "(None, None)": [
+                        38
+                    ],
+                    "('parquet.hadoop.util#ContextUtil', 'getCounter(TaskInputOutputContext,String,String)')": [
+                        254
+                    ]
+                },
+                "new": {
+                    "('parquet.hadoop.util#ContextUtil', 'getCounter(TaskAttemptContext,String,String)')": [
+                        253
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/util/counters/BenchmarkCounter.java": {
+                "old": {
+                    "('parquet.hadoop.util.counters#BenchmarkCounter', 'initCounterFromContext(TaskInputOutputContext)')": [
+                        51
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('parquet.hadoop.util.counters#BenchmarkCounter', None)": [
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        57,
+                        58,
+                        59
+                    ],
+                    "('parquet.hadoop.util.counters#BenchmarkCounter', 'initCounterFromContext(TaskInputOutputContext)')": [
+                        55,
+                        56
+                    ],
+                    "('parquet.hadoop.util.counters#BenchmarkCounter', 'initCounterFromContext(TaskAttemptContext)')": [
+                        64
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/util/counters/mapreduce/MapReduceCounterLoader.java": {
+                "old": {
+                    "('parquet.hadoop.util.counters.mapreduce#MapReduceCounterLoader', None)": [
+                        33
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('parquet.hadoop.util.counters.mapreduce#MapReduceCounterLoader', None)": [
+                        34,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        45,
+                        46,
+                        47,
+                        48
+                    ]
+                }
+            }
+        }
+    },
+    "4ed0bdf1c73fd82d3080d15085675de96d5be0aa": {
+        "authored_data": "2015 Mar 31 23:49",
+        "commit.message": "PARQUET-214: Fix Avro string regression.\n\nAt some point, parquet-avro converted string fields to binary without\nthe UTF8 annotation. The change in PARQUET-139 to filter the file's\nschema using the requested projection causes a regression because the\nannotation is not present in some file schemas, but is present in the\nprojection schema converted from Avro.\n\nThis reverts the projection change to avoid a regression in a release.\nFixing the projection as in PARQUET-139 will need to be done as a\nfollow-up.\n\nAuthor: Ryan Blue <blue@apache.org>\n\nCloses #142 from rdblue/PARQUET-214-fix-avro-regression and squashes the following commits:\n\n71e0207 [Ryan Blue] PARQUET-214: Add support for old avro.schema property.\n95148f9 [Ryan Blue] PARQUET-214: Revert Schema projection change from PARQUET-139.\n",
+        "commit.author.name": "Ryan Blue",
+        "pcid": "0ab0013522df1dc03a68bce6e7539bbfd0ea67d9",
+        "changes": {
+            "parquet-avro/src/main/java/parquet/avro/AvroReadSupport.java": {
+                "old": {
+                    "('parquet.avro#AvroReadSupport', 'init(Configuration,Map,MessageType)')": [
+                        82,
+                        83,
+                        84
+                    ]
+                },
+                "new": {
+                    "('parquet.avro#AvroReadSupport', None)": [
+                        42,
+                        43
+                    ],
+                    "('parquet.avro#AvroReadSupport', 'init(Configuration,Map,MessageType)')": [
+                        84
+                    ],
+                    "('parquet.avro#AvroReadSupport', 'prepareForRead(Configuration,Map,MessageType,ReadContext)')": [
+                        100,
+                        101,
+                        102
+                    ]
+                }
+            }
+        }
+    },
+    "0ab0013522df1dc03a68bce6e7539bbfd0ea67d9": {
+        "authored_data": "2015 Mar 31 23:34",
+        "commit.message": "PARQUET-210: add JSON support for parquet-cat\n\nJSON output with this patch:\n```\n{\"int_field\":99,\"long_field\":1099,\"float_field\":2099.5,\"double_field\":5099.5,\"boolean_field\":true,\"string_field\":\"str99\",\"nested\":{\"numbers\":[100,101,102,103,104],\"name\":\"name99\",\"dict\":{\"a\":100,\"b\":200,\"c\":300}}}\n```\n\nCurrent output format:\n```\nint_field = 99\nlong_field = 1099\nfloat_field = 2099.5\ndouble_field = 5099.5\nboolean_field = true\nstring_field = str99\nnested:\n.numbers:\n..array = 100\n..array = 101\n..array = 102\n..array = 103\n..array = 104\n.name = name99\n.dict:\n..map:\n...key = a\n...value = 100\n..map:\n...key = b\n...value = 200\n..map:\n...key = c\n...value = 300\n```\n\nAuthor: Neville Li <neville@spotify.com>\n\nCloses #140 from nevillelyh/neville/PARQUET-210 and squashes the following commits:\n\n45fd629 [Neville Li] PARQUET-210: add JSON support for parquet-cat\n",
+        "commit.author.name": "Neville Li",
+        "pcid": "9a92f39783c01ba36d32d6e9cb2631ac589b9ac8",
+        "changes": {
+            "parquet-tools/src/main/java/parquet/tools/command/CatCommand.java": {
+                "old": {
+                    "('parquet.tools.command#CatCommand', 'execute(CommandLine)')": [
+                        58
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        26
+                    ],
+                    "('parquet.tools.command#CatCommand', None)": [
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        56,
+                        57,
+                        58
+                    ],
+                    "('parquet.tools.command#CatCommand', 'getOptions')": [
+                        59,
+                        60
+                    ],
+                    "('parquet.tools.command#CatCommand', 'execute(CommandLine)')": [
+                        75,
+                        76,
+                        77,
+                        78,
+                        79
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/read/SimpleRecord.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        25
+                    ],
+                    "('parquet.tools.read#SimpleRecord', None)": [
+                        31
+                    ],
+                    "('parquet.tools.read#SimpleRecord', 'prettyPrint(PrintWriter,int)')": [
+                        68
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        23,
+                        26,
+                        27,
+                        28
+                    ],
+                    "('parquet.tools.read#SimpleRecord', None)": [
+                        32,
+                        107,
+                        108,
+                        115,
+                        116,
+                        124,
+                        125,
+                        126
+                    ],
+                    "('parquet.tools.read#SimpleRecord', 'prettyPrint(PrintWriter,int)')": [
+                        69
+                    ],
+                    "('parquet.tools.read#SimpleRecord', 'prettyPrintJson(PrintWriter)')": [
+                        104,
+                        105,
+                        106
+                    ],
+                    "('parquet.tools.read#SimpleRecord', 'toJsonObject')": [
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114
+                    ],
+                    "('parquet.tools.read#SimpleRecord', 'toJsonValue(Object)')": [
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/read/SimpleRecordConverter.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        26
+                    ],
+                    "('parquet.tools.read#SimpleRecordConverter', None)": [
+                        47,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127
+                    ],
+                    "('parquet.tools.read#SimpleRecordConverter', 'createConverter(Type)')": [
+                        66,
+                        80
+                    ]
+                },
+                "new": {
+                    "('parquet.tools.read#SimpleRecordConverter', None)": [
+                        45
+                    ],
+                    "('parquet.tools.read#SimpleRecordConverter', 'createConverter(Type)')": [
+                        63,
+                        64,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86
+                    ]
+                }
+            }
+        }
+    },
+    "fd3085ed31d920e8ca6bba391e75d1423ed8b607": {
+        "authored_data": "2015 Mar 24 23:06",
+        "commit.message": "PARQUET-204: add parquet-schema directory support\n\nAuthor: Neville Li <neville@spotify.com>\n\nCloses #136 from nevillelyh/neville/PARQUET-204 and squashes the following commits:\n\n633829b [Neville Li] PARQUET-204: add parquet-schema directory support\n7aa8581 [Neville Li] PARQUET-203: consolidate PathFilter for hidden files\n",
+        "commit.author.name": "Neville Li",
+        "pcid": "cb7f6a8cb956b2503f04a5308f6a461672df1301",
+        "changes": {
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetFileReader.java": {
+                "old": {
+                    "(None, None)": [
+                        55
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'listFiles(Configuration,FileStatus)')": [
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        77
+                    ],
+                    "('parquet.hadoop#ParquetFileReader', 'listFiles(Configuration,FileStatus)')": [
+                        302
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetInputFormat.java": {
+                "old": {
+                    "('parquet.hadoop#ParquetInputFormat', 'getAllFileRecursively(List,Configuration)')": [
+                        349
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', None)": [
+                        369,
+                        370,
+                        371,
+                        372,
+                        373,
+                        374,
+                        375
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        68
+                    ],
+                    "('parquet.hadoop#ParquetInputFormat', 'getAllFileRecursively(List,Configuration)')": [
+                        350
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/ParquetReader.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('parquet.hadoop#ParquetReader', None)": [
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        40
+                    ],
+                    "('parquet.hadoop#ParquetReader', None)": [
+                        113
+                    ]
+                }
+            },
+            "parquet-hadoop/src/main/java/parquet/hadoop/PrintFooter.java": {
+                "old": {
+                    "(None, None)": [
+                        45
+                    ],
+                    "('parquet.hadoop#PrintFooter', 'main(String)')": [
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        52
+                    ],
+                    "('parquet.hadoop#PrintFooter', 'main(String)')": [
+                        85
+                    ]
+                }
+            },
+            "parquet-hadoop/src/test/java/parquet/hadoop/TestParquetFileWriter.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('parquet.hadoop#TestParquetFileWriter', 'testMetaDataFile')": [
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        39
+                    ],
+                    "('parquet.hadoop#TestParquetFileWriter', 'testMetaDataFile')": [
+                        328
+                    ]
+                }
+            },
+            "parquet-tools/src/main/java/parquet/tools/command/ShowSchemaCommand.java": {
+                "old": {
+                    "('parquet.tools.command#ShowSchemaCommand', 'execute(CommandLine)')": [
+                        74
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        29,
+                        34
+                    ],
+                    "('parquet.tools.command#ShowSchemaCommand', 'execute(CommandLine)')": [
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,861 @@
+{
+    "3cec08069e58d71861df732a921537278385bc02": {
+        "authored_data": "2008 Apr 01 03:51",
+        "commit.message": "Re-factored the authentication subsystem to remove the need for JAAS configuration files. WEB-INF/jspwiki.jaas goes away, as does the need for PolicyLoader. Also, responsibilities for web authentication move to WikiServletFilter. Authentication is now configured via jspwiki.properties -- see that file for details. WikiSession API change: getLoginContext() vanishes.\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@643265 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Andrew R. Jaquith",
+        "pcid": "6387afa9b10d8c478ae49e277795794e39262cb9",
+        "changes": {
+            "tests/com/ecyrd/jspwiki/auth/login/AnonymousLoginModuleTest.java": {
+                "old": {
+                    "(None, None)": [
+                        8
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#AnonymousLoginModuleTest', 'testLogin')": [
+                        45,
+                        46,
+                        48,
+                        50,
+                        51
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#AnonymousLoginModuleTest', 'testLogout')": [
+                        67,
+                        68,
+                        70,
+                        72,
+                        73,
+                        74
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        23,
+                        30
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#AnonymousLoginModuleTest', 'testLogin')": [
+                        66,
+                        67,
+                        68,
+                        69,
+                        71,
+                        73,
+                        74
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#AnonymousLoginModuleTest', 'testLogout')": [
+                        90,
+                        91,
+                        92,
+                        93,
+                        95,
+                        97,
+                        98,
+                        99
+                    ]
+                }
+            },
+            "tests/com/ecyrd/jspwiki/auth/login/CookieAssertionLoginModuleTest.java": {
+                "old": {
+                    "(None, None)": [
+                        8,
+                        19
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#CookieAssertionLoginModuleTest', 'testLogin')": [
+                        46,
+                        50,
+                        51,
+                        54,
+                        55,
+                        57,
+                        59,
+                        60
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#CookieAssertionLoginModuleTest', 'testLogout')": [
+                        76,
+                        77,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        23,
+                        30
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#CookieAssertionLoginModuleTest', 'testLogin')": [
+                        66,
+                        70,
+                        73,
+                        74,
+                        75,
+                        76,
+                        78,
+                        80,
+                        81
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#CookieAssertionLoginModuleTest', 'testLogout')": [
+                        94,
+                        95,
+                        99,
+                        100,
+                        101,
+                        102,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108
+                    ]
+                }
+            },
+            "tests/com/ecyrd/jspwiki/auth/login/UserDatabaseLoginModuleTest.java": {
+                "old": {
+                    "(None, None)": [
+                        8
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#UserDatabaseLoginModuleTest', 'testLogin')": [
+                        36,
+                        37,
+                        39,
+                        40,
+                        41,
+                        42,
+                        44,
+                        47,
+                        48,
+                        50,
+                        51,
+                        52,
+                        53
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#UserDatabaseLoginModuleTest', 'testLogout')": [
+                        67,
+                        68,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        23,
+                        30
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#UserDatabaseLoginModuleTest', 'testLogin')": [
+                        57,
+                        58,
+                        59,
+                        60,
+                        62,
+                        63,
+                        64,
+                        65,
+                        67,
+                        70,
+                        71,
+                        72,
+                        73,
+                        75,
+                        76,
+                        77,
+                        78
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#UserDatabaseLoginModuleTest', 'testLogout')": [
+                        92,
+                        93,
+                        94,
+                        95,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101
+                    ]
+                }
+            },
+            "tests/com/ecyrd/jspwiki/auth/login/WebContainerLoginModuleTest.java": {
+                "old": {
+                    "(None, None)": [
+                        9
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#WebContainerLoginModuleTest', 'testLogin')": [
+                        41,
+                        48,
+                        49,
+                        51,
+                        52,
+                        55,
+                        56,
+                        63,
+                        64,
+                        66,
+                        67,
+                        70,
+                        71,
+                        78,
+                        79,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#WebContainerLoginModuleTest', 'testLoginWithRoles')": [
+                        99,
+                        106,
+                        107,
+                        109,
+                        110,
+                        113,
+                        114
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#WebContainerLoginModuleTest', 'testLogout')": [
+                        122,
+                        128,
+                        129,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        24,
+                        31
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#WebContainerLoginModuleTest', 'testLogin')": [
+                        68,
+                        69,
+                        70,
+                        71,
+                        73,
+                        74,
+                        77,
+                        78,
+                        85,
+                        86,
+                        87,
+                        88,
+                        90,
+                        91,
+                        94,
+                        95,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        114
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#WebContainerLoginModuleTest', 'testLoginWithRoles')": [
+                        133,
+                        134,
+                        135,
+                        136,
+                        138,
+                        139,
+                        142,
+                        143
+                    ],
+                    "('com.ecyrd.jspwiki.auth.login#WebContainerLoginModuleTest', 'testLogout')": [
+                        156,
+                        157,
+                        158,
+                        159,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165
+                    ]
+                }
+            }
+        }
+    },
+    "6387afa9b10d8c478ae49e277795794e39262cb9": {
+        "authored_data": "2008 Apr 01 03:49",
+        "commit.message": "Re-factored the authentication subsystem to remove the need for JAAS configuration files. WEB-INF/jspwiki.jaas goes away, as does the need for PolicyLoader. Also, responsibilities for web authentication move to WikiServletFilter. Authentication is now configured via jspwiki.properties -- see that file for details. WikiSession API change: getLoginContext() vanishes.\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@643264 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Andrew R. Jaquith",
+        "pcid": "ed0ab7a000656f7b0b0faa87ea48181fc0cfe81d",
+        "changes": {
+            "tests/com/ecyrd/jspwiki/auth/authorize/XMLGroupDatabaseTest.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20
+                    ]
+                }
+            }
+        }
+    },
+    "ed0ab7a000656f7b0b0faa87ea48181fc0cfe81d": {
+        "authored_data": "2008 Apr 01 03:48",
+        "commit.message": "Re-factored the authentication subsystem to remove the need for JAAS configuration files. WEB-INF/jspwiki.jaas goes away, as does the need for PolicyLoader. Also, responsibilities for web authentication move to WikiServletFilter. Authentication is now configured via jspwiki.properties -- see that file for details. WikiSession API change: getLoginContext() vanishes.\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@643263 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Andrew R. Jaquith",
+        "pcid": "90ca11d3a30cf4a77e8346d5c432d7c8140af316",
+        "changes": {
+            "tests/com/ecyrd/jspwiki/auth/AuthenticationManagerTest.java": {
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        24,
+                        32,
+                        38
+                    ],
+                    "('com.ecyrd.jspwiki.auth#AuthenticationManagerTest', 'testCustomJAASLoginModule')": [
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88
+                    ],
+                    "('com.ecyrd.jspwiki.auth#AuthenticationManagerTest', None)": [
+                        89,
+                        90,
+                        112,
+                        113
+                    ],
+                    "('com.ecyrd.jspwiki.auth#AuthenticationManagerTest', 'testCustomJAASLoginModuleOptions')": [
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111
+                    ]
+                }
+            },
+            "tests/com/ecyrd/jspwiki/auth/UserManagerTest.java": {
+                "old": {
+                    "('com.ecyrd.jspwiki.auth#UserManagerTest', None)": [
+                        47,
+                        48
+                    ],
+                    "('com.ecyrd.jspwiki.auth#UserManagerTest', 'testSetRenamedUserProfile')": [
+                        89,
+                        96,
+                        97,
+                        140,
+                        166,
+                        199
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20
+                    ],
+                    "('com.ecyrd.jspwiki.auth#UserManagerTest', None)": [
+                        49,
+                        69,
+                        70,
+                        77,
+                        78,
+                        79
+                    ],
+                    "('com.ecyrd.jspwiki.auth#UserManagerTest', 'setUp')": [
+                        68
+                    ],
+                    "('com.ecyrd.jspwiki.auth#UserManagerTest', 'tearDown')": [
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76
+                    ],
+                    "('com.ecyrd.jspwiki.auth#UserManagerTest', 'testSetRenamedUserProfile')": [
+                        120,
+                        125,
+                        128,
+                        171,
+                        197,
+                        230
+                    ]
+                }
+            }
+        }
+    },
+    "90ca11d3a30cf4a77e8346d5c432d7c8140af316": {
+        "authored_data": "2008 Apr 01 03:47",
+        "commit.message": "Re-factored the authentication subsystem to remove the need for JAAS configuration files. WEB-INF/jspwiki.jaas goes away, as does the need for PolicyLoader. Also, responsibilities for web authentication move to WikiServletFilter. Authentication is now configured via jspwiki.properties -- see that file for details. WikiSession API change: getLoginContext() vanishes.\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@643262 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Andrew R. Jaquith",
+        "pcid": "df69d9406db9f284128871ac1deab5c77bfd51a3",
+        "changes": {
+            "tests/com/ecyrd/jspwiki/TestAuthorizer.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3
+                    ],
+                    "('com.ecyrd.jspwiki#TestAuthorizer', 'getRoles')": [
+                        53
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ],
+                    "('com.ecyrd.jspwiki#TestAuthorizer', 'getRoles')": [
+                        69
+                    ]
+                }
+            }
+        }
+    },
+    "df69d9406db9f284128871ac1deab5c77bfd51a3": {
+        "authored_data": "2008 Apr 01 03:47",
+        "commit.message": "Re-factored the authentication subsystem to remove the need for JAAS configuration files. WEB-INF/jspwiki.jaas goes away, as does the need for PolicyLoader. Also, responsibilities for web authentication move to WikiServletFilter. Authentication is now configured via jspwiki.properties -- see that file for details. WikiSession API change: getLoginContext() vanishes.\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@643261 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Andrew R. Jaquith",
+        "pcid": "ace24e250fd878a1327ae6f5329059d5ccc384f3",
+        "changes": {
+            "src/com/ecyrd/jspwiki/ui/WikiServletFilter.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        4,
+                        6,
+                        7,
+                        8,
+                        9,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        36,
+                        37
+                    ],
+                    "('com.ecyrd.jspwiki.ui#WikiServletFilter', 'init(FilterConfig)')": [
+                        52
+                    ],
+                    "('com.ecyrd.jspwiki.ui#WikiServletFilter', None)": [
+                        62,
+                        109
+                    ],
+                    "('com.ecyrd.jspwiki.ui#WikiServletFilter', 'doFilter(ServletRequest,ServletResponse,FilterChain)')": [
+                        63,
+                        89,
+                        90,
+                        99
+                    ],
+                    "('com.ecyrd.jspwiki.ui#WikiServletFilter', 'getWikiContext(ServletRequest)')": [
+                        117
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        12,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        28,
+                        35,
+                        36,
+                        37,
+                        38,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        55,
+                        190,
+                        191
+                    ],
+                    "('com.ecyrd.jspwiki.ui#WikiServletFilter', None)": [
+                        68,
+                        69,
+                        70,
+                        77,
+                        78,
+                        79,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180
+                    ],
+                    "('com.ecyrd.jspwiki.ui#WikiServletFilter', 'init(FilterConfig)')": [
+                        71
+                    ],
+                    "('com.ecyrd.jspwiki.ui#WikiServletFilter', 'doFilter(ServletRequest,ServletResponse,FilterChain)')": [
+                        94,
+                        120,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        141,
+                        148
+                    ],
+                    "('com.ecyrd.jspwiki.ui#WikiServletFilter', 'getWikiContext(ServletRequest)')": [
+                        165
+                    ],
+                    "('com.ecyrd.jspwiki.ui#WikiServletFilter', 'isWrapped(ServletRequest)')": [
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189
+                    ]
+                }
+            }
+        }
+    },
+    "e554bd145a62d00e151f23b83d17278043f1fbbc": {
+        "authored_data": "2008 Apr 01 03:45",
+        "commit.message": "Re-factored the authentication subsystem to remove the need for JAAS configuration files. WEB-INF/jspwiki.jaas goes away, as does the need for PolicyLoader. Also, responsibilities for web authentication move to WikiServletFilter. Authentication is now configured via jspwiki.properties -- see that file for details. WikiSession API change: getLoginContext() vanishes.\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@643258 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Andrew R. Jaquith",
+        "pcid": "352e87a5996b373e35a0224051322db6f8284225",
+        "changes": {
+            "src/com/ecyrd/jspwiki/tags/UserCheckTag.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18
+                    ],
+                    "('com.ecyrd.jspwiki.tags#UserCheckTag', 'doWikiStartTag')": [
+                        131
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ],
+                    "('com.ecyrd.jspwiki.tags#UserCheckTag', 'doWikiStartTag')": [
+                        132
+                    ]
+                }
+            }
+        }
+    },
+    "352e87a5996b373e35a0224051322db6f8284225": {
+        "authored_data": "2008 Apr 01 03:45",
+        "commit.message": "Re-factored the authentication subsystem to remove the need for JAAS configuration files. WEB-INF/jspwiki.jaas goes away, as does the need for PolicyLoader. Also, responsibilities for web authentication move to WikiServletFilter. Authentication is now configured via jspwiki.properties -- see that file for details. WikiSession API change: getLoginContext() vanishes.\n\ngit-svn-id: https://svn.apache.org/repos/asf/incubator/jspwiki/trunk@643257 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Andrew R. Jaquith",
+        "pcid": "f986dedb4582b6da95d765dfae0b8a3712ec4b2f",
+        "changes": {
+            "src/com/ecyrd/jspwiki/event/WikiSecurityEvent.java": {
+                "old": {
+                    "(None, None)": [
+                        1,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        1,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19
+                    ],
+                    "('com.ecyrd.jspwiki.event#WikiSecurityEvent', None)": [
+                        92,
+                        93,
+                        94
+                    ],
+                    "('com.ecyrd.jspwiki.event#WikiSecurityEvent', 'eventName(int)')": [
+                        241
+                    ],
+                    "('com.ecyrd.jspwiki.event#WikiSecurityEvent', 'getTypeDescription')": [
+                        268
+                    ]
+                }
+            }
+        }
+    }
+}

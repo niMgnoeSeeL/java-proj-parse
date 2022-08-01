@@ -1,0 +1,1865 @@
+{
+    "3d90df25d5b43dce833e4e06931824a9d298763d": {
+        "authored_data": "2005 Apr 26 06:15",
+        "commit.message": "Adding methods that use the locale for parsing numbers.  The original\npatch came from Andrew van der Voort.  Including unit tests however \nthey could use more tests as I have limited knowledge of international\nnumber formats.\nPR: 21282 and 34198\n\nAlso adding a more clear error message when the validation method cannot\nbe found.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/validator/trunk@164749 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Donald J. Brown",
+        "pcid": "f68d82128ad7a83c96cfccd35ae35834feaee296",
+        "changes": {
+            "src/share/org/apache/commons/validator/GenericTypeValidator.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        34,
+                        35
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', None)": [
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatByte(String)')": [
+                        53,
+                        54
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatShort(String)')": [
+                        71,
+                        72
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatInt(String)')": [
+                        89,
+                        90
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatLong(String)')": [
+                        107,
+                        108
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatFloat(String)')": [
+                        125,
+                        126
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatDouble(String)')": [
+                        143,
+                        144
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatDate(String,Locale)')": [
+                        168,
+                        171,
+                        172,
+                        173,
+                        179
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatDate(String,String,boolean)')": [
+                        202,
+                        203,
+                        218
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        30,
+                        35,
+                        36,
+                        453
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', None)": [
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatByte(String)')": [
+                        55,
+                        56
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatByte(String,Locale)')": [
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatShort(String)')": [
+                        107,
+                        108
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatShort(String,Locale)')": [
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatInt(String)')": [
+                        159,
+                        160
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatInt(String,Locale)')": [
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatLong(String)')": [
+                        211,
+                        212
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatLong(String,Locale)')": [
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatFloat(String)')": [
+                        263,
+                        264
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatFloat(String,Locale)')": [
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatDouble(String)')": [
+                        315,
+                        316
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatDouble(String,Locale)')": [
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatDate(String,Locale)')": [
+                        377,
+                        380,
+                        381,
+                        382,
+                        388
+                    ],
+                    "('org.apache.commons.validator#GenericTypeValidator', 'formatDate(String,String,boolean)')": [
+                        414,
+                        415,
+                        430
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/ValidatorAction.java": {
+                "old": {
+                    "('org.apache.commons.validator#ValidatorAction', 'loadValidationMethod')": [
+                        584
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.validator#ValidatorAction', 'loadValidationMethod')": [
+                        584,
+                        585
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/TestTypeValidator.java": {
+                "old": {
+                    "(None, None)": [
+                        114
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        199
+                    ],
+                    "('org.apache.commons.validator#TestTypeValidator', None)": [
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        59,
+                        60,
+                        61,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        87,
+                        88,
+                        89,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        115,
+                        116,
+                        117,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        143,
+                        144,
+                        145,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        171,
+                        172,
+                        173,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194
+                    ],
+                    "('org.apache.commons.validator#TestTypeValidator', 'validateByte(Object,Field,Locale)')": [
+                        55,
+                        56,
+                        57,
+                        58
+                    ],
+                    "('org.apache.commons.validator#TestTypeValidator', 'validateShort(Object,Field,Locale)')": [
+                        83,
+                        84,
+                        85,
+                        86
+                    ],
+                    "('org.apache.commons.validator#TestTypeValidator', 'validateInt(Object,Field,Locale)')": [
+                        111,
+                        112,
+                        113,
+                        114
+                    ],
+                    "('org.apache.commons.validator#TestTypeValidator', 'validateLong(Object,Field,Locale)')": [
+                        139,
+                        140,
+                        141,
+                        142
+                    ],
+                    "('org.apache.commons.validator#TestTypeValidator', 'validateFloat(Object,Field,Locale)')": [
+                        167,
+                        168,
+                        169,
+                        170
+                    ],
+                    "('org.apache.commons.validator#TestTypeValidator', 'validateDouble(Object,Field,Locale)')": [
+                        195,
+                        196,
+                        197,
+                        198
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/TypeTest.java": {
+                "new": {
+                    "(None, None)": [
+                        26,
+                        211
+                    ],
+                    "('org.apache.commons.validator#TypeTest', None)": [
+                        138,
+                        139,
+                        140,
+                        141,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173
+                    ],
+                    "('org.apache.commons.validator#TypeTest', 'testUSLocale')": [
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151
+                    ],
+                    "('org.apache.commons.validator#TypeTest', 'testFRLocale')": [
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168
+                    ],
+                    "('org.apache.commons.validator#TypeTest', 'localeTest(TypeBean,Locale)')": [
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210
+                    ]
+                }
+            }
+        }
+    },
+    "1faaf1f3bc0d65559ae36b34513380d8ba347e31": {
+        "authored_data": "2005 Feb 26 13:16",
+        "commit.message": "svn:keywords correction\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/validator/trunk@155434 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Dirk Verbeeck",
+        "pcid": "df345f9a541e126f09b2fdc3d9b9c415ea2300b4",
+        "changes": {
+            "src/share/org/apache/commons/validator/util/ValidatorUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        4
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        4
+                    ]
+                }
+            }
+        }
+    },
+    "49366b2603a7805b27c426feb9997a385cad6fc3": {
+        "authored_data": "2005 Feb 16 14:38",
+        "commit.message": "Deprecated all FastHashMap usage and provided protected \nget methods that return generic Maps to be used by subclasses.\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/validator/trunk@154021 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "David Graham",
+        "pcid": "3789bb6c0ba9991c83a650051f89130a328ddc1c",
+        "changes": {
+            "src/share/org/apache/commons/validator/Field.java": {
+                "old": {
+                    "(None, None)": [
+                        44,
+                        47
+                    ],
+                    "('org.apache.commons.validator#Field', None)": [
+                        91
+                    ],
+                    "('org.apache.commons.validator#Field', 'getMessage(String)')": [
+                        226
+                    ],
+                    "('org.apache.commons.validator#Field', 'addArg(Arg)')": [
+                        249,
+                        250
+                    ],
+                    "('org.apache.commons.validator#Field', 'handleMissingAction(String)')": [
+                        799,
+                        800,
+                        801,
+                        802,
+                        803
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        44,
+                        47
+                    ],
+                    "('org.apache.commons.validator#Field', None)": [
+                        90,
+                        91,
+                        92,
+                        94,
+                        95,
+                        96,
+                        97,
+                        806,
+                        807,
+                        808,
+                        809,
+                        810,
+                        811,
+                        814,
+                        815,
+                        816,
+                        817,
+                        818,
+                        819
+                    ],
+                    "('org.apache.commons.validator#Field', 'getMessage(String)')": [
+                        232
+                    ],
+                    "('org.apache.commons.validator#Field', 'addArg(Arg)')": [
+                        255
+                    ],
+                    "('org.apache.commons.validator#Field', 'handleMissingAction(String)')": [
+                        804,
+                        805
+                    ],
+                    "('org.apache.commons.validator#Field', 'getMsgMap')": [
+                        812,
+                        813
+                    ],
+                    "('org.apache.commons.validator#Field', 'getVarMap')": [
+                        820,
+                        821
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/Form.java": {
+                "old": {
+                    "('org.apache.commons.validator#Form', None)": [
+                        47,
+                        48
+                    ],
+                    "('org.apache.commons.validator#Form', 'setExtends(String)')": [
+                        231,
+                        232
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.validator#Form', None)": [
+                        47,
+                        61,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246
+                    ],
+                    "('org.apache.commons.validator#Form', 'setExtends(String)')": [
+                        231,
+                        232
+                    ],
+                    "('org.apache.commons.validator#Form', 'getFieldMap')": [
+                        247,
+                        248
+                    ],
+                    "(None, None)": [
+                        249
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/ValidatorResources.java": {
+                "old": {
+                    "('org.apache.commons.validator#ValidatorResources', None)": [
+                        77,
+                        78,
+                        79,
+                        83,
+                        89,
+                        95
+                    ],
+                    "('org.apache.commons.validator#ValidatorResources', 'getForm(Locale,String)')": [
+                        266,
+                        267,
+                        268,
+                        269,
+                        270
+                    ],
+                    "('org.apache.commons.validator#ValidatorResources', 'getForm(String,String,String,String)')": [
+                        285,
+                        286,
+                        287,
+                        288
+                    ],
+                    "('org.apache.commons.validator#ValidatorResources', 'getClosestLocaleField(FormSet,String,String)')": [
+                        417,
+                        418,
+                        419
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.validator#ValidatorResources', None)": [
+                        80,
+                        82,
+                        87,
+                        89,
+                        94,
+                        96,
+                        451,
+                        452,
+                        453,
+                        454,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470
+                    ],
+                    "('org.apache.commons.validator#ValidatorResources', 'getForm(Locale,String)')": [
+                        266,
+                        267
+                    ],
+                    "('org.apache.commons.validator#ValidatorResources', 'getForm(String,String,String,String)')": [
+                        282
+                    ],
+                    "('org.apache.commons.validator#ValidatorResources', 'getClosestLocaleField(FormSet,String,String)')": [
+                        411
+                    ],
+                    "('org.apache.commons.validator#ValidatorResources', 'getFormSets')": [
+                        455,
+                        456
+                    ],
+                    "('org.apache.commons.validator#ValidatorResources', 'getConstants')": [
+                        463,
+                        464
+                    ],
+                    "('org.apache.commons.validator#ValidatorResources', 'getActions')": [
+                        471,
+                        472
+                    ],
+                    "(None, None)": [
+                        473,
+                        474
+                    ]
+                }
+            }
+        }
+    },
+    "3789bb6c0ba9991c83a650051f89130a328ddc1c": {
+        "authored_data": "2005 Feb 14 01:33",
+        "commit.message": "Update keywords for SVN and change Copyright to 2005\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/validator/trunk@153692 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Niall Kegan Pemberton",
+        "pcid": "5273335e6cc6f12076db88da0ebcbbcb0dd9a9b3",
+        "changes": {
+            "src/example/org/apache/commons/validator/example/ValidateBean.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/example/org/apache/commons/validator/example/ValidateExample.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/Arg.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/CreditCardValidator.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/DateValidator.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/EmailValidator.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/Field.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/Form.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/FormSet.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/GenericTypeValidator.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/GenericValidator.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/ISBNValidator.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/Msg.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/UrlValidator.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/Validator.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/ValidatorAction.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/ValidatorException.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/ValidatorResources.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/ValidatorResult.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/ValidatorResults.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/Var.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/util/Flags.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/share/org/apache/commons/validator/util/ValidatorUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/ByteTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/CreditCardValidatorTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/DoubleTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/EmailTest.java": {
+                "old": [
+                    "LexerError",
+                    "src/test/org/apache/commons/validator/EmailTest.java",
+                    [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                ],
+                "new": [
+                    "LexerError",
+                    "src/test/org/apache/commons/validator/EmailTest.java",
+                    [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                ]
+            },
+            "src/test/org/apache/commons/validator/ExceptionTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/ExtensionTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/FieldTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/FloatTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/ISBNValidatorTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/IntegerTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/LocaleTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/LongTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/MultipleConfigFilesTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/MultipleTests.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/NameBean.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/RequiredIfTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/RequiredNameTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/ShortTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/TestCommon.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/TestNumber.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/TestPair.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/TestTypeValidator.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/TestValidator.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/TypeBean.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/TypeTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/UrlTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/ValidatorTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/ValidatorTestSuite.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/ValueBean.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            },
+            "src/test/org/apache/commons/validator/util/FlagsTest.java": {
+                "old": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        2,
+                        3,
+                        4,
+                        7
+                    ]
+                }
+            }
+        }
+    }
+}

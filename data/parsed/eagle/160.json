@@ -1,0 +1,419 @@
+{
+    "6e0fc410d4d148eba238c86d3bb7b2be507f6d82": {
+        "authored_data": "2017 Feb 28 06:33",
+        "commit.message": "[EAGLE-928] Refine system metric schema design and fix system metric collector\n\nhttps://issues.apache.org/jira/browse/EAGLE-928\n\n* Support new stream `SYSTEM_METRIC_STREAM`:\n\n        <stream>\n                <streamId>SYSTEM_METRIC_STREAM</streamId>\n                <description>System Metrics Stream including CPU, Network, Disk, etc.</description>\n                <columns>\n                    <column>\n                        <name>host</name>\n                        <type>string</type>\n                    </column>\n                    <column>\n                        <name>timestamp</name>\n                        <type>long</type>\n                    </column>\n                    <column>\n                        <name>metric</name>\n                        <type>string</type>\n                    </column>\n                    <column>\n                        <name>group</name>\n                        <type>string</type>\n                    </column>\n                    <column>\n                        <name>site</name>\n                        <type>string</type>\n                    </column>\n                    <column>\n                        <name>device</name>\n                        <type>string</type>\n                    </column>\n                    <column>\n                        <name>value</name>\n                        <type>double</type>\n                        <defaultValue>0.0</defaultValue>\n                    </column>\n                </columns>\n            </stream>\n\n* Sample Metric Event\n\n        {\n            'timestamp': 1487918913569,\n            'metric': 'system.nic.transmitdrop',\n            'site': 'sandbox',\n            'value': 7724.0,\n            'host': 'sandbox.hortonworks.com',\n            'device': 'eth0'\n        }\n\n* Add `system_metric_collector.py`\n* Support to persist system metric collector for query\n* Refactor MetricSchemaEntity and MetricDescriptor\n\nAuthor: Hao Chen <hao@apache.org>\n\nCloses #842 from haoch/FixSystemMetricCollector.\n",
+        "commit.author.name": "Hao Chen",
+        "pcid": "97ae1da52d09d8c22b37a63b53dac0649b2c024f",
+        "changes": {
+            "eagle-core/eagle-app/eagle-app-base/src/main/java/org/apache/eagle/app/environment/builder/ApplicationBuilder.java": {
+                "old": {
+                    "('org.apache.eagle.app.environment.builder#ApplicationBuilder', None)": [
+                        69,
+                        72,
+                        73
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.app.environment.builder#ApplicationBuilder', None)": [
+                        52,
+                        53,
+                        54,
+                        55,
+                        73,
+                        76,
+                        77
+                    ]
+                }
+            },
+            "eagle-core/eagle-app/eagle-app-base/src/main/java/org/apache/eagle/app/environment/impl/StormEnvironment.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        26
+                    ],
+                    "('org.apache.eagle.app.environment.impl#StormEnvironment', 'getMetricPersist(MetricDefinition,Config)')": [
+                        47,
+                        48
+                    ],
+                    "('org.apache.eagle.app.environment.impl#StormEnvironment', 'getMetricSchemaGenerator(MetricDefinition,Config)')": [
+                        55,
+                        56
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.eagle.app.environment.impl#StormEnvironment', 'getMetricPersist(MetricDescriptor,Config)')": [
+                        46,
+                        47
+                    ],
+                    "('org.apache.eagle.app.environment.impl#StormEnvironment', 'getMetricSchemaGenerator(MetricDescriptor,Config)')": [
+                        54,
+                        55
+                    ]
+                }
+            },
+            "eagle-core/eagle-app/eagle-app-base/src/main/java/org/apache/eagle/app/messaging/MetricSchemaGenerator.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.eagle.app.messaging#MetricSchemaGenerator', None)": [
+                        43,
+                        49,
+                        50
+                    ],
+                    "('org.apache.eagle.app.messaging#MetricSchemaGenerator', 'execute(Tuple)')": [
+                        66
+                    ],
+                    "('org.apache.eagle.app.messaging#MetricSchemaGenerator', 'createMetricSchemaEntity(String,MetricDefinition)')": [
+                        96,
+                        101,
+                        102,
+                        103
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.eagle.app.messaging#MetricSchemaGenerator', None)": [
+                        43,
+                        49,
+                        50
+                    ],
+                    "('org.apache.eagle.app.messaging#MetricSchemaGenerator', 'execute(Tuple)')": [
+                        66
+                    ],
+                    "('org.apache.eagle.app.messaging#MetricSchemaGenerator', 'createMetricSchemaEntity(String,Map,MetricDescriptor)')": [
+                        96,
+                        100,
+                        102,
+                        103,
+                        104
+                    ]
+                }
+            },
+            "eagle-core/eagle-app/eagle-app-base/src/main/java/org/apache/eagle/app/messaging/MetricStreamPersist.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.eagle.app.messaging#MetricStreamPersist', None)": [
+                        55,
+                        57,
+                        123,
+                        125,
+                        126,
+                        131,
+                        133,
+                        136,
+                        142,
+                        143,
+                        145,
+                        151
+                    ],
+                    "('org.apache.eagle.app.messaging#MetricStreamPersist', 'execute(Tuple)')": [
+                        80,
+                        94,
+                        95
+                    ],
+                    "('org.apache.eagle.app.messaging#MetricStreamPersist', 'declareOutputFields(OutputFieldsDeclarer)')": [
+                        103
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        40
+                    ],
+                    "('org.apache.eagle.app.messaging#MetricStreamPersist', None)": [
+                        48,
+                        57,
+                        59,
+                        127,
+                        129,
+                        130,
+                        135,
+                        137,
+                        140,
+                        146,
+                        147,
+                        149,
+                        155
+                    ],
+                    "('org.apache.eagle.app.messaging#MetricStreamPersist', 'execute(Tuple)')": [
+                        81,
+                        83,
+                        84,
+                        98,
+                        99
+                    ],
+                    "('org.apache.eagle.app.messaging#MetricStreamPersist', 'declareOutputFields(OutputFieldsDeclarer)')": [
+                        107
+                    ]
+                }
+            },
+            "eagle-core/eagle-metadata/eagle-metadata-base/src/main/java/org/apache/eagle/metadata/model/MetricSchemaEntity.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.eagle.metadata.model#MetricSchemaEntity', None)": [
+                        36,
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.eagle.metadata.model#MetricSchemaEntity', None)": [
+                        36,
+                        37,
+                        38
+                    ]
+                }
+            },
+            "eagle-metric/eagle-hadoop-metric/src/main/java/org/apache/eagle/metric/HadoopMetricMonitorApp.java": {
+                "old": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.eagle.metric#HadoopMetricMonitorApp', 'execute(Config,StormEnvironment)')": [
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        25
+                    ],
+                    "('org.apache.eagle.metric#HadoopMetricMonitorApp', 'execute(Config,StormEnvironment)')": [
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57
+                    ]
+                }
+            },
+            "eagle-metric/eagle-hadoop-metric/src/test/java/org/apache/eagle/metric/HadoopMetricMonitorAppDebug.java": {
+                "new": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        21
+                    ]
+                }
+            }
+        }
+    },
+    "af33ae3c364aa3edf57df5469c97ab28cf0ce3c1": {
+        "authored_data": "2017 Feb 27 10:33",
+        "commit.message": "[MINOR] support sequence in policy definition\n\nAuthor: wujinhu <wujinhu920@126.com>\n\nCloses #844 from wujinhu/EAGLE-847.\n",
+        "commit.author.name": "wujinhu",
+        "pcid": "a42f7891c90e654a6a74283f1eaedddd531ad39d",
+        "changes": {
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/main/java/org/apache/eagle/alert/engine/interpreter/PolicyExecutionPlannerImpl.java": {
+                "old": {
+                    "('org.apache.eagle.alert.engine.interpreter#PolicyExecutionPlannerImpl', 'doParse')": [
+                        202
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.alert.engine.interpreter#PolicyExecutionPlannerImpl', 'doParse')": [
+                        202,
+                        203
+                    ]
+                }
+            },
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/test/java/org/apache/eagle/alert/engine/interpreter/PolicyInterpreterTest.java": {
+                "new": {
+                    "('org.apache.eagle.alert.engine.interpreter#PolicyInterpreterTest', None)": [
+                        486,
+                        487,
+                        519,
+                        520,
+                        521
+                    ],
+                    "('org.apache.eagle.alert.engine.interpreter#PolicyInterpreterTest', 'testValidPolicyWithSequence')": [
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        499,
+                        500,
+                        501,
+                        502,
+                        503,
+                        504,
+                        505,
+                        506,
+                        507,
+                        508,
+                        509,
+                        510,
+                        511,
+                        512,
+                        513,
+                        514,
+                        515,
+                        516,
+                        517,
+                        518
+                    ],
+                    "('org.apache.eagle.alert.engine.interpreter#PolicyInterpreterTest', 'testValidPolicyWithSequenceSort')": [
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556
+                    ],
+                    "(None, None)": [
+                        557
+                    ]
+                }
+            }
+        }
+    },
+    "086d11e1ddc0f00f5209d4b74086dd6a920eaa85": {
+        "authored_data": "2017 Feb 24 04:33",
+        "commit.message": "[MINOR] fix unit test cases to get rid of creating file.bin in code\n",
+        "commit.author.name": "Hao Chen",
+        "pcid": "5ec75f2abce494d01319998c3970301c991960bd",
+        "changes": {
+            "eagle-core/eagle-alert-parent/eagle-alert/alert-engine/src/test/java/org/apache/eagle/alert/engine/perf/TestSerDeserPer.java": {
+                "old": {
+                    "(None, None)": [
+                        22
+                    ],
+                    "('org.apache.eagle.alert.engine.perf#TestSerDeserPer', 'getTmpPath')": [
+                        53,
+                        54
+                    ],
+                    "('org.apache.eagle.alert.engine.perf#TestSerDeserPer', None)": [
+                        55,
+                        56
+                    ],
+                    "('org.apache.eagle.alert.engine.perf#TestSerDeserPer', 'testSerDeserPerf')": [
+                        60
+                    ],
+                    "('org.apache.eagle.alert.engine.perf#TestSerDeserPer', 'testSerDeserPerf2')": [
+                        97
+                    ],
+                    "('org.apache.eagle.alert.engine.perf#TestSerDeserPer', 'testSerDeserPerf3')": [
+                        129
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        30
+                    ],
+                    "('org.apache.eagle.alert.engine.perf#TestSerDeserPer', None)": [
+                        42,
+                        43,
+                        44
+                    ],
+                    "('org.apache.eagle.alert.engine.perf#TestSerDeserPer', 'testSerDeserPerf')": [
+                        60
+                    ],
+                    "('org.apache.eagle.alert.engine.perf#TestSerDeserPer', 'testSerDeserPerf2')": [
+                        97
+                    ],
+                    "('org.apache.eagle.alert.engine.perf#TestSerDeserPer', 'testSerDeserPerf3')": [
+                        129
+                    ]
+                }
+            }
+        }
+    },
+    "5ec75f2abce494d01319998c3970301c991960bd": {
+        "authored_data": "2017 Feb 24 04:38",
+        "commit.message": "[MINOR] Fix ServerMain CLI\n",
+        "commit.author.name": "Hao Chen",
+        "pcid": "75586658ba1aa202ee0ebec8c4cc52546cb0aae2",
+        "changes": {
+            "eagle-server/src/main/java/org/apache/eagle/server/ServerMain.java": {
+                "old": {
+                    "('org.apache.eagle.server#ServerMain', 'main(String)')": [
+                        32
+                    ]
+                },
+                "new": {
+                    "('org.apache.eagle.server#ServerMain', 'main(String)')": [
+                        32
+                    ]
+                }
+            }
+        }
+    }
+}

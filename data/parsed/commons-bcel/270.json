@@ -1,0 +1,3215 @@
+{
+    "215508b60f372891d2da0c7190451d8e82bb404b": {
+        "authored_data": "2020 Oct 07 14:16",
+        "commit.message": "BCEL-343 JUnit Assertion improvement (#69)\n\n* BCEL-343 Fix assertion typo\r\n\r\nFix a typo in FieldAnnotationsTestCase#checkValue: \"Didnt\" to\r\n\"Didn't\".\r\n\r\n* BCEL-343 Remove unused test methods\r\n\r\n* BCEL-343 Remove redundant casts in tests\r\n\r\n* BCEL-343 Simplify assertTrue to assertFalse\r\n\r\nSimplify assertTrue calls with negative conditions to assertFalse\r\ncalls which are easier to understand.\r\n\r\n* BCEL-343 Simplify assertTrue with equality to assertEquals\r\n\r\nClean up assertions code by using the built-in assertions in\r\norg.junit.jupiter.api.Assertions instead of reinventing the wheel.\r\n\r\nassertTrue(x.equals(y)) and assertTrue(primitiveX == primitiveY)\r\nare simplified to assertEquals(x, y).\r\n\r\nThe main gain by this patch is cleaning up the code and making it\r\neasier to maintain.\r\nA side bonus is that many assertions simplified to assertEquals calls\r\nhad messages that were manually constructed to show the difference\r\nbetween the two values being compared, and these messages were\r\nconstructed regardless of the assertion success or failure. By using\r\nassertEquals, these string concatenations are avoided as long as the\r\nassert succeeds.\r\n\r\n* BCEL-343 Simplify explicit ifs to assertEquals\r\n\r\nClean up assertions code by using the built-in assertions in\r\norg.junit.jupiter.api.Assertions instead of reinventing the wheel.\r\n\r\nThis patch simplifies the idiom of using an if to explicitly check for\r\nequality:\r\n```\r\nif (!a.equals(b)) {\r\n    fail(\"a should equal b\");\r\n}\r\n```\r\n\r\nwith the build it assertEquals(a, b, \"a should equal b\").\r\n\r\n* BCEL-343 Simplify catching exceptions in tests\r\n\r\nReplace the idiom of catching an exception and then explicitly calling\r\norg.junit.jupiter.api.Assertions with just allowing the error to be\r\nthrown from the test method and leaving the it up to the runner to\r\nhandle the failure.\r\n\r\n* BCEL-343 Replace non-constant assertion message with Supplier\r\n\r\nIn the cases that assertions have non-constant failure messages, these\r\nmessages are replaced with Suppliers that produce them in order to\r\navoid producing the calculated string unconditionally.",
+        "commit.author.name": "Allon Murienik",
+        "pcid": "0d75ce16ca652b3722daa3d2ad5144e26748e2d7",
+        "changes": {
+            "src/test/java/org/apache/bcel/AbstractTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        38
+                    ],
+                    "('org.apache.bcel#AbstractTestCase', 'findAttribute(String,Attribute)')": [
+                        144,
+                        145
+                    ],
+                    "('org.apache.bcel#AbstractTestCase', None)": [
+                        147,
+                        148
+                    ],
+                    "('org.apache.bcel#AbstractTestCase', 'dumpAttributes(Attribute)')": [
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38
+                    ],
+                    "('org.apache.bcel#AbstractTestCase', 'findAttribute(String,Attribute)')": [
+                        144
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/AnnotationAccessFlagTestCase.java": {
+                "old": {
+                    "('org.apache.bcel#AnnotationAccessFlagTestCase', 'testAnnotationClassSaysItIs')": [
+                        40
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.bcel#AnnotationAccessFlagTestCase', 'testAnnotationClassSaysItIs')": [
+                        41
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/AnnotationDefaultAttributeTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        28
+                    ],
+                    "('org.apache.bcel#AnnotationDefaultAttributeTestCase', 'testMethodAnnotations')": [
+                        45,
+                        46,
+                        47,
+                        48
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28
+                    ],
+                    "('org.apache.bcel#AnnotationDefaultAttributeTestCase', 'testMethodAnnotations')": [
+                        45,
+                        46
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/ElementValueGenTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        37,
+                        246
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateIntegerElementValue')": [
+                        59,
+                        60,
+                        61
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateFloatElementValue')": [
+                        74,
+                        75,
+                        76
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateDoubleElementValue')": [
+                        90,
+                        91,
+                        92
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateLongElementValue')": [
+                        106,
+                        107,
+                        108
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateCharElementValue')": [
+                        122,
+                        123,
+                        124
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateByteElementValue')": [
+                        138,
+                        139,
+                        140
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateBooleanElementValue')": [
+                        154,
+                        155,
+                        156
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateShortElementValue')": [
+                        170,
+                        171,
+                        172
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateStringElementValue')": [
+                        188,
+                        189,
+                        190
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateEnumElementValue')": [
+                        206,
+                        207,
+                        208
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'checkSerialize(ElementValueGen,ConstantPoolGen)')": [
+                        244,
+                        245
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateIntegerElementValue')": [
+                        59
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateFloatElementValue')": [
+                        72
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateDoubleElementValue')": [
+                        86
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateLongElementValue')": [
+                        100
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateCharElementValue')": [
+                        114
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateByteElementValue')": [
+                        128
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateBooleanElementValue')": [
+                        142
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateShortElementValue')": [
+                        156
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateStringElementValue')": [
+                        172
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateEnumElementValue')": [
+                        188,
+                        189
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'checkSerialize(ElementValueGen,ConstantPoolGen)')": [
+                        225
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/EnclosingMethodAttributeTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        32
+                    ],
+                    "('org.apache.bcel#EnclosingMethodAttributeTestCase', 'testCheckMethodLevelNamedInnerClass')": [
+                        47,
+                        48,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56
+                    ],
+                    "('org.apache.bcel#EnclosingMethodAttributeTestCase', 'testCheckClassLevelNamedInnerClass')": [
+                        70,
+                        71,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79
+                    ],
+                    "('org.apache.bcel#EnclosingMethodAttributeTestCase', 'testAttributeSerializtion')": [
+                        92,
+                        93,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.bcel#EnclosingMethodAttributeTestCase', 'testCheckMethodLevelNamedInnerClass')": [
+                        47,
+                        51,
+                        52
+                    ],
+                    "('org.apache.bcel#EnclosingMethodAttributeTestCase', 'testCheckClassLevelNamedInnerClass')": [
+                        66,
+                        69,
+                        70,
+                        71
+                    ],
+                    "('org.apache.bcel#EnclosingMethodAttributeTestCase', 'testAttributeSerializtion')": [
+                        84,
+                        94,
+                        95,
+                        96
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/EnumAccessFlagTestCase.java": {
+                "old": {
+                    "('org.apache.bcel#EnumAccessFlagTestCase', 'testEnumClassSaysItIs')": [
+                        40
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.bcel#EnumAccessFlagTestCase', 'testEnumClassSaysItIs')": [
+                        41
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/PerformanceTest.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.bcel#PerformanceTest', 'testPerformance')": [
+                        137
+                    ]
+                },
+                "new": {
+                    "('org.apache.bcel#PerformanceTest', 'testPerformance')": [
+                        136
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/classfile/JDKClassDumpTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.bcel.classfile#JDKClassDumpTestCase', 'testPerformance')": [
+                        43
+                    ],
+                    "('org.apache.bcel.classfile#JDKClassDumpTestCase', 'compare(JavaClass,InputStream,String)')": [
+                        84
+                    ]
+                },
+                "new": {
+                    "('org.apache.bcel.classfile#JDKClassDumpTestCase', 'testPerformance')": [
+                        42
+                    ],
+                    "('org.apache.bcel.classfile#JDKClassDumpTestCase', 'compare(JavaClass,InputStream,String)')": [
+                        83,
+                        84
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/generic/AnnotationGenTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        38
+                    ],
+                    "('org.apache.bcel.generic#AnnotationGenTestCase', 'testConstructMutableAnnotation')": [
+                        52
+                    ],
+                    "('org.apache.bcel.generic#AnnotationGenTestCase', 'checkSerialize(AnnotationEntryGen,ConstantPoolGen)')": [
+                        126,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        166,
+                        167,
+                        168
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36
+                    ],
+                    "('org.apache.bcel.generic#AnnotationGenTestCase', 'testConstructMutableAnnotation')": [
+                        52
+                    ],
+                    "('org.apache.bcel.generic#AnnotationGenTestCase', 'checkSerialize(AnnotationEntryGen,ConstantPoolGen)')": [
+                        126,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/generic/FieldAnnotationsTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.bcel.generic#FieldAnnotationsTestCase', 'testFieldAnnotationModification')": [
+                        118,
+                        119,
+                        120
+                    ],
+                    "('org.apache.bcel.generic#FieldAnnotationsTestCase', 'checkAnnotationEntry(AnnotationEntry,String,String,String)')": [
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154
+                    ],
+                    "('org.apache.bcel.generic#FieldAnnotationsTestCase', None)": [
+                        155,
+                        156,
+                        157
+                    ],
+                    "('org.apache.bcel.generic#FieldAnnotationsTestCase', 'checkValue(AnnotationEntry,String,String)')": [
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32
+                    ],
+                    "('org.apache.bcel.generic#FieldAnnotationsTestCase', 'testFieldAnnotationModification')": [
+                        118
+                    ],
+                    "('org.apache.bcel.generic#FieldAnnotationsTestCase', 'checkAnnotationEntry(AnnotationEntry,String,String,String)')": [
+                        140,
+                        141,
+                        143,
+                        144
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/generic/GeneratingAnnotatedClassesTestCase.java": {
+                "old": {
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testGenerateClassLevelAnnotations')": [
+                        94,
+                        95,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        105,
+                        106,
+                        108,
+                        109,
+                        110,
+                        111
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testGenerateMethodLevelAnnotations1')": [
+                        130,
+                        131,
+                        136,
+                        137,
+                        142,
+                        143,
+                        148,
+                        149
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testGenerateMethodLevelAnnotations2')": [
+                        174,
+                        175,
+                        176,
+                        179,
+                        180,
+                        181,
+                        191,
+                        192,
+                        194,
+                        195,
+                        196,
+                        198,
+                        199,
+                        200
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testTransformClassToClassGen_SimpleTypes')": [
+                        217,
+                        218
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testTransformClassToClassGen_EnumType')": [
+                        233,
+                        234
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testTransformClassToClassGen_ArrayAndAnnotationTypes')": [
+                        249,
+                        250,
+                        252,
+                        253,
+                        259,
+                        260,
+                        266,
+                        267,
+                        268,
+                        269,
+                        292
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'assertMethodAnnotations(Method,int,int)')": [
+                        301
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'assertParameterAnnotations(Method,int)')": [
+                        328
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testTransformComplexClassToClassGen')": [
+                        355,
+                        356,
+                        363,
+                        364
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testModifyingClasses1')": [
+                        383,
+                        384
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testModifyingClasses2')": [
+                        400,
+                        401
+                    ]
+                },
+                "new": {
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testGenerateClassLevelAnnotations')": [
+                        94,
+                        96,
+                        97,
+                        100,
+                        102,
+                        103
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testGenerateMethodLevelAnnotations1')": [
+                        122,
+                        127,
+                        132,
+                        137
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testGenerateMethodLevelAnnotations2')": [
+                        162,
+                        165,
+                        175,
+                        177,
+                        179,
+                        180
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testTransformClassToClassGen_SimpleTypes')": [
+                        197
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testTransformClassToClassGen_EnumType')": [
+                        212
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testTransformClassToClassGen_ArrayAndAnnotationTypes')": [
+                        227,
+                        229,
+                        235,
+                        241,
+                        242,
+                        243,
+                        266
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'assertMethodAnnotations(Method,int,int)')": [
+                        275
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'assertParameterAnnotations(Method,int)')": [
+                        302,
+                        303
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testTransformComplexClassToClassGen')": [
+                        330,
+                        337
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testModifyingClasses1')": [
+                        356
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testModifyingClasses2')": [
+                        372
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/generic/JdkGenericDumpTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        28
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'compare(String,Method)')": [
+                        201
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'listJdkJars(String)')": [
+                        215
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'listJdkModules(String)')": [
+                        220
+                    ]
+                },
+                "new": {
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'compare(String,Method)')": [
+                        200
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'listJdkJars(String)')": [
+                        214
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'listJdkModules(String)')": [
+                        219
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/generic/MethodGenTestCase.java": {
+                "old": {
+                    "('org.apache.bcel.generic#MethodGenTestCase', 'getMethod(Class,String)')": [
+                        71
+                    ]
+                },
+                "new": {
+                    "('org.apache.bcel.generic#MethodGenTestCase', 'getMethod(Class,String)')": [
+                        71
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/AbstractVerifierTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.bcel.verifier#AbstractVerifierTestCase', 'assertVerifyOK(String,String)')": [
+                        38
+                    ],
+                    "('org.apache.bcel.verifier#AbstractVerifierTestCase', 'assertVerifyRejected(String,String)')": [
+                        50
+                    ],
+                    "('org.apache.bcel.verifier#AbstractVerifierTestCase', 'doAllPasses(String)')": [
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70
+                    ]
+                },
+                "new": {
+                    "('org.apache.bcel.verifier#AbstractVerifierTestCase', 'assertVerifyOK(String,String)')": [
+                        37
+                    ],
+                    "('org.apache.bcel.verifier#AbstractVerifierTestCase', 'assertVerifyRejected(String,String)')": [
+                        49
+                    ],
+                    "('org.apache.bcel.verifier#AbstractVerifierTestCase', 'doAllPasses(String)')": [
+                        60,
+                        61,
+                        62
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/VerifierArrayAccessTestCase.java": {
+                "old": {
+                    "('org.apache.bcel.verifier#VerifierArrayAccessTestCase', 'testInvalidArrayAccess')": [
+                        31
+                    ],
+                    "('org.apache.bcel.verifier#VerifierArrayAccessTestCase', 'testValidArrayAccess')": [
+                        40
+                    ]
+                },
+                "new": {
+                    "('org.apache.bcel.verifier#VerifierArrayAccessTestCase', 'testInvalidArrayAccess')": [
+                        31
+                    ],
+                    "('org.apache.bcel.verifier#VerifierArrayAccessTestCase', 'testValidArrayAccess')": [
+                        40
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/VerifierInvokeTestCase.java": {
+                "old": {
+                    "('org.apache.bcel.verifier#VerifierInvokeTestCase', 'testLegalInvokeVirtual')": [
+                        26
+                    ],
+                    "('org.apache.bcel.verifier#VerifierInvokeTestCase', 'testLegalInvokeStatic')": [
+                        32
+                    ],
+                    "('org.apache.bcel.verifier#VerifierInvokeTestCase', 'testLegalInvokeInterface')": [
+                        37
+                    ],
+                    "('org.apache.bcel.verifier#VerifierInvokeTestCase', 'testLegalInvokeSpecial')": [
+                        42
+                    ]
+                },
+                "new": {
+                    "('org.apache.bcel.verifier#VerifierInvokeTestCase', 'testLegalInvokeVirtual')": [
+                        26
+                    ],
+                    "('org.apache.bcel.verifier#VerifierInvokeTestCase', 'testLegalInvokeStatic')": [
+                        32
+                    ],
+                    "('org.apache.bcel.verifier#VerifierInvokeTestCase', 'testLegalInvokeInterface')": [
+                        37
+                    ],
+                    "('org.apache.bcel.verifier#VerifierInvokeTestCase', 'testLegalInvokeSpecial')": [
+                        42
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/VerifierReturnTestCase.java": {
+                "old": {
+                    "('org.apache.bcel.verifier#VerifierReturnTestCase', 'testInvalidReturn')": [
+                        29
+                    ],
+                    "('org.apache.bcel.verifier#VerifierReturnTestCase', 'testValidReturn')": [
+                        37
+                    ]
+                },
+                "new": {
+                    "('org.apache.bcel.verifier#VerifierReturnTestCase', 'testInvalidReturn')": [
+                        29
+                    ],
+                    "('org.apache.bcel.verifier#VerifierReturnTestCase', 'testValidReturn')": [
+                        37
+                    ]
+                }
+            }
+        }
+    },
+    "f967751f50509c5b27362b9611728fd8abe26abf": {
+        "authored_data": "2020 Oct 05 18:29",
+        "commit.message": "BCEL-342 Migrate test suite to JUnit Jupiter (#68)\n\n* BCEL-342 Remove dependency on the junit.framework package\r\n\r\nThe junit.framework package was introduced in JUnit 3, and while it's\r\nnot officially deprecated in JUnit 4, it's considered bad form to\r\ncontinue using it.\r\n\r\nThis patch removes the dependency on that outdated package and\r\nreplaces it with the best practices of JUnit 4.\r\n\r\nThe changes performed:\r\n\r\n1. Class structure\r\n a. Extending junit.framework.TestCase was removed (see \"Annotations\"\r\n    and \"Assertions\" below for details on how it was replaced).\r\n\r\n2. Annotations\r\n a. Test methods (i.e., public void methods with no arguments and a\r\n    name beginning with \"test\") were annotated with an org.junit.Test\r\n    annotation so they would be picked up by the JUnit 4 runner.\r\n b. void setUp() methods were annotated with an org.junit.Before\r\n    annotation. The @Override annotation was removed from these\r\n    methods, as they no longer override TestCase#setUp.\r\n\r\n3. Assertions\r\n a. Instead of using the assertion methods from\r\n    junit.framework.TestCase, the methods from org.junit.Assert were\r\n    statically imported.\r\n\r\n4. Miscellaneous\r\n a. In HandleTestCase, the dependency on\r\n    junit.framework.AssertionFailedError was removed, and instead its\r\n    JDK parent, AssertionError, was used.\r\n\r\n* BCEL-342 Standardize org.junit.Assert imports\r\n\r\nStandardize the usage of org.junit.Assert by replacing imports and\r\nstar static imports with static imports of specific methods.\r\n\r\n* BCEL-342 Static imports from org.junit.Assume\r\n\r\nUse static imports from org.junit.Assume in order to clean up the code\r\nand facilitate further refactoring.\r\n\r\n* BCEL-342 Migration to JUnit Jupiter\r\n\r\nThis patch migrates the project to the modern JUnit Jupiter in order\r\nto make it easier to write tests for it and lower the entry bar for\r\nnew contributors.\r\n\r\nWhile JUnit 4 and JUnit Jupiter are similar in many ways, they are not\r\nAPI compatible, so some changes had to be made:\r\n\r\n1. Dependencies\r\n a. The dependency on junit.junit:4.13 was replaced by a dependency on\r\n    org.junit.jupiter:junit-jupiter\r\n\r\n2. Annotations\r\n a. org.junit.jupiter.api.Test was used as a drop-in replacement for\r\n    org.junit.Test in the simple case the annotation had no arguments.\r\n b. org.junit.jupiter.api.BeforeEach was used as a drop-in replacement\r\n    for org.junit.Before.\r\n c. org.junit.jupiter.api.Disabled was used as a drop-in replacement\r\n    for org.junit.Ignore.\r\n d. Classes annotated with @RunWith(Parameterized.class) were\r\n    rewritten to use org.junit.jupiter.params.ParameterizedTest\r\n\r\n3. Assertions\r\n a. org.junit.jupiter.api.Assertions' methods were used as drop-in\r\n    replacements for methods of the name from org.junit.Assert in the\r\n    case the method didn't use the optional message argument.\r\n b. org.junit.jupiter.api.Assertions' methods were used as\r\n    replacements for methods of the name from org.junit.Assert in the\r\n    case the method did use the optional message argument. In this\r\n    case, the message argument that was the first argument in the\r\n    Assert's method was moved to be the last argument in the\r\n    Assertion's method arguments.\r\n c. org.junit.Test annotations with an expected argument were replaced\r\n    by org.junit.jupiter.api.Assertions#assertThrows calls. As a side\r\n    bonus, this change also makes the test more accurate by narrowing\r\n    the scope that's expected to throw the exception and preventing\r\n    false positives from situations where the wrong statement throws\r\n    the expected exception.\r\n\r\n4. Assumptions\r\n a. org.junit.jupiter.api.Assumptions' method were used as drop-in\r\n    replacements for methods of the name from org.junit.Assume.",
+        "commit.author.name": "Allon Murienik",
+        "pcid": "79d02840d178143ee06561a7473eae8780d1d121",
+        "changes": {
+            "src/test/java/org/apache/bcel/AbstractCounterVisitorTestCase.java": {
+                "old": {
+                    "('org.apache.bcel#AbstractCounterVisitorTestCase', None)": [
+                        31
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.bcel#AbstractCounterVisitorTestCase', None)": [
+                        32
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/AbstractTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        38,
+                        39
+                    ],
+                    "('org.apache.bcel#AbstractTestCase', None)": [
+                        40
+                    ],
+                    "('org.apache.bcel#AbstractTestCase', 'findAttribute(String,Attribute)')": [
+                        144,
+                        145
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38,
+                        39
+                    ],
+                    "('org.apache.bcel#AbstractTestCase', None)": [
+                        40
+                    ],
+                    "('org.apache.bcel#AbstractTestCase', 'findAttribute(String,Attribute)')": [
+                        144,
+                        145
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/AnnotationAccessFlagTestCase.java": {
+                "old": {
+                    "('org.apache.bcel#AnnotationAccessFlagTestCase', 'testAnnotationClassSaysItIs')": [
+                        33,
+                        34,
+                        35,
+                        37,
+                        38,
+                        39
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24
+                    ],
+                    "('org.apache.bcel#AnnotationAccessFlagTestCase', None)": [
+                        33
+                    ],
+                    "('org.apache.bcel#AnnotationAccessFlagTestCase', 'testAnnotationClassSaysItIs')": [
+                        37,
+                        38,
+                        40,
+                        41
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/AnnotationDefaultAttributeTestCase.java": {
+                "old": {
+                    "('org.apache.bcel#AnnotationDefaultAttributeTestCase', 'testMethodAnnotations')": [
+                        41,
+                        42,
+                        43,
+                        44
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28
+                    ],
+                    "('org.apache.bcel#AnnotationDefaultAttributeTestCase', None)": [
+                        37
+                    ],
+                    "('org.apache.bcel#AnnotationDefaultAttributeTestCase', 'testMethodAnnotations')": [
+                        45,
+                        46,
+                        47,
+                        48
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/AnonymousClassTestCase.java": {
+                "old": {
+                    "('org.apache.bcel#AnonymousClassTestCase', 'testRegularClassIsNotAnonymous')": [
+                        28,
+                        29,
+                        30
+                    ],
+                    "('org.apache.bcel#AnonymousClassTestCase', 'testNamedInnerClassIsNotAnonymous')": [
+                        37,
+                        38,
+                        39
+                    ],
+                    "('org.apache.bcel#AnonymousClassTestCase', 'testStaticInnerClassIsNotAnonymous')": [
+                        46,
+                        47,
+                        48
+                    ],
+                    "('org.apache.bcel#AnonymousClassTestCase', 'testAnonymousInnerClassIsAnonymous')": [
+                        55,
+                        56
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24,
+                        25
+                    ],
+                    "('org.apache.bcel#AnonymousClassTestCase', None)": [
+                        29,
+                        37,
+                        46,
+                        55
+                    ],
+                    "('org.apache.bcel#AnonymousClassTestCase', 'testRegularClassIsNotAnonymous')": [
+                        33,
+                        34
+                    ],
+                    "('org.apache.bcel#AnonymousClassTestCase', 'testNamedInnerClassIsNotAnonymous')": [
+                        42,
+                        43
+                    ],
+                    "('org.apache.bcel#AnonymousClassTestCase', 'testStaticInnerClassIsNotAnonymous')": [
+                        51,
+                        52
+                    ],
+                    "('org.apache.bcel#AnonymousClassTestCase', 'testAnonymousInnerClassIsAnonymous')": [
+                        60,
+                        61
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/CounterVisitorTestCase.java": {
+                "old": {
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testAnnotationsCount')": [
+                        33
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', None)": [
+                        34,
+                        35,
+                        39,
+                        40,
+                        44,
+                        45,
+                        49,
+                        50,
+                        54,
+                        55,
+                        59,
+                        60,
+                        64,
+                        65,
+                        69,
+                        70,
+                        74,
+                        75,
+                        79,
+                        80,
+                        84,
+                        85,
+                        89,
+                        90,
+                        94,
+                        95,
+                        99,
+                        100,
+                        104,
+                        105,
+                        109,
+                        110,
+                        114,
+                        115,
+                        119,
+                        120,
+                        124,
+                        125,
+                        129,
+                        130,
+                        134,
+                        135,
+                        139,
+                        140,
+                        144,
+                        145,
+                        149,
+                        150,
+                        154,
+                        155,
+                        159,
+                        160,
+                        164,
+                        165,
+                        169,
+                        170,
+                        174,
+                        175,
+                        179,
+                        180,
+                        184,
+                        185,
+                        189,
+                        190,
+                        194,
+                        195,
+                        199,
+                        200,
+                        204,
+                        205,
+                        209,
+                        210
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testAnnotationDefaultCount')": [
+                        38
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testAnnotationEntryCount')": [
+                        43
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testCodeCount')": [
+                        48
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testCodeExceptionCount')": [
+                        53
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantClassCount')": [
+                        58
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantDoubleCount')": [
+                        63
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantFieldrefCount')": [
+                        68
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantFloatCount')": [
+                        73
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantIntegerCount')": [
+                        78
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantInterfaceMethodrefCount')": [
+                        83
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantLongCount')": [
+                        88
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantMethodrefCount')": [
+                        93
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantNameAndTypeCount')": [
+                        98
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantPoolCount')": [
+                        103
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantStringCount')": [
+                        108
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantValueCount')": [
+                        113
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testDeprecatedCount')": [
+                        118
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testEnclosingMethodCount')": [
+                        123
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testExceptionTableCount')": [
+                        128
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testFieldCount')": [
+                        133
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testInnerClassCount')": [
+                        138
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testInnerClassesCount')": [
+                        143
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testJavaClassCount')": [
+                        148
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testLineNumberCount')": [
+                        153
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testLineNumberTableCount')": [
+                        158
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testLocalVariableCount')": [
+                        163
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testLocalVariableTableCount')": [
+                        168
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testLocalVariableTypeTableCount')": [
+                        173
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testMethodCount')": [
+                        178
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testParameterAnnotationCount')": [
+                        183
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testSignatureCount')": [
+                        188
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testSourceFileCount')": [
+                        193
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testStackMapCount')": [
+                        198
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testStackMapEntryCount')": [
+                        203
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testSyntheticCount')": [
+                        208
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testUnknownCount')": [
+                        213
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', None)": [
+                        34,
+                        38,
+                        39,
+                        40,
+                        44,
+                        45,
+                        46,
+                        50,
+                        51,
+                        52,
+                        56,
+                        57,
+                        58,
+                        62,
+                        63,
+                        64,
+                        68,
+                        69,
+                        70,
+                        74,
+                        75,
+                        76,
+                        80,
+                        81,
+                        82,
+                        86,
+                        87,
+                        88,
+                        92,
+                        93,
+                        94,
+                        98,
+                        99,
+                        100,
+                        104,
+                        105,
+                        106,
+                        110,
+                        111,
+                        112,
+                        116,
+                        117,
+                        118,
+                        122,
+                        123,
+                        124,
+                        128,
+                        129,
+                        130,
+                        134,
+                        135,
+                        136,
+                        140,
+                        141,
+                        142,
+                        146,
+                        147,
+                        148,
+                        152,
+                        153,
+                        154,
+                        158,
+                        159,
+                        160,
+                        164,
+                        165,
+                        166,
+                        170,
+                        171,
+                        172,
+                        176,
+                        177,
+                        178,
+                        182,
+                        183,
+                        184,
+                        188,
+                        189,
+                        190,
+                        194,
+                        195,
+                        196,
+                        200,
+                        201,
+                        202,
+                        206,
+                        207,
+                        208,
+                        212,
+                        213,
+                        214,
+                        218,
+                        219,
+                        220,
+                        224,
+                        225,
+                        226,
+                        230,
+                        231,
+                        232,
+                        236,
+                        237,
+                        238,
+                        242,
+                        243,
+                        244,
+                        248,
+                        249,
+                        250
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testAnnotationsCount')": [
+                        37
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testAnnotationDefaultCount')": [
+                        43
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testAnnotationEntryCount')": [
+                        49
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testCodeCount')": [
+                        55
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testCodeExceptionCount')": [
+                        61
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantClassCount')": [
+                        67
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantDoubleCount')": [
+                        73
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantFieldrefCount')": [
+                        79
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantFloatCount')": [
+                        85
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantIntegerCount')": [
+                        91
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantInterfaceMethodrefCount')": [
+                        97
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantLongCount')": [
+                        103
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantMethodrefCount')": [
+                        109
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantNameAndTypeCount')": [
+                        115
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantPoolCount')": [
+                        121
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantStringCount')": [
+                        127
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testConstantValueCount')": [
+                        133
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testDeprecatedCount')": [
+                        139
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testEnclosingMethodCount')": [
+                        145
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testExceptionTableCount')": [
+                        151
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testFieldCount')": [
+                        157
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testInnerClassCount')": [
+                        163
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testInnerClassesCount')": [
+                        169
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testJavaClassCount')": [
+                        175
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testLineNumberCount')": [
+                        181
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testLineNumberTableCount')": [
+                        187
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testLocalVariableCount')": [
+                        193
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testLocalVariableTableCount')": [
+                        199
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testLocalVariableTypeTableCount')": [
+                        205
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testMethodCount')": [
+                        211
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testParameterAnnotationCount')": [
+                        217
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testSignatureCount')": [
+                        223
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testSourceFileCount')": [
+                        229
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testStackMapCount')": [
+                        235
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testStackMapEntryCount')": [
+                        241
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testSyntheticCount')": [
+                        247
+                    ],
+                    "('org.apache.bcel#CounterVisitorTestCase', 'testUnknownCount')": [
+                        253
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/ElementValueGenTestCase.java": {
+                "old": {
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateIntegerElementValue')": [
+                        54,
+                        55,
+                        56,
+                        57
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', None)": [
+                        58,
+                        59,
+                        72,
+                        73,
+                        86,
+                        87,
+                        100,
+                        101,
+                        114,
+                        115,
+                        128,
+                        129,
+                        142,
+                        143
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateFloatElementValue')": [
+                        68,
+                        69,
+                        70,
+                        71
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateDoubleElementValue')": [
+                        83,
+                        84,
+                        85
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateLongElementValue')": [
+                        97,
+                        98,
+                        99
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateCharElementValue')": [
+                        111,
+                        112,
+                        113
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateByteElementValue')": [
+                        125,
+                        126,
+                        127
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateBooleanElementValue')": [
+                        139,
+                        140,
+                        141
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateShortElementValue')": [
+                        153,
+                        154
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateStringElementValue')": [
+                        169,
+                        170,
+                        171
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateEnumElementValue')": [
+                        186,
+                        188,
+                        189
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateClassElementValue')": [
+                        207,
+                        208
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        35,
+                        36,
+                        37
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', None)": [
+                        50,
+                        63,
+                        64,
+                        65,
+                        78,
+                        79,
+                        80,
+                        94,
+                        95,
+                        96,
+                        110,
+                        111,
+                        112,
+                        126,
+                        127,
+                        128,
+                        142,
+                        143,
+                        144,
+                        158,
+                        159,
+                        160,
+                        178,
+                        196,
+                        220
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateIntegerElementValue')": [
+                        59,
+                        60,
+                        61,
+                        62
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateFloatElementValue')": [
+                        74,
+                        75,
+                        76,
+                        77
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateDoubleElementValue')": [
+                        90,
+                        91,
+                        92,
+                        93
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateLongElementValue')": [
+                        106,
+                        107,
+                        108,
+                        109
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateCharElementValue')": [
+                        122,
+                        123,
+                        124,
+                        125
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateByteElementValue')": [
+                        138,
+                        139,
+                        140,
+                        141
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateBooleanElementValue')": [
+                        154,
+                        155,
+                        156,
+                        157
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateShortElementValue')": [
+                        170,
+                        171,
+                        172
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateStringElementValue')": [
+                        188,
+                        189,
+                        190
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateEnumElementValue')": [
+                        206,
+                        208
+                    ],
+                    "('org.apache.bcel#ElementValueGenTestCase', 'testCreateClassElementValue')": [
+                        227,
+                        228
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/EnclosingMethodAttributeTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ],
+                    "('org.apache.bcel#EnclosingMethodAttributeTestCase', 'testCheckMethodLevelNamedInnerClass')": [
+                        43,
+                        44,
+                        48,
+                        50,
+                        51,
+                        52,
+                        53
+                    ],
+                    "('org.apache.bcel#EnclosingMethodAttributeTestCase', 'testCheckClassLevelNamedInnerClass')": [
+                        66,
+                        67,
+                        70,
+                        72,
+                        73,
+                        74,
+                        76,
+                        77
+                    ],
+                    "('org.apache.bcel#EnclosingMethodAttributeTestCase', 'testAttributeSerializtion')": [
+                        89,
+                        90,
+                        97,
+                        100,
+                        102,
+                        103,
+                        104,
+                        106,
+                        107
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29,
+                        30,
+                        31,
+                        32
+                    ],
+                    "('org.apache.bcel#EnclosingMethodAttributeTestCase', None)": [
+                        40,
+                        63,
+                        85
+                    ],
+                    "('org.apache.bcel#EnclosingMethodAttributeTestCase', 'testCheckMethodLevelNamedInnerClass')": [
+                        47,
+                        48,
+                        52,
+                        54,
+                        55,
+                        56
+                    ],
+                    "('org.apache.bcel#EnclosingMethodAttributeTestCase', 'testCheckClassLevelNamedInnerClass')": [
+                        70,
+                        71,
+                        74,
+                        76,
+                        77,
+                        79
+                    ],
+                    "('org.apache.bcel#EnclosingMethodAttributeTestCase', 'testAttributeSerializtion')": [
+                        92,
+                        93,
+                        100,
+                        103,
+                        105,
+                        106,
+                        108
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/EnumAccessFlagTestCase.java": {
+                "old": {
+                    "('org.apache.bcel#EnumAccessFlagTestCase', 'testEnumClassSaysItIs')": [
+                        33,
+                        34,
+                        35,
+                        37,
+                        38,
+                        39
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        24
+                    ],
+                    "('org.apache.bcel#EnumAccessFlagTestCase', None)": [
+                        33
+                    ],
+                    "('org.apache.bcel#EnumAccessFlagTestCase', 'testEnumClassSaysItIs')": [
+                        37,
+                        38,
+                        40,
+                        41
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/HandleTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        28
+                    ],
+                    "('org.apache.bcel#HandleTestCase', 'branchHandles')": [
+                        58
+                    ],
+                    "('org.apache.bcel#HandleTestCase', 'checkLinkage(InstructionHandle,int)')": [
+                        84
+                    ],
+                    "('org.apache.bcel#HandleTestCase', 'handles')": [
+                        106
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.bcel#HandleTestCase', 'branchHandles')": [
+                        56
+                    ],
+                    "('org.apache.bcel#HandleTestCase', 'checkLinkage(InstructionHandle,int)')": [
+                        82
+                    ],
+                    "('org.apache.bcel#HandleTestCase', 'handles')": [
+                        104
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/InstructionFinderTestCase.java": {
+                "new": {
+                    "(None, None)": [
+                        27,
+                        28,
+                        29
+                    ],
+                    "('org.apache.bcel#InstructionFinderTestCase', None)": [
+                        33
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/LocalVariableTypeTableTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        36
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/PLSETestCase.java": {
+                "old": {
+                    "('org.apache.bcel#PLSETestCase', 'testB79')": [
+                        69
+                    ],
+                    "('org.apache.bcel#PLSETestCase', 'testB295')": [
+                        109
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        35,
+                        36
+                    ],
+                    "('org.apache.bcel#PLSETestCase', None)": [
+                        44,
+                        61,
+                        80,
+                        102,
+                        122
+                    ],
+                    "('org.apache.bcel#PLSETestCase', 'testB79')": [
+                        74
+                    ],
+                    "('org.apache.bcel#PLSETestCase', 'testB295')": [
+                        116
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/PerformanceTest.java": {
+                "old": {
+                    "(None, None)": [
+                        36,
+                        38
+                    ],
+                    "('org.apache.bcel#PerformanceTest', None)": [
+                        40
+                    ],
+                    "('org.apache.bcel#PerformanceTest', 'testPerformance')": [
+                        141
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36,
+                        38
+                    ],
+                    "('org.apache.bcel#PerformanceTest', None)": [
+                        40,
+                        134
+                    ],
+                    "('org.apache.bcel#PerformanceTest', 'testPerformance')": [
+                        142
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/classfile/CodeExceptionTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        20
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/classfile/ConstantPoolTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        26
+                    ],
+                    "('org.apache.bcel.classfile#ConstantPoolTestCase', 'testConstantToString')": [
+                        41
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27
+                    ],
+                    "('org.apache.bcel.classfile#ConstantPoolTestCase', 'testConstantToString')": [
+                        42
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/classfile/JDKClassDumpTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        32,
+                        33
+                    ],
+                    "('org.apache.bcel.classfile#JDKClassDumpTestCase', 'testPerformance')": [
+                        48
+                    ],
+                    "('org.apache.bcel.classfile#JDKClassDumpTestCase', 'compare(JavaClass,InputStream,String)')": [
+                        84
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        33
+                    ],
+                    "('org.apache.bcel.classfile#JDKClassDumpTestCase', 'testPerformance')": [
+                        48
+                    ],
+                    "('org.apache.bcel.classfile#JDKClassDumpTestCase', 'compare(JavaClass,InputStream,String)')": [
+                        84
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/classfile/LocalVariableTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        20
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/classfile/UtilityTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        20
+                    ],
+                    "('org.apache.bcel.classfile#UtilityTestCase', None)": [
+                        22
+                    ],
+                    "('org.apache.bcel.classfile#UtilityTestCase', 'testSignatureToStringWithGenerics')": [
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        22
+                    ],
+                    "('org.apache.bcel.classfile#UtilityTestCase', None)": [
+                        24,
+                        25,
+                        26
+                    ],
+                    "('org.apache.bcel.classfile#UtilityTestCase', 'testSignatureToStringWithGenerics')": [
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/generic/AnnotationGenTestCase.java": {
+                "old": {
+                    "('org.apache.bcel.generic#AnnotationGenTestCase', 'testConstructMutableAnnotation')": [
+                        58,
+                        59,
+                        60
+                    ],
+                    "('org.apache.bcel.generic#AnnotationGenTestCase', 'testVisibleInvisibleAnnotationGen')": [
+                        83,
+                        84,
+                        85,
+                        103,
+                        118
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        35,
+                        36,
+                        37,
+                        38
+                    ],
+                    "('org.apache.bcel.generic#AnnotationGenTestCase', None)": [
+                        51,
+                        76
+                    ],
+                    "('org.apache.bcel.generic#AnnotationGenTestCase', 'testConstructMutableAnnotation')": [
+                        64,
+                        65
+                    ],
+                    "('org.apache.bcel.generic#AnnotationGenTestCase', 'testVisibleInvisibleAnnotationGen')": [
+                        89,
+                        90,
+                        108,
+                        123
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/generic/BranchHandleTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21
+                    ],
+                    "('org.apache.bcel.generic#BranchHandleTestCase', None)": [
+                        26,
+                        42,
+                        50
+                    ],
+                    "('org.apache.bcel.generic#BranchHandleTestCase', 'testsetInstructionNull')": [
+                        29,
+                        30,
+                        31
+                    ],
+                    "('org.apache.bcel.generic#BranchHandleTestCase', 'testsetInstructionBI')": [
+                        37,
+                        39
+                    ],
+                    "('org.apache.bcel.generic#BranchHandleTestCase', 'testsetInstructionnotBI')": [
+                        45,
+                        46,
+                        47
+                    ],
+                    "('org.apache.bcel.generic#BranchHandleTestCase', 'testGetBHnull')": [
+                        52
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23
+                    ],
+                    "('org.apache.bcel.generic#BranchHandleTestCase', None)": [
+                        28,
+                        43,
+                        50
+                    ],
+                    "('org.apache.bcel.generic#BranchHandleTestCase', 'testsetInstructionNull')": [
+                        31,
+                        32
+                    ],
+                    "('org.apache.bcel.generic#BranchHandleTestCase', 'testsetInstructionBI')": [
+                        38,
+                        40
+                    ],
+                    "('org.apache.bcel.generic#BranchHandleTestCase', 'testsetInstructionnotBI')": [
+                        46,
+                        47
+                    ],
+                    "('org.apache.bcel.generic#BranchHandleTestCase', 'testGetBHnull')": [
+                        52
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/generic/FieldAnnotationsTestCase.java": {
+                "old": {
+                    "('org.apache.bcel.generic#FieldAnnotationsTestCase', 'testFieldAnnotationModification')": [
+                        111,
+                        112
+                    ],
+                    "('org.apache.bcel.generic#FieldAnnotationsTestCase', 'checkAnnotationEntry(AnnotationEntry,String,String,String)')": [
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30,
+                        31,
+                        32,
+                        33
+                    ],
+                    "('org.apache.bcel.generic#FieldAnnotationsTestCase', None)": [
+                        40,
+                        52,
+                        73
+                    ],
+                    "('org.apache.bcel.generic#FieldAnnotationsTestCase', 'testFieldAnnotationModification')": [
+                        118,
+                        119,
+                        120
+                    ],
+                    "('org.apache.bcel.generic#FieldAnnotationsTestCase', 'checkAnnotationEntry(AnnotationEntry,String,String,String)')": [
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/generic/GeneratingAnnotatedClassesTestCase.java": {
+                "old": {
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testGenerateClassLevelAnnotations')": [
+                        88,
+                        89,
+                        91,
+                        93,
+                        94,
+                        95,
+                        97,
+                        98,
+                        101,
+                        102,
+                        103,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testGenerateMethodLevelAnnotations1')": [
+                        127,
+                        128,
+                        129,
+                        134,
+                        135,
+                        140,
+                        141,
+                        146,
+                        147
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testGenerateMethodLevelAnnotations2')": [
+                        171,
+                        172,
+                        173,
+                        176,
+                        177,
+                        178,
+                        188,
+                        189,
+                        191,
+                        192,
+                        193,
+                        195,
+                        196,
+                        197
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testTransformClassToClassGen_SimpleTypes')": [
+                        213,
+                        214
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testTransformClassToClassGen_EnumType')": [
+                        228,
+                        229
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testTransformClassToClassGen_ArrayAndAnnotationTypes')": [
+                        243,
+                        244,
+                        246,
+                        247,
+                        250,
+                        251,
+                        253,
+                        254,
+                        255,
+                        258,
+                        259,
+                        260,
+                        262,
+                        263,
+                        264,
+                        265
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'assertMethodAnnotations(Method,int,int)')": [
+                        297
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'assertParameterAnnotations(Method,int)')": [
+                        317,
+                        324
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testTransformComplexClassToClassGen')": [
+                        350,
+                        351,
+                        364,
+                        365
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testModifyingClasses1')": [
+                        378,
+                        379,
+                        380
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testModifyingClasses2')": [
+                        395,
+                        396,
+                        397
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35,
+                        36,
+                        37,
+                        38,
+                        39
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', None)": [
+                        77,
+                        119,
+                        160,
+                        209,
+                        225,
+                        241,
+                        347,
+                        376,
+                        393
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testGenerateClassLevelAnnotations')": [
+                        94,
+                        95,
+                        97,
+                        99,
+                        100,
+                        102,
+                        105,
+                        106,
+                        108,
+                        109,
+                        110,
+                        111
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testGenerateMethodLevelAnnotations1')": [
+                        130,
+                        131,
+                        136,
+                        137,
+                        142,
+                        143,
+                        148,
+                        149
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testGenerateMethodLevelAnnotations2')": [
+                        174,
+                        175,
+                        176,
+                        179,
+                        180,
+                        181,
+                        191,
+                        192,
+                        194,
+                        195,
+                        196,
+                        198,
+                        199,
+                        200
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testTransformClassToClassGen_SimpleTypes')": [
+                        217,
+                        218
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testTransformClassToClassGen_EnumType')": [
+                        233,
+                        234
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testTransformClassToClassGen_ArrayAndAnnotationTypes')": [
+                        249,
+                        250,
+                        252,
+                        253,
+                        256,
+                        257,
+                        259,
+                        260,
+                        263,
+                        264,
+                        266,
+                        267,
+                        268,
+                        269
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'assertMethodAnnotations(Method,int,int)')": [
+                        301
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'assertParameterAnnotations(Method,int)')": [
+                        321,
+                        328
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testTransformComplexClassToClassGen')": [
+                        355,
+                        356,
+                        369
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testModifyingClasses1')": [
+                        383,
+                        384
+                    ],
+                    "('org.apache.bcel.generic#GeneratingAnnotatedClassesTestCase', 'testModifyingClasses2')": [
+                        400,
+                        401
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/generic/InstructionHandleTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21
+                    ],
+                    "('org.apache.bcel.generic#InstructionHandleTestCase', None)": [
+                        27,
+                        43,
+                        51
+                    ],
+                    "('org.apache.bcel.generic#InstructionHandleTestCase', 'testsetInstructionNull')": [
+                        30,
+                        31,
+                        32
+                    ],
+                    "('org.apache.bcel.generic#InstructionHandleTestCase', 'testsetInstructionI')": [
+                        38,
+                        40
+                    ],
+                    "('org.apache.bcel.generic#InstructionHandleTestCase', 'testsetInstructionnotI')": [
+                        46,
+                        47,
+                        48
+                    ],
+                    "('org.apache.bcel.generic#InstructionHandleTestCase', 'testGetIHnull')": [
+                        53
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23
+                    ],
+                    "('org.apache.bcel.generic#InstructionHandleTestCase', None)": [
+                        29,
+                        44,
+                        51
+                    ],
+                    "('org.apache.bcel.generic#InstructionHandleTestCase', 'testsetInstructionNull')": [
+                        32,
+                        33
+                    ],
+                    "('org.apache.bcel.generic#InstructionHandleTestCase', 'testsetInstructionI')": [
+                        39,
+                        41
+                    ],
+                    "('org.apache.bcel.generic#InstructionHandleTestCase', 'testsetInstructionnotI')": [
+                        47,
+                        48
+                    ],
+                    "('org.apache.bcel.generic#InstructionHandleTestCase', 'testGetIHnull')": [
+                        53
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/generic/JdkGenericDumpTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        36,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        76
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', None)": [
+                        95,
+                        133,
+                        148,
+                        151,
+                        152,
+                        160,
+                        161,
+                        170,
+                        171,
+                        175,
+                        176,
+                        183,
+                        184,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        260,
+                        270,
+                        280
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'addAllJavaHomesOnWindows(String,Set)')": [
+                        130,
+                        132
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'data')": [
+                        149,
+                        150
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'findJavaHomes')": [
+                        153,
+                        157,
+                        158,
+                        159
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'findJavaHomesOnWindows')": [
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'addAllJavaHomesFromKey(String,Set)')": [
+                        172,
+                        173,
+                        174
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'addAllJavaHomesFromPath(Set,String)')": [
+                        177,
+                        179,
+                        180,
+                        181,
+                        182
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'findJavaHomesOnWindows(String,String)')": [
+                        185,
+                        198
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'compare(String,Method)')": [
+                        217
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'listJdkJars')": [
+                        229
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'listJdkModules')": [
+                        234
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'testJdkJars')": [
+                        261,
+                        262
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'testJdkModules')": [
+                        271,
+                        272
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'testJreModules')": [
+                        281,
+                        282,
+                        285
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        45,
+                        57,
+                        58
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', None)": [
+                        93,
+                        152,
+                        153,
+                        160,
+                        161,
+                        166,
+                        167,
+                        173,
+                        174,
+                        244,
+                        245,
+                        255,
+                        256,
+                        266,
+                        267
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'getAllJavaHomesOnWindows(String)')": [
+                        128,
+                        130,
+                        131,
+                        132
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'findJavaHomes')": [
+                        147,
+                        151
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'findJavaHomesOnWindows')": [
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'getAllJavaHomesFromKey(String)')": [
+                        162,
+                        163,
+                        164,
+                        165
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'getAllJavaHomesFromPath(String)')": [
+                        168,
+                        170,
+                        171,
+                        172
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'findJavaHomesOnWindows(String,String)')": [
+                        175,
+                        188
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'compare(String,Method)')": [
+                        201
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'listJdkJars(String)')": [
+                        213
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'listJdkModules(String)')": [
+                        218
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'testJdkJars(String)')": [
+                        246,
+                        247
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'testJdkModules(String)')": [
+                        257,
+                        258
+                    ],
+                    "('org.apache.bcel.generic#JdkGenericDumpTestCase', 'testJreModules(String)')": [
+                        268,
+                        269,
+                        272
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/generic/MethodGenTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        26,
+                        27
+                    ],
+                    "('org.apache.bcel.generic#MethodGenTestCase', 'getMethod(Class,String)')": [
+                        64
+                    ],
+                    "('org.apache.bcel.generic#MethodGenTestCase', 'testAnnotationsAreUnpacked')": [
+                        74,
+                        76
+                    ],
+                    "('org.apache.bcel.generic#MethodGenTestCase', 'testRemoveLocalVariable')": [
+                        84,
+                        87,
+                        88,
+                        89,
+                        90,
+                        95,
+                        96,
+                        97,
+                        98
+                    ],
+                    "('org.apache.bcel.generic#MethodGenTestCase', 'testRemoveLocalVariables')": [
+                        106,
+                        109,
+                        110,
+                        111,
+                        112,
+                        117,
+                        118,
+                        119,
+                        120
+                    ],
+                    "('org.apache.bcel.generic#MethodGenTestCase', None)": [
+                        123
+                    ],
+                    "('org.apache.bcel.generic#MethodGenTestCase', 'testInvalidNullMethodBody_MailDateFormat')": [
+                        124,
+                        125
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36
+                    ],
+                    "('org.apache.bcel.generic#MethodGenTestCase', 'getMethod(Class,String)')": [
+                        71
+                    ],
+                    "('org.apache.bcel.generic#MethodGenTestCase', 'testAnnotationsAreUnpacked')": [
+                        81,
+                        83
+                    ],
+                    "('org.apache.bcel.generic#MethodGenTestCase', 'testRemoveLocalVariable')": [
+                        91,
+                        94,
+                        95,
+                        96,
+                        97,
+                        102,
+                        103,
+                        104,
+                        105
+                    ],
+                    "('org.apache.bcel.generic#MethodGenTestCase', 'testRemoveLocalVariables')": [
+                        113,
+                        116,
+                        117,
+                        118,
+                        119,
+                        124,
+                        125,
+                        126,
+                        127
+                    ],
+                    "('org.apache.bcel.generic#MethodGenTestCase', None)": [
+                        130
+                    ],
+                    "('org.apache.bcel.generic#MethodGenTestCase', 'testInvalidNullMethodBody_MailDateFormat')": [
+                        131,
+                        132
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/generic/TypeTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        20
+                    ],
+                    "('org.apache.bcel.generic#TypeTestCase', None)": [
+                        22
+                    ],
+                    "('org.apache.bcel.generic#TypeTestCase', 'testBCEL243')": [
+                        30
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        22,
+                        23
+                    ],
+                    "('org.apache.bcel.generic#TypeTestCase', None)": [
+                        24,
+                        25
+                    ],
+                    "('org.apache.bcel.generic#TypeTestCase', 'testBCEL243')": [
+                        33
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/util/BCELifierTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        29
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        28,
+                        29,
+                        30
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/util/Class2HTMLTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        27
+                    ],
+                    "('org.apache.bcel.util#Class2HTMLTestCase', None)": [
+                        29
+                    ],
+                    "('org.apache.bcel.util#Class2HTMLTestCase', 'testConvertJavaUtil')": [
+                        34
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        26
+                    ],
+                    "('org.apache.bcel.util#Class2HTMLTestCase', None)": [
+                        28,
+                        30
+                    ],
+                    "('org.apache.bcel.util#Class2HTMLTestCase', 'testConvertJavaUtil')": [
+                        34
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/util/ClassPathRepositoryTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        24
+                    ],
+                    "('org.apache.bcel.util#ClassPathRepositoryTestCase', 'verifyCaching(AbstractClassPathRepository)')": [
+                        37,
+                        39,
+                        42,
+                        43,
+                        47,
+                        51
+                    ],
+                    "('org.apache.bcel.util#ClassPathRepositoryTestCase', 'testClassPath')": [
+                        79
+                    ],
+                    "('org.apache.bcel.util#ClassPathRepositoryTestCase', None)": [
+                        83,
+                        91,
+                        99,
+                        107
+                    ],
+                    "('org.apache.bcel.util#ClassPathRepositoryTestCase', 'testNoClassNotFound')": [
+                        84,
+                        87
+                    ],
+                    "('org.apache.bcel.util#ClassPathRepositoryTestCase', 'testClassWithoutPackage')": [
+                        92,
+                        95
+                    ],
+                    "('org.apache.bcel.util#ClassPathRepositoryTestCase', 'testEmptyInput')": [
+                        100,
+                        103
+                    ],
+                    "('org.apache.bcel.util#ClassPathRepositoryTestCase', 'testNullInput')": [
+                        108,
+                        111
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28
+                    ],
+                    "('org.apache.bcel.util#ClassPathRepositoryTestCase', 'verifyCaching(AbstractClassPathRepository)')": [
+                        41,
+                        43,
+                        46,
+                        47,
+                        51,
+                        55
+                    ],
+                    "('org.apache.bcel.util#ClassPathRepositoryTestCase', 'testClassPath')": [
+                        83
+                    ],
+                    "('org.apache.bcel.util#ClassPathRepositoryTestCase', None)": [
+                        87,
+                        95,
+                        103,
+                        111
+                    ],
+                    "('org.apache.bcel.util#ClassPathRepositoryTestCase', 'testNoClassNotFound')": [
+                        88,
+                        91
+                    ],
+                    "('org.apache.bcel.util#ClassPathRepositoryTestCase', 'testClassWithoutPackage')": [
+                        96,
+                        99
+                    ],
+                    "('org.apache.bcel.util#ClassPathRepositoryTestCase', 'testEmptyInput')": [
+                        104,
+                        107
+                    ],
+                    "('org.apache.bcel.util#ClassPathRepositoryTestCase', 'testNullInput')": [
+                        112,
+                        115
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/util/ClassPathTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.bcel.util#ClassPathTestCase', 'testGetClassFile')": [
+                        30
+                    ],
+                    "('org.apache.bcel.util#ClassPathTestCase', 'testGetResource')": [
+                        34
+                    ],
+                    "('org.apache.bcel.util#ClassPathTestCase', 'testGetResourceAsStream')": [
+                        40
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27
+                    ],
+                    "('org.apache.bcel.util#ClassPathTestCase', None)": [
+                        31,
+                        36,
+                        41
+                    ],
+                    "('org.apache.bcel.util#ClassPathTestCase', 'testGetClassFile')": [
+                        33
+                    ],
+                    "('org.apache.bcel.util#ClassPathTestCase', 'testGetResource')": [
+                        38
+                    ],
+                    "('org.apache.bcel.util#ClassPathTestCase', 'testGetResourceAsStream')": [
+                        45
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/util/InstructionFinderTest.java": {
+                "new": {
+                    "(None, None)": [
+                        29,
+                        30,
+                        31
+                    ],
+                    "('org.apache.bcel.util#InstructionFinderTest', None)": [
+                        35
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/util/LruCacheClassPathRepositoryTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        26,
+                        27
+                    ],
+                    "('org.apache.bcel.util#LruCacheClassPathRepositoryTestCase', 'testCacheEviction')": [
+                        39,
+                        41,
+                        43
+                    ],
+                    "('org.apache.bcel.util#LruCacheClassPathRepositoryTestCase', 'testLeastRecentlyUsedEviction')": [
+                        56,
+                        58,
+                        61
+                    ],
+                    "('org.apache.bcel.util#LruCacheClassPathRepositoryTestCase', None)": [
+                        69
+                    ],
+                    "('org.apache.bcel.util#LruCacheClassPathRepositoryTestCase', 'testZeroCacheSize')": [
+                        72
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        28
+                    ],
+                    "('org.apache.bcel.util#LruCacheClassPathRepositoryTestCase', 'testCacheEviction')": [
+                        40,
+                        42,
+                        44
+                    ],
+                    "('org.apache.bcel.util#LruCacheClassPathRepositoryTestCase', 'testLeastRecentlyUsedEviction')": [
+                        57,
+                        59,
+                        62
+                    ],
+                    "('org.apache.bcel.util#LruCacheClassPathRepositoryTestCase', None)": [
+                        70
+                    ],
+                    "('org.apache.bcel.util#LruCacheClassPathRepositoryTestCase', 'testZeroCacheSize')": [
+                        73
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/util/ModularRuntimeImageTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        23,
+                        26,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        39
+                    ],
+                    "('org.apache.bcel.util#ModularRuntimeImageTestCase', None)": [
+                        42,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        56,
+                        63,
+                        70,
+                        76,
+                        77,
+                        78
+                    ],
+                    "('org.apache.bcel.util#ModularRuntimeImageTestCase', 'data')": [
+                        43,
+                        44
+                    ],
+                    "('org.apache.bcel.util#ModularRuntimeImageTestCase', 'testListJreModules')": [
+                        57,
+                        58,
+                        59,
+                        60
+                    ],
+                    "('org.apache.bcel.util#ModularRuntimeImageTestCase', 'testListJreModule')": [
+                        64,
+                        65,
+                        66,
+                        67
+                    ],
+                    "('org.apache.bcel.util#ModularRuntimeImageTestCase', 'testListJreModulePackageDir')": [
+                        71,
+                        72,
+                        73,
+                        74,
+                        75
+                    ],
+                    "('org.apache.bcel.util#ModularRuntimeImageTestCase', 'testListJrePackages')": [
+                        79,
+                        81,
+                        82
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33
+                    ],
+                    "('org.apache.bcel.util#ModularRuntimeImageTestCase', None)": [
+                        40,
+                        45,
+                        46,
+                        53,
+                        54,
+                        61,
+                        62,
+                        70,
+                        71
+                    ],
+                    "('org.apache.bcel.util#ModularRuntimeImageTestCase', 'before')": [
+                        41,
+                        42
+                    ],
+                    "('org.apache.bcel.util#ModularRuntimeImageTestCase', 'testListJreModules(ModularRuntimeImage)')": [
+                        47,
+                        48,
+                        49,
+                        50
+                    ],
+                    "('org.apache.bcel.util#ModularRuntimeImageTestCase', 'testListJreModule(ModularRuntimeImage)')": [
+                        55,
+                        56,
+                        57,
+                        58
+                    ],
+                    "('org.apache.bcel.util#ModularRuntimeImageTestCase', 'testListJreModulePackageDir(ModularRuntimeImage)')": [
+                        63,
+                        64,
+                        65,
+                        66,
+                        67
+                    ],
+                    "('org.apache.bcel.util#ModularRuntimeImageTestCase', 'testListJrePackages(ModularRuntimeImage)')": [
+                        72,
+                        74,
+                        75
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/AbstractVerifierTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.bcel.verifier#AbstractVerifierTestCase', None)": [
+                        26
+                    ],
+                    "('org.apache.bcel.verifier#AbstractVerifierTestCase', 'assertVerifyOK(String,String)')": [
+                        38
+                    ],
+                    "('org.apache.bcel.verifier#AbstractVerifierTestCase', 'assertVerifyRejected(String,String)')": [
+                        50
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        25,
+                        26
+                    ],
+                    "('org.apache.bcel.verifier#AbstractVerifierTestCase', None)": [
+                        28
+                    ],
+                    "('org.apache.bcel.verifier#AbstractVerifierTestCase', 'assertVerifyOK(String,String)')": [
+                        40
+                    ],
+                    "('org.apache.bcel.verifier#AbstractVerifierTestCase', 'assertVerifyRejected(String,String)')": [
+                        52
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/JiraBcel291TestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        24
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        24
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/VerifierArrayAccessTestCase.java": {
+                "new": {
+                    "(None, None)": [
+                        26
+                    ],
+                    "('org.apache.bcel.verifier#VerifierArrayAccessTestCase', None)": [
+                        30,
+                        39
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/VerifierInvokeTestCase.java": {
+                "new": {
+                    "(None, None)": [
+                        21
+                    ],
+                    "('org.apache.bcel.verifier#VerifierInvokeTestCase', None)": [
+                        25,
+                        31,
+                        36,
+                        41
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/VerifierReturnTestCase.java": {
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.bcel.verifier#VerifierReturnTestCase', None)": [
+                        28,
+                        36
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/VerifierTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.bcel.verifier#VerifierTestCase', None)": [
+                        25
+                    ],
+                    "('org.apache.bcel.verifier#VerifierTestCase', 'testDefaultMethodValidation')": [
+                        33,
+                        34,
+                        38,
+                        39
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        25
+                    ],
+                    "('org.apache.bcel.verifier#VerifierTestCase', None)": [
+                        27,
+                        29
+                    ],
+                    "('org.apache.bcel.verifier#VerifierTestCase', 'testDefaultMethodValidation')": [
+                        36,
+                        37,
+                        41,
+                        42
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/statics/Pass2VerifierTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        20
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/structurals/UninitializedObjectTypeTestCase.java": {
+                "old": {
+                    "(None, None)": [
+                        20
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/tests/TestArrayAccess02Creator.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestArrayAccess02Creator', 'createMethod_0')": [
+                        62,
+                        65
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestArrayAccess02Creator', 'createMethod_1')": [
+                        78,
+                        82,
+                        86,
+                        93
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        35
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestArrayAccess02Creator', 'createMethod_0')": [
+                        63,
+                        66
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestArrayAccess02Creator', 'createMethod_1')": [
+                        79,
+                        83,
+                        87,
+                        94
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/tests/TestArrayAccess03Creator.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestArrayAccess03Creator', 'createMethod_0')": [
+                        62,
+                        65
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestArrayAccess03Creator', 'createMethod_1')": [
+                        78,
+                        82,
+                        89
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        35
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestArrayAccess03Creator', 'createMethod_0')": [
+                        63,
+                        66
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestArrayAccess03Creator', 'createMethod_1')": [
+                        79,
+                        83,
+                        90
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/tests/TestArrayAccess04Creator.java": {
+                "old": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestArrayAccess04Creator', 'createMethod_0')": [
+                        62,
+                        65
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestArrayAccess04Creator', 'createMethod_1')": [
+                        78,
+                        82,
+                        85,
+                        90
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34,
+                        35
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestArrayAccess04Creator', 'createMethod_0')": [
+                        63,
+                        66
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestArrayAccess04Creator', 'createMethod_1')": [
+                        79,
+                        83,
+                        86,
+                        91
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/tests/TestReturn01Creator.java": {
+                "old": {
+                    "(None, None)": [
+                        32
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestReturn01Creator', 'createMethod_0')": [
+                        60,
+                        63
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestReturn01Creator', 'createMethod_1')": [
+                        76,
+                        81
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestReturn01Creator', 'createMethod_0')": [
+                        61,
+                        64
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestReturn01Creator', 'createMethod_1')": [
+                        77,
+                        82
+                    ]
+                }
+            },
+            "src/test/java/org/apache/bcel/verifier/tests/TestReturn03Creator.java": {
+                "old": {
+                    "(None, None)": [
+                        32
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestReturn03Creator', 'createMethod_0')": [
+                        60,
+                        63
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestReturn03Creator', 'createMethod_1')": [
+                        76
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestReturn03Creator', 'createMethod_0')": [
+                        61,
+                        64
+                    ],
+                    "('org.apache.bcel.verifier.tests#TestReturn03Creator', 'createMethod_1')": [
+                        77
+                    ]
+                }
+            }
+        }
+    }
+}

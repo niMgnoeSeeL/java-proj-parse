@@ -1,0 +1,1173 @@
+{
+    "52bcd1b58bb5ba151c1dc577a649cab9135f2a20": {
+        "authored_data": "2009 Dec 01 16:01",
+        "commit.message": "[MRM-1292] replace the dependency graph by a maven-dependency-tree based implementation (maven-project is not used)\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/branches/MRM-1025@885812 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "e195adc06c86dafef0353f49993bd836963ce848",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/tags/DependencyTree.java": {
+                "old": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        42,
+                        43,
+                        44,
+                        49,
+                        52,
+                        53
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DependencyTree', None)": [
+                        56,
+                        59,
+                        62,
+                        63,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        75,
+                        76,
+                        77,
+                        82,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        157,
+                        158,
+                        159,
+                        160,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        196,
+                        199,
+                        200,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        255,
+                        256,
+                        257
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DependencyTree', 'gatherTreeList(String,String,String,String,PageContext)')": [
+                        118,
+                        119,
+                        123,
+                        124,
+                        131,
+                        132,
+                        139,
+                        140,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DependencyTree', 'fetchGraph(String,String,String)')": [
+                        234,
+                        235,
+                        236,
+                        237,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DependencyTree', 'initialize')": [
+                        258,
+                        259,
+                        260,
+                        261,
+                        262
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26,
+                        27,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        41,
+                        44,
+                        210
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DependencyTree', None)": [
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        58,
+                        59,
+                        60,
+                        66,
+                        67,
+                        68,
+                        73,
+                        140,
+                        141,
+                        145,
+                        146,
+                        147,
+                        148,
+                        154,
+                        155,
+                        156,
+                        157,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        177,
+                        180,
+                        181,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DependencyTree', 'gatherTreeList(String,String,String)')": [
+                        99,
+                        100,
+                        104,
+                        105,
+                        112,
+                        113,
+                        120,
+                        121,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DependencyTree', 'getPrincipal')": [
+                        142,
+                        143,
+                        144
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/maven/archiva/web/tags/DependencyTreeTag.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.tags#DependencyTreeTag', 'doAfterBody')": [
+                        86
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DependencyTreeTag', 'doStartTag')": [
+                        135,
+                        144
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.web.tags#DependencyTreeTag', 'doAfterBody')": [
+                        86
+                    ],
+                    "('org.apache.maven.archiva.web.tags#DependencyTreeTag', 'doStartTag')": [
+                        135,
+                        144
+                    ]
+                }
+            },
+            "archiva-modules/plugins/maven2-repository/src/test/java/org/apache/archiva/metadata/repository/storage/maven2/Maven2RepositoryMetadataResolverTest.java": {
+                "old": {
+                    "('org.apache.archiva.metadata.repository.storage.maven2#Maven2RepositoryMetadataResolverTest', 'testGetNamespaces')": [
+                        234
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.metadata.repository.storage.maven2#Maven2RepositoryMetadataResolverTest', 'testGetNamespaces')": [
+                        234,
+                        243,
+                        244,
+                        245
+                    ]
+                }
+            }
+        }
+    },
+    "e195adc06c86dafef0353f49993bd836963ce848": {
+        "authored_data": "2009 Dec 01 00:58",
+        "commit.message": "[MRM-1025] remove some consumers that don't actually do anything\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/branches/MRM-1025@885638 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "504f80e6a8e548a590e6723a697863d397b2689c",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/test/java/org/apache/archiva/web/xmlrpc/services/SearchServiceImplTest.java": {
+                "old": {
+                    "(None, None)": [
+                        47
+                    ]
+                }
+            }
+        }
+    },
+    "1cf0f9f7a53bd63015d064c0557342fc9c6e3a30": {
+        "authored_data": "2009 Nov 30 15:51",
+        "commit.message": "[MRM-1282] correct updating of facets in the file-based repository\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/branches/MRM-1025@885466 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "d0aaf12ca1a856ea40826e4869c59644cf088c65",
+        "changes": {
+            "archiva-modules/plugins/metadata-repository-file/src/main/java/org/apache/archiva/metadata/repository/file/FileMetadataRepository.java": {
+                "old": {
+                    "('org.apache.archiva.metadata.repository.file#FileMetadataRepository', 'updateProjectVersion(String,String,String,ProjectVersionMetadata)')": [
+                        119,
+                        179
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.metadata.repository.file#FileMetadataRepository', 'updateProjectVersion(String,String,String,ProjectVersionMetadata)')": [
+                        119,
+                        179,
+                        180,
+                        181,
+                        182
+                    ],
+                    "('org.apache.archiva.metadata.repository.file#FileMetadataRepository', None)": [
+                        619
+                    ],
+                    "('org.apache.archiva.metadata.repository.file#FileMetadataRepository', 'setMetadataFacetFactories(Map)')": [
+                        620,
+                        621,
+                        622
+                    ],
+                    "(None, None)": [
+                        623
+                    ]
+                }
+            },
+            "archiva-modules/plugins/metadata-repository-file/src/test/java/org/apache/archiva/metadata/repository/file/FileMetadataRepositoryTest.java": {
+                "old": {
+                    "('org.apache.archiva.metadata.repository.file#FileMetadataRepositoryTest', 'testUpdateProjectVersionMetadataWithNoOtherArchives')": [
+                        63
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        6,
+                        9,
+                        10,
+                        134,
+                        135
+                    ],
+                    "('org.apache.archiva.metadata.repository.file#FileMetadataRepositoryTest', None)": [
+                        46,
+                        47,
+                        75,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133
+                    ],
+                    "('org.apache.archiva.metadata.repository.file#FileMetadataRepositoryTest', 'testUpdateProjectVersionMetadataWithNoOtherArchives')": [
+                        68
+                    ],
+                    "('org.apache.archiva.metadata.repository.file#FileMetadataRepositoryTest', 'testUpdateProjectVersionMetadataWithExistingFacets')": [
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103
+                    ]
+                }
+            }
+        }
+    },
+    "d0aaf12ca1a856ea40826e4869c59644cf088c65": {
+        "authored_data": "2009 Nov 30 14:38",
+        "commit.message": "[MRM-1288] remove RepositoryBrowsing interface that is no longer used\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/branches/MRM-1025@885436 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "3278cdc8ae95cc9c59f431bec145d9a01b2cf014",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-webapp/src/test/java/org/apache/maven/archiva/web/action/BrowseActionTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.action#BrowseActionTest', None)": [
+                        314
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/main/java/org/apache/archiva/web/xmlrpc/services/SearchServiceImpl.java": {
+                "old": {
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', 'getArtifactVersionsByDate(String,String,String,Date)')": [
+                        217
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', 'getArtifactVersionsByDate(String,String,String,Date)')": [
+                        217
+                    ]
+                }
+            }
+        }
+    },
+    "3278cdc8ae95cc9c59f431bec145d9a01b2cf014": {
+        "authored_data": "2009 Nov 30 14:19",
+        "commit.message": "[MRM-1288] move quickSearch from repository browsing to metadata content repository API\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/branches/MRM-1025@885430 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "bfc001b7e1dcd0c983219e301c2b98b00908f4e3",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/main/java/org/apache/archiva/web/xmlrpc/services/SearchServiceImpl.java": {
+                "old": {
+                    "(None, None)": [
+                        40,
+                        42,
+                        43,
+                        47
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', None)": [
+                        75,
+                        76,
+                        80,
+                        81,
+                        85
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', 'quickSearch(String)')": [
+                        117,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        130,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        34
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', None)": [
+                        75
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', 'quickSearch(String)')": [
+                        110,
+                        111,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        130,
+                        131,
+                        133,
+                        134,
+                        135,
+                        136
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/test/java/org/apache/archiva/web/xmlrpc/services/SearchServiceImplTest.java": {
+                "old": {
+                    "(None, None)": [
+                        43
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', None)": [
+                        78,
+                        79,
+                        80,
+                        81
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'setUp')": [
+                        101,
+                        102,
+                        103,
+                        111,
+                        112
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testQuickSearchModelPackagingIsUsed')": [
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        158,
+                        159,
+                        160,
+                        161,
+                        164,
+                        171
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testQuickSearchDefaultPackagingIsUsed')": [
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        226,
+                        233,
+                        244,
+                        245
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testQuickSearchArtifactRegularSearch')": [
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        295,
+                        302
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'setUp')": [
+                        106,
+                        107
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testQuickSearchModelPackagingIsUsed')": [
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        153,
+                        160
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testQuickSearchDefaultPackagingIsUsed')": [
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        217,
+                        224,
+                        235
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testQuickSearchArtifactRegularSearch')": [
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        281,
+                        288
+                    ]
+                }
+            }
+        }
+    },
+    "bfc001b7e1dcd0c983219e301c2b98b00908f4e3": {
+        "authored_data": "2009 Nov 30 04:23",
+        "commit.message": "[MRM-1288] move getArtifactVersions() method to new repository API\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/branches/MRM-1025@885331 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "2ca1b798440dfd9db060f9972fa702cb15b97cca",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-api/src/main/java/org/apache/archiva/web/xmlrpc/api/beans/Artifact.java": {
+                "new": {
+                    "('org.apache.archiva.web.xmlrpc.api.beans#Artifact', None)": [
+                        97,
+                        102,
+                        103
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.api.beans#Artifact', 'toString')": [
+                        98,
+                        99,
+                        100,
+                        101
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/main/java/org/apache/archiva/web/xmlrpc/services/SearchServiceImpl.java": {
+                "old": {
+                    "(None, None)": [
+                        43
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', 'getArtifactVersions(String,String)')": [
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', None)": [
+                        266
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', 'getArtifactVersions(String,String)')": [
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/test/java/org/apache/archiva/web/xmlrpc/services/SearchServiceImplTest.java": {
+                "old": {
+                    "(None, None)": [
+                        42
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testGetArtifactVersionsArtifactExists')": [
+                        374,
+                        375,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        395,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        424,
+                        425,
+                        426,
+                        427,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        461,
+                        462
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testGetArtifactVersionsArtifactExists')": [
+                        378,
+                        379,
+                        380,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        392,
+                        396,
+                        397,
+                        398,
+                        399,
+                        400,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410
+                    ]
+                }
+            }
+        }
+    },
+    "00fb9a045ec6c98f1d10b01d3598a9c12ac53363": {
+        "authored_data": "2009 Nov 30 04:01",
+        "commit.message": "throw an exception from unimplemented methods instead of silently returning empty results\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@885330 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "9aabebcdf529baa4322142a5ab87696c0485e451",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/main/java/org/apache/archiva/web/xmlrpc/services/SearchServiceImpl.java": {
+                "old": {
+                    "(None, None)": [
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', 'getArtifactVersionsByDate(String,String,String,Date)')": [
+                        216
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', 'getDependencyTree(String,String,String)')": [
+                        249
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', 'getArtifactVersionsByDate(String,String,String,Date)')": [
+                        203
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', None)": [
+                        204,
+                        205,
+                        239
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', 'getDependencyTree(String,String,String)')": [
+                        238
+                    ]
+                }
+            }
+        }
+    },
+    "2ca1b798440dfd9db060f9972fa702cb15b97cca": {
+        "authored_data": "2009 Nov 30 03:50",
+        "commit.message": "[MRM-1288] move getDependencies() method to new repository API\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/branches/MRM-1025@885328 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "711db6f5afaca08a2758918c445ca1298d06edd4",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-api/src/main/java/org/apache/archiva/web/xmlrpc/api/beans/Dependency.java": {
+                "old": {
+                    "('org.apache.archiva.web.xmlrpc.api.beans#Dependency', None)": [
+                        41
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.web.xmlrpc.api.beans#Dependency', None)": [
+                        41,
+                        42,
+                        48,
+                        49,
+                        50,
+                        90,
+                        91,
+                        92,
+                        102,
+                        103
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.api.beans#Dependency', 'toString')": [
+                        43,
+                        44,
+                        45,
+                        46,
+                        47
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.api.beans#Dependency', 'equals(Object)')": [
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.api.beans#Dependency', 'hashCode')": [
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/main/java/org/apache/archiva/web/xmlrpc/services/SearchServiceImpl.java": {
+                "old": {
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', 'getDependencies(String,String,String)')": [
+                        235,
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImpl', 'getDependencies(String,String,String)')": [
+                        238,
+                        239,
+                        240,
+                        241,
+                        242,
+                        243,
+                        244,
+                        245,
+                        246,
+                        247,
+                        248,
+                        249,
+                        250,
+                        251,
+                        252,
+                        253,
+                        254,
+                        255
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/test/java/org/apache/archiva/web/xmlrpc/services/SearchServiceImplTest.java": {
+                "old": {
+                    "(None, None)": [
+                        41
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testGetDependenciesArtifactExists')": [
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        499,
+                        507,
+                        508,
+                        509,
+                        512,
+                        518
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testGetDependenciesArtifactDoesNotExist')": [
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        551
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testGetDependenciesArtifactExists')": [
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        495,
+                        503,
+                        504,
+                        505,
+                        508,
+                        514,
+                        519,
+                        520,
+                        521
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testGetDependenciesArtifactDoesNotExist')": [
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        534,
+                        535,
+                        548
+                    ]
+                }
+            }
+        }
+    },
+    "711db6f5afaca08a2758918c445ca1298d06edd4": {
+        "authored_data": "2009 Nov 30 03:32",
+        "commit.message": "[MRM-1288] correction to adjusted getDependees() test\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/branches/MRM-1025@885326 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "112223260ede1dc2e0d91e6723e151acc42fca41",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-xmlrpc/archiva-xmlrpc-services/src/test/java/org/apache/archiva/web/xmlrpc/services/SearchServiceImplTest.java": {
+                "old": {
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testGetDependeesArtifactDoesNotExist')": [
+                        609,
+                        610,
+                        611,
+                        612,
+                        613,
+                        617,
+                        620,
+                        621,
+                        622,
+                        623,
+                        624,
+                        625,
+                        626,
+                        627,
+                        628,
+                        629,
+                        630,
+                        631,
+                        632,
+                        633
+                    ],
+                    "(None, None)": [
+                        634
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.archiva.web.xmlrpc.services#SearchServiceImplTest', 'testGetDependeesArtifactDoesNotExist')": [
+                        610,
+                        611,
+                        612,
+                        613,
+                        614,
+                        615,
+                        619,
+                        622,
+                        623,
+                        624,
+                        625,
+                        626,
+                        627
+                    ]
+                }
+            }
+        }
+    }
+}

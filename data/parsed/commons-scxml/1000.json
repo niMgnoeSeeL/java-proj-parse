@@ -1,0 +1,2331 @@
+{
+    "bd1f5640ff8eef140eb7f8c78f23eeae6333f1c4": {
+        "authored_data": "2006 Jun 20 06:33",
+        "commit.message": "Listen to the invoked state machine's execution.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/scxml/trunk@415522 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Rahul Akolkar",
+        "pcid": "4bdcf5423dccd43930109eb9fd23c13307daa176",
+        "changes": {
+            "src/main/java/org/apache/commons/scxml/invoke/SimpleSCXMLInvoker.java": {
+                "new": {
+                    "(None, None)": [
+                        32
+                    ],
+                    "('org.apache.commons.scxml.invoke#SimpleSCXMLInvoker', 'invoke(String,Map)')": [
+                        106
+                    ]
+                }
+            }
+        }
+    },
+    "8f49be2bef350f3f97851283d0f84ca5e59d833f": {
+        "authored_data": "2006 Jun 20 06:06",
+        "commit.message": "Implemented <invoke> (Section 4.4) and its children <param> (Section 4.5) and <finalize> (Section 4.6) -- all sections from the January 06 W3C WD [ http://www.w3.org/TR/scxml/ ]. With this addition, Commons SCXML aligns with the Jan '06 WD.\n\nThe primary addition is the Invoker interface, which is used to define the possible interactions between the parent state machine (executor) and the types of invocable activities. Invocable activities must first register an Invoker implementation class for the appropriate \"targettype\" (attribute of <invoke>) with the parent SCXMLExecutor.\n\nThe communication link between the parent state machine executor and the invoked activity is a bi-directional events pipe. All events triggered on the parent state machine get forwarded to the invoked activity. The processing semantics for these events depend upon the \"targettype\", and thereby vary per concrete implementation of the Invoker interface.\n\nThe Invoker \"lifecycle\" is outlined below: \n\n * Instantiation via Class.newInstance() (Invoker implementation requires accessible constructor).\n * Configuration (setters for parent state ID and SCInstance).\n * Initiation of invoked activity via invoke() method, passing the source URI and the map of params.\n * Zero or more bi-directional event triggers.\n * Either completion or cancellation.\n\nThese additions introduce backwards incompatible changes to the SCXMLSemantics interface (two new methods).\n\nI will bring up the couple of open issues (such as event names TBD in WD and handling invocation failure) at the related W3C face to face meeting later this week.\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/scxml/trunk@415512 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Rahul Akolkar",
+        "pcid": "d615d66d5f87994a8d03eae0235ed530099b42cb",
+        "changes": {
+            "src/main/java/org/apache/commons/scxml/SCInstance.java": {
+                "old": {
+                    "('org.apache.commons.scxml#SCInstance', None)": [
+                        65,
+                        66
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        351,
+                        352
+                    ],
+                    "('org.apache.commons.scxml#SCInstance', None)": [
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        84,
+                        85,
+                        86,
+                        87,
+                        91,
+                        92,
+                        95,
+                        256,
+                        257,
+                        258,
+                        259,
+                        260,
+                        261,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        318,
+                        319,
+                        320,
+                        321,
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        348
+                    ],
+                    "('org.apache.commons.scxml#SCInstance', 'getExecutor')": [
+                        262,
+                        263
+                    ],
+                    "('org.apache.commons.scxml#SCInstance', 'registerInvokerClass(String,Class)')": [
+                        273,
+                        274,
+                        275
+                    ],
+                    "('org.apache.commons.scxml#SCInstance', 'unregisterInvokerClass(String)')": [
+                        285,
+                        286
+                    ],
+                    "('org.apache.commons.scxml#SCInstance', 'newInvoker(String)')": [
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317
+                    ],
+                    "('org.apache.commons.scxml#SCInstance', 'getInvoker(TransitionTarget)')": [
+                        329,
+                        330
+                    ],
+                    "('org.apache.commons.scxml#SCInstance', 'setInvoker(TransitionTarget,Invoker)')": [
+                        339,
+                        340,
+                        341
+                    ],
+                    "('org.apache.commons.scxml#SCInstance', 'getInvokers')": [
+                        349,
+                        350
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/scxml/SCXMLExecutor.java": {
+                "old": {
+                    "('org.apache.commons.scxml#SCXMLExecutor', 'triggerEvents(TriggerEvent)')": [
+                        103,
+                        106,
+                        109,
+                        111,
+                        118,
+                        125
+                    ],
+                    "('org.apache.commons.scxml#SCXMLExecutor', None)": [
+                        187
+                    ],
+                    "('org.apache.commons.scxml#SCXMLExecutor', 'reset')": [
+                        201
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ],
+                    "('org.apache.commons.scxml#SCXMLExecutor', 'triggerEvents(TriggerEvent)')": [
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        114,
+                        117,
+                        119,
+                        120,
+                        127,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138
+                    ],
+                    "('org.apache.commons.scxml#SCXMLExecutor', None)": [
+                        200,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496
+                    ],
+                    "('org.apache.commons.scxml#SCXMLExecutor', 'reset')": [
+                        257,
+                        258
+                    ],
+                    "('org.apache.commons.scxml#SCXMLExecutor', 'registerInvokerClass(String,Class)')": [
+                        485,
+                        486,
+                        487
+                    ],
+                    "('org.apache.commons.scxml#SCXMLExecutor', 'unregisterInvokerClass(String)')": [
+                        497,
+                        498
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/scxml/SCXMLSemantics.java": {
+                "old": {
+                    "(None, None)": [
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        200
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/scxml/io/ModelUpdater.java": {
+                "new": {
+                    "(None, None)": [
+                        29,
+                        366,
+                        368
+                    ],
+                    "('org.apache.commons.scxml.io#ModelUpdater', 'updateState(State,Map)')": [
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193
+                    ],
+                    "('org.apache.commons.scxml.io#ModelUpdater', None)": [
+                        300,
+                        301,
+                        302,
+                        303,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        345,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/scxml/io/SCXMLDigester.java": {
+                "new": {
+                    "(None, None)": [
+                        53,
+                        57,
+                        63,
+                        1455,
+                        1456,
+                        1457
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', None)": [
+                        519,
+                        520,
+                        521,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        798,
+                        799,
+                        800,
+                        801,
+                        802,
+                        803,
+                        804,
+                        805,
+                        806,
+                        807,
+                        808,
+                        809,
+                        810,
+                        1405,
+                        1406,
+                        1407,
+                        1408,
+                        1409,
+                        1410,
+                        1411,
+                        1412,
+                        1413,
+                        1414,
+                        1415,
+                        1416,
+                        1417,
+                        1418,
+                        1419,
+                        1420,
+                        1421,
+                        1422,
+                        1423,
+                        1424,
+                        1425,
+                        1426,
+                        1427,
+                        1428,
+                        1429,
+                        1430,
+                        1431,
+                        1432,
+                        1433,
+                        1434,
+                        1435,
+                        1436,
+                        1437,
+                        1438,
+                        1439,
+                        1440,
+                        1441,
+                        1442,
+                        1443,
+                        1444,
+                        1445,
+                        1446,
+                        1447,
+                        1448,
+                        1449,
+                        1450,
+                        1451,
+                        1452,
+                        1453,
+                        1454
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'initRules(SCXML,PathResolver,List)')": [
+                        701
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addStateRules(String,ExtendedBaseRules,List,SCXML,PathResolver,int)')": [
+                        726
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addInvokeRules(String,ExtendedBaseRules,List,PathResolver,SCXML)')": [
+                        811,
+                        812,
+                        813,
+                        814,
+                        815,
+                        816,
+                        817,
+                        818,
+                        819,
+                        820,
+                        821,
+                        822,
+                        823,
+                        824
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/scxml/io/SCXMLSerializer.java": {
+                "old": {
+                    "('org.apache.commons.scxml.io#SCXMLSerializer', 'serializeTransitionTargetAttributes(StringBuffer,TransitionTarget)')": [
+                        499
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        47,
+                        51
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLSerializer', 'serializeState(StringBuffer,State,String)')": [
+                        151,
+                        154,
+                        155
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLSerializer', None)": [
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLSerializer', 'serializeInvoke(StringBuffer,Invoke,String)')": [
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        215,
+                        216,
+                        217,
+                        218,
+                        219,
+                        220,
+                        221,
+                        222,
+                        223,
+                        224,
+                        225,
+                        226
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLSerializer', 'serializeTransitionTargetAttributes(StringBuffer,TransitionTarget)')": [
+                        543
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/scxml/model/State.java": {
+                "old": {
+                    "('org.apache.commons.scxml.model#State', None)": [
+                        35,
+                        41
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.scxml.model#State', None)": [
+                        35,
+                        41,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147
+                    ],
+                    "('org.apache.commons.scxml.model#State', 'getInvoke')": [
+                        138,
+                        139
+                    ],
+                    "('org.apache.commons.scxml.model#State', 'setInvoke(Invoke)')": [
+                        148,
+                        149
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/scxml/semantics/SCXMLSemanticsImpl.java": {
+                "old": {
+                    "('org.apache.commons.scxml.semantics#SCXMLSemanticsImpl', 'filterTransitionsSet(Step,ErrorReporter,SCInstance)')": [
+                        297,
+                        305,
+                        306,
+                        307
+                    ],
+                    "('org.apache.commons.scxml.semantics#SCXMLSemanticsImpl', None)": [
+                        585,
+                        586,
+                        587,
+                        588,
+                        589,
+                        590,
+                        591,
+                        592,
+                        593,
+                        594,
+                        614,
+                        615,
+                        616,
+                        617
+                    ],
+                    "('org.apache.commons.scxml.semantics#SCXMLSemanticsImpl', 'eventMatch(String,Set)')": [
+                        595,
+                        596,
+                        597,
+                        598,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612,
+                        613
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24,
+                        29,
+                        34,
+                        36,
+                        39,
+                        46,
+                        47,
+                        49,
+                        52
+                    ],
+                    "('org.apache.commons.scxml.semantics#SCXMLSemanticsImpl', 'executeActions(Step,SCXML,EventDispatcher,ErrorReporter,SCInstance)')": [
+                        159,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181,
+                        182,
+                        183,
+                        184,
+                        185
+                    ],
+                    "('org.apache.commons.scxml.semantics#SCXMLSemanticsImpl', None)": [
+                        314,
+                        315,
+                        320,
+                        321,
+                        702,
+                        703,
+                        704,
+                        705,
+                        706,
+                        707,
+                        708,
+                        709,
+                        710,
+                        711,
+                        712,
+                        713,
+                        714,
+                        734,
+                        735,
+                        736,
+                        737,
+                        738,
+                        739,
+                        740,
+                        741,
+                        742,
+                        743,
+                        744,
+                        745,
+                        746,
+                        747,
+                        748,
+                        815,
+                        816,
+                        817,
+                        818,
+                        819,
+                        820,
+                        821,
+                        822,
+                        823,
+                        824,
+                        825,
+                        826,
+                        827,
+                        828,
+                        829,
+                        849,
+                        850,
+                        851,
+                        852,
+                        853,
+                        854,
+                        855,
+                        856,
+                        857,
+                        858,
+                        859,
+                        860,
+                        861,
+                        875
+                    ],
+                    "('org.apache.commons.scxml.semantics#SCXMLSemanticsImpl', 'filterTransitionsSet(Step,EventDispatcher,ErrorReporter,SCInstance)')": [
+                        324,
+                        325,
+                        326,
+                        334,
+                        335,
+                        346,
+                        347,
+                        348,
+                        349,
+                        350,
+                        351,
+                        352,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        366
+                    ],
+                    "('org.apache.commons.scxml.semantics#SCXMLSemanticsImpl', 'processInvokes(TriggerEvent,ErrorReporter,SCInstance)')": [
+                        715,
+                        716,
+                        717,
+                        718,
+                        719,
+                        720,
+                        721,
+                        722,
+                        723,
+                        724,
+                        725,
+                        726,
+                        727,
+                        728,
+                        729,
+                        730,
+                        731,
+                        732,
+                        733
+                    ],
+                    "('org.apache.commons.scxml.semantics#SCXMLSemanticsImpl', 'initiateInvokes(Step,ErrorReporter,SCInstance)')": [
+                        749,
+                        750,
+                        751,
+                        752,
+                        753,
+                        754,
+                        755,
+                        756,
+                        757,
+                        758,
+                        759,
+                        760,
+                        761,
+                        762,
+                        763,
+                        764,
+                        765,
+                        766,
+                        767,
+                        768,
+                        769,
+                        770,
+                        771,
+                        772,
+                        773,
+                        774,
+                        775,
+                        776,
+                        777,
+                        778,
+                        779,
+                        780,
+                        781,
+                        782,
+                        783,
+                        784,
+                        785,
+                        786,
+                        787,
+                        788,
+                        789,
+                        790,
+                        791,
+                        792,
+                        793,
+                        794,
+                        795,
+                        796,
+                        797,
+                        798,
+                        799,
+                        800,
+                        801,
+                        802,
+                        803,
+                        804,
+                        805,
+                        806,
+                        807,
+                        808,
+                        809,
+                        810,
+                        811,
+                        812,
+                        813,
+                        814
+                    ],
+                    "('org.apache.commons.scxml.semantics#SCXMLSemanticsImpl', 'eventMatch(String,Set)')": [
+                        830,
+                        831,
+                        832,
+                        833,
+                        834,
+                        835,
+                        836,
+                        837,
+                        838,
+                        839,
+                        840,
+                        841,
+                        842,
+                        843,
+                        844,
+                        845,
+                        846,
+                        847,
+                        848
+                    ],
+                    "('org.apache.commons.scxml.semantics#SCXMLSemanticsImpl', 'finalizeMatch(String,Set)')": [
+                        862,
+                        863,
+                        864,
+                        865,
+                        866,
+                        867,
+                        868,
+                        869,
+                        870,
+                        871,
+                        872,
+                        873,
+                        874
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/scxml/test/StandaloneUtils.java": {
+                "old": {
+                    "('org.apache.commons.scxml.test#StandaloneUtils', 'execute(String,Evaluator)')": [
+                        89
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35
+                    ],
+                    "('org.apache.commons.scxml.test#StandaloneUtils', 'execute(String,Evaluator)')": [
+                        90
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/scxml/AllSCXMLTestSuite.java": {
+                "new": {
+                    "(None, None)": [
+                        28
+                    ],
+                    "('org.apache.commons.scxml#AllSCXMLTestSuite', 'suite')": [
+                        66
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/scxml/SCInstanceTest.java": {
+                "old": {
+                    "('org.apache.commons.scxml#SCInstanceTest', 'setUp')": [
+                        50
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.scxml#SCInstanceTest', 'setUp')": [
+                        50
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/scxml/SCXMLTestHelper.java": {
+                "new": {
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'digest(URL,ErrorHandler,List)')": [
+                        61,
+                        62
+                    ],
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'fireEvent(SCXMLExecutor,String)')": [
+                        182,
+                        183
+                    ],
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'fireEvent(SCXMLExecutor,TriggerEvent)')": [
+                        194,
+                        195
+                    ],
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'fireEvents(SCXMLExecutor,TriggerEvent)')": [
+                        205,
+                        206
+                    ]
+                }
+            }
+        }
+    },
+    "a55ed3b8a6fc5b78070f77704f6bce7ce7862c75": {
+        "authored_data": "2006 May 18 01:16",
+        "commit.message": "1) External document digester did not process custom actions (fix introduces a backwards incompatible change). Documentation and test cases have been updated. A wiki page has been created to note such changes as we move towards the first RC.\nSCXML-8\n2) Moved the post document-parsing model updation (and checking) bits to a io package scoped ModelUpdater class\n3) Added some more utility methods to SCXMLTestHelper and SCXMLDigester\n4) Added examples and test cases of shallow and deep history, and history defaults\n5) SCXMLDigester's parsing methods now throw a ModelException (backwards incompatible change). This is one of the ways to provide better error reporting about model errors introduced by reading in a state machine from flawed SCXML documents.\n\n\n\ngit-svn-id: https://svn.apache.org/repos/asf/jakarta/commons/proper/scxml/trunk@407424 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Rahul Akolkar",
+        "pcid": "8bd64da66462f050fa77dd01e3181cdbaf9b3e81",
+        "changes": {
+            "src/main/java/org/apache/commons/scxml/env/AbstractStateMachine.java": {
+                "new": {
+                    "('org.apache.commons.scxml.env#AbstractStateMachine', None)": [
+                        132,
+                        133
+                    ]
+                }
+            },
+            "src/main/java/org/apache/commons/scxml/io/SCXMLDigester.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', None)": [
+                        93,
+                        258,
+                        259,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        304,
+                        305,
+                        306,
+                        307,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        321,
+                        345,
+                        346,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        453,
+                        454,
+                        455,
+                        456,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        472,
+                        473,
+                        474,
+                        475,
+                        476,
+                        477,
+                        478,
+                        479,
+                        480,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        495,
+                        496,
+                        497,
+                        498,
+                        499,
+                        500,
+                        501,
+                        502,
+                        503,
+                        504,
+                        505,
+                        506,
+                        507,
+                        508,
+                        514,
+                        515,
+                        533,
+                        534,
+                        821,
+                        822,
+                        823,
+                        824,
+                        825,
+                        826,
+                        827,
+                        828,
+                        829,
+                        830,
+                        831,
+                        832,
+                        833,
+                        834,
+                        835,
+                        836,
+                        930,
+                        931,
+                        932,
+                        933,
+                        934,
+                        935,
+                        936,
+                        937,
+                        938,
+                        939,
+                        940,
+                        941,
+                        1007,
+                        1008,
+                        1009,
+                        1010,
+                        1011,
+                        1012,
+                        1013,
+                        1014,
+                        1015,
+                        1016,
+                        1021,
+                        1022,
+                        1023,
+                        1024,
+                        1025,
+                        1026,
+                        1027,
+                        1028,
+                        1029,
+                        1044,
+                        1045,
+                        1046,
+                        1047,
+                        1048,
+                        1049,
+                        1050,
+                        1051,
+                        1052,
+                        1060,
+                        1061,
+                        1062,
+                        1063,
+                        1064,
+                        1065,
+                        1066,
+                        1067,
+                        1068,
+                        1069,
+                        1284,
+                        1285,
+                        1307,
+                        1310
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'digest(URL,ErrorHandler)')": [
+                        116,
+                        120,
+                        139
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'digest(String,ErrorHandler,PathResolver)')": [
+                        167,
+                        168,
+                        171,
+                        190
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'digest(InputSource,ErrorHandler)')": [
+                        221,
+                        222,
+                        223,
+                        224,
+                        235,
+                        240
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'newInstance(SCXML,PathResolver)')": [
+                        272,
+                        273
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'updateSCXML(SCXML)')": [
+                        285,
+                        286,
+                        287,
+                        288,
+                        289,
+                        290,
+                        291,
+                        292,
+                        293,
+                        294,
+                        295,
+                        296,
+                        297,
+                        298,
+                        299,
+                        300,
+                        301,
+                        302,
+                        303
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addCustomAction(Digester,String,String,Class)')": [
+                        322,
+                        323,
+                        324,
+                        325,
+                        326,
+                        327,
+                        328,
+                        329,
+                        330,
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        344
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'initRules(SCXML,PathResolver)')": [
+                        537,
+                        550,
+                        553,
+                        557,
+                        560,
+                        564,
+                        567
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addStateRules(String,ExtendedBaseRules,SCXML,PathResolver,int)')": [
+                        585,
+                        586,
+                        588,
+                        590,
+                        591,
+                        593,
+                        594
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addParallelRules(String,ExtendedBaseRules,SCXML)')": [
+                        607,
+                        610
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addStatePropertiesRules(String,ExtendedBaseRules,PathResolver)')": [
+                        624,
+                        627
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addDatamodelRules(String,ExtendedBaseRules,SCXML,PathResolver)')": [
+                        651,
+                        652
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addInitialRules(String,ExtendedBaseRules,PathResolver,SCXML)')": [
+                        667,
+                        668,
+                        670,
+                        672
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addHistoryRules(String,ExtendedBaseRules,PathResolver,SCXML)')": [
+                        686,
+                        687,
+                        689,
+                        693
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addPseudoStatePropertiesRules(String,ExtendedBaseRules,PathResolver)')": [
+                        707,
+                        710
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addTransitionRules(String,ExtendedBaseRules,String)')": [
+                        751,
+                        757
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addHandlerRules(String,ExtendedBaseRules)')": [
+                        778,
+                        780,
+                        783
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addActionRules(String,ExtendedBaseRules)')": [
+                        795
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addSendRulesTuple(String,ExtendedBaseRules)')": [
+                        819,
+                        820
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addCustomActionRules(String,ExtendedBaseRules,Class,boolean)')": [
+                        837,
+                        838,
+                        839,
+                        840,
+                        841,
+                        842,
+                        843,
+                        844,
+                        845,
+                        846,
+                        847
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addCustomActionRulesTuple(String,ExtendedBaseRules,Class,boolean)')": [
+                        871,
+                        872
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addIfRules(String,ExtendedBaseRules)')": [
+                        885,
+                        887
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'updateState(State,Map)')": [
+                        942,
+                        943,
+                        944,
+                        945,
+                        946,
+                        947,
+                        948,
+                        949,
+                        950,
+                        951,
+                        952,
+                        953,
+                        954,
+                        955,
+                        956,
+                        957,
+                        958,
+                        959,
+                        960,
+                        961,
+                        962,
+                        963,
+                        964,
+                        965,
+                        966,
+                        967,
+                        968,
+                        969,
+                        970,
+                        971,
+                        972,
+                        973,
+                        974,
+                        975,
+                        976,
+                        977,
+                        978,
+                        979,
+                        980,
+                        981,
+                        982,
+                        983,
+                        984,
+                        985,
+                        986,
+                        987,
+                        988,
+                        989,
+                        990,
+                        991,
+                        992,
+                        993,
+                        994,
+                        995,
+                        996,
+                        997,
+                        998,
+                        999,
+                        1000,
+                        1001,
+                        1002,
+                        1003,
+                        1004,
+                        1005,
+                        1006
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'updateParallel(Parallel,Map)')": [
+                        1017,
+                        1018,
+                        1019,
+                        1020
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'updateTransition(Transition,Map)')": [
+                        1030,
+                        1031,
+                        1032,
+                        1033,
+                        1034,
+                        1035,
+                        1036,
+                        1037,
+                        1038,
+                        1039,
+                        1040,
+                        1041,
+                        1042,
+                        1043
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'logModelError(String,Object)')": [
+                        1053,
+                        1054,
+                        1055,
+                        1056,
+                        1057,
+                        1058,
+                        1059
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'getStateName(State)')": [
+                        1070,
+                        1071,
+                        1072,
+                        1073,
+                        1074,
+                        1075
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        45,
+                        57
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', None)": [
+                        94,
+                        111,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179,
+                        180,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        205,
+                        206,
+                        207,
+                        208,
+                        209,
+                        210,
+                        211,
+                        212,
+                        213,
+                        214,
+                        258,
+                        259,
+                        260,
+                        266,
+                        323,
+                        324,
+                        325,
+                        331,
+                        374,
+                        375,
+                        376,
+                        377,
+                        381,
+                        382,
+                        383,
+                        384,
+                        385,
+                        386,
+                        387,
+                        388,
+                        389,
+                        390,
+                        391,
+                        392,
+                        393,
+                        394,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        422,
+                        423,
+                        428,
+                        429,
+                        430,
+                        431,
+                        432,
+                        433,
+                        434,
+                        435,
+                        436,
+                        437,
+                        438,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        462,
+                        463,
+                        464,
+                        465,
+                        466,
+                        467,
+                        468,
+                        469,
+                        470,
+                        471,
+                        475,
+                        574,
+                        575,
+                        576,
+                        577,
+                        578,
+                        579,
+                        580,
+                        581,
+                        582,
+                        583,
+                        584,
+                        585,
+                        586,
+                        587,
+                        588,
+                        590,
+                        591,
+                        592,
+                        593,
+                        594,
+                        595,
+                        596,
+                        597,
+                        598,
+                        599,
+                        600,
+                        601,
+                        602,
+                        603,
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612,
+                        613,
+                        614,
+                        615,
+                        616,
+                        617,
+                        623,
+                        624,
+                        642,
+                        643,
+                        644,
+                        645,
+                        696,
+                        697,
+                        724,
+                        725,
+                        744,
+                        745,
+                        788,
+                        789,
+                        810,
+                        811,
+                        835,
+                        836,
+                        883,
+                        884,
+                        913,
+                        914,
+                        932,
+                        933,
+                        943,
+                        944,
+                        945,
+                        946,
+                        947,
+                        948,
+                        949,
+                        950,
+                        951,
+                        952,
+                        953,
+                        954,
+                        1000,
+                        1035,
+                        1036,
+                        1289,
+                        1290,
+                        1291,
+                        1292,
+                        1293,
+                        1294,
+                        1295,
+                        1298,
+                        1299,
+                        1300,
+                        1302,
+                        1303,
+                        1304,
+                        1305,
+                        1307,
+                        1328,
+                        1331,
+                        1332
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'digest(URL,ErrorHandler)')": [
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'digest(String,ErrorHandler,PathResolver)')": [
+                        149,
+                        150,
+                        151,
+                        152,
+                        153
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'digest(InputSource,ErrorHandler)')": [
+                        181,
+                        182,
+                        183,
+                        184,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'digest(URL,ErrorHandler,List)')": [
+                        215,
+                        216,
+                        217,
+                        221,
+                        240
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'digest(String,ErrorHandler,PathResolver,List)')": [
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        281,
+                        282,
+                        301
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'digest(InputSource,ErrorHandler,List)')": [
+                        336,
+                        337,
+                        338,
+                        339,
+                        340,
+                        351,
+                        356
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'newInstance')": [
+                        378,
+                        379,
+                        380
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'newInstance(PathResolver)')": [
+                        400,
+                        401,
+                        402
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'newInstance(SCXML,PathResolver)')": [
+                        426,
+                        427
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'newInstance(SCXML,PathResolver,List)')": [
+                        451,
+                        452,
+                        458
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'updateSCXML(SCXML)')": [
+                        472,
+                        473,
+                        474
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'initRules(SCXML,PathResolver,List)')": [
+                        648,
+                        661,
+                        664,
+                        668,
+                        671,
+                        675,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682,
+                        683,
+                        684
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addStateRules(String,ExtendedBaseRules,List,SCXML,PathResolver,int)')": [
+                        704,
+                        705,
+                        707,
+                        709,
+                        710,
+                        712,
+                        713,
+                        714
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addParallelRules(String,ExtendedBaseRules,List,SCXML)')": [
+                        729,
+                        730,
+                        733
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addStatePropertiesRules(String,ExtendedBaseRules,List,PathResolver)')": [
+                        749,
+                        750,
+                        753
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addDatamodelRules(String,ExtendedBaseRules,SCXML,PathResolver)')": [
+                        777
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addInitialRules(String,ExtendedBaseRules,List,PathResolver,SCXML)')": [
+                        794,
+                        795,
+                        797,
+                        799,
+                        800
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addHistoryRules(String,ExtendedBaseRules,List,PathResolver,SCXML)')": [
+                        816,
+                        817,
+                        819,
+                        823,
+                        824
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addPseudoStatePropertiesRules(String,ExtendedBaseRules,List,PathResolver)')": [
+                        840,
+                        841,
+                        844
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addTransitionRules(String,ExtendedBaseRules,String,List)')": [
+                        887,
+                        888,
+                        894
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addHandlerRules(String,ExtendedBaseRules,List)')": [
+                        917,
+                        919,
+                        922
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addActionRules(String,ExtendedBaseRules,List)')": [
+                        936
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addCustomActionRules(String,ExtendedBaseRules,List)')": [
+                        955,
+                        956,
+                        957,
+                        958,
+                        959,
+                        960,
+                        961,
+                        962,
+                        963,
+                        964,
+                        965,
+                        966,
+                        967,
+                        968,
+                        969,
+                        970,
+                        971,
+                        972,
+                        973,
+                        974,
+                        975,
+                        976,
+                        977,
+                        978,
+                        979,
+                        980,
+                        981
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addSendRulesTuple(String,ExtendedBaseRules)')": [
+                        999
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addCustomActionRulesTuple(String,ExtendedBaseRules,Class,boolean)')": [
+                        1024
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigester', 'addIfRules(String,ExtendedBaseRules,List)')": [
+                        1039,
+                        1041
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/scxml/SCXMLTestHelper.java": {
+                "old": {
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'digest(URL)')": [
+                        38
+                    ],
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'digest(URL,ErrorHandler)')": [
+                        46
+                    ],
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'getExecutor(URL)')": [
+                        55
+                    ],
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'getExecutor(URL,Evaluator)')": [
+                        62
+                    ],
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'getExecutor(URL,Context,Evaluator)')": [
+                        95
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        23,
+                        24,
+                        25
+                    ],
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'digest(URL)')": [
+                        42
+                    ],
+                    "('org.apache.commons.scxml#SCXMLTestHelper', None)": [
+                        43,
+                        44,
+                        51,
+                        52
+                    ],
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'digest(URL,List)')": [
+                        45,
+                        46
+                    ],
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'digest(URL,ErrorHandler)')": [
+                        50
+                    ],
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'digest(URL,ErrorHandler,List)')": [
+                        53,
+                        54,
+                        59
+                    ],
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'getExecutor(URL)')": [
+                        68
+                    ],
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'getExecutor(URL,Evaluator)')": [
+                        75
+                    ],
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'getExecutor(URL,Context,Evaluator)')": [
+                        108
+                    ],
+                    "('org.apache.commons.scxml#SCXMLTestHelper', 'getExecutor(Context,Evaluator,SCXML,EventDispatcher,Tracer,SCXMLSemantics)')": [
+                        147,
+                        148
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/scxml/io/SCXMLDigesterTest.java": {
+                "old": {
+                    "(None, None)": [
+                        28
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigesterTest', 'setUp')": [
+                        69
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigesterTest', 'testAddGoodCustomAction01')": [
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigesterTest', None)": [
+                        129,
+                        130,
+                        131,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        177,
+                        178,
+                        179,
+                        180,
+                        181
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigesterTest', 'testAddBadCustomAction01')": [
+                        132,
+                        133,
+                        134,
+                        135,
+                        136
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigesterTest', 'testAddBadCustomAction02')": [
+                        142,
+                        143,
+                        144,
+                        145,
+                        146
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigesterTest', 'testAddBadCustomAction03')": [
+                        152,
+                        153,
+                        154,
+                        155,
+                        156
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigesterTest', 'testAddBadCustomAction04')": [
+                        162,
+                        163,
+                        164,
+                        165,
+                        166
+                    ],
+                    "('org.apache.commons.scxml.io#SCXMLDigesterTest', 'testAddBadCustomAction05')": [
+                        172,
+                        173,
+                        174,
+                        175,
+                        176
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.scxml.io#SCXMLDigesterTest', 'setUp')": [
+                        68
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/scxml/model/CustomActionTest.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        28,
+                        29
+                    ],
+                    "('org.apache.commons.scxml.model#CustomActionTest', None)": [
+                        46
+                    ],
+                    "('org.apache.commons.scxml.model#CustomActionTest', 'setUp')": [
+                        57
+                    ],
+                    "('org.apache.commons.scxml.model#CustomActionTest', 'tearDown')": [
+                        64
+                    ],
+                    "('org.apache.commons.scxml.model#CustomActionTest', 'testCustomActionHelloWorld')": [
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        97
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        185,
+                        186
+                    ],
+                    "('org.apache.commons.scxml.model#CustomActionTest', None)": [
+                        45,
+                        68,
+                        69,
+                        76,
+                        77,
+                        78,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        122,
+                        123,
+                        124,
+                        162,
+                        163,
+                        179,
+                        180,
+                        181,
+                        182
+                    ],
+                    "('org.apache.commons.scxml.model#CustomActionTest', 'setUp')": [
+                        56,
+                        57,
+                        58
+                    ],
+                    "('org.apache.commons.scxml.model#CustomActionTest', 'tearDown')": [
+                        65
+                    ],
+                    "('org.apache.commons.scxml.model#CustomActionTest', 'testAddGoodCustomAction01')": [
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75
+                    ],
+                    "('org.apache.commons.scxml.model#CustomActionTest', 'testAddBadCustomAction01')": [
+                        79,
+                        80,
+                        81,
+                        82
+                    ],
+                    "('org.apache.commons.scxml.model#CustomActionTest', 'testAddBadCustomAction02')": [
+                        88,
+                        89,
+                        90,
+                        91
+                    ],
+                    "('org.apache.commons.scxml.model#CustomActionTest', 'testAddBadCustomAction03')": [
+                        97,
+                        98,
+                        99,
+                        100,
+                        101
+                    ],
+                    "('org.apache.commons.scxml.model#CustomActionTest', 'testAddBadCustomAction04')": [
+                        107,
+                        108,
+                        109,
+                        110,
+                        111
+                    ],
+                    "('org.apache.commons.scxml.model#CustomActionTest', 'testAddBadCustomAction05')": [
+                        117,
+                        118,
+                        119,
+                        120,
+                        121
+                    ],
+                    "('org.apache.commons.scxml.model#CustomActionTest', 'testCustomActionHelloWorld')": [
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        156
+                    ],
+                    "('org.apache.commons.scxml.model#CustomActionTest', 'testCustomActionExternalSrcHelloWorld')": [
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178
+                    ],
+                    "('org.apache.commons.scxml.model#CustomActionTest', 'testCustomActionCallbacks')": [
+                        183,
+                        184
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/scxml/model/Hello.java": {
+                "new": {
+                    "('org.apache.commons.scxml.model#Hello', None)": [
+                        34,
+                        35
+                    ],
+                    "('org.apache.commons.scxml.model#Hello', 'execute(EventDispatcher,ErrorReporter,SCInstance,Log,Collection)')": [
+                        70
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/scxml/model/HistoryTest.java": {
+                "old": {
+                    "('org.apache.commons.scxml.model#HistoryTest', None)": [
+                        23,
+                        36,
+                        38,
+                        42
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        18,
+                        19,
+                        20,
+                        25,
+                        26,
+                        27,
+                        151,
+                        152
+                    ],
+                    "('org.apache.commons.scxml.model#HistoryTest', None)": [
+                        29,
+                        30,
+                        31,
+                        32,
+                        45,
+                        46,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        63,
+                        64,
+                        65,
+                        66,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        87,
+                        91,
+                        92,
+                        96,
+                        97,
+                        111,
+                        112,
+                        113,
+                        134,
+                        135,
+                        136,
+                        145,
+                        146
+                    ],
+                    "('org.apache.commons.scxml.model#HistoryTest', 'setUp')": [
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61
+                    ],
+                    "('org.apache.commons.scxml.model#HistoryTest', 'tearDown')": [
+                        67,
+                        68,
+                        69,
+                        70
+                    ],
+                    "('org.apache.commons.scxml.model#HistoryTest', 'testShallowHistory01')": [
+                        88,
+                        89,
+                        90
+                    ],
+                    "('org.apache.commons.scxml.model#HistoryTest', 'testDeepHistory01')": [
+                        93,
+                        94,
+                        95
+                    ],
+                    "('org.apache.commons.scxml.model#HistoryTest', 'testHistoryDefaults01')": [
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110
+                    ],
+                    "('org.apache.commons.scxml.model#HistoryTest', 'runHistoryFlow')": [
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133
+                    ],
+                    "('org.apache.commons.scxml.model#HistoryTest', 'pauseAndResume')": [
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144
+                    ],
+                    "('org.apache.commons.scxml.model#HistoryTest', 'nextPhase')": [
+                        147,
+                        148,
+                        149,
+                        150
+                    ]
+                }
+            }
+        }
+    }
+}

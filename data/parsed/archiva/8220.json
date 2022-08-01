@@ -1,0 +1,1883 @@
+{
+    "40b955d3878f11ed8485005e4358ff40b9cbfb1d": {
+        "authored_data": "2006 Sep 11 00:01",
+        "commit.message": "[MRM-166] better display of ungenerated reports, and only list metadata that has had failures or warnings\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@442039 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "b57273dff3f31895f05d8a669cc15a9db7a92f5b",
+        "changes": {
+            "archiva-reports-standard/src/main/java/org/apache/maven/archiva/reporting/ReportingDatabase.java": {
+                "new": {
+                    "(None, None)": [
+                        30,
+                        32
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', None)": [
+                        57,
+                        58,
+                        183,
+                        184
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', 'addFailure(RepositoryMetadata,String)')": [
+                        159,
+                        160,
+                        161,
+                        162
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', 'addWarning(RepositoryMetadata,String)')": [
+                        171,
+                        172,
+                        173,
+                        174
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', 'getMetadataWithProblems')": [
+                        180,
+                        181,
+                        182
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', 'initMetadataMap')": [
+                        188,
+                        189,
+                        200,
+                        201,
+                        202,
+                        203,
+                        204,
+                        207
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', 'cleanMetadata(RepositoryMetadata,long)')": [
+                        265,
+                        266
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', 'clear')": [
+                        345
+                    ]
+                }
+            },
+            "archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/ReportsAction.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', None)": [
+                        52,
+                        53,
+                        54,
+                        55,
+                        56
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'getReport(RepositoryConfiguration,ReportGroup)')": [
+                        113
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'runReport')": [
+                        162,
+                        163
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'getReport(RepositoryConfiguration,ReportGroup)')": [
+                        108
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'runReport')": [
+                        127,
+                        128,
+                        129
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', None)": [
+                        130,
+                        131
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'generateReport(ReportingDatabase,RepositoryConfiguration,ReportGroup,ArtifactRepository)')": [
+                        132,
+                        133,
+                        134,
+                        135
+                    ]
+                }
+            }
+        }
+    },
+    "b57273dff3f31895f05d8a669cc15a9db7a92f5b": {
+        "authored_data": "2006 Sep 10 23:21",
+        "commit.message": "[MRM-166] add multiple report groups\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@442028 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "9dd5b3e9880fbbf3ae5bf5072edc61446587206e",
+        "changes": {
+            "archiva-converter/src/test/java/org/apache/maven/archiva/converter/RepositoryConverterTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', None)": [
+                        63
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'setUp')": [
+                        96
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testV4PomConvert')": [
+                        165
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testV3PomConvert')": [
+                        207
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testV3PomConvertWithRelocation')": [
+                        248
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testV3PomWarningsOnConvert')": [
+                        283,
+                        284,
+                        285
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'doTestV4SnapshotPomConvert(String,String)')": [
+                        317
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testV3SnapshotPomConvert')": [
+                        360
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testV3TimestampedSnapshotPomConvert')": [
+                        420
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testNoPomConvert')": [
+                        453,
+                        454,
+                        455
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testIncorrectSourceChecksumMd5')": [
+                        479
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testIncorrectSourceChecksumSha1')": [
+                        500
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testUnmodifiedArtifact')": [
+                        537
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testModifedArtifactFails')": [
+                        573
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testForcedUnmodifiedArtifact')": [
+                        610
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testDryRunSuccess')": [
+                        640
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testDryRunFailure')": [
+                        682
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testRollbackArtifactCreated')": [
+                        713
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testMultipleArtifacts')": [
+                        732,
+                        733,
+                        734
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testInvalidSourceArtifactMetadata')": [
+                        765
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testInvalidSourceSnapshotMetadata')": [
+                        789
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testMergeArtifactMetadata')": [
+                        809
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testSourceAndTargetRepositoriesMatch')": [
+                        847
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'checkSuccess')": [
+                        905,
+                        906
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'checkFailure')": [
+                        911,
+                        912
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'getFailure')": [
+                        922
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'getWarning')": [
+                        928
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', None)": [
+                        64
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'setUp')": [
+                        97,
+                        98
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testV4PomConvert')": [
+                        167
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testV3PomConvert')": [
+                        209
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testV3PomConvertWithRelocation')": [
+                        250
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testV3PomWarningsOnConvert')": [
+                        285,
+                        286,
+                        287
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'doTestV4SnapshotPomConvert(String,String)')": [
+                        319
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testV3SnapshotPomConvert')": [
+                        362
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testV3TimestampedSnapshotPomConvert')": [
+                        422
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testNoPomConvert')": [
+                        455,
+                        456,
+                        457
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testIncorrectSourceChecksumMd5')": [
+                        481
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testIncorrectSourceChecksumSha1')": [
+                        502
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testUnmodifiedArtifact')": [
+                        539
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testModifedArtifactFails')": [
+                        575
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testForcedUnmodifiedArtifact')": [
+                        612
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testDryRunSuccess')": [
+                        642
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testDryRunFailure')": [
+                        684
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testRollbackArtifactCreated')": [
+                        715
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testMultipleArtifacts')": [
+                        734,
+                        735,
+                        736
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testInvalidSourceArtifactMetadata')": [
+                        767
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testInvalidSourceSnapshotMetadata')": [
+                        791
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testMergeArtifactMetadata')": [
+                        811
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'testSourceAndTargetRepositoriesMatch')": [
+                        849
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'checkSuccess')": [
+                        907,
+                        908
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'checkFailure')": [
+                        913,
+                        914
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'getFailure')": [
+                        924
+                    ],
+                    "('org.apache.maven.archiva.converter#RepositoryConverterTest', 'getWarning')": [
+                        930
+                    ]
+                }
+            },
+            "archiva-core/src/main/java/org/apache/maven/archiva/DefaultRepositoryManager.java": {
+                "old": {
+                    "('org.apache.maven.archiva#DefaultRepositoryManager', 'convertLegacyRepository(File,File,boolean)')": [
+                        88
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        9
+                    ],
+                    "('org.apache.maven.archiva#DefaultRepositoryManager', None)": [
+                        59,
+                        60,
+                        61,
+                        62,
+                        63
+                    ],
+                    "('org.apache.maven.archiva#DefaultRepositoryManager', 'convertLegacyRepository(File,File,boolean)')": [
+                        94
+                    ]
+                }
+            },
+            "archiva-core/src/main/java/org/apache/maven/archiva/scheduler/task/IndexerTask.java": {
+                "old": {
+                    "('org.apache.maven.archiva.scheduler.task#IndexerTask', 'execute(Configuration,File)')": [
+                        157,
+                        195,
+                        217
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35
+                    ],
+                    "('org.apache.maven.archiva.scheduler.task#IndexerTask', None)": [
+                        100,
+                        101,
+                        102,
+                        103,
+                        104
+                    ],
+                    "('org.apache.maven.archiva.scheduler.task#IndexerTask', 'execute(Configuration,File)')": [
+                        163,
+                        201,
+                        223
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/main/java/org/apache/maven/archiva/reporting/DefaultReportExecutor.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting#DefaultReportExecutor', None)": [
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        118,
+                        119,
+                        120,
+                        159,
+                        160,
+                        226,
+                        227,
+                        228
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportExecutor', 'runMetadataReports(List,ArtifactRepository)')": [
+                        90,
+                        93,
+                        103,
+                        104
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportExecutor', 'runMetadataReports(RepositoryMetadata,ArtifactRepository,ReportingDatabase)')": [
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportExecutor', 'runArtifactReports(List,ArtifactRepository)')": [
+                        121,
+                        124,
+                        148
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportExecutor', 'getReportDatabase(ArtifactRepository)')": [
+                        154,
+                        157,
+                        158
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportExecutor', 'runReports(ArtifactRepository,List,ArtifactFilter)')": [
+                        161,
+                        165,
+                        191,
+                        208
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportExecutor', 'runArtifactReports(Artifact,Model,ReportingDatabase)')": [
+                        229,
+                        230,
+                        231,
+                        232,
+                        233,
+                        234,
+                        235,
+                        236
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        46
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportExecutor', 'runMetadataReports(ReportGroup,List,ArtifactRepository)')": [
+                        80,
+                        83,
+                        93
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportExecutor', 'runArtifactReports(ReportGroup,List,ArtifactRepository)')": [
+                        99,
+                        102,
+                        126
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportExecutor', 'getReportDatabase(ArtifactRepository,ReportGroup)')": [
+                        132,
+                        135,
+                        136,
+                        137
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportExecutor', None)": [
+                        138,
+                        139
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportExecutor', 'runReports(ReportGroup,ArtifactRepository,List,ArtifactFilter)')": [
+                        140,
+                        141,
+                        145,
+                        171,
+                        188
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/main/java/org/apache/maven/archiva/reporting/DefaultReportingStore.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting#DefaultReportingStore', None)": [
+                        50
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportingStore', 'getReportsFromStore(ArtifactRepository)')": [
+                        52,
+                        55,
+                        61,
+                        70,
+                        78,
+                        94
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportingStore', 'getReportFilename(ArtifactRepository,String)')": [
+                        99,
+                        101,
+                        102
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportingStore', 'storeReports(ReportingDatabase,ArtifactRepository)')": [
+                        112
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportingStore', None)": [
+                        51,
+                        105,
+                        106
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportingStore', 'getReportsFromStore(ArtifactRepository,ReportGroup)')": [
+                        53,
+                        56,
+                        57,
+                        63,
+                        72,
+                        80,
+                        81,
+                        97
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportingStore', 'getKey(ArtifactRepository,ReportGroup)')": [
+                        102,
+                        104
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportingStore', 'getReportFilename(ArtifactRepository,ReportGroup)')": [
+                        107,
+                        108,
+                        109
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportingStore', 'storeReports(ReportingDatabase,ArtifactRepository)')": [
+                        119
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/main/java/org/apache/maven/archiva/reporting/DuplicateArtifactFileReportProcessor.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting#DuplicateArtifactFileReportProcessor', 'processArtifact(Artifact,Model,ReportingDatabase)')": [
+                        64,
+                        65,
+                        67,
+                        69,
+                        71,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        81,
+                        82,
+                        83,
+                        85,
+                        86,
+                        88,
+                        89,
+                        90,
+                        92,
+                        93,
+                        94,
+                        95,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        107,
+                        108,
+                        109,
+                        110,
+                        113,
+                        114,
+                        115
+                    ],
+                    "(None, None)": [
+                        116
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.reporting#DuplicateArtifactFileReportProcessor', 'processArtifact(Artifact,Model,ReportingDatabase)')": [
+                        64,
+                        66,
+                        67,
+                        68,
+                        69,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        78,
+                        79,
+                        82,
+                        83,
+                        85,
+                        87,
+                        88,
+                        89,
+                        91,
+                        92,
+                        94,
+                        95,
+                        96,
+                        98,
+                        103,
+                        104,
+                        105,
+                        106,
+                        109,
+                        110,
+                        111,
+                        112
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/main/java/org/apache/maven/archiva/reporting/ReportExecutor.java": {
+                "old": {
+                    "(None, None)": [
+                        38,
+                        39,
+                        42,
+                        48,
+                        49,
+                        52,
+                        58,
+                        62,
+                        75
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38,
+                        39,
+                        40,
+                        43,
+                        49,
+                        50,
+                        51,
+                        54,
+                        60,
+                        61,
+                        65,
+                        74,
+                        79,
+                        80
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/main/java/org/apache/maven/archiva/reporting/ReportingDatabase.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', None)": [
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', None)": [
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        345
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', 'getReportGroup')": [
+                        346,
+                        347,
+                        348
+                    ],
+                    "(None, None)": [
+                        349
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/main/java/org/apache/maven/archiva/reporting/ReportingStore.java": {
+                "old": {
+                    "(None, None)": [
+                        37,
+                        41
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37,
+                        38,
+                        42
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/test/java/org/apache/maven/archiva/reporting/ArtifactReporterTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting#ArtifactReporterTest', None)": [
+                        33
+                    ],
+                    "('org.apache.maven.archiva.reporting#ArtifactReporterTest', 'setUp')": [
+                        41
+                    ],
+                    "('org.apache.maven.archiva.reporting#ArtifactReporterTest', 'testArtifactReporterSingleFailure')": [
+                        51,
+                        53,
+                        63,
+                        64
+                    ],
+                    "('org.apache.maven.archiva.reporting#ArtifactReporterTest', 'testArtifactReporterMultipleFailure')": [
+                        69,
+                        70,
+                        71,
+                        73,
+                        83,
+                        84
+                    ],
+                    "('org.apache.maven.archiva.reporting#ArtifactReporterTest', 'testFailureMessages')": [
+                        89,
+                        90,
+                        91,
+                        92
+                    ],
+                    "('org.apache.maven.archiva.reporting#ArtifactReporterTest', 'testArtifactReporterSingleWarning')": [
+                        103,
+                        104,
+                        114,
+                        115
+                    ],
+                    "('org.apache.maven.archiva.reporting#ArtifactReporterTest', 'testArtifactReporterMultipleWarning')": [
+                        120,
+                        121,
+                        122,
+                        124,
+                        134,
+                        135
+                    ],
+                    "('org.apache.maven.archiva.reporting#ArtifactReporterTest', 'testWarningMessages')": [
+                        140,
+                        141,
+                        142,
+                        144
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.reporting#ArtifactReporterTest', None)": [
+                        33
+                    ],
+                    "('org.apache.maven.archiva.reporting#ArtifactReporterTest', 'setUp')": [
+                        46,
+                        47,
+                        48
+                    ],
+                    "('org.apache.maven.archiva.reporting#ArtifactReporterTest', 'testArtifactReporterSingleFailure')": [
+                        53,
+                        55,
+                        65,
+                        66
+                    ],
+                    "('org.apache.maven.archiva.reporting#ArtifactReporterTest', 'testArtifactReporterMultipleFailure')": [
+                        71,
+                        72,
+                        73,
+                        75,
+                        85,
+                        86
+                    ],
+                    "('org.apache.maven.archiva.reporting#ArtifactReporterTest', 'testFailureMessages')": [
+                        91,
+                        92,
+                        93,
+                        94
+                    ],
+                    "('org.apache.maven.archiva.reporting#ArtifactReporterTest', 'testArtifactReporterSingleWarning')": [
+                        105,
+                        106,
+                        116,
+                        117
+                    ],
+                    "('org.apache.maven.archiva.reporting#ArtifactReporterTest', 'testArtifactReporterMultipleWarning')": [
+                        122,
+                        123,
+                        124,
+                        126,
+                        136,
+                        137
+                    ],
+                    "('org.apache.maven.archiva.reporting#ArtifactReporterTest', 'testWarningMessages')": [
+                        142,
+                        143,
+                        144,
+                        146
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/test/java/org/apache/maven/archiva/reporting/BadMetadataReportProcessorTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', None)": [
+                        40
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testMetadataMissingLastUpdated')": [
+                        62,
+                        63,
+                        64
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testMetadataMissingVersioning')": [
+                        81,
+                        82,
+                        83
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testSnapshotMetadataMissingVersioning')": [
+                        109,
+                        110,
+                        111
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testMetadataValidVersions')": [
+                        133,
+                        134,
+                        135
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testMetadataMissingADirectory')": [
+                        149,
+                        150,
+                        151
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testMetadataInvalidArtifactVersion')": [
+                        177,
+                        178,
+                        179
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testMoreThanOneMetadataVersionErrors')": [
+                        204,
+                        205,
+                        206
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testValidPluginMetadata')": [
+                        232,
+                        233,
+                        234
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testMissingMetadataPlugin')": [
+                        245,
+                        246,
+                        247
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testIncompletePluginMetadata')": [
+                        264,
+                        265,
+                        266
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testInvalidPluginArtifactId')": [
+                        287,
+                        288,
+                        289
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testInvalidPluginPrefix')": [
+                        312,
+                        313,
+                        314
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testDuplicatePluginPrefixes')": [
+                        336,
+                        337,
+                        338
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testValidSnapshotMetadata')": [
+                        360,
+                        361,
+                        362
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testInvalidSnapshotMetadata')": [
+                        377,
+                        378,
+                        379
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', None)": [
+                        40
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'setUp')": [
+                        50,
+                        51,
+                        52
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testMetadataMissingLastUpdated')": [
+                        65,
+                        66,
+                        67
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testMetadataMissingVersioning')": [
+                        84,
+                        85,
+                        86
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testSnapshotMetadataMissingVersioning')": [
+                        112,
+                        113,
+                        114
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testMetadataValidVersions')": [
+                        136,
+                        137,
+                        138
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testMetadataMissingADirectory')": [
+                        152,
+                        153,
+                        154
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testMetadataInvalidArtifactVersion')": [
+                        180,
+                        181,
+                        182
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testMoreThanOneMetadataVersionErrors')": [
+                        207,
+                        208,
+                        209
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testValidPluginMetadata')": [
+                        235,
+                        236,
+                        237
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testMissingMetadataPlugin')": [
+                        248,
+                        249,
+                        250
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testIncompletePluginMetadata')": [
+                        267,
+                        268,
+                        269
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testInvalidPluginArtifactId')": [
+                        290,
+                        291,
+                        292
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testInvalidPluginPrefix')": [
+                        315,
+                        316,
+                        317
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testDuplicatePluginPrefixes')": [
+                        339,
+                        340,
+                        341
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testValidSnapshotMetadata')": [
+                        363,
+                        364,
+                        365
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessorTest', 'testInvalidSnapshotMetadata')": [
+                        380,
+                        381,
+                        382
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/test/java/org/apache/maven/archiva/reporting/ChecksumArtifactReporterTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting#ChecksumArtifactReporterTest', None)": [
+                        40,
+                        84,
+                        109
+                    ],
+                    "('org.apache.maven.archiva.reporting#ChecksumArtifactReporterTest', 'testChecksumArtifactReporterSuccess')": [
+                        63,
+                        64,
+                        65
+                    ],
+                    "('org.apache.maven.archiva.reporting#ChecksumArtifactReporterTest', 'testChecksumArtifactReporterFailed')": [
+                        77,
+                        78,
+                        79
+                    ],
+                    "('org.apache.maven.archiva.reporting#ChecksumArtifactReporterTest', 'testChecksumMetadataReporterSuccess')": [
+                        96,
+                        100,
+                        104
+                    ],
+                    "('org.apache.maven.archiva.reporting#ChecksumArtifactReporterTest', 'testChecksumMetadataReporterFailure')": [
+                        116,
+                        118
+                    ],
+                    "('org.apache.maven.archiva.reporting#ChecksumArtifactReporterTest', 'testChecksumFilesDoNotExist')": [
+                        137,
+                        138,
+                        141,
+                        143
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.reporting#ChecksumArtifactReporterTest', None)": [
+                        40,
+                        87,
+                        112
+                    ],
+                    "('org.apache.maven.archiva.reporting#ChecksumArtifactReporterTest', 'setUp')": [
+                        50,
+                        51,
+                        52
+                    ],
+                    "('org.apache.maven.archiva.reporting#ChecksumArtifactReporterTest', 'testChecksumArtifactReporterSuccess')": [
+                        66,
+                        67,
+                        68
+                    ],
+                    "('org.apache.maven.archiva.reporting#ChecksumArtifactReporterTest', 'testChecksumArtifactReporterFailed')": [
+                        80,
+                        81,
+                        82
+                    ],
+                    "('org.apache.maven.archiva.reporting#ChecksumArtifactReporterTest', 'testChecksumMetadataReporterSuccess')": [
+                        99,
+                        103,
+                        107
+                    ],
+                    "('org.apache.maven.archiva.reporting#ChecksumArtifactReporterTest', 'testChecksumMetadataReporterFailure')": [
+                        119,
+                        121
+                    ],
+                    "('org.apache.maven.archiva.reporting#ChecksumArtifactReporterTest', 'testChecksumFilesDoNotExist')": [
+                        140,
+                        141,
+                        144,
+                        146
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/test/java/org/apache/maven/archiva/reporting/DefaultArtifactReporterTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting#DefaultArtifactReporterTest', None)": [
+                        35
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultArtifactReporterTest', 'testEmptyArtifactReporter')": [
+                        41,
+                        42,
+                        43,
+                        44
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultArtifactReporterTest', 'testMetadataSingleFailure')": [
+                        49,
+                        50,
+                        51,
+                        53
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultArtifactReporterTest', 'testMetadataMultipleFailures')": [
+                        73,
+                        74,
+                        75,
+                        76,
+                        78
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultArtifactReporterTest', 'testMetadataSingleWarning')": [
+                        94,
+                        95,
+                        96,
+                        98
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultArtifactReporterTest', 'testMetadataMultipleWarnings')": [
+                        111,
+                        112,
+                        113,
+                        114,
+                        116
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultArtifactReporterTest', 'setUp')": [
+                        135
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.reporting#DefaultArtifactReporterTest', None)": [
+                        35
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultArtifactReporterTest', 'testEmptyArtifactReporter')": [
+                        41,
+                        42,
+                        43,
+                        44
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultArtifactReporterTest', 'testMetadataSingleFailure')": [
+                        49,
+                        50,
+                        51,
+                        53
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultArtifactReporterTest', 'testMetadataMultipleFailures')": [
+                        73,
+                        74,
+                        75,
+                        76,
+                        78
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultArtifactReporterTest', 'testMetadataSingleWarning')": [
+                        94,
+                        95,
+                        96,
+                        98
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultArtifactReporterTest', 'testMetadataMultipleWarnings')": [
+                        111,
+                        112,
+                        113,
+                        114,
+                        116
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultArtifactReporterTest', 'setUp')": [
+                        143,
+                        144,
+                        145
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/test/java/org/apache/maven/archiva/reporting/DependencyArtifactReportProcessorTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', None)": [
+                        40
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'setUp')": [
+                        54
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testArtifactFoundButNoDirectDependencies')": [
+                        64,
+                        65,
+                        66
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testArtifactNotFound')": [
+                        81,
+                        82,
+                        83,
+                        84
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithNullDependency')": [
+                        99,
+                        100,
+                        101
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithValidSingleDependency')": [
+                        116,
+                        117,
+                        118
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithValidMultipleDependencies')": [
+                        131,
+                        132,
+                        133
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithAnInvalidDependency')": [
+                        146,
+                        147,
+                        148,
+                        149,
+                        150
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithInvalidDependencyGroupId')": [
+                        166,
+                        167,
+                        168,
+                        169,
+                        170
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithInvalidDependencyArtifactId')": [
+                        194,
+                        195,
+                        196,
+                        197,
+                        198
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithIncorrectDependencyVersion')": [
+                        213,
+                        214,
+                        215,
+                        216,
+                        217
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithInvalidDependencyVersion')": [
+                        232,
+                        233,
+                        234,
+                        235,
+                        236
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithInvalidDependencyVersionRange')": [
+                        251,
+                        252,
+                        253
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithMissingDependencyVersion')": [
+                        263,
+                        264,
+                        265,
+                        266,
+                        267
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', None)": [
+                        40
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'setUp')": [
+                        58,
+                        59,
+                        60
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testArtifactFoundButNoDirectDependencies')": [
+                        66,
+                        67,
+                        68
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testArtifactNotFound')": [
+                        83,
+                        84,
+                        85,
+                        86
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithNullDependency')": [
+                        101,
+                        102,
+                        103
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithValidSingleDependency')": [
+                        118,
+                        119,
+                        120
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithValidMultipleDependencies')": [
+                        133,
+                        134,
+                        135
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithAnInvalidDependency')": [
+                        148,
+                        149,
+                        150,
+                        151,
+                        152
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithInvalidDependencyGroupId')": [
+                        168,
+                        169,
+                        170,
+                        171,
+                        172
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithInvalidDependencyArtifactId')": [
+                        196,
+                        197,
+                        198,
+                        199,
+                        200
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithIncorrectDependencyVersion')": [
+                        215,
+                        216,
+                        217,
+                        218,
+                        219
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithInvalidDependencyVersion')": [
+                        234,
+                        235,
+                        236,
+                        237,
+                        238
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithInvalidDependencyVersionRange')": [
+                        253,
+                        254,
+                        255
+                    ],
+                    "('org.apache.maven.archiva.reporting#DependencyArtifactReportProcessorTest', 'testValidArtifactWithMissingDependencyVersion')": [
+                        265,
+                        266,
+                        267,
+                        268,
+                        269
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/test/java/org/apache/maven/archiva/reporting/DuplicateArtifactFileReportProcessorTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting#DuplicateArtifactFileReportProcessorTest', None)": [
+                        46
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.reporting#DuplicateArtifactFileReportProcessorTest', None)": [
+                        46
+                    ],
+                    "('org.apache.maven.archiva.reporting#DuplicateArtifactFileReportProcessorTest', 'setUp')": [
+                        71,
+                        72,
+                        73
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/test/java/org/apache/maven/archiva/reporting/InvalidPomArtifactReportProcessorTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting#InvalidPomArtifactReportProcessorTest', None)": [
+                        29
+                    ],
+                    "('org.apache.maven.archiva.reporting#InvalidPomArtifactReportProcessorTest', 'testInvalidPomArtifactReportProcessorFailure')": [
+                        45,
+                        46
+                    ],
+                    "('org.apache.maven.archiva.reporting#InvalidPomArtifactReportProcessorTest', 'testInvalidPomArtifactReportProcessorSuccess')": [
+                        57,
+                        58,
+                        59
+                    ],
+                    "('org.apache.maven.archiva.reporting#InvalidPomArtifactReportProcessorTest', 'testNotAPomArtifactReportProcessorSuccess')": [
+                        70,
+                        71,
+                        72
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.reporting#InvalidPomArtifactReportProcessorTest', None)": [
+                        29
+                    ],
+                    "('org.apache.maven.archiva.reporting#InvalidPomArtifactReportProcessorTest', 'setUp')": [
+                        36,
+                        37,
+                        38
+                    ],
+                    "('org.apache.maven.archiva.reporting#InvalidPomArtifactReportProcessorTest', 'testInvalidPomArtifactReportProcessorFailure')": [
+                        48,
+                        49
+                    ],
+                    "('org.apache.maven.archiva.reporting#InvalidPomArtifactReportProcessorTest', 'testInvalidPomArtifactReportProcessorSuccess')": [
+                        60,
+                        61,
+                        62
+                    ],
+                    "('org.apache.maven.archiva.reporting#InvalidPomArtifactReportProcessorTest', 'testNotAPomArtifactReportProcessorSuccess')": [
+                        73,
+                        74,
+                        75
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/test/java/org/apache/maven/archiva/reporting/LocationArtifactReportProcessorTest.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', None)": [
+                        37,
+                        38,
+                        39
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'setUp')": [
+                        46
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testPackagedPomLocationArtifactReporterSuccess')": [
+                        58,
+                        59,
+                        60
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testLocationArtifactReporterSuccess')": [
+                        74,
+                        75,
+                        76
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testLocationArtifactReporterSuccessPom')": [
+                        89,
+                        90,
+                        91
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testLocationArtifactReporterSuccessClassifier')": [
+                        105,
+                        106,
+                        107
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testLocationArtifactReporterSuccessZip')": [
+                        122,
+                        123,
+                        124
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testLocationArtifactReporterSuccessTgz')": [
+                        139,
+                        140,
+                        141
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testLocationArtifactReporterFailure')": [
+                        157
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testFsPomArtifactMatchFailure')": [
+                        177,
+                        178
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'readPom(String)')": [
+                        185
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testPkgPomArtifactMatchFailure')": [
+                        207,
+                        208
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testBothPomArtifactMatchFailure')": [
+                        220,
+                        221
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', None)": [
+                        37
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'setUp')": [
+                        44,
+                        45,
+                        46
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testPackagedPomLocationArtifactReporterSuccess')": [
+                        58,
+                        59,
+                        60
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testLocationArtifactReporterSuccess')": [
+                        74,
+                        75,
+                        76
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testLocationArtifactReporterSuccessPom')": [
+                        89,
+                        90,
+                        91
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testLocationArtifactReporterSuccessClassifier')": [
+                        105,
+                        106,
+                        107
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testLocationArtifactReporterSuccessZip')": [
+                        122,
+                        123,
+                        124
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testLocationArtifactReporterSuccessTgz')": [
+                        139,
+                        140,
+                        141
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testLocationArtifactReporterFailure')": [
+                        157
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testFsPomArtifactMatchFailure')": [
+                        177,
+                        178
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'readPom(String)')": [
+                        185
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testPkgPomArtifactMatchFailure')": [
+                        207,
+                        208
+                    ],
+                    "('org.apache.maven.archiva.reporting#LocationArtifactReportProcessorTest', 'testBothPomArtifactMatchFailure')": [
+                        220,
+                        221
+                    ]
+                }
+            },
+            "archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/ReportsAction.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'execute')": [
+                        81,
+                        89
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'getReport(RepositoryConfiguration)')": [
+                        95,
+                        100
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'runReport')": [
+                        108,
+                        113,
+                        143
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28,
+                        38,
+                        205
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', None)": [
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        164,
+                        165,
+                        169,
+                        170,
+                        201
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'execute')": [
+                        87,
+                        88,
+                        94,
+                        102
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'getReport(RepositoryConfiguration,ReportGroup)')": [
+                        108,
+                        113
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'runReport')": [
+                        121,
+                        126,
+                        156
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'setReportGroup(String)')": [
+                        166,
+                        167,
+                        168
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'getReportGroup')": [
+                        171,
+                        172,
+                        173
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'getReports')": [
+                        202,
+                        203,
+                        204
+                    ]
+                }
+            }
+        }
+    },
+    "9dd5b3e9880fbbf3ae5bf5072edc61446587206e": {
+        "authored_data": "2006 Sep 09 15:51",
+        "commit.message": "clarify some TODO elements\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@441803 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "1a3026414e9a5c3a02d3bbb31fbf92fc388600f5",
+        "changes": {
+            "archiva-core/src/main/java/org/apache/maven/archiva/scheduler/DefaultRepositoryTaskScheduler.java": {
+                "old": {
+                    "('org.apache.maven.archiva.scheduler#DefaultRepositoryTaskScheduler', 'scheduleJobs(Configuration)')": [
+                        100,
+                        110
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.scheduler#DefaultRepositoryTaskScheduler', 'scheduleJobs(Configuration)')": [
+                        100,
+                        110
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/main/java/org/apache/maven/archiva/reporting/BadMetadataReportProcessor.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessor', 'checkRepositoryVersions(RepositoryMetadata,ArtifactRepository,ReportingDatabase)')": [
+                        267
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessor', 'checkRepositoryVersions(RepositoryMetadata,ArtifactRepository,ReportingDatabase)')": [
+                        267
+                    ]
+                }
+            },
+            "archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/ProxyAction.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.action#ProxyAction', 'execute')": [
+                        61
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.web.action#ProxyAction', 'execute')": [
+                        61
+                    ]
+                }
+            },
+            "archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/admin/DeleteSyncedRepositoryAction.java": {
+                "old": {
+                    "(None, None)": [
+                        46
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        46
+                    ]
+                }
+            }
+        }
+    },
+    "1a3026414e9a5c3a02d3bbb31fbf92fc388600f5": {
+        "authored_data": "2006 Sep 09 15:47",
+        "commit.message": "[MRM-166] select repository to show in reports page\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@441799 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "8630479fc6c4d9d0e90d6a1486a4c56a1a3d2817",
+        "changes": {
+            "archiva-webapp/src/main/java/org/apache/maven/archiva/web/action/ReportsAction.java": {
+                "old": {
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'execute')": [
+                        73,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'runReport')": [
+                        92,
+                        93
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        30,
+                        177
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', None)": [
+                        45,
+                        71,
+                        72,
+                        93,
+                        94,
+                        167,
+                        172,
+                        173
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'execute')": [
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        89,
+                        90
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'getReport(RepositoryConfiguration)')": [
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'prepare')": [
+                        168,
+                        169,
+                        170,
+                        171
+                    ],
+                    "('org.apache.maven.archiva.web.action#ReportsAction', 'getConfiguration')": [
+                        174,
+                        175,
+                        176
+                    ]
+                }
+            }
+        }
+    },
+    "8630479fc6c4d9d0e90d6a1486a4c56a1a3d2817": {
+        "authored_data": "2006 Sep 09 15:28",
+        "commit.message": "[MRM-166] ignore .reports and .index when doing discovery\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@441798 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "cad717586ffdf0569fc57020c05b1dffb2a93c83",
+        "changes": {
+            "archiva-discoverer/src/main/java/org/apache/maven/archiva/discoverer/AbstractArtifactDiscoverer.java": {
+                "old": {
+                    "('org.apache.maven.archiva.discoverer#AbstractArtifactDiscoverer', None)": [
+                        41,
+                        42,
+                        43,
+                        90,
+                        91
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.discoverer#AbstractArtifactDiscoverer', None)": [
+                        41,
+                        42,
+                        43,
+                        44,
+                        91,
+                        92
+                    ]
+                }
+            }
+        }
+    },
+    "cad717586ffdf0569fc57020c05b1dffb2a93c83": {
+        "authored_data": "2006 Sep 09 15:27",
+        "commit.message": "[MRM-166] move reports to .reports in preparation for multiple results\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@441797 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "ffded4338d5b787db49677d99cfae6dc8357d437",
+        "changes": {
+            "archiva-reports-standard/src/main/java/org/apache/maven/archiva/reporting/DefaultReportingStore.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting#DefaultReportingStore', 'getReportsFromStore(ArtifactRepository)')": [
+                        61
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportingStore', 'storeReports(ReportingDatabase,ArtifactRepository)')": [
+                        106
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.reporting#DefaultReportingStore', 'getReportsFromStore(ArtifactRepository)')": [
+                        61
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportingStore', 'getReportFilename(ArtifactRepository,String)')": [
+                        99,
+                        100,
+                        101,
+                        102
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportingStore', None)": [
+                        103,
+                        104
+                    ],
+                    "('org.apache.maven.archiva.reporting#DefaultReportingStore', 'storeReports(ReportingDatabase,ArtifactRepository)')": [
+                        112
+                    ]
+                }
+            }
+        }
+    },
+    "ffded4338d5b787db49677d99cfae6dc8357d437": {
+        "authored_data": "2006 Sep 09 15:19",
+        "commit.message": "[MRM-167] add the execution times to the report\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@441795 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "157f00698db48c42aafb7fa09ebbd71a7fce0fa9",
+        "changes": {
+            "archiva-core/src/main/java/org/apache/maven/archiva/scheduler/task/IndexerTask.java": {
+                "old": {
+                    "('org.apache.maven.archiva.scheduler.task#IndexerTask', 'execute(Configuration,File)')": [
+                        199,
+                        200
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35
+                    ],
+                    "('org.apache.maven.archiva.scheduler.task#IndexerTask', 'execute(Configuration,File)')": [
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        205,
+                        219,
+                        220
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/main/java/org/apache/maven/archiva/reporting/DefaultReportingStore.java": {
+                "old": {
+                    "(None, None)": [
+                        123
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.reporting#DefaultReportingStore', 'storeReports(ReportingDatabase,ArtifactRepository)')": [
+                        102,
+                        103
+                    ]
+                }
+            },
+            "archiva-reports-standard/src/main/java/org/apache/maven/archiva/reporting/ReportingDatabase.java": {
+                "new": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', None)": [
+                        51,
+                        52,
+                        303,
+                        319,
+                        320,
+                        324,
+                        325,
+                        329,
+                        330
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', 'addFailure(Artifact,String)')": [
+                        84
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', 'addWarning(Artifact,String)')": [
+                        92
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', 'addFailure(RepositoryMetadata,String)')": [
+                        153
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', 'addWarning(RepositoryMetadata,String)')": [
+                        161
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', 'setInProgress(boolean)')": [
+                        299,
+                        300,
+                        301,
+                        302
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', 'clear')": [
+                        317,
+                        318
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', 'setStartTime(long)')": [
+                        321,
+                        322,
+                        323
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', 'getStartTime')": [
+                        326,
+                        327,
+                        328
+                    ],
+                    "('org.apache.maven.archiva.reporting#ReportingDatabase', 'updateTimings')": [
+                        331,
+                        332,
+                        333,
+                        334,
+                        335,
+                        336,
+                        337,
+                        338,
+                        339
+                    ]
+                }
+            }
+        }
+    },
+    "b37020b275bee01ffee4f79ed349eecb6824fb1a": {
+        "authored_data": "2006 Sep 09 11:27",
+        "commit.message": "[MRM-77] avoid problems with metadata reporting\n\ngit-svn-id: https://svn.apache.org/repos/asf/maven/archiva/trunk@441780 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Brett Porter",
+        "pcid": "b340526e56dd1abc797f015979629d5afe896478",
+        "changes": {
+            "archiva-reports-standard/src/main/java/org/apache/maven/archiva/reporting/BadMetadataReportProcessor.java": {
+                "old": {
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessor', 'checkRepositoryVersions(RepositoryMetadata,ArtifactRepository,ReportingDatabase)')": [
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274
+                    ],
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessor', None)": [
+                        275
+                    ]
+                },
+                "new": {
+                    "('org.apache.maven.archiva.reporting#BadMetadataReportProcessor', 'checkRepositoryVersions(RepositoryMetadata,ArtifactRepository,ReportingDatabase)')": [
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        276,
+                        277,
+                        278,
+                        279,
+                        280,
+                        281,
+                        282,
+                        283,
+                        284,
+                        285
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,2178 @@
+{
+    "f40aeaeaa0baec1b8b83dd53433b28d1c107047c": {
+        "authored_data": "2019 Mar 30 15:04",
+        "commit.message": "Upgrade to JUnit Jupiter (#19)\n\nThis PR migrates the project to the modern JUnit Jupiter 5.4.1\r\ntesting framework.\r\nSince JUnit Jupiter is not backwards compatible to JUnit 4.x, or even\r\nJUnit Vintage 5.x, the patch is a tad large, although most of the\r\nchanges are just cosmetic.\r\n\r\n1. Maven changes:\r\n a. junit:junit was replaced with org.junit.jupiter:junit-jupiter\r\n b. org.hamcrest:hamcrest-all was added since JUnit Jupiter no longer\r\n    bundles Hamcrest with them.\r\n\r\n2. Annotations:\r\n a. org.junit.jupiter.api.Test was used as a drop in replacement for\r\n    org.juit.Test without arguments. See 3.b for handling of the\r\n    @Test annotation with an \"expected\" argument.\r\n b. org.junit.jupiter.api.BeforeEach was used as an drop in\r\n    replacement for org.junit.Before.\r\n c. org.junit.jupiter.api.AfterEach was used as a drop in replacement\r\n    for org.junit.After.\r\n d. org.junit.jupiter.api.BeforeAll was used as a drop in replacement\r\n    for org.junit.BeforeClass.\r\n e. org.junit.jupiter.api.AfterAll was used as a drop in replacement\r\n    for org.junit.AfterClass.\r\n f. org.junit.jupiter.api.Disabled was used as a drop in replacement\r\n    for org.junit.Ignore.\r\n\r\n3. Assertions:\r\n a. org.junit.jupiter.api.Assertions' methods were used as a drop in\r\n    replacements for org.junit.Assert's methods with the same name in\r\n    the simple case of an assertion without a message.\r\n    In the case of an assertion with a message,\r\n    org.junit.jupiter.api.Assertions' methods were used, but the\r\n    argument order was changed - Assert's methods take the message as\r\n    the first argument, while Assertions' methods take the message as\r\n    the last argument.\r\n b. org.junit.jupiter.api.Assertions#assertThrows was used to assert\r\n    a specific exception was throws instead of an org.junit.Test\r\n    annotation with an \"expected\" argument. This technique has a side\r\n    bonus of making the tests slightly stricter, as now they assert the\r\n    exception was thrown from a specific line and prevent false\r\n    posivites where the test's \"set-up\" code accidentally threw that\r\n    exception. The throws clauses of these methods were cleaned up from\r\n    exceptions that can no longer be thrown in order to avoid\r\n    compilation warnings.\r\n c. org.hamcrest.MatcherAssert#assertThat was used as a drop in\r\n    reaplcement for org.junit.Assert#assertThat, as\r\n    org.junit.jupiter.api.Assertions has no equivilent method.",
+        "commit.author.name": "Allon Murienik",
+        "pcid": "64a3b977a957964368498916f81be15e7a2fca30",
+        "changes": {
+            "src/test/java/org/apache/commons/dbcp2/TestAbandonedBasicDataSource.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        34,
+                        35,
+                        36
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', None)": [
+                        46
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'testAbandonedClose')": [
+                        98
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'testAbandonedCloseWithExceptions')": [
+                        135
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'testLastUsedPreparedStatementUse')": [
+                        196,
+                        199
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'testLastUsedLargePreparedStatementUse')": [
+                        221,
+                        224
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'testGarbageCollectorCleanUp01')": [
+                        259,
+                        261,
+                        263
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'testGarbageCollectorCleanUp02')": [
+                        280,
+                        281,
+                        283,
+                        284,
+                        293,
+                        294
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'createStatement(Connection)')": [
+                        299
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'checkLastUsedStatement(Statement,DelegatingConnection)')": [
+                        317
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'checkLastUsedPreparedStatement(PreparedStatement,DelegatingConnection)')": [
+                        341
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        34,
+                        35,
+                        36
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', None)": [
+                        46
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'testAbandonedClose')": [
+                        98
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'testAbandonedCloseWithExceptions')": [
+                        135
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'testLastUsedPreparedStatementUse')": [
+                        196,
+                        199
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'testLastUsedLargePreparedStatementUse')": [
+                        221,
+                        224
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'testGarbageCollectorCleanUp01')": [
+                        259,
+                        261,
+                        263
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'testGarbageCollectorCleanUp02')": [
+                        280,
+                        281,
+                        283,
+                        284,
+                        293,
+                        294
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'createStatement(Connection)')": [
+                        299
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'checkLastUsedStatement(Statement,DelegatingConnection)')": [
+                        317
+                    ],
+                    "('org.apache.commons.dbcp2#TestAbandonedBasicDataSource', 'checkLastUsedPreparedStatement(PreparedStatement,DelegatingConnection)')": [
+                        341
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestBasicDataSource.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42
+                    ],
+                    "('org.apache.commons.dbcp2#TestBasicDataSource', None)": [
+                        57,
+                        63,
+                        87
+                    ],
+                    "('org.apache.commons.dbcp2#TestBasicDataSource', 'testPoolCloseCheckedException')": [
+                        467
+                    ],
+                    "('org.apache.commons.dbcp2#TestBasicDataSource', 'testPoolCloseRTE')": [
+                        490
+                    ],
+                    "('org.apache.commons.dbcp2#TestBasicDataSource', 'testMaxConnLifetimeExceeded')": [
+                        701
+                    ],
+                    "('org.apache.commons.dbcp2#TestBasicDataSource', 'testMaxConnLifetimeExceededMutedLog')": [
+                        721
+                    ],
+                    "('org.apache.commons.dbcp2#TestBasicDataSource', 'testMutateAbandonedConfig')": [
+                        868
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43
+                    ],
+                    "('org.apache.commons.dbcp2#TestBasicDataSource', None)": [
+                        58,
+                        64,
+                        88
+                    ],
+                    "('org.apache.commons.dbcp2#TestBasicDataSource', 'testPoolCloseCheckedException')": [
+                        468
+                    ],
+                    "('org.apache.commons.dbcp2#TestBasicDataSource', 'testPoolCloseRTE')": [
+                        491
+                    ],
+                    "('org.apache.commons.dbcp2#TestBasicDataSource', 'testMaxConnLifetimeExceeded')": [
+                        702
+                    ],
+                    "('org.apache.commons.dbcp2#TestBasicDataSource', 'testMaxConnLifetimeExceededMutedLog')": [
+                        722
+                    ],
+                    "('org.apache.commons.dbcp2#TestBasicDataSource', 'testMutateAbandonedConfig')": [
+                        869
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestBasicDataSourceFactory.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        36
+                    ],
+                    "('org.apache.commons.dbcp2#TestBasicDataSourceFactory', 'testValidateProperties')": [
+                        69
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        36
+                    ],
+                    "('org.apache.commons.dbcp2#TestBasicDataSourceFactory', 'testValidateProperties')": [
+                        69
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestBasicDataSourceMXBean.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestConnectionPool.java": {
+                "old": {
+                    "(None, None)": [
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39
+                    ],
+                    "('org.apache.commons.dbcp2#TestConnectionPool', None)": [
+                        52
+                    ],
+                    "('org.apache.commons.dbcp2#TestConnectionPool', 'assertBackPointers(Connection,Statement)')": [
+                        284,
+                        285,
+                        289,
+                        290,
+                        294,
+                        295,
+                        299,
+                        300,
+                        307,
+                        308
+                    ],
+                    "('org.apache.commons.dbcp2#TestConnectionPool', 'testPooling')": [
+                        429,
+                        437
+                    ],
+                    "('org.apache.commons.dbcp2#TestConnectionPool', 'testAutoCommitBehavior')": [
+                        445,
+                        446,
+                        449,
+                        452,
+                        454,
+                        458,
+                        461
+                    ],
+                    "('org.apache.commons.dbcp2#TestConnectionPool', 'multipleThreads(int,boolean,boolean,long,int,int,long)')": [
+                        847,
+                        849,
+                        851
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39
+                    ],
+                    "('org.apache.commons.dbcp2#TestConnectionPool', None)": [
+                        52
+                    ],
+                    "('org.apache.commons.dbcp2#TestConnectionPool', 'assertBackPointers(Connection,Statement)')": [
+                        284,
+                        285,
+                        289,
+                        290,
+                        294,
+                        295,
+                        299,
+                        300,
+                        307,
+                        308
+                    ],
+                    "('org.apache.commons.dbcp2#TestConnectionPool', 'testPooling')": [
+                        429,
+                        437
+                    ],
+                    "('org.apache.commons.dbcp2#TestConnectionPool', 'testAutoCommitBehavior')": [
+                        445,
+                        446,
+                        449,
+                        452,
+                        454,
+                        458,
+                        461
+                    ],
+                    "('org.apache.commons.dbcp2#TestConnectionPool', 'multipleThreads(int,boolean,boolean,long,int,int,long)')": [
+                        847,
+                        849,
+                        851
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestConstants.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        23
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        23
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestDataSourceConnectionFactory.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        31,
+                        32
+                    ],
+                    "('org.apache.commons.dbcp2#TestDataSourceConnectionFactory', None)": [
+                        42
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        31,
+                        32
+                    ],
+                    "('org.apache.commons.dbcp2#TestDataSourceConnectionFactory', None)": [
+                        42
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestDelegatingCallableStatement.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        31,
+                        32
+                    ],
+                    "('org.apache.commons.dbcp2#TestDelegatingCallableStatement', None)": [
+                        41
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        31,
+                        32
+                    ],
+                    "('org.apache.commons.dbcp2#TestDelegatingCallableStatement', None)": [
+                        41
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestDelegatingConnection.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        31,
+                        32
+                    ],
+                    "('org.apache.commons.dbcp2#TestDelegatingConnection', None)": [
+                        42
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        31,
+                        32
+                    ],
+                    "('org.apache.commons.dbcp2#TestDelegatingConnection', None)": [
+                        42
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestDelegatingDatabaseMetaData.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        32,
+                        33
+                    ],
+                    "('org.apache.commons.dbcp2#TestDelegatingDatabaseMetaData', None)": [
+                        45
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        32,
+                        33
+                    ],
+                    "('org.apache.commons.dbcp2#TestDelegatingDatabaseMetaData', None)": [
+                        45
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestDelegatingPreparedStatement.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        30,
+                        31
+                    ],
+                    "('org.apache.commons.dbcp2#TestDelegatingPreparedStatement', None)": [
+                        41
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        30,
+                        31
+                    ],
+                    "('org.apache.commons.dbcp2#TestDelegatingPreparedStatement', None)": [
+                        41
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestDelegatingResultSet.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        32,
+                        33,
+                        34
+                    ],
+                    "('org.apache.commons.dbcp2#TestDelegatingResultSet', None)": [
+                        47,
+                        182,
+                        193,
+                        1633,
+                        1644
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        32,
+                        33,
+                        34
+                    ],
+                    "('org.apache.commons.dbcp2#TestDelegatingResultSet', None)": [
+                        47,
+                        182,
+                        193,
+                        1633,
+                        1644
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestDelegatingStatement.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        34,
+                        35
+                    ],
+                    "('org.apache.commons.dbcp2#TestDelegatingStatement', None)": [
+                        44
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        34,
+                        35
+                    ],
+                    "('org.apache.commons.dbcp2#TestDelegatingStatement', None)": [
+                        44
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestDriverConnectionFactory.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        26
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestDriverManagerConnectionFactory.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        30,
+                        31,
+                        32
+                    ],
+                    "('org.apache.commons.dbcp2#TestDriverManagerConnectionFactory', None)": [
+                        43,
+                        48,
+                        70,
+                        76,
+                        82
+                    ],
+                    "('org.apache.commons.dbcp2#TestDriverManagerConnectionFactory', 'testDriverManagerWithoutUser')": [
+                        71,
+                        73
+                    ],
+                    "('org.apache.commons.dbcp2#TestDriverManagerConnectionFactory', 'testDriverManagerWithoutPassword')": [
+                        77,
+                        79
+                    ],
+                    "('org.apache.commons.dbcp2#TestDriverManagerConnectionFactory', 'testDriverManagerWithoutCredentials')": [
+                        83,
+                        85
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        31,
+                        32,
+                        33
+                    ],
+                    "('org.apache.commons.dbcp2#TestDriverManagerConnectionFactory', None)": [
+                        44,
+                        49,
+                        71,
+                        77,
+                        83
+                    ],
+                    "('org.apache.commons.dbcp2#TestDriverManagerConnectionFactory', 'testDriverManagerWithoutUser')": [
+                        72,
+                        74
+                    ],
+                    "('org.apache.commons.dbcp2#TestDriverManagerConnectionFactory', 'testDriverManagerWithoutPassword')": [
+                        78,
+                        80
+                    ],
+                    "('org.apache.commons.dbcp2#TestDriverManagerConnectionFactory', 'testDriverManagerWithoutCredentials')": [
+                        84,
+                        86
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestJndi.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        31,
+                        32,
+                        33
+                    ],
+                    "('org.apache.commons.dbcp2#TestJndi', None)": [
+                        87,
+                        93
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        31,
+                        32,
+                        33
+                    ],
+                    "('org.apache.commons.dbcp2#TestJndi', None)": [
+                        87,
+                        93
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestLifetimeExceededException.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        23
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        23
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestListException.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        27
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        27
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestPStmtKey.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        21,
+                        22,
+                        28,
+                        29
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtKey', 'testCtorDifferentSchema')": [
+                        43,
+                        44,
+                        46,
+                        48,
+                        51,
+                        53,
+                        56,
+                        58,
+                        61,
+                        63,
+                        65,
+                        67,
+                        69,
+                        71
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtKey', 'testCtorDifferentCatalog')": [
+                        81,
+                        82,
+                        84,
+                        86,
+                        89,
+                        91,
+                        94,
+                        96,
+                        99,
+                        101,
+                        103,
+                        105,
+                        107,
+                        109
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtKey', 'testCtorEquals')": [
+                        119,
+                        120,
+                        122,
+                        124,
+                        127,
+                        129,
+                        132,
+                        134,
+                        137,
+                        139,
+                        141,
+                        143,
+                        145,
+                        147
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtKey', 'testCtorStringStringArrayOfInts')": [
+                        161,
+                        164
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtKey', 'testCtorStringStringArrayOfNullInts')": [
+                        176
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtKey', 'testCtorStringStringArrayOfNullStrings')": [
+                        188
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtKey', 'testCtorStringStringArrayOfStrings')": [
+                        200,
+                        203
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        21,
+                        22,
+                        28,
+                        29
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtKey', 'testCtorDifferentSchema')": [
+                        43,
+                        44,
+                        46,
+                        48,
+                        51,
+                        53,
+                        56,
+                        58,
+                        61,
+                        63,
+                        65,
+                        67,
+                        69,
+                        71
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtKey', 'testCtorDifferentCatalog')": [
+                        81,
+                        82,
+                        84,
+                        86,
+                        89,
+                        91,
+                        94,
+                        96,
+                        99,
+                        101,
+                        103,
+                        105,
+                        107,
+                        109
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtKey', 'testCtorEquals')": [
+                        119,
+                        120,
+                        122,
+                        124,
+                        127,
+                        129,
+                        132,
+                        134,
+                        137,
+                        139,
+                        141,
+                        143,
+                        145,
+                        147
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtKey', 'testCtorStringStringArrayOfInts')": [
+                        161,
+                        164
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtKey', 'testCtorStringStringArrayOfNullInts')": [
+                        176
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtKey', 'testCtorStringStringArrayOfNullStrings')": [
+                        188
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtKey', 'testCtorStringStringArrayOfStrings')": [
+                        200,
+                        203
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestPStmtPooling.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        37,
+                        38
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtPooling', 'testMultipleClose')": [
+                        78
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtPooling', 'testBatchUpdate')": [
+                        223
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        37,
+                        38
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtPooling', 'testMultipleClose')": [
+                        78
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtPooling', 'testBatchUpdate')": [
+                        223
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestPStmtPoolingBasicDataSource.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        32,
+                        33
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtPoolingBasicDataSource', None)": [
+                        41
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        32,
+                        33
+                    ],
+                    "('org.apache.commons.dbcp2#TestPStmtPoolingBasicDataSource', None)": [
+                        41
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestParallelCreationWithNoIdle.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        32
+                    ],
+                    "('org.apache.commons.dbcp2#TestParallelCreationWithNoIdle', None)": [
+                        43,
+                        49
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        32
+                    ],
+                    "('org.apache.commons.dbcp2#TestParallelCreationWithNoIdle', None)": [
+                        43,
+                        49
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestPoolableConnection.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        21,
+                        28,
+                        29,
+                        30,
+                        31
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolableConnection', None)": [
+                        39,
+                        53
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolableConnection', 'testConnectionPool')": [
+                        63,
+                        64,
+                        69
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolableConnection', 'testPoolableConnectionLeak')": [
+                        95,
+                        96
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolableConnection', 'testClosingWrappedInDelegate')": [
+                        101,
+                        106,
+                        107,
+                        108,
+                        112,
+                        113,
+                        114,
+                        115
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolableConnection', 'testFastFailValidation')": [
+                        160,
+                        161,
+                        162,
+                        163
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolableConnection', 'testFastFailValidationCustomCodes')": [
+                        190,
+                        191,
+                        192,
+                        193
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        21,
+                        28,
+                        29,
+                        30,
+                        31
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolableConnection', None)": [
+                        39,
+                        53
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolableConnection', 'testConnectionPool')": [
+                        63,
+                        64,
+                        69
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolableConnection', 'testPoolableConnectionLeak')": [
+                        95
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolableConnection', 'testClosingWrappedInDelegate')": [
+                        100,
+                        105,
+                        106,
+                        107,
+                        111,
+                        112,
+                        113,
+                        114
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolableConnection', 'testFastFailValidation')": [
+                        159,
+                        160
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolableConnection', 'testFastFailValidationCustomCodes')": [
+                        187,
+                        188
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestPoolingConnection.java": {
+                "old": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        25,
+                        26,
+                        27
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolingConnection', None)": [
+                        33,
+                        47
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        19,
+                        20,
+                        25,
+                        26,
+                        27
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolingConnection', None)": [
+                        33,
+                        47
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestPoolingDataSource.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        29,
+                        30,
+                        31,
+                        32
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolingDataSource', None)": [
+                        47,
+                        69
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolingDataSource', 'testPoolGuardConnectionWrapperEqualsSameDelegate')": [
+                        88,
+                        89
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        29,
+                        30,
+                        31,
+                        32
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolingDataSource', None)": [
+                        47,
+                        69
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolingDataSource', 'testPoolGuardConnectionWrapperEqualsSameDelegate')": [
+                        88,
+                        89
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestPoolingDriver.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        39,
+                        40,
+                        41,
+                        42
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolingDriver', None)": [
+                        56,
+                        87
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolingDriver', 'test1')": [
+                        104
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        39,
+                        40,
+                        41,
+                        42
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolingDriver', None)": [
+                        56,
+                        87
+                    ],
+                    "('org.apache.commons.dbcp2#TestPoolingDriver', 'test1')": [
+                        104
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/TestUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        22
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        22
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/cpdsadapter/TestDriverAdapterCPDS.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        41,
+                        42,
+                        43
+                    ],
+                    "('org.apache.commons.dbcp2.cpdsadapter#TestDriverAdapterCPDS', None)": [
+                        52,
+                        172,
+                        304
+                    ],
+                    "('org.apache.commons.dbcp2.cpdsadapter#TestDriverAdapterCPDS', 'testSetConnectionPropertiesConnectionCalled')": [
+                        177
+                    ],
+                    "('org.apache.commons.dbcp2.cpdsadapter#TestDriverAdapterCPDS', 'testDbcp367')": [
+                        271
+                    ],
+                    "('org.apache.commons.dbcp2.cpdsadapter#TestDriverAdapterCPDS', 'testGetParentLogger')": [
+                        305,
+                        306
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        42,
+                        43,
+                        44
+                    ],
+                    "('org.apache.commons.dbcp2.cpdsadapter#TestDriverAdapterCPDS', None)": [
+                        53,
+                        173,
+                        305
+                    ],
+                    "('org.apache.commons.dbcp2.cpdsadapter#TestDriverAdapterCPDS', 'testSetConnectionPropertiesConnectionCalled')": [
+                        178
+                    ],
+                    "('org.apache.commons.dbcp2.cpdsadapter#TestDriverAdapterCPDS', 'testDbcp367')": [
+                        272
+                    ],
+                    "('org.apache.commons.dbcp2.cpdsadapter#TestDriverAdapterCPDS', 'testGetParentLogger')": [
+                        306,
+                        307
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/datasources/TestCPDSConnectionFactory.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        31,
+                        32
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestCPDSConnectionFactory', None)": [
+                        40
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        31,
+                        32
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestCPDSConnectionFactory', None)": [
+                        40
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/datasources/TestFactory.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        32
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        32
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/datasources/TestInstanceKeyDataSource.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        33,
+                        34,
+                        35
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', None)": [
+                        49,
+                        61,
+                        105,
+                        108,
+                        109,
+                        110,
+                        125,
+                        128,
+                        129,
+                        130,
+                        144,
+                        156,
+                        213,
+                        234
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', 'testConnectionPoolDataSourceAlreadySet')": [
+                        107
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', 'testConnectionPoolDataSourceAlreadySetUsingJndi')": [
+                        114
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', 'testDataSourceNameAlreadySetUsingJndi')": [
+                        131,
+                        132,
+                        133,
+                        134
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', 'testDefaultTransactionIsolationInvalid')": [
+                        147
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', 'testJndiNullProperties')": [
+                        158
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', 'testValidationQueryWithConnectionCalled')": [
+                        217
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', 'testRollbackAfterValidationWithConnectionCalled')": [
+                        238,
+                        239
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        34,
+                        35,
+                        36
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', None)": [
+                        50,
+                        62,
+                        106,
+                        109,
+                        110,
+                        111,
+                        126,
+                        129,
+                        130,
+                        131,
+                        145,
+                        157,
+                        214,
+                        235
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', 'testConnectionPoolDataSourceAlreadySet')": [
+                        108
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', 'testConnectionPoolDataSourceAlreadySetUsingJndi')": [
+                        115
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', 'testDataSourceNameAlreadySet')": [
+                        128
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', 'testDataSourceNameAlreadySetUsingJndi')": [
+                        132,
+                        133,
+                        135
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', 'testDefaultTransactionIsolationInvalid')": [
+                        148
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', 'testJndiNullProperties')": [
+                        159
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', 'testValidationQueryWithConnectionCalled')": [
+                        218
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestInstanceKeyDataSource', 'testRollbackAfterValidationWithConnectionCalled')": [
+                        239
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/datasources/TestKeyedCPDSConnectionFactory.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        32,
+                        33
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestKeyedCPDSConnectionFactory', None)": [
+                        41
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        32,
+                        33
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestKeyedCPDSConnectionFactory', None)": [
+                        41
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/datasources/TestPerUserPoolDataSource.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        42,
+                        43,
+                        44
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestPerUserPoolDataSource', None)": [
+                        59,
+                        82
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestPerUserPoolDataSource', 'testChangePassword')": [
+                        530,
+                        531,
+                        534,
+                        535,
+                        543,
+                        544
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        42,
+                        43,
+                        44
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestPerUserPoolDataSource', None)": [
+                        59,
+                        82
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestPerUserPoolDataSource', 'testChangePassword')": [
+                        530,
+                        531,
+                        534,
+                        535,
+                        543,
+                        544
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/datasources/TestPoolKey.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        23,
+                        24
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestPoolKey', None)": [
+                        35
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        23,
+                        24
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestPoolKey', None)": [
+                        35
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/datasources/TestSharedPoolDataSource.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        39,
+                        40
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestSharedPoolDataSource', None)": [
+                        54
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestSharedPoolDataSource', 'testChangePassword')": [
+                        700,
+                        701,
+                        704,
+                        705,
+                        713,
+                        714
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        39,
+                        40
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestSharedPoolDataSource', None)": [
+                        54
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestSharedPoolDataSource', 'testChangePassword')": [
+                        700,
+                        701,
+                        704,
+                        705,
+                        713,
+                        714
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/datasources/TestUserPassKey.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        27,
+                        28
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestUserPassKey', None)": [
+                        39
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        27,
+                        28
+                    ],
+                    "('org.apache.commons.dbcp2.datasources#TestUserPassKey', None)": [
+                        39
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/managed/TestBasicManagedDataSource.java": {
+                "old": {
+                    "(None, None)": [
+                        27,
+                        37,
+                        38,
+                        39,
+                        40
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestBasicManagedDataSource', None)": [
+                        101,
+                        138
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestBasicManagedDataSource', 'testTransactionManagerNotSet')": [
+                        104
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestBasicManagedDataSource', 'testRuntimeExceptionsAreRethrown')": [
+                        148
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestBasicManagedDataSource', None)": [
+                        102,
+                        139
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestBasicManagedDataSource', 'testTransactionManagerNotSet')": [
+                        105
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestBasicManagedDataSource', 'testRuntimeExceptionsAreRethrown')": [
+                        149
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/managed/TestConnectionWithNarayana.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        31,
+                        32,
+                        33,
+                        34
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestConnectionWithNarayana', None)": [
+                        65,
+                        222,
+                        223,
+                        224,
+                        225
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestConnectionWithNarayana', 'testRepeatedGetConnectionInTimeout')": [
+                        123
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestConnectionWithNarayana', 'testConnectionCommitAfterTimeout')": [
+                        141,
+                        146
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestConnectionWithNarayana', 'testConnectionInTimeout')": [
+                        221
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        31,
+                        32,
+                        33,
+                        34
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestConnectionWithNarayana', None)": [
+                        65,
+                        222,
+                        223,
+                        224,
+                        225
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestConnectionWithNarayana', 'testRepeatedGetConnectionInTimeout')": [
+                        123
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestConnectionWithNarayana', 'testConnectionCommitAfterTimeout')": [
+                        141,
+                        146
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestConnectionWithNarayana', 'testConnectionInTimeout')": [
+                        221
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/managed/TestDataSourceXAConnectionFactory.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        35,
+                        36
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestDataSourceXAConnectionFactory', None)": [
+                        49
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        35,
+                        36
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestDataSourceXAConnectionFactory', None)": [
+                        49
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/managed/TestLocalXaResource.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        48,
+                        49
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', None)": [
+                        59,
+                        81,
+                        85,
+                        86,
+                        87,
+                        91,
+                        92,
+                        93,
+                        117,
+                        124,
+                        125,
+                        126,
+                        212,
+                        217,
+                        218,
+                        219,
+                        222,
+                        223,
+                        224,
+                        229,
+                        230,
+                        231,
+                        238,
+                        239,
+                        240,
+                        269,
+                        272,
+                        273,
+                        274
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testStartInvalidFlag')": [
+                        82,
+                        84
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testStartNoFlagButAlreadyEnlisted')": [
+                        90
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testStartNoFlagResumeButDifferentXid')": [
+                        96
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testStartNoFlagResumeEndMissingXid')": [
+                        123
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testStartNoFlagResumeEndDifferentXid')": [
+                        132
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testStartFailsWhenCannotSetAutoCommit')": [
+                        213,
+                        216
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testCommitMissingXid')": [
+                        220,
+                        221
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testCommitNoTransaction')": [
+                        225,
+                        228
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testCommitInvalidXid')": [
+                        237
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testCommitConnectionClosed')": [
+                        246
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testRollbackMissingXid')": [
+                        270,
+                        271
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testRollbackInvalidXid')": [
+                        280
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        49,
+                        50
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', None)": [
+                        60,
+                        82,
+                        86,
+                        87,
+                        88,
+                        92,
+                        93,
+                        94,
+                        118,
+                        125,
+                        126,
+                        127,
+                        213,
+                        218,
+                        219,
+                        220,
+                        223,
+                        224,
+                        225,
+                        230,
+                        231,
+                        232,
+                        239,
+                        240,
+                        241,
+                        270,
+                        273,
+                        274,
+                        275
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testStartInvalidFlag')": [
+                        83,
+                        85
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testStartNoFlagButAlreadyEnlisted')": [
+                        91
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testStartNoFlagResumeButDifferentXid')": [
+                        97
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testStartNoFlagResumeEndMissingXid')": [
+                        124
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testStartNoFlagResumeEndDifferentXid')": [
+                        133
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testStartFailsWhenCannotSetAutoCommit')": [
+                        214,
+                        217
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testCommitMissingXid')": [
+                        221,
+                        222
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testCommitNoTransaction')": [
+                        226,
+                        229
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testCommitInvalidXid')": [
+                        238
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testCommitConnectionClosed')": [
+                        247
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testRollbackMissingXid')": [
+                        271,
+                        272
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestLocalXaResource', 'testRollbackInvalidXid')": [
+                        281
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/managed/TestManagedConnection.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        45,
+                        46,
+                        47
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedConnection', None)": [
+                        60,
+                        92
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        45,
+                        46,
+                        47
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedConnection', None)": [
+                        60,
+                        92
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/managed/TestManagedDataSource.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        36,
+                        37,
+                        38,
+                        39
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSource', None)": [
+                        60,
+                        93,
+                        260,
+                        264,
+                        265,
+                        266,
+                        267,
+                        271,
+                        272,
+                        273
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSource', 'testManagedConnectionEqualsSameDelegateNoUnderlyingAccess')": [
+                        162,
+                        163
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSource', 'testManagedConnectionEqualsSameDelegate')": [
+                        185,
+                        186
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSource', 'testTransactionRegistryNotInitialized')": [
+                        263
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSource', 'testSetTransactionRegistryAlreadySet')": [
+                        270
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSource', 'testSetNullTransactionRegistry')": [
+                        276
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        37,
+                        38,
+                        39,
+                        40
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSource', None)": [
+                        61,
+                        94,
+                        261,
+                        265,
+                        266,
+                        267,
+                        268,
+                        272,
+                        273,
+                        274
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSource', 'testManagedConnectionEqualsSameDelegateNoUnderlyingAccess')": [
+                        163,
+                        164
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSource', 'testManagedConnectionEqualsSameDelegate')": [
+                        186,
+                        187
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSource', 'testTransactionRegistryNotInitialized')": [
+                        264
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSource', 'testSetTransactionRegistryAlreadySet')": [
+                        271
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSource', 'testSetNullTransactionRegistry')": [
+                        277
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/managed/TestManagedDataSourceInTx.java": {
+                "old": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        38,
+                        39,
+                        40,
+                        41
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSourceInTx', None)": [
+                        49,
+                        56
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSourceInTx', 'testConnectionsAreDistinct')": [
+                        89,
+                        92,
+                        94
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSourceInTx', 'testHashCode')": [
+                        177
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSourceInTx', 'testCloseInTransaction')": [
+                        311,
+                        312,
+                        313,
+                        314,
+                        315
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSourceInTx', 'testAutoCommitBehavior')": [
+                        324,
+                        335
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSourceInTx', 'testCommit')": [
+                        346,
+                        357
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSourceInTx', 'testReadOnly')": [
+                        370,
+                        381,
+                        392
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSourceInTx', 'assertBackPointers(Connection,Statement)')": [
+                        404,
+                        405,
+                        409,
+                        410,
+                        414,
+                        415,
+                        419,
+                        420,
+                        427,
+                        428
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        38,
+                        39,
+                        40,
+                        41
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSourceInTx', None)": [
+                        49,
+                        56
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSourceInTx', 'testConnectionsAreDistinct')": [
+                        89,
+                        92,
+                        94
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSourceInTx', 'testHashCode')": [
+                        177
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSourceInTx', 'testCloseInTransaction')": [
+                        311,
+                        312,
+                        313,
+                        314,
+                        315
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSourceInTx', 'testAutoCommitBehavior')": [
+                        324,
+                        335
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSourceInTx', 'testCommit')": [
+                        346,
+                        357
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSourceInTx', 'testReadOnly')": [
+                        370,
+                        381,
+                        392
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestManagedDataSourceInTx', 'assertBackPointers(Connection,Statement)')": [
+                        404,
+                        405,
+                        409,
+                        410,
+                        414,
+                        415,
+                        419,
+                        420,
+                        427,
+                        428
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/managed/TestPoolableManagedConnection.java": {
+                "old": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        39,
+                        40,
+                        41
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestPoolableManagedConnection', None)": [
+                        54,
+                        84
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        21,
+                        22,
+                        23,
+                        24,
+                        39,
+                        40,
+                        41
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestPoolableManagedConnection', None)": [
+                        54,
+                        84
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/managed/TestSynchronizationOrder.java": {
+                "old": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27,
+                        51,
+                        52
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestSynchronizationOrder', None)": [
+                        122,
+                        128
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25,
+                        26,
+                        27,
+                        51,
+                        52
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestSynchronizationOrder', None)": [
+                        122,
+                        128
+                    ]
+                }
+            },
+            "src/test/java/org/apache/commons/dbcp2/managed/TestTransactionContext.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestTransactionContext', None)": [
+                        35
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestTransactionContext', 'testSetSharedConnectionEnlistFailure')": [
+                        48
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        26,
+                        27
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestTransactionContext', None)": [
+                        37
+                    ],
+                    "('org.apache.commons.dbcp2.managed#TestTransactionContext', 'testSetSharedConnectionEnlistFailure')": [
+                        50
+                    ]
+                }
+            }
+        }
+    },
+    "a4c5b96d1a61ea44858208e194488f0248b9587e": {
+        "authored_data": "2019 Mar 30 01:19",
+        "commit.message": "Fixing usage of ObjectOutputStream decorated with ByteArrayOutputStream (#28)\n\n",
+        "commit.author.name": "emopers",
+        "pcid": "b92a3885ad0eade44d5eb10e8815547633a93b63",
+        "changes": {
+            "src/test/java/org/apache/commons/dbcp2/datasources/TestPerUserPoolDataSource.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2.datasources#TestPerUserPoolDataSource', 'testSerialization')": [
+                        430
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2.datasources#TestPerUserPoolDataSource', 'testSerialization')": [
+                        429
+                    ]
+                }
+            }
+        }
+    },
+    "b92a3885ad0eade44d5eb10e8815547633a93b63": {
+        "authored_data": "2019 Mar 26 20:55",
+        "commit.message": "camel-case.",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "7930f731bdf242eb17d7bbcc2ac05b96016a95d1",
+        "changes": {
+            "src/main/java/org/apache/commons/dbcp2/BasicDataSource.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2#BasicDataSource', 'close')": [
+                        421,
+                        425,
+                        426
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2#BasicDataSource', 'close')": [
+                        421,
+                        425,
+                        426
+                    ]
+                }
+            }
+        }
+    },
+    "01d5d9ec40923e93e80c5cde15aea60df5465ffb": {
+        "authored_data": "2019 Mar 13 16:36",
+        "commit.message": "Javadoc.",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "a43ae9596574fc686113f10db3c620e2430e76ec",
+        "changes": {
+            "src/main/java/org/apache/commons/dbcp2/BasicDataSource.java": {
+                "old": {
+                    "('org.apache.commons.dbcp2#BasicDataSource', None)": [
+                        1522
+                    ]
+                },
+                "new": {
+                    "('org.apache.commons.dbcp2#BasicDataSource', None)": [
+                        1522,
+                        1523,
+                        1524,
+                        1525
+                    ]
+                }
+            }
+        }
+    },
+    "a43ae9596574fc686113f10db3c620e2430e76ec": {
+        "authored_data": "2019 Mar 13 16:34",
+        "commit.message": "Javadoc.",
+        "commit.author.name": "Gary Gregory",
+        "pcid": "cad1f197a5c50b43371b6a464f303aa9caa1fecb",
+        "changes": {
+            "src/main/java/org/apache/commons/dbcp2/managed/ManagedDataSource.java": {
+                "new": {
+                    "('org.apache.commons.dbcp2.managed#ManagedDataSource', None)": [
+                        68,
+                        69,
+                        70,
+                        71
+                    ]
+                }
+            }
+        }
+    }
+}

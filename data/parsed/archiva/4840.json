@@ -1,0 +1,3211 @@
+{
+    "46840f3c31bb81b4088473d49a74c8f1a519aa7a": {
+        "authored_data": "2011 Oct 04 21:14",
+        "commit.message": "[MRM-1332] remove database scanning configuration and handle upgrade.\nensure some consumers are here and remove db consumers.\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1178954 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "c110af17f46e8b93eb416b55b8039e7ee85ff134",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-configuration/src/main/java/org/apache/archiva/configuration/DefaultArchivaConfiguration.java": {
+                "old": {
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', None)": [
+                        139,
+                        144,
+                        157,
+                        158,
+                        521,
+                        522,
+                        523,
+                        524,
+                        525
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'getConfiguration')": [
+                        154,
+                        155,
+                        156
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'loadConfiguration')": [
+                        159,
+                        163
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'load')": [
+                        175,
+                        182,
+                        185,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        205,
+                        206,
+                        207,
+                        210,
+                        215,
+                        217,
+                        223,
+                        224,
+                        225,
+                        226,
+                        227,
+                        233,
+                        238,
+                        239,
+                        240,
+                        244,
+                        249,
+                        256,
+                        260,
+                        262,
+                        264,
+                        271,
+                        273,
+                        275,
+                        278,
+                        279,
+                        280,
+                        281,
+                        319,
+                        321,
+                        340,
+                        341,
+                        342,
+                        345
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'readDefaultConfiguration')": [
+                        407
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'save(Configuration)')": [
+                        436,
+                        441,
+                        443,
+                        444,
+                        445,
+                        449,
+                        450,
+                        451,
+                        452,
+                        471,
+                        475,
+                        480,
+                        484,
+                        488,
+                        492,
+                        496,
+                        497,
+                        498,
+                        502,
+                        508,
+                        509
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'escapeCronExpressions(Configuration)')": [
+                        518,
+                        519,
+                        520
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'createDefaultConfigurationFile')": [
+                        526,
+                        554,
+                        564
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'writeFile(String,String,String)')": [
+                        584,
+                        587,
+                        599
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'initialize')": [
+                        656,
+                        664,
+                        665,
+                        676
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'reload')": [
+                        686,
+                        691,
+                        695,
+                        696,
+                        697
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'unescapeExpressions(Configuration)')": [
+                        732,
+                        733,
+                        734,
+                        735,
+                        736
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'checkRepositoryLocations(Configuration)')": [
+                        746,
+                        747,
+                        748,
+                        751,
+                        752,
+                        753,
+                        754
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'getUserConfigFilename')": [
+                        761
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'getAltConfigFilename')": [
+                        766
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'isDefaulted')": [
+                        771
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'getRegistry')": [
+                        776
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        55
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', None)": [
+                        140,
+                        145,
+                        158,
+                        159,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        696,
+                        697,
+                        698,
+                        735,
+                        736,
+                        737
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'getConfiguration')": [
+                        155,
+                        156,
+                        157
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'loadConfiguration')": [
+                        160,
+                        164
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'load')": [
+                        176,
+                        183,
+                        186,
+                        187,
+                        188,
+                        189,
+                        190,
+                        191,
+                        192,
+                        193,
+                        194,
+                        195,
+                        196,
+                        197,
+                        198,
+                        199,
+                        200,
+                        201,
+                        202,
+                        203,
+                        206,
+                        207,
+                        208,
+                        211,
+                        216,
+                        218,
+                        224,
+                        225,
+                        226,
+                        227,
+                        228,
+                        234,
+                        239,
+                        240,
+                        241,
+                        245,
+                        250,
+                        257,
+                        261,
+                        263,
+                        265,
+                        272,
+                        274,
+                        276,
+                        279,
+                        280,
+                        281,
+                        282,
+                        320,
+                        322,
+                        341,
+                        342,
+                        343,
+                        346
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'readDefaultConfiguration')": [
+                        408
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'save(Configuration)')": [
+                        437,
+                        442,
+                        444,
+                        445,
+                        446,
+                        450,
+                        451,
+                        452,
+                        453,
+                        472,
+                        476,
+                        481,
+                        485,
+                        489,
+                        493,
+                        497,
+                        498,
+                        499,
+                        503,
+                        509,
+                        510
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'escapeCronExpressions(Configuration)')": [
+                        519,
+                        520,
+                        521
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'createDefaultConfigurationFile')": [
+                        527,
+                        555,
+                        565
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'writeFile(String,String,String)')": [
+                        585,
+                        588,
+                        600
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'initialize')": [
+                        657,
+                        665,
+                        666,
+                        677,
+                        678,
+                        679,
+                        680,
+                        681,
+                        682,
+                        683,
+                        684,
+                        685,
+                        686
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'handleUpgradeConfiguration')": [
+                        699,
+                        700,
+                        701,
+                        702,
+                        703,
+                        704,
+                        705,
+                        706,
+                        707,
+                        708,
+                        709,
+                        710,
+                        711,
+                        712,
+                        713,
+                        714,
+                        715,
+                        716,
+                        717,
+                        718,
+                        719,
+                        720,
+                        721,
+                        722,
+                        723,
+                        724,
+                        725,
+                        726,
+                        727,
+                        728,
+                        729,
+                        730,
+                        731,
+                        732,
+                        733,
+                        734
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'reload')": [
+                        738,
+                        743,
+                        747,
+                        748,
+                        749
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'unescapeExpressions(Configuration)')": [
+                        784,
+                        785,
+                        786,
+                        787,
+                        788
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'checkRepositoryLocations(Configuration)')": [
+                        798,
+                        799,
+                        800,
+                        803,
+                        804,
+                        805,
+                        806
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'getUserConfigFilename')": [
+                        813
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'getAltConfigFilename')": [
+                        818
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'isDefaulted')": [
+                        823
+                    ],
+                    "('org.apache.archiva.configuration#DefaultArchivaConfiguration', 'getRegistry')": [
+                        828
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-configuration/src/test/java/org/apache/archiva/configuration/ArchivaConfigurationTest.java": {
+                "old": {
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'getTestFile(String)')": [
+                        54
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testGetConfigurationFromRegistryWithASingleNamedConfigurationResource')": [
+                        68,
+                        73,
+                        75,
+                        76,
+                        77,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', None)": [
+                        85,
+                        86,
+                        87,
+                        184,
+                        185,
+                        186,
+                        209,
+                        210,
+                        211,
+                        283,
+                        284,
+                        321,
+                        322,
+                        323,
+                        366,
+                        367,
+                        368,
+                        381,
+                        382,
+                        383,
+                        416,
+                        417,
+                        418,
+                        458,
+                        459,
+                        460,
+                        500,
+                        501,
+                        502,
+                        597,
+                        598,
+                        599,
+                        688,
+                        689,
+                        690,
+                        742,
+                        743,
+                        744
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testGetConfigurationFromDefaults')": [
+                        88,
+                        94,
+                        96,
+                        99,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testGetConfigurationFromDefaultsWithDefaultRepoLocationAlreadyExisting')": [
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        123,
+                        124,
+                        125,
+                        134,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'assertConfiguration(Configuration,int,int,int)')": [
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        169,
+                        170,
+                        171,
+                        175,
+                        176,
+                        177,
+                        180,
+                        182,
+                        183
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testGetConfigurationFromRegistryWithTwoConfigurationResources')": [
+                        187,
+                        192,
+                        195,
+                        196,
+                        198,
+                        199,
+                        200,
+                        203,
+                        206,
+                        208
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testGetConfigurationSystemOverride')": [
+                        212,
+                        220,
+                        224,
+                        225,
+                        226,
+                        230
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testStoreConfiguration')": [
+                        235,
+                        239,
+                        240,
+                        249,
+                        250,
+                        251,
+                        253,
+                        254,
+                        255,
+                        258,
+                        259,
+                        263,
+                        264,
+                        265,
+                        266,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        274,
+                        275,
+                        280,
+                        281,
+                        282
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'createConfigurationListenerMockControl')": [
+                        285
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testStoreConfigurationUser')": [
+                        291,
+                        295,
+                        296,
+                        299,
+                        300,
+                        301,
+                        302,
+                        308,
+                        309,
+                        310,
+                        311,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        319,
+                        320
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testStoreConfigurationLoadedFromDefaults')": [
+                        324,
+                        328,
+                        329,
+                        332,
+                        333,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        343,
+                        346,
+                        347,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        364,
+                        365
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testDefaultUserConfigFilename')": [
+                        369,
+                        375,
+                        378,
+                        380
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testStoreConfigurationFallback')": [
+                        384,
+                        388,
+                        389,
+                        392,
+                        393,
+                        394,
+                        395,
+                        401,
+                        402,
+                        403,
+                        404,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        414,
+                        415
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testStoreConfigurationFailsWhenReadFromBothLocationsNoLists')": [
+                        419,
+                        423,
+                        424,
+                        427,
+                        428,
+                        429,
+                        430,
+                        433,
+                        439,
+                        440,
+                        441,
+                        442,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        451,
+                        456,
+                        457
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testStoreConfigurationFailsWhenReadFromBothLocationsUserHasLists')": [
+                        461,
+                        465,
+                        466,
+                        469,
+                        470,
+                        471,
+                        472,
+                        475,
+                        481,
+                        482,
+                        483,
+                        484,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        493,
+                        498,
+                        499
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testStoreConfigurationFailsWhenReadFromBothLocationsAppserverHasLists')": [
+                        503,
+                        507,
+                        508,
+                        511,
+                        512,
+                        513,
+                        514,
+                        517,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        538,
+                        539
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testLoadConfigurationFromInvalidBothLocationsOnDisk')": [
+                        544,
+                        549
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testLoadConfigurationFromInvalidUserLocationOnDisk')": [
+                        563,
+                        567,
+                        571
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testConfigurationUpgradeFrom09')": [
+                        578,
+                        584,
+                        587,
+                        588,
+                        589,
+                        592,
+                        593,
+                        594,
+                        595,
+                        596
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testAutoDetectV1')": [
+                        600,
+                        605,
+                        606,
+                        607,
+                        608,
+                        614,
+                        615,
+                        616,
+                        618,
+                        619,
+                        620,
+                        623,
+                        624,
+                        625,
+                        626,
+                        627,
+                        630,
+                        631,
+                        632,
+                        642,
+                        645,
+                        646,
+                        647,
+                        648,
+                        649
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testArchivaV1')": [
+                        657,
+                        662,
+                        664,
+                        665,
+                        666,
+                        667,
+                        668,
+                        669,
+                        673,
+                        674,
+                        675,
+                        676,
+                        677,
+                        678,
+                        682,
+                        683,
+                        684,
+                        685,
+                        686,
+                        687
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testCronExpressionsWithComma')": [
+                        691,
+                        695,
+                        696,
+                        699,
+                        700,
+                        701,
+                        702,
+                        705,
+                        710,
+                        711,
+                        712,
+                        715,
+                        716,
+                        717,
+                        721,
+                        725,
+                        732,
+                        739,
+                        740,
+                        741
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testRemoveLastElements')": [
+                        745,
+                        749,
+                        750,
+                        753,
+                        754,
+                        755,
+                        756,
+                        759,
+                        765,
+                        766,
+                        767,
+                        770,
+                        773,
+                        774,
+                        775,
+                        778,
+                        781,
+                        784,
+                        787,
+                        790,
+                        791,
+                        792,
+                        795,
+                        796,
+                        797,
+                        800,
+                        801,
+                        802,
+                        803,
+                        806,
+                        807,
+                        810,
+                        815,
+                        816,
+                        817,
+                        818,
+                        819,
+                        820,
+                        821,
+                        822,
+                        823,
+                        824
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testGetConfigurationFixEmptyRemoteRepoUsernamePassword')": [
+                        831,
+                        836,
+                        837,
+                        839,
+                        842,
+                        845,
+                        846,
+                        847,
+                        848,
+                        849,
+                        850
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32,
+                        33
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', None)": [
+                        51,
+                        52,
+                        89,
+                        90,
+                        91,
+                        188,
+                        189,
+                        190,
+                        213,
+                        214,
+                        215,
+                        287,
+                        288,
+                        325,
+                        326,
+                        327,
+                        370,
+                        371,
+                        372,
+                        385,
+                        386,
+                        387,
+                        420,
+                        421,
+                        422,
+                        462,
+                        463,
+                        464,
+                        504,
+                        505,
+                        506,
+                        601,
+                        602,
+                        603,
+                        632,
+                        633,
+                        634,
+                        723,
+                        724,
+                        725,
+                        777,
+                        778,
+                        779
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'getTestFile(String)')": [
+                        58
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testGetConfigurationFromRegistryWithASingleNamedConfigurationResource')": [
+                        72,
+                        77,
+                        79,
+                        80,
+                        81,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testGetConfigurationFromDefaults')": [
+                        92,
+                        98,
+                        100,
+                        103,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testGetConfigurationFromDefaultsWithDefaultRepoLocationAlreadyExisting')": [
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        127,
+                        128,
+                        129,
+                        138,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'assertConfiguration(Configuration,int,int,int)')": [
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        173,
+                        174,
+                        175,
+                        179,
+                        180,
+                        181,
+                        184,
+                        186,
+                        187
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testGetConfigurationFromRegistryWithTwoConfigurationResources')": [
+                        191,
+                        196,
+                        199,
+                        200,
+                        202,
+                        203,
+                        204,
+                        207,
+                        210,
+                        212
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testGetConfigurationSystemOverride')": [
+                        216,
+                        224,
+                        228,
+                        229,
+                        230,
+                        234
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testStoreConfiguration')": [
+                        239,
+                        243,
+                        244,
+                        253,
+                        254,
+                        255,
+                        257,
+                        258,
+                        259,
+                        262,
+                        263,
+                        267,
+                        268,
+                        269,
+                        270,
+                        271,
+                        272,
+                        273,
+                        274,
+                        275,
+                        278,
+                        279,
+                        284,
+                        285,
+                        286
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'createConfigurationListenerMockControl')": [
+                        289
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testStoreConfigurationUser')": [
+                        295,
+                        299,
+                        300,
+                        303,
+                        304,
+                        305,
+                        306,
+                        312,
+                        313,
+                        314,
+                        315,
+                        316,
+                        317,
+                        318,
+                        319,
+                        320,
+                        323,
+                        324
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testStoreConfigurationLoadedFromDefaults')": [
+                        328,
+                        332,
+                        333,
+                        336,
+                        337,
+                        342,
+                        343,
+                        344,
+                        345,
+                        346,
+                        347,
+                        350,
+                        351,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        368,
+                        369
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testDefaultUserConfigFilename')": [
+                        373,
+                        379,
+                        382,
+                        384
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testStoreConfigurationFallback')": [
+                        388,
+                        392,
+                        393,
+                        396,
+                        397,
+                        398,
+                        399,
+                        405,
+                        406,
+                        407,
+                        408,
+                        409,
+                        410,
+                        411,
+                        412,
+                        413,
+                        414,
+                        415,
+                        418,
+                        419
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testStoreConfigurationFailsWhenReadFromBothLocationsNoLists')": [
+                        423,
+                        427,
+                        428,
+                        431,
+                        432,
+                        433,
+                        434,
+                        437,
+                        443,
+                        444,
+                        445,
+                        446,
+                        447,
+                        448,
+                        449,
+                        450,
+                        451,
+                        452,
+                        455,
+                        460,
+                        461
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testStoreConfigurationFailsWhenReadFromBothLocationsUserHasLists')": [
+                        465,
+                        469,
+                        470,
+                        473,
+                        474,
+                        475,
+                        476,
+                        479,
+                        485,
+                        486,
+                        487,
+                        488,
+                        489,
+                        490,
+                        491,
+                        492,
+                        493,
+                        494,
+                        497,
+                        502,
+                        503
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testStoreConfigurationFailsWhenReadFromBothLocationsAppserverHasLists')": [
+                        507,
+                        511,
+                        512,
+                        515,
+                        516,
+                        517,
+                        518,
+                        521,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        542,
+                        543
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testLoadConfigurationFromInvalidBothLocationsOnDisk')": [
+                        548,
+                        553
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testLoadConfigurationFromInvalidUserLocationOnDisk')": [
+                        567,
+                        571,
+                        575
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testConfigurationUpgradeFrom09')": [
+                        582,
+                        588,
+                        591,
+                        592,
+                        593,
+                        596,
+                        597,
+                        598,
+                        599,
+                        600
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testConfigurationUpgradeFrom13')": [
+                        604,
+                        605,
+                        606,
+                        607,
+                        608,
+                        609,
+                        610,
+                        611,
+                        612,
+                        613,
+                        614,
+                        615,
+                        616,
+                        617,
+                        618,
+                        619,
+                        620,
+                        621,
+                        622,
+                        623,
+                        624,
+                        625,
+                        626,
+                        627,
+                        628,
+                        629,
+                        630,
+                        631
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testAutoDetectV1')": [
+                        635,
+                        640,
+                        641,
+                        642,
+                        643,
+                        649,
+                        650,
+                        651,
+                        653,
+                        654,
+                        655,
+                        658,
+                        659,
+                        660,
+                        661,
+                        662,
+                        665,
+                        666,
+                        667,
+                        677,
+                        680,
+                        681,
+                        682,
+                        683,
+                        684
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testArchivaV1')": [
+                        692,
+                        697,
+                        699,
+                        700,
+                        701,
+                        702,
+                        703,
+                        704,
+                        708,
+                        709,
+                        710,
+                        711,
+                        712,
+                        713,
+                        717,
+                        718,
+                        719,
+                        720,
+                        721,
+                        722
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testCronExpressionsWithComma')": [
+                        726,
+                        730,
+                        731,
+                        734,
+                        735,
+                        736,
+                        737,
+                        740,
+                        745,
+                        746,
+                        747,
+                        750,
+                        751,
+                        752,
+                        756,
+                        760,
+                        767,
+                        774,
+                        775,
+                        776
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testRemoveLastElements')": [
+                        780,
+                        784,
+                        785,
+                        788,
+                        789,
+                        790,
+                        791,
+                        794,
+                        800,
+                        801,
+                        802,
+                        805,
+                        808,
+                        809,
+                        810,
+                        813,
+                        816,
+                        819,
+                        822,
+                        825,
+                        826,
+                        827,
+                        830,
+                        831,
+                        832,
+                        835,
+                        836,
+                        837,
+                        838,
+                        841,
+                        842,
+                        845,
+                        850,
+                        851,
+                        852,
+                        853,
+                        854,
+                        855,
+                        856,
+                        857,
+                        858,
+                        859
+                    ],
+                    "('org.apache.archiva.configuration#ArchivaConfigurationTest', 'testGetConfigurationFixEmptyRemoteRepoUsernamePassword')": [
+                        866,
+                        871,
+                        872,
+                        874,
+                        877,
+                        880,
+                        881,
+                        882,
+                        883,
+                        884,
+                        885
+                    ]
+                }
+            }
+        }
+    },
+    "c110af17f46e8b93eb416b55b8039e7ee85ff134": {
+        "authored_data": "2011 Oct 04 14:58",
+        "commit.message": "missed to fix add\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1178822 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "2de246045762c6224acdc49042a69a5a4d522f96",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/archiva/web/action/admin/connectors/proxy/AddProxyConnectorAction.java": {
+                "old": {
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AddProxyConnectorAction', 'input')": [
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AddProxyConnectorAction', 'commit')": [
+                        91,
+                        92,
+                        93,
+                        94
+                    ]
+                }
+            }
+        }
+    },
+    "2de246045762c6224acdc49042a69a5a4d522f96": {
+        "authored_data": "2011 Oct 04 13:59",
+        "commit.message": "[MRM-1173] Cannot delete patterns with single and double quotes : fix black list too\nsimplify too  fix for MRM-1135\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1178795 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "ebcabb17a35c53bc107f0d5ec07ff749f57d1bd3",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/archiva/web/action/admin/connectors/proxy/AbstractProxyConnectorFormAction.java": {
+                "old": {
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'escapePatterns(List)')": [
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', None)": [
+                        126,
+                        127,
+                        141,
+                        142,
+                        146,
+                        147
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'unescapePatterns(List)')": [
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'escapePattern(String)')": [
+                        143,
+                        144,
+                        145
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'addBlackListPattern')": [
+                        159
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'addWhiteListPattern')": [
+                        195,
+                        203
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'removeBlackListPattern')": [
+                        279,
+                        286
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'removeWhiteListPattern')": [
+                        330,
+                        337
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'addBlackListPattern')": [
+                        118,
+                        119,
+                        127
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'addWhiteListPattern')": [
+                        163,
+                        171
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'removeBlackListPattern')": [
+                        247,
+                        254
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'removeWhiteListPattern')": [
+                        298,
+                        305
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/archiva/web/action/admin/connectors/proxy/EditProxyConnectorAction.java": {
+                "old": {
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#EditProxyConnectorAction', 'input')": [
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72
+                    ]
+                }
+            }
+        }
+    },
+    "ebcabb17a35c53bc107f0d5ec07ff749f57d1bd3": {
+        "authored_data": "2011 Oct 04 13:58",
+        "commit.message": "[MRM-1173] Cannot delete patterns with single and double quotes.\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1178794 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "3556951234b78012e64cd4946fbfdfbbf6493595",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/archiva/web/action/admin/connectors/proxy/AbstractProxyConnectorFormAction.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'initialize')": [
+                        105,
+                        106,
+                        107
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'escapePatterns(List)')": [
+                        115,
+                        120
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'unescapePatterns(List)')": [
+                        129,
+                        134
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'addBlackListPattern')": [
+                        146,
+                        147,
+                        148,
+                        155,
+                        156,
+                        157
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'addProperty')": [
+                        165,
+                        166,
+                        167,
+                        168,
+                        180,
+                        181,
+                        182
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'addWhiteListPattern')": [
+                        190,
+                        191,
+                        192,
+                        199,
+                        200,
+                        201
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getBlackListPattern')": [
+                        208
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getConnector')": [
+                        213
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getManagedRepoIdList')": [
+                        218
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getPattern')": [
+                        223
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getPolicyMap')": [
+                        228
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getPropertyKey')": [
+                        233
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getPropertyValue')": [
+                        238
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getProxyIdOptions')": [
+                        243
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getRemoteRepoIdList')": [
+                        248
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getWhiteListPattern')": [
+                        253
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'prepare')": [
+                        258,
+                        261,
+                        262,
+                        263,
+                        264
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', None)": [
+                        265,
+                        266,
+                        398,
+                        399
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'removeBlackListPattern')": [
+                        267,
+                        268,
+                        269,
+                        276,
+                        277,
+                        282,
+                        283,
+                        284
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'removeProperty')": [
+                        293,
+                        294,
+                        295,
+                        302,
+                        307,
+                        308,
+                        309
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'removeWhiteListPattern')": [
+                        318,
+                        319,
+                        320,
+                        327,
+                        328,
+                        333,
+                        334,
+                        335
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'createManagedRepoOptions')": [
+                        394,
+                        397
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'createNetworkProxyOptions')": [
+                        400,
+                        403,
+                        406
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getNetworkProxiesKeys')": [
+                        411,
+                        414,
+                        415,
+                        416,
+                        417,
+                        418,
+                        419,
+                        422
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'createPolicyMap')": [
+                        428,
+                        429,
+                        430
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'createRemoteRepoOptions')": [
+                        439,
+                        442
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'validateConnector')": [
+                        446,
+                        447,
+                        448,
+                        455,
+                        457,
+                        458,
+                        459,
+                        460,
+                        461,
+                        467,
+                        468,
+                        470,
+                        471,
+                        474,
+                        479,
+                        481,
+                        491
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getNetworkProxyAdmin')": [
+                        509
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'initialize')": [
+                        105,
+                        106,
+                        107
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'escapePatterns(List)')": [
+                        115,
+                        120,
+                        121
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'unescapePatterns(List)')": [
+                        130,
+                        135,
+                        136
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'addBlackListPattern')": [
+                        148,
+                        149,
+                        150,
+                        157,
+                        158,
+                        159
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'addProperty')": [
+                        167,
+                        168,
+                        169,
+                        170,
+                        182,
+                        183,
+                        184
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'addWhiteListPattern')": [
+                        192,
+                        193,
+                        194,
+                        201,
+                        202,
+                        203
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getBlackListPattern')": [
+                        210
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getConnector')": [
+                        215
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getManagedRepoIdList')": [
+                        220
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getPattern')": [
+                        225
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getPolicyMap')": [
+                        230
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getPropertyKey')": [
+                        235
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getPropertyValue')": [
+                        240
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getProxyIdOptions')": [
+                        245
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getRemoteRepoIdList')": [
+                        250
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getWhiteListPattern')": [
+                        255
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'prepare')": [
+                        260,
+                        263,
+                        264,
+                        265,
+                        266
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', None)": [
+                        267,
+                        268,
+                        400,
+                        401
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'removeBlackListPattern')": [
+                        269,
+                        270,
+                        271,
+                        278,
+                        279,
+                        284,
+                        285,
+                        286
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'removeProperty')": [
+                        295,
+                        296,
+                        297,
+                        304,
+                        309,
+                        310,
+                        311
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'removeWhiteListPattern')": [
+                        320,
+                        321,
+                        322,
+                        329,
+                        330,
+                        335,
+                        336,
+                        337
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'createManagedRepoOptions')": [
+                        396,
+                        399
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'createNetworkProxyOptions')": [
+                        402,
+                        405,
+                        408
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getNetworkProxiesKeys')": [
+                        413,
+                        416,
+                        417,
+                        418,
+                        419,
+                        420,
+                        421,
+                        424
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'createPolicyMap')": [
+                        430,
+                        431,
+                        432
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'createRemoteRepoOptions')": [
+                        441,
+                        444
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'validateConnector')": [
+                        448,
+                        449,
+                        450,
+                        457,
+                        459,
+                        460,
+                        461,
+                        462,
+                        463,
+                        469,
+                        470,
+                        472,
+                        473,
+                        476,
+                        481,
+                        483,
+                        493
+                    ],
+                    "('org.apache.archiva.web.action.admin.connectors.proxy#AbstractProxyConnectorFormAction', 'getNetworkProxyAdmin')": [
+                        511
+                    ]
+                }
+            }
+        }
+    },
+    "3556951234b78012e64cd4946fbfdfbbf6493595": {
+        "authored_data": "2011 Oct 04 09:31",
+        "commit.message": "don't fail with an IOException when artifact to copy not exists, throw a more human readable message :-)\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1178739 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "a30ed7be7f2884dc4d0f28530620d39e4c049054",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-services/src/main/java/org/apache/archiva/rest/services/DefaultRepositoriesService.java": {
+                "old": {
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', None)": [
+                        91
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'scanRepository(String,boolean)')": [
+                        135
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'removeScanningTaskFromQueue(String)')": [
+                        157
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'scanRepositoryNow(String,boolean)')": [
+                        181,
+                        193,
+                        194
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'scheduleDownloadRemoteIndex(String,boolean,boolean)')": [
+                        207,
+                        208
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'copyArtifact(ArtifactTransferRequest)')": [
+                        217,
+                        223,
+                        228,
+                        236,
+                        240,
+                        246,
+                        252,
+                        256,
+                        262,
+                        263,
+                        264,
+                        265,
+                        270,
+                        275,
+                        280,
+                        290,
+                        304,
+                        308,
+                        313,
+                        314,
+                        322,
+                        326,
+                        331,
+                        332,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        349,
+                        353,
+                        356,
+                        363,
+                        364,
+                        365,
+                        372,
+                        373,
+                        374,
+                        382,
+                        385,
+                        388,
+                        394,
+                        399,
+                        400,
+                        401,
+                        406,
+                        409,
+                        412,
+                        418,
+                        419,
+                        420,
+                        427,
+                        428,
+                        429,
+                        434,
+                        435,
+                        439,
+                        440,
+                        444,
+                        445
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'queueRepositoryTask(String,File)')": [
+                        454,
+                        466
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'getMetadata(File)')": [
+                        474,
+                        475
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'copyFile(File,File,String,boolean)')": [
+                        494,
+                        495
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'updateProjectMetadata(String,Date,String,int,boolean,ArtifactTransferRequest)')": [
+                        514,
+                        515,
+                        516,
+                        517,
+                        522,
+                        523,
+                        524,
+                        525,
+                        526,
+                        527,
+                        528,
+                        529,
+                        530,
+                        531,
+                        532,
+                        533,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        546,
+                        547,
+                        548,
+                        549,
+                        550,
+                        557
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', None)": [
+                        91
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'scanRepository(String,boolean)')": [
+                        135
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'removeScanningTaskFromQueue(String)')": [
+                        157
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'scanRepositoryNow(String,boolean)')": [
+                        181,
+                        193,
+                        194
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'scheduleDownloadRemoteIndex(String,boolean,boolean)')": [
+                        207,
+                        208
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'copyArtifact(ArtifactTransferRequest)')": [
+                        217,
+                        223,
+                        228,
+                        236,
+                        240,
+                        246,
+                        252,
+                        256,
+                        262,
+                        263,
+                        264,
+                        265,
+                        270,
+                        275,
+                        280,
+                        290,
+                        304,
+                        308,
+                        313,
+                        314,
+                        322,
+                        326,
+                        331,
+                        332,
+                        337,
+                        338,
+                        339,
+                        340,
+                        341,
+                        342,
+                        349,
+                        353,
+                        354,
+                        355,
+                        356,
+                        357,
+                        358,
+                        359,
+                        360,
+                        361,
+                        362,
+                        363,
+                        364,
+                        365,
+                        368,
+                        375,
+                        376,
+                        377,
+                        384,
+                        385,
+                        386,
+                        394,
+                        397,
+                        400,
+                        406,
+                        411,
+                        412,
+                        413,
+                        418,
+                        421,
+                        424,
+                        430,
+                        431,
+                        432,
+                        439,
+                        440,
+                        441,
+                        446,
+                        447,
+                        451,
+                        452,
+                        456,
+                        457
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'queueRepositoryTask(String,File)')": [
+                        466,
+                        478
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'getMetadata(File)')": [
+                        486,
+                        487
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'copyFile(File,File,String,boolean)')": [
+                        506,
+                        507
+                    ],
+                    "('org.apache.archiva.rest.services#DefaultRepositoriesService', 'updateProjectMetadata(String,Date,String,int,boolean,ArtifactTransferRequest)')": [
+                        526,
+                        527,
+                        528,
+                        529,
+                        534,
+                        535,
+                        536,
+                        537,
+                        538,
+                        539,
+                        540,
+                        541,
+                        542,
+                        543,
+                        544,
+                        545,
+                        549,
+                        550,
+                        551,
+                        552,
+                        553,
+                        554,
+                        555,
+                        556,
+                        557,
+                        558,
+                        559,
+                        560,
+                        561,
+                        562,
+                        569
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-services/src/test/java/org/apache/archiva/rest/services/CopyArtifactTest.java": {
+                "old": {
+                    "('org.apache.archiva.rest.services#CopyArtifactTest', 'copyToAnEmptyRepo')": [
+                        109,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        127,
+                        128,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        136,
+                        137,
+                        138
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23,
+                        26,
+                        27
+                    ],
+                    "('org.apache.archiva.rest.services#CopyArtifactTest', 'copyToAnEmptyRepo')": [
+                        112,
+                        113,
+                        114,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        132,
+                        133,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146
+                    ],
+                    "('org.apache.archiva.rest.services#CopyArtifactTest', None)": [
+                        147,
+                        148,
+                        149,
+                        150,
+                        176,
+                        177
+                    ],
+                    "('org.apache.archiva.rest.services#CopyArtifactTest', 'copyNonExistingArtifact')": [
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175
+                    ]
+                }
+            }
+        }
+    },
+    "a30ed7be7f2884dc4d0f28530620d39e4c049054": {
+        "authored_data": "2011 Oct 04 09:31",
+        "commit.message": " fix code format\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1178738 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "9675668bcbb147b4fc976382a0f1ab76e34b53e1",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-services/src/test/java/org/apache/archiva/rest/services/CopyArtifactTest.java": {
+                "old": {
+                    "(None, None)": [
+                        22,
+                        23,
+                        27,
+                        30
+                    ],
+                    "('org.apache.archiva.rest.services#CopyArtifactTest', 'initSourceTargetRepo')": [
+                        43,
+                        47,
+                        51,
+                        52,
+                        59,
+                        61,
+                        67,
+                        71,
+                        80,
+                        82,
+                        87,
+                        88
+                    ],
+                    "('org.apache.archiva.rest.services#CopyArtifactTest', 'clean')": [
+                        92
+                    ],
+                    "('org.apache.archiva.rest.services#CopyArtifactTest', 'copyToAnEmptyRepo')": [
+                        109,
+                        112,
+                        117,
+                        130,
+                        132,
+                        136,
+                        140,
+                        142
+                    ],
+                    "('org.apache.archiva.rest.services#CopyArtifactTest', 'copyToAnExistingRepo')": [
+                        146,
+                        149,
+                        150
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.rest.services#CopyArtifactTest', 'initSourceTargetRepo')": [
+                        39,
+                        43,
+                        47,
+                        48,
+                        55,
+                        57,
+                        63,
+                        67,
+                        76,
+                        78,
+                        83,
+                        84
+                    ],
+                    "('org.apache.archiva.rest.services#CopyArtifactTest', 'clean')": [
+                        88,
+                        89
+                    ],
+                    "('org.apache.archiva.rest.services#CopyArtifactTest', 'copyToAnEmptyRepo')": [
+                        106,
+                        109,
+                        114,
+                        128,
+                        132,
+                        136,
+                        138
+                    ],
+                    "('org.apache.archiva.rest.services#CopyArtifactTest', 'copyToAnExistingRepo')": [
+                        142,
+                        145,
+                        146
+                    ]
+                }
+            }
+        }
+    },
+    "9675668bcbb147b4fc976382a0f1ab76e34b53e1": {
+        "authored_data": "2011 Oct 04 09:11",
+        "commit.message": "remove unused private methods\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1178734 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "12ba74abf265f61df7a9c9a49fa25313064abf00",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/archiva/web/action/admin/networkproxies/ConfigureNetworkProxyAction.java": {
+                "old": {
+                    "('org.apache.archiva.web.action.admin.networkproxies#ConfigureNetworkProxyAction', 'removeNetworkProxy(String)')": [
+                        194,
+                        195,
+                        196,
+                        197
+                    ],
+                    "('org.apache.archiva.web.action.admin.networkproxies#ConfigureNetworkProxyAction', None)": [
+                        198,
+                        199,
+                        200
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/archiva/web/action/admin/scanning/RepositoryScanningAction.java": {
+                "old": {
+                    "('org.apache.archiva.web.action.admin.scanning#RepositoryScanningAction', 'findFileType(String)')": [
+                        308,
+                        309,
+                        310,
+                        311
+                    ],
+                    "('org.apache.archiva.web.action.admin.scanning#RepositoryScanningAction', None)": [
+                        312,
+                        313
+                    ]
+                }
+            },
+            "archiva-modules/metadata/metadata-repository-api/src/main/java/org/apache/archiva/metadata/repository/DefaultMetadataResolver.java": {
+                "old": {
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', None)": [
+                        87,
+                        89,
+                        90,
+                        91,
+                        92
+                    ],
+                    "('org.apache.archiva.metadata.repository#DefaultMetadataResolver', 'initialize')": [
+                        88
+                    ]
+                }
+            }
+        }
+    },
+    "12ba74abf265f61df7a9c9a49fa25313064abf00": {
+        "authored_data": "2011 Oct 04 09:05",
+        "commit.message": " fix @since 1.4 with @since 1.4-M1\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1178731 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "5af04024306fc76cc3e8dd5965cdcadac5c224ff",
+        "changes": {
+            "archiva-modules/archiva-base/archiva-common/src/main/java/org/apache/archiva/common/FileTypeUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-indexer/src/main/java/org/apache/archiva/indexer/search/ArtifactInfoFiler.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-indexer/src/main/java/org/apache/archiva/indexer/search/SearchFields.java": {
+                "old": {
+                    "('org.apache.archiva.indexer.search#SearchFields', None)": [
+                        61,
+                        68,
+                        75,
+                        82,
+                        89,
+                        96
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.indexer.search#SearchFields', None)": [
+                        61,
+                        68,
+                        75,
+                        82,
+                        89,
+                        96
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-indexer/src/main/java/org/apache/archiva/indexer/search/SearchResultHit.java": {
+                "old": {
+                    "('org.apache.archiva.indexer.search#SearchResultHit', None)": [
+                        63,
+                        70,
+                        77,
+                        84,
+                        91,
+                        98,
+                        105,
+                        112,
+                        119,
+                        126
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.indexer.search#SearchResultHit', None)": [
+                        63,
+                        70,
+                        77,
+                        84,
+                        91,
+                        98,
+                        105,
+                        112,
+                        119,
+                        126
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-indexer/src/main/java/org/apache/archiva/indexer/search/SearchResults.java": {
+                "old": {
+                    "('org.apache.archiva.indexer.search#SearchResults', None)": [
+                        107,
+                        116
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.indexer.search#SearchResults', None)": [
+                        107,
+                        116
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-plexus-bridge/src/main/java/org/apache/archiva/common/plexusbridge/DigesterUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        35
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-plexus-bridge/src/main/java/org/apache/archiva/common/plexusbridge/MavenIndexerUtils.java": {
+                "old": {
+                    "(None, None)": [
+                        39
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        39
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-proxy-common/src/main/java/org/apache/archiva/proxy/common/DebugTransferListener.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-proxy-common/src/main/java/org/apache/archiva/proxy/common/DefaultWagonFactory.java": {
+                "old": {
+                    "(None, None)": [
+                        32
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-proxy-common/src/main/java/org/apache/archiva/proxy/common/WagonFactoryException.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/AbstractRepositoryConnector.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/AuditInformation.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/RepositoryAdminException.java": {
+                "old": {
+                    "(None, None)": [
+                        24
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        24
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/admin/ArchivaAdministration.java": {
+                "old": {
+                    "(None, None)": [
+                        33
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        33
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/beans/AbstractRepository.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/beans/FileType.java": {
+                "old": {
+                    "(None, None)": [
+                        28
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/beans/LegacyArtifactPath.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/beans/ManagedRepository.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/beans/NetworkConfiguration.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/beans/NetworkProxy.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/beans/OrganisationInformation.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/beans/ProxyConnector.java": {
+                "old": {
+                    "(None, None)": [
+                        28
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/beans/RemoteRepository.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/beans/RepositoryGroup.java": {
+                "old": {
+                    "(None, None)": [
+                        28
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        28
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/beans/UiConfiguration.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/group/RepositoryGroupAdmin.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/managed/ManagedRepositoryAdmin.java": {
+                "old": {
+                    "(None, None)": [
+                        31
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/networkproxy/NetworkProxyAdmin.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/proxyconnector/ProxyConnectorAdmin.java": {
+                "old": {
+                    "(None, None)": [
+                        32
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        32
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/proxyconnector/ProxyConnectorOrderComparator.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/proxyconnector/ProxyConnectorSelectionPredicate.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-api/src/main/java/org/apache/archiva/admin/model/remote/RemoteRepositoryAdmin.java": {
+                "old": {
+                    "(None, None)": [
+                        31
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-default/src/main/java/org/apache/archiva/admin/repository/AbstractRepositoryAdmin.java": {
+                "old": {
+                    "(None, None)": [
+                        41
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        41
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-default/src/main/java/org/apache/archiva/admin/repository/RepositoryCommonValidator.java": {
+                "old": {
+                    "(None, None)": [
+                        38
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-default/src/main/java/org/apache/archiva/admin/repository/admin/FiletypeToMapClosure.java": {
+                "old": {
+                    "(None, None)": [
+                        31
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-default/src/main/java/org/apache/archiva/admin/repository/networkproxy/DefaultNetworkProxyAdmin.java": {
+                "old": {
+                    "(None, None)": [
+                        40
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        40
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-default/src/main/java/org/apache/archiva/admin/repository/proxyconnector/DefaultProxyConnectorAdmin.java": {
+                "old": {
+                    "(None, None)": [
+                        48
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        48
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-default/src/main/java/org/apache/archiva/admin/repository/remote/DefaultRemoteRepositoryAdmin.java": {
+                "old": {
+                    "(None, None)": [
+                        40
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        40
+                    ]
+                }
+            },
+            "archiva-modules/archiva-base/archiva-repository-admin/archiva-repository-admin-default/src/main/java/org/apache/archiva/admin/repository/utils/RepositoryComparator.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduler/archiva-scheduler-indexing/src/main/java/org/apache/archiva/scheduler/indexing/ArtifactIndexingTask.java": {
+                "old": {
+                    "('org.apache.archiva.scheduler.indexing#ArtifactIndexingTask', None)": [
+                        55
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.scheduler.indexing#ArtifactIndexingTask', None)": [
+                        55
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduler/archiva-scheduler-indexing/src/main/java/org/apache/archiva/scheduler/indexing/DefaultDownloadRemoteIndexScheduler.java": {
+                "old": {
+                    "(None, None)": [
+                        58
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        58
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduler/archiva-scheduler-indexing/src/main/java/org/apache/archiva/scheduler/indexing/DownloadRemoteIndexException.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduler/archiva-scheduler-indexing/src/main/java/org/apache/archiva/scheduler/indexing/DownloadRemoteIndexScheduler.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduler/archiva-scheduler-indexing/src/main/java/org/apache/archiva/scheduler/indexing/DownloadRemoteIndexTask.java": {
+                "old": {
+                    "(None, None)": [
+                        61
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        61
+                    ]
+                }
+            },
+            "archiva-modules/archiva-scheduler/archiva-scheduler-indexing/src/main/java/org/apache/archiva/scheduler/indexing/DownloadRemoteIndexTaskRequest.java": {
+                "old": {
+                    "(None, None)": [
+                        29
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        29
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/model/Artifact.java": {
+                "old": {
+                    "('org.apache.archiva.rest.api.model#Artifact', None)": [
+                        59,
+                        66,
+                        73,
+                        80,
+                        87,
+                        94,
+                        101,
+                        108,
+                        115,
+                        122
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.rest.api.model#Artifact', None)": [
+                        59,
+                        66,
+                        73,
+                        80,
+                        87,
+                        94,
+                        101,
+                        108,
+                        115,
+                        122
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/model/SearchRequest.java": {
+                "old": {
+                    "('org.apache.archiva.rest.api.model#SearchRequest', None)": [
+                        62,
+                        69,
+                        76,
+                        83
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.rest.api.model#SearchRequest', None)": [
+                        62,
+                        69,
+                        76,
+                        83
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/ArchivaAdministrationService.java": {
+                "old": {
+                    "(None, None)": [
+                        40
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        40
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/ArchivaRestServiceException.java": {
+                "old": {
+                    "(None, None)": [
+                        23
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        23
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/ManagedRepositoriesService.java": {
+                "old": {
+                    "(None, None)": [
+                        38
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/NetworkProxyService.java": {
+                "old": {
+                    "(None, None)": [
+                        36
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/PingService.java": {
+                "old": {
+                    "(None, None)": [
+                        31
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        31
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/ProxyConnectorService.java": {
+                "old": {
+                    "(None, None)": [
+                        38
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        38
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/RemoteRepositoriesService.java": {
+                "old": {
+                    "(None, None)": [
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/RepositoriesService.java": {
+                "old": {
+                    "(None, None)": [
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-api/src/main/java/org/apache/archiva/rest/api/services/RepositoryGroupService.java": {
+                "old": {
+                    "(None, None)": [
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-services/src/main/java/org/apache/archiva/rest/services/AbstractRestService.java": {
+                "old": {
+                    "(None, None)": [
+                        37
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        37
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-services/src/main/java/org/apache/archiva/rest/services/DefaultArchivaAdministrationService.java": {
+                "old": {
+                    "(None, None)": [
+                        39
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        39
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-services/src/main/java/org/apache/archiva/rest/services/DefaultManagedRepositoriesService.java": {
+                "old": {
+                    "(None, None)": [
+                        36
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-services/src/main/java/org/apache/archiva/rest/services/DefaultPingService.java": {
+                "old": {
+                    "(None, None)": [
+                        27
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        27
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-services/src/main/java/org/apache/archiva/rest/services/DefaultRemoteRepositoriesService.java": {
+                "old": {
+                    "(None, None)": [
+                        35
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        35
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-services/src/main/java/org/apache/archiva/rest/services/DefaultRepositoriesService.java": {
+                "old": {
+                    "(None, None)": [
+                        84
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        84
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-services/src/main/java/org/apache/archiva/rest/services/interceptors/HttpContext.java": {
+                "old": {
+                    "(None, None)": [
+                        26
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        26
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-services/src/main/java/org/apache/archiva/rest/services/interceptors/HttpContextThreadLocal.java": {
+                "old": {
+                    "(None, None)": [
+                        25
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        25
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-services/src/main/java/org/apache/archiva/rest/services/interceptors/HttpContextThreadLocalCleaner.java": {
+                "old": {
+                    "(None, None)": [
+                        36
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        36
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-rest/archiva-rest-services/src/test/java/org/apache/archiva/rest/services/PingServiceTest.java": {
+                "old": {
+                    "(None, None)": [
+                        30
+                    ]
+                },
+                "new": {
+                    "(None, None)": [
+                        30
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/archiva/web/action/AbstractActionSupport.java": {
+                "old": {
+                    "('org.apache.archiva.web.action#AbstractActionSupport', None)": [
+                        220
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.web.action#AbstractActionSupport', None)": [
+                        220
+                    ]
+                }
+            },
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/archiva/web/action/SearchAction.java": {
+                "old": {
+                    "('org.apache.archiva.web.action#SearchAction', None)": [
+                        102,
+                        109,
+                        116,
+                        123,
+                        130,
+                        137
+                    ]
+                },
+                "new": {
+                    "('org.apache.archiva.web.action#SearchAction', None)": [
+                        102,
+                        109,
+                        116,
+                        123,
+                        130,
+                        137
+                    ]
+                }
+            }
+        }
+    },
+    "5af04024306fc76cc3e8dd5965cdcadac5c224ff": {
+        "authored_data": "2011 Oct 04 08:57",
+        "commit.message": "add @since\n\ngit-svn-id: https://svn.apache.org/repos/asf/archiva/trunk@1178728 13f79535-47bb-0310-9956-ffa450edef68\n",
+        "commit.author.name": "Olivier Lamy",
+        "pcid": "4f0b680db5a15889be586211d830db3c8dd0ae1f",
+        "changes": {
+            "archiva-modules/archiva-web/archiva-webapp/src/main/java/org/apache/archiva/web/action/admin/network/NetworkConfigurationAction.java": {
+                "new": {
+                    "(None, None)": [
+                        38
+                    ]
+                }
+            }
+        }
+    }
+}
