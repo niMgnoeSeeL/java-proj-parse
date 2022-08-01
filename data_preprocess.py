@@ -243,8 +243,8 @@ def format():
 
 
 if __name__ == "__main__":
-    with_chgdat_v = True #True
-    with_compute_dist = True #True 
+    with_chgdat_v = False #True
+    with_compute_dist = False #True 
 
     project = 'ant-ivy' 
     types_of_dist = ['chgdat', 'authorship', 'static']
@@ -284,19 +284,19 @@ if __name__ == "__main__":
         import pickle
         pickle.dump(labeled_mths_pc, f)
     
-    #with open(destfile, 'rb') as f:
-    #    import pickle
-    #    labeled_mths_pc = pickle.load(f)
-    # compute distance
-    destfile = "data/cands/ant_ivy_dists.pkl"
-    if with_compute_dist:
-        pairwise_dists = {}
-        for commit, mod_mths_info in tqdm(labeled_mths_pc.items()):
-            pairwise_dists[commit] = dist_utils.compute_distances(types_of_dist, mod_mths_info)
-            
-        with open(destfile, 'wb') as f:
-            import pickle
-            pickle.dump(labeled_mths_pc, f)
+    ##with open(destfile, 'rb') as f:
+    ##    import pickle
+    ##    labeled_mths_pc = pickle.load(f)
+    ## compute distance
+    #destfile = "data/cands/ant_ivy_dists.pkl"
+    #if with_compute_dist:
+        #pairwise_dists = {}
+        #for commit, mod_mths_info in tqdm(labeled_mths_pc.items()):
+            #pairwise_dists[commit] = dist_utils.compute_distances(types_of_dist, mod_mths_info)
+#            
+        #with open(destfile, 'wb') as f:
+            #import pickle
+            #pickle.dump(labeled_mths_pc, f)
 
 
 
