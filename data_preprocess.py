@@ -3,17 +3,19 @@ Compute
 """
 from typing import Dict, List, Tuple
 from git import Object
-import hunk_utils
-import db_utils
-import dist_utils 
-import change_utils
+import utils.hunk_utils as hunk_utils
+import utils.db_utils as db_utils
+import utils.dist_utils as dist_utils
+import utils.change_utils as change_utils
 import pandas as pd 
 from pymongo.database import Database
 from tqdm import tqdm 
 import os 
 import git
+import numpy as np
 
-datadir = "../data/parsed"
+datadir = "data/parsed"
+N_MIN_MOD = 1 # the minium number of modified methods -1 
 
 class MethodLabelInfo(Object):
     def __init__(self, 
@@ -199,11 +201,18 @@ def add_chgdat_vector(
     """
     """
     # chgd_time_vector -> from parsing the proj repo 
-    chgd_time_vector ,_ = dist_utils.compute_change_vector(commit, change_hist)
+    chgd_time_vector ,_ = dist_utils.compute_change_vector(
+        commit, 
+        change_hist, 
+        n_min_mod = N_MIN_MOD)
+
     for k in mod_mths_info.keys():
         if k == 'author':
             continue
-        mod_mths_info[k]['chgdat'] = chgd_time_vector[k] # keyerror? -> not sure
+        if chgd_time_vector is not None:
+            mod_mths_info[k]['chgdat'] = chgd_time_vector[k] # keyerror? -> not sure
+        else:
+            mod_mths_info[k]['chgdat'] = None
     return mod_mths_info
 
 
@@ -213,12 +222,17 @@ def add_authorship_vector(
     change_hist: pd.DataFrame) -> Dict:
     """
     """
-    # chgd_time_vector -> from parsing the proj repo 
-    authorship_vector = dist_utils.compute_authorship_vector(commit, change_hist)
+    authorship_vector = dist_utils.compute_authorship_vector(
+        commit, 
+        change_hist,
+        n_min_mod = N_MIN_MOD)
     for i,k in enumerate(mod_mths_info.keys()):
         if k == 'author':
             continue
-        mod_mths_info[k]['authored'] = authorship_vector[k] # keyerror? -> not sure
+        if authorship_vector is not None:
+            mod_mths_info[k]['authored'] = authorship_vector[k] # keyerror? -> not sure
+        else:
+            mod_mths_info[k]['authored'] = None
     return mod_mths_info
 
 
@@ -229,25 +243,25 @@ def format():
 
 
 if __name__ == "__main__":
-    with_chgdat_v = False #True
-    with_compute_dist = False #True 
+    with_chgdat_v = True #True
+    with_compute_dist = True #True 
 
     project = 'ant-ivy' 
     types_of_dist = ['chgdat', 'authorship', 'static']
     repo_path = os.path.join(
         '/Volumes/JJ_Media/Data/commit_untangling/projects', project)
-    target_cs_file = "../data/cands/ant_ivy.csv"
+    target_cs_file = "data/cands/ant_ivy.csv"
     target_commit_insts = get_target_commits(
         repo_path, target_cs_file=target_cs_file)
     
     # get hunks
-    hunk_file = "../data/complete_hunk_labels.pkl"
+    hunk_file = "data/complete_hunk_labels.pkl"
     completed_df = pd.read_pickle(hunk_file)
-    changes_df = change_utils.get_change_df(project, datadir = "../data/parsed")
+    changes_df = change_utils.get_change_df(project, datadir = "data/parsed")
     changes_df = hunk_utils.parse_date(changes_df)
 
-    os.makedirs("../data/cands", exist_ok=True)
-    destfile = "../data/cands/ant_ivy_labeled_mths.pkl"
+    os.makedirs("data/cands", exist_ok=True)
+    destfile = "data/cands/ant_ivy_labeled_mths.pkl"
     # assume mongodb to run & smartshark_1_1 database to be already restored 
     target_commits = [] # ...
     mydb = db_utils.get_smartshark_db()
@@ -274,15 +288,15 @@ if __name__ == "__main__":
     #    import pickle
     #    labeled_mths_pc = pickle.load(f)
     # compute distance
-    #destfile = "../data/cands/ant_ivy_dists.pkl"
-    #if with_compute_dist:
-        #pairwise_dists = {}
-        #for commit, mod_mths_info in tqdm(labeled_mths_pc.items()):
-            #pairwise_dists[commit] = dist_utils.compute_distances(types_of_dist, mod_mths_info)
-#            
-        #with open(destfile, 'wb') as f:
-            #import pickle
-            #pickle.dump(labeled_mths_pc, f)
+    destfile = "data/cands/ant_ivy_dists.pkl"
+    if with_compute_dist:
+        pairwise_dists = {}
+        for commit, mod_mths_info in tqdm(labeled_mths_pc.items()):
+            pairwise_dists[commit] = dist_utils.compute_distances(types_of_dist, mod_mths_info)
+            
+        with open(destfile, 'wb') as f:
+            import pickle
+            pickle.dump(labeled_mths_pc, f)
 
 
 

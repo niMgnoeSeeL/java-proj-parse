@@ -1,3 +1,4 @@
+from sre_constants import AT_MULTILINE
 from typing import Dict, Tuple, List
 import pandas as pd
 import numpy as np
@@ -21,7 +22,7 @@ def compute_change_vector(
     """
     target_commit: 
     """ 
-    from hunk_utils import get_changed_method 
+    from utils.hunk_utils import get_changed_method 
     
     target_del_add_mths, _, _ = get_changed_method(change_hist.loc[target_commit].changes)
     if len(target_del_add_mths) <= n_min_mod:
@@ -83,11 +84,11 @@ def compute_authorship_vector(
     """
     target_commit: 
     """ 
-    from hunk_utils import get_changed_method 
+    from utils.hunk_utils import get_changed_method 
     
     target_del_add_mths, _, _ = get_changed_method(change_hist.loc[target_commit].changes)
     if len(target_del_add_mths) <= n_min_mod: 
-        return (None, None)
+        return None
 
     tcommit_time = change_hist.loc[target_commit].authored_date 
     # previous changes, INCLUDING the current one 
@@ -154,10 +155,15 @@ def compute_distances(
         for which_type in which_types:
             if which_type == 'chgdat':
                 a_dist_arr = np.array(a_info['chgdat'])
-                a_dist_arr.sort()
-                a_dist_arr = a_dist_arr[::-1]
+                if a_dist_arr is None:
+                    assert False # have to decide
+                else:
+                    a_dist_arr.sort()
+                    a_dist_arr = a_dist_arr[::-1]
 
                 b_dist_arr = np.array(b_info['chgdat'])
+                if b_dist_arr is None:
+                    assert False # have to decide
                 b_dist_arr.sort()
                 b_dist_arr = b_dist_arr[::-1]
 
@@ -178,6 +184,10 @@ def compute_distances(
                 # compare a list of authors that modified two methods & compute 
                 a_authored = np.array(a_info['authored'])
                 b_authored = np.array(b_info['authored'])
+                if a_authored is None:
+                    assert False 
+                if b_authored is None:
+                    assert False
                 # need to change to authorship vector 
                 author_pool_v = np.append(a_authored, b_authored)
                 uniq_authors = np.unique(author_pool_v)
