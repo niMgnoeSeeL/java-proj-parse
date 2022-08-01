@@ -10,6 +10,8 @@ import change_utils
 import pandas as pd 
 from pymongo.database import Database
 from tqdm import tqdm 
+import os 
+import git
 
 datadir = "../data/parsed"
 
@@ -48,77 +50,6 @@ class MethodLabelInfo(Object):
         """
         """
         pass 
-
-
-#def get_final_mths_labels(
-    #mydb:Database,
-    #hunk_df:pd.DataFrame,
-    #change_hist_df:pd.DataFrame,
-    #project:str, 
-    #target_commits:List[str],
-    #simple:bool = True) -> Dict[str,str]:
-#
-    #final_labels_pc = {}
-    #for commit in tqdm(target_commits):
-        #hunk_rows = hunk_utils.get_target_rows(hunk_df, project, commit)
-        #new_mths_w_labels = {}
-        #old_mths_w_labels = {}
-        #for _, hunk_row in hunk_rows.iterrows():
-            ## check whether it modified javafiles
-            #filepath = hunk_row.file 
-            #if not filepath.endswith('.java'):
-                #continue 
-#
-            #hunk_id = hunk_row.hunk_id 
-            #new_old_lnos = db_utils.get_org_lno(mydb, hunk_id)
-            #if new_old_lnos is None:
-                #continue
-            #else:
-                #lno_labels = hunk_utils.get_all_labels(hunk_df, project, hunk_id)
-#
-                ## for new lines
-                #new_lnos, old_lnos = new_old_lnos
-                ## should consider the thing that, sometims, idx_new_lno not labeled
-                #for idx_new_lno, org_new_lno in new_lnos.items():
-                    #new_mth = hunk_utils.get_belong_chgd_mth(
-                        #change_hist_df.loc[commit].changes, 
-                        #filepath, org_new_lno, False)
-#
-                    #if new_mth is not None:
-                        ## get label
-                        #try:
-                            #man_lno_label = lno_labels[idx_new_lno]
-                        #except KeyError: #idx_new_lno not labeled
-                            #continue # skip this 
-#
-                        #try:
-                            #new_mths_w_labels[new_mth].append(man_lno_label)
-                        #except KeyError:
-                            #new_mths_w_labels[new_mth] = [man_lno_label]
-#
-                ## for old lines
-                #for idx_old_lno, org_old_lno in old_lnos.items():
-                    #old_mth = hunk_utils.get_belong_chgd_mth(
-                        #change_hist_df.loc[commit].changes, 
-                        #filepath, org_old_lno, True)
-                    #if old_mth is not None:
-                        ## get label
-                        #try:
-                            #man_lno_label = lno_labels[idx_old_lno]
-                        #except KeyError: #idx_new_lno not labeled (can happen)
-                            #continue # skip this 
-                        #try:
-                            #old_mths_w_labels[old_mth].append(man_lno_label)
-                        #except KeyError:
-                            #old_mths_w_labels[old_mth] = [man_lno_label]
-#        
-        ## up-to-here, new_mths_w_labels & old_mths_w_labels -> key:mth, 
-        ## determine the final label of modified methods 
-        #final_mths_labels = hunk_utils.get_final_labels(
-            #new_mths_w_labels, old_mths_w_labels, simple = simple)
-        #final_labels_pc[commit] = final_mths_labels
-#    
-    #return final_labels_pc
 
 
 def get_mths_labels(
@@ -276,6 +207,22 @@ def add_chgdat_vector(
     return mod_mths_info
 
 
+def add_authorship_vector(
+    mod_mths_info, 
+    commit:str, 
+    change_hist: pd.DataFrame) -> Dict:
+    """
+    """
+    # chgd_time_vector -> from parsing the proj repo 
+    authorship_vector = dist_utils.compute_authorship_vector(commit, change_hist)
+    for i,k in enumerate(mod_mths_info.keys()):
+        if k == 'author':
+            continue
+        mod_mths_info[k]['authored'] = authorship_vector[k] # keyerror? -> not sure
+    return mod_mths_info
+
+
+# compute various types of distances
 def compute_distances(
     which_types:List[str],
     mod_mths_info:pd.DataFrame) -> Dict[str,float]:
@@ -287,7 +234,8 @@ def compute_distances(
     
     ret_dists = {}
     mod_mths = list(mod_mths_info.keys())
-    mod_mths.remove('author')
+    if 'author' in mod_mths: 
+        mod_mths.remove('author')
     mth_pairs = list(combinations(mod_mths, 2))
     #author = mod_mths_info['author']
     for a_mod_mth, b_mod_mth in mth_pairs:
@@ -304,6 +252,7 @@ def compute_distances(
                 b_dist_arr.sort()
                 b_dist_arr = b_dist_arr[::-1]
 
+                # exclude the current changes only for the opponent
                 a_to_b_dist = dist_utils.compute_dist(
                     a_dist_arr[1:], b_dist_arr, gran = 'day')
                 b_to_a_dist = dist_utils.compute_dist(
@@ -311,10 +260,35 @@ def compute_distances(
 
                 ret_dists[(a_mod_mth, b_mod_mth)][
                     which_type] = [a_to_b_dist, b_to_a_dist]
-            elif which_type == 'irfl':
-                pass 
+            elif which_type == 'static':
+                # for now, lexical similarity between two method identifiersg
+                cls_jarow_sim, mth_jarow_sim = dist_utils.compute_jaro_wrinkler_sim(a_mod_mth, b_mod_mth)
+                ret_dists[(a_mod_mth, b_mod_mth)][
+                    which_type] = cls_jarow_sim * mth_jarow_sim # can be anything 
             elif which_type == 'authorship':
-                pass
+                # compare a list of authors that modified two methods & compute 
+                a_authored = np.array(a_info['authored'])
+                b_authored = np.array(b_info['authored'])
+                # need to change to authorship vector 
+                author_pool_v = np.append(a_authored, b_authored)
+                uniq_authors = np.unique(author_pool_v)
+                a_authored_v = np.zeros(len(uniq_authors))
+                b_authored_v = np.zeros(len(uniq_authors))
+                for i,author in enumerate(uniq_authors):
+                    a_authored_v[i] = np.sum(a_authored == author)
+                    b_authored_v[i] = np.sum(b_authored == author)
+                #
+                denominator = np.linalg.norm(a_authored_v) * np.linalg.norm(b_authored_v)
+                if denominator == 0:
+                    if np.linalg.norm(a_authored_v) == np.linalg.norm(b_authored_v):
+                        # for inspecting the entire hist, shouldn't be here
+                        sim = 1.
+                    else:
+                        sim = 0.
+                else:
+                    numerator = np.dot(a_authored_v, b_authored_v)
+                    sim = numerator/denominator
+                ret_dists[(a_mod_mth, b_mod_mth)][which_type] = np.float32(sim)
 
     return ret_dists
 
@@ -326,12 +300,11 @@ def format():
 
 
 if __name__ == "__main__":
-    import git, os
-
-    with_chgdat_v = True
-    with_compute_dist = False 
+    with_chgdat_v = False #True
+    with_compute_dist = False #True 
 
     project = 'ant-ivy' 
+    types_of_dist = ['chgdat', 'authorship', 'static']
     repo_path = os.path.join(
         '/Volumes/JJ_Media/Data/commit_untangling/projects', project)
     target_cs_file = "../data/cands/ant_ivy.csv"
@@ -342,7 +315,10 @@ if __name__ == "__main__":
     hunk_file = "../data/complete_hunk_labels.pkl"
     completed_df = pd.read_pickle(hunk_file)
     changes_df = change_utils.get_change_df(project, datadir = "../data/parsed")
+    changes_df = hunk_utils.parse_date(changes_df)
 
+    os.makedirs("../data/cands", exist_ok=True)
+    destfile = "../data/cands/ant_ivy_labeled_mths.pkl"
     # assume mongodb to run & smartshark_1_1 database to be already restored 
     target_commits = [] # ...
     mydb = db_utils.get_smartshark_db()
@@ -354,20 +330,32 @@ if __name__ == "__main__":
         simple = True, 
         target_commit_insts = target_commit_insts)
     
-    os.makedirs("../data/cands", exist_ok=True)
-    destfile = "../data/cands/ant_ivy_labeled_mths.pkl"
+    if with_chgdat_v:
+        for commit, labeled_mths in tqdm(labeled_mths_pc.items()) :
+            if 'chgdat' in types_of_dist:
+                add_chgdat_vector(labeled_mths, commit, changes_df)
+            if 'authorship' in types_of_dist:
+                add_authorship_vector(labeled_mths, commit, changes_df)   
+    
     with open(destfile, 'wb') as f:
         import pickle
         pickle.dump(labeled_mths_pc, f)
-
-    #if with_chgdat_v:
-        #for commit, labeled_mths in tqdm(labeled_mths_pc.items()) :
-            #labeled_mths_pc[commit] = add_chgdat_vector(
-                #labeled_mths, commit, changes_df)
     
+    #with open(destfile, 'rb') as f:
+    #    import pickle
+    #    labeled_mths_pc = pickle.load(f)
     # compute distance
+    #destfile = "../data/cands/ant_ivy_dists.pkl"
     #if with_compute_dist:
-    #    for commit, mod_mths_info in labeled_mths_pc.items():
-    #        pairwise_dists = compute_distances(['chgdat'], mod_mths_info)
+        #pairwise_dists = {}
+        #for commit, mod_mths_info in tqdm(labeled_mths_pc.items()):
+            #pairwise_dists[commit] = compute_distances(types_of_dist, mod_mths_info)
+#            
+        #with open(destfile, 'wb') as f:
+            #import pickle
+            #pickle.dump(labeled_mths_pc, f)
+
+
+
             
 
