@@ -222,77 +222,6 @@ def add_authorship_vector(
     return mod_mths_info
 
 
-# compute various types of distances
-def compute_distances(
-    which_types:List[str],
-    mod_mths_info:pd.DataFrame) -> Dict[str,float]:
-    """
-    which_types -> chgdat, author, lexical sim 
-    """
-    import numpy as np
-    from itertools import combinations
-    
-    ret_dists = {}
-    mod_mths = list(mod_mths_info.keys())
-    if 'author' in mod_mths: 
-        mod_mths.remove('author')
-    mth_pairs = list(combinations(mod_mths, 2))
-    #author = mod_mths_info['author']
-    for a_mod_mth, b_mod_mth in mth_pairs:
-        a_info = mod_mths_info[a_mod_mth]
-        b_info = mod_mths_info[b_mod_mth]
-        ret_dists[(a_mod_mth, b_mod_mth)] = {}
-        for which_type in which_types:
-            if which_type == 'chgdat':
-                a_dist_arr = np.array(a_info['chgdat'])
-                a_dist_arr.sort()
-                a_dist_arr = a_dist_arr[::-1]
-
-                b_dist_arr = np.array(b_info['chgdat'])
-                b_dist_arr.sort()
-                b_dist_arr = b_dist_arr[::-1]
-
-                # exclude the current changes only for the opponent
-                a_to_b_dist = dist_utils.compute_dist(
-                    a_dist_arr[1:], b_dist_arr, gran = 'day')
-                b_to_a_dist = dist_utils.compute_dist(
-                    b_dist_arr[1:], a_dist_arr, gran = 'day')
-
-                ret_dists[(a_mod_mth, b_mod_mth)][
-                    which_type] = [a_to_b_dist, b_to_a_dist]
-            elif which_type == 'static':
-                # for now, lexical similarity between two method identifiersg
-                cls_jarow_sim, mth_jarow_sim = dist_utils.compute_jaro_wrinkler_sim(a_mod_mth, b_mod_mth)
-                ret_dists[(a_mod_mth, b_mod_mth)][
-                    which_type] = cls_jarow_sim * mth_jarow_sim # can be anything 
-            elif which_type == 'authorship':
-                # compare a list of authors that modified two methods & compute 
-                a_authored = np.array(a_info['authored'])
-                b_authored = np.array(b_info['authored'])
-                # need to change to authorship vector 
-                author_pool_v = np.append(a_authored, b_authored)
-                uniq_authors = np.unique(author_pool_v)
-                a_authored_v = np.zeros(len(uniq_authors))
-                b_authored_v = np.zeros(len(uniq_authors))
-                for i,author in enumerate(uniq_authors):
-                    a_authored_v[i] = np.sum(a_authored == author)
-                    b_authored_v[i] = np.sum(b_authored == author)
-                #
-                denominator = np.linalg.norm(a_authored_v) * np.linalg.norm(b_authored_v)
-                if denominator == 0:
-                    if np.linalg.norm(a_authored_v) == np.linalg.norm(b_authored_v):
-                        # for inspecting the entire hist, shouldn't be here
-                        sim = 1.
-                    else:
-                        sim = 0.
-                else:
-                    numerator = np.dot(a_authored_v, b_authored_v)
-                    sim = numerator/denominator
-                ret_dists[(a_mod_mth, b_mod_mth)][which_type] = np.float32(sim)
-
-    return ret_dists
-
-
 def format():
     """
     """
@@ -349,7 +278,7 @@ if __name__ == "__main__":
     #if with_compute_dist:
         #pairwise_dists = {}
         #for commit, mod_mths_info in tqdm(labeled_mths_pc.items()):
-            #pairwise_dists[commit] = compute_distances(types_of_dist, mod_mths_info)
+            #pairwise_dists[commit] = dist_utils.compute_distances(types_of_dist, mod_mths_info)
 #            
         #with open(destfile, 'wb') as f:
             #import pickle
